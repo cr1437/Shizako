@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 选中 pill 薄纱填充(夜间):alpha 0.26 -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:alpha="0.26" android:color="?colorPrimary" />
+</selector>

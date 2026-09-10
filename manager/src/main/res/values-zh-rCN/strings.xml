@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="permission_label">调教Shizako酱</string>
+    <string name="permission_description">允许引用随意调教Shizako酱</string>
+    <string name="home_status_service_is_running">%1$s 已经在主人身边待命了哦</string>
+    <string name="home_status_service_version">版本 %2$s，%1$s</string>
+    <string name="home_status_service_version_update"><![CDATA[版本 %2$s，%1$s<br>再次启动来升级到版本 %3$s]]></string>
+    <string name="home_status_service_not_running">%1$s还在睡懒觉呢，快叫醒她吧~</string>
+    <string name="home_root_button_start">狠狠地蹂躏注入</string>
+    <string name="home_root_button_restart">再次狠狠地蹂躏注入</string>
+    <string name="home_root_title">用 root 工具来蹂躏Shizako酱</string>
+    <string name="home_adb_title">用电脑来狠狠调教Shizako酱</string>
+    <string name="home_adb_description">主人～电脑这个东西，很大，我很喜欢，快点填满我吧 我真的....忍了很久了</string>
+    <string name="home_root_description">另外，Shizako酱可以在你开机时迎接你。如果没有，请检查主人的系统或是第三方工具是否限制了 Shizako酱的启动。&lt;br>你可以参考 %s。</string>
+    <string name="home_adb_dialog_view_command_copy_button">复制</string>
+    <string name="home_adb_dialog_view_command_button_send">发送</string>
+    <string name="home_adb_button_view_command">查看指令</string>
+    <string name="home_adb_dialog_view_command_message"><![CDATA[<font face="monospace">%1$s</font><br><br>* 还有一些其他注意事项，请确认你已阅读帮助。]]></string>
+
+    <!-- Dhizuku（Device Owner） -->
+    <string name="home_dhizuku_title">让她当上设备所有者</string>
+    <string name="home_dhizuku_description">一条命令把 Shizako酱 扶上「设备所有者」的宝座，之后不用 Root、不用守着无线调试，她的特权一直都在。支持 Dhizuku 的应用（比如 Hail、冰箱）可以直接借用她的力量。</string>
+    <string name="home_dhizuku_description_active">设备所有者模式已生效～ 授权过的应用可以借用 Shizako酱 的特权啦，不想借了随时可以收回。</string>
+    <string name="home_dhizuku_button_view_command">查看指令</string>
+    <string name="home_dhizuku_button_manage">已授权的应用</string>
+    <string name="home_dhizuku_button_activate">一键激活</string>
+    <string name="home_dhizuku_button_activating">激活中…</string>
+    <string name="home_dhizuku_activate_success">设备所有者模式激活成功啦～</string>
+    <string name="home_dhizuku_activate_failed">激活失败：%1$s</string>
+    <string name="home_dhizuku_description_ready">Shizuku 模式正在运行，主人点一下就能让 Shizako酱 当上设备所有者，不用电脑～</string>
+    <string name="home_dhizuku_dialog_view_command_message"><![CDATA[<font face="monospace">%1$s</font><br><br>* 用电脑执行一次即可（需开启 USB 调试）。设备上不能存在任何账户，否则命令会失败。]]></string>
+    <string name="dhizuku_device_owner_label">Shizako（设备所有者）</string>
+    <string name="dhizuku_device_owner_desc">Dhizuku 模式需要：让 Shizako酱 把设备所有者特权分享给已授权的应用。</string>
+    <string name="dhizuku_device_owner_enabled">Shizako酱 已成为设备所有者</string>
+    <string name="dhizuku_device_owner_disabled">设备所有者模式已关闭</string>
+    <string name="dhizuku_manage_title">Dhizuku 授权的应用</string>
+    <string name="dhizuku_manage_empty">还没有授权任何应用。\n支持 Dhizuku 的应用会在第一次使用时来敲门申请。</string>
+    <string name="dhizuku_revoke_title">收回特权</string>
+    <string name="dhizuku_revoke_message">不再让 %1$s 借用设备所有者特权吗？</string>
+    <string name="dhizuku_revoke_confirm">收回</string>
+    <string name="dhizuku_permission_warning_template"><![CDATA[要让<b>%1$s</b>%2$s借用 Shizako酱 的设备所有者特权吗？]]></string>
+    <string name="dialog_legacy_not_support_title">%1$s 不支持现代 Shizako 主人抱歉</string>
+    <string name="dialog_legacy_not_support_message">旧式 Shizako 已于 2019 年 3 月被弃用。此外，旧式 Shizako 无法在较新版本的 Android 系统上工作。&lt;p>请要求 &lt;b>%1$s&lt;/b> 的开发者进行更新。</string>
+    <string name="dialog_requesting_legacy_title">%1$s 正在请求旧式 Shizako</string>
+    <string name="dialog_requesting_legacy_message">&lt;b>%1$s&lt;/b> 支持现代 Shizako，但它正在请求旧式 Shizako。这可能是因为 Shizako 没有运行，请在 Shizako 应用内检查。&lt;p>旧式 Shizako 已于 2019 年 3 月被弃用。</string>
+    <string name="home_app_management_title">被调教的小可爱们</string>
+    <plurals name="home_app_management_authorized_apps_count">
+        <item quantity="other"><![CDATA[已经调教了 %d 个应用]]></item>
+    </plurals>
+    <string name="home_app_management_view_authorized_apps">点按看看有哪些小可爱被我调教过</string>
+    <string name="toast_copied_to_clipboard">%s\n已被复制到剪贴板。</string>
+    <string name="dialog_requesting_legacy_button_open_shizuku">打开 Shizako</string>
+    <string name="action_about">关于</string>
+    <string name="about_view_source_code"><![CDATA[在 %s 查看源码]]></string>
+    <string name="about_author">作者</string>
+    <string name="about_author_name">初然</string>
+    <string name="about_based_on">基于</string>
+    <string name="about_based_on_text"><![CDATA[%s 开源项目二次开发]]></string>
+    <string name="about_license">开源协议</string>
+    <string name="about_license_text">Apache License 2.0</string>
+    <string name="about_footer">Shizako — 为爱发电</string>
+    <string name="settings_title">调教设置</string>
+    <string name="start_with_root_failed">未授予 root 权限或是该设备没有 root，因此无法启动服务。</string>
+    <string name="notification_channel_service_status">服务启动状态</string>
+    <string name="notification_channel_status">服务状态</string>
+    <string name="notification_service_starting">Shizako酱正在准备中....</string>
+    <string name="notification_service_start_failed">Shizako酱有些累了（或许是害羞）所以你召唤失败</string>
+    <string name="notification_service_start_no_root">请求 root 权限失败。</string>
+    <string name="notification_working">工作中…</string>
+    <string name="settings_language">语言</string>
+    <string name="settings_user_interface">界面外观</string>
+    <string name="settings_black_night_theme">黑色夜间主题</string>
+    <string name="settings_black_night_theme_summary">当夜间模式启用时使用纯黑色主题</string>
+    <string name="settings_startup">狠狠地蹂躏注入</string>
+    <string name="app_management_dialog_adb_is_limited_title">adb 权限受限</string>
+    <string name="app_management_dialog_adb_is_limited_message">这极有可能是你的设备制造商限制了 adb 的权限。&lt;p&gt;&lt;b&gt;&lt;a href=\"%1$s\"&gt;此文档&lt;/a&gt;&lt;/b&gt;中可能有针对你的系统的解决方案。</string>
+    <string name="home_adb_button_view_help">阅读帮助</string>
+    <string name="dialog_cannot_open_browser_title">无法启动浏览器</string>
+    <string name="toast_copied_to_clipboard_with_text"><![CDATA[<b>%s</b> 已被复制到剪贴板。]]></string>
+    <string name="home_learn_more_title">深入了解Shizako❤️</string>
+    <string name="home_learn_more_description">了解如何正确调教 Shizako酱</string>
+    <string name="app_management_item_summary_requires_root">* 需要用 root 这个工具来调教Shizako酱！</string>
+    <string name="settings_translation_contributors">翻译贡献者</string>
+    <string name="translation_contributors"/>
+    <string name="settings_translation">参与翻译</string>
+
+    <string name="settings_debug">调试</string>
+    <string name="settings_crash_logs">Shizako酱的翻车记录</string>
+    <string name="settings_crash_logs_summary">Shizako酱不小心摔倒的时候会记在这里呢</string>
+    <string name="settings_crash_logs_empty">Shizako酱还没有摔倒过呢</string>
+    <string name="settings_crash_logs_count">Shizako酱摔倒了 %1$d 次…</string>
+    <string name="settings_crash_logs_share">分享</string>
+    <string name="settings_crash_logs_delete">删除</string>
+    <string name="settings_crash_logs_delete_all">全部删除</string>
+    <string name="settings_crash_logs_deleted">已删除</string>
+
+    <!-- One-click activation -->
+    <string name="activation_title">一键注入</string>
+    <string name="activation_subtitle">让 Shizako酱替主人执行那些原本需要电脑的指令</string>
+    <string name="activation_service_running">Shizako 已运行，可以注入</string>
+    <string name="activation_service_running_brief">Shizako 已运行</string>
+    <string name="activation_service_not_running">Shizako 未运行，请先回到主页启动服务</string>
+    <string name="activation_activate">注入</string>
+    <string name="activation_download">下载</string>
+    <string name="activation_downloading">下载中，稍等哦～</string>
+    <string name="activation_download_failed">下载失败了，主人再试一次吧</string>
+    <string name="activation_error_multiple_users">设备上还有多用户（访客模式/应用双开），先去设置里移除再注入哦</string>
+    <string name="activation_error_multiple_accounts">设备上还有账户，先去设置里移除再注入（注入后可以加回来）</string>
+    <string name="activation_activated">已注入</string>
+    <string name="activation_status_not_installed">%1$s · 未安装</string>
+    <string name="activation_status_installed">%1$s · 已安装</string>
+    <string name="activation_status_activated">%1$s · 已注入</string>
+    <string name="activation_status_not_activated">%1$s · 已安装，未注入</string>
+    <string name="activation_status_checking">%1$s</string>
+    <string name="activation_note_device_owner">需要先移除设备上的全部账号与多用户（访客模式/应用双开）。注意：炼妖壶（Island）会创建「壶中界」工作空间，它也算多用户——想注入设备所有者就得先删掉它，两者只能留一个。注入后可以恢复其他账号。部分厂商系统可能有兼容性限制。</string>
+    <string name="activation_note_brevent">黑域每次重启后都要重新注入哦，主人别忘了~</string>
+    <string name="activation_custom_title">自己动手</string>
+    <string name="activation_custom_hint">想对Shizako酱做什么都可以哦，输入命令吧…</string>
+    <string name="activation_custom_empty">主人还没输入命令呢~</string>
+    <string name="activation_run">开始调教</string>
+    <string name="activation_running">Shizako酱正在努力中…</string>
+    <string name="activation_success">注入成功，主人真厉害</string>
+    <string name="activation_failed">呜呜…注入失败了，看看下面哪里出错了</string>
+    <string name="activation_failed_with_code">呜呜…注入失败（码 %1$d），Shizako酱也不知道为什么</string>
+    <string name="activation_timeout">还在跑呢，不等了（服务型的不用等哦）</string>
+    <string name="activation_output">反馈</string>
+    <string name="activation_output_empty">（还没有反馈呢，主人先注入吧~）</string>
+    <string name="activation_copy">复制</string>
+    <string name="activation_copied">已复制</string>
+    <string name="activation_back">返回</string>
+
+    <!-- Quick settings tiles -->
+    <string name="tile_service_label">Shizako酱服务</string>
+    <string name="tile_service_subtitle_running">待命中</string>
+    <string name="tile_service_subtitle_stopped">睡懒觉中</string>
+    <string name="tile_wireless_adb_label">无线调试</string>
+    <string name="tile_wireless_adb_subtitle">Shizako酱</string>
+
+    <string name="settings_high_refresh_rate">高刷新率</string>
+    <string name="settings_high_refresh_rate_summary">让 Shizako酱 的动画跑满屏幕最高刷新率；关闭则跟随系统默认（更省电）</string>
+
+    <string name="settings_stability">稳定性与自动化</string>
+    <string name="settings_watchdog">看门狗</string>
+    <string name="settings_watchdog_summary">Shizako酱 崩溃后自动重启。开启后会显示常驻通知。</string>
+    <string name="settings_auto_update">自动更新</string>
+
+    <!-- API 调用日志 -->
+    <string name="settings_api_log">API 调用日志</string>
+    <string name="settings_api_log_summary">看看哪些应用通过 Shizako酱 调用了特权 API</string>
+    <string name="api_log_title">API 调用日志</string>
+    <string name="api_log_refresh">刷新</string>
+    <string name="api_log_unavailable">读不到日志，先启动 Shizako 服务（日志由服务端写入）。</string>
+    <string name="api_log_empty">还没有任何 API 调用记录。</string>
+
+    <!-- Tasker Dhizuku -->
+    <string name="tasker_dhizuku_already">设备所有者模式已经激活啦</string>
+    <string name="tasker_dhizuku_not_running">要先启动 Shizuku 模式才能激活设备所有者哦</string>
+    <string name="tasker_dhizuku_success">设备所有者模式激活成功</string>
+    <string name="tasker_dhizuku_failed">设备所有者激活失败</string>
+
+    <!-- 安装通知 -->
+    <string name="notify_install_channel">更新</string>
+    <string name="notify_install_title">Shizako 新版本已就绪</string>
+    <string name="notify_install_text">点一下安装 %1$s</string>
+    <string name="tasker_install_apk_missing">Download 里没找到 Shizako 安装包</string>
+    <string name="tasker_download_bad_url">下载地址缺失或无效</string>
+    <string name="settings_auto_update_summary">每天自动检查 GitHub 新版本，发现更新后推送通知</string>
+
+    <!-- Update -->
+    <string name="settings_check_update">检查更新</string>
+    <string name="settings_check_update_summary">从 GitHub 检查新版本</string>
+    <string name="update_checking">正在检查更新\u2026</string>
+    <string name="update_up_to_date">已是最新版本</string>
+    <string name="update_available_title">发现新版本</string>
+    <string name="update_available_text">版本 %1$s 已发布</string>
+    <string name="update_dialog_message">版本 %1$s 已发布\n\n%2$s</string>
+    <string name="update_download">下载</string>
+    <string name="update_downloading">正在下载\u2026</string>
+    <string name="update_downloading_progress">正在下载\u2026 %1$d%%</string>
+    <string name="update_check_failed">检查失败：%1$s</string>
+    <string name="update_download_failed">下载失败：%1$s</string>
+    <string name="update_install_failed">安装失败：%1$s</string>
+    <string name="update_channel_name">Shizako 更新</string>
+    <string name="update_download_channel">Shizako 下载</string>
+    <string name="update_retrying">正在重试（第 %1$d/%2$d 次）…</string>
+    <string name="update_connecting">正在连接…</string>
+    <string name="update_downloading_detail">%1$s / %2$s（%3$d%%）</string>
+    <string name="update_download_complete">下载完成</string>
+    <string name="update_tap_to_install">点击安装（%1$s）</string>
+    <string name="update_download_failed_title">下载失败</string>
+    <string name="update_speed">%1$s/s</string>
+    <string name="update_download_cancelled">已取消下载</string>
+
+    <!-- Watchdog -->
+    <string name="watchdog_channel_name">Shizako酱 看门狗</string>
+    <string name="watchdog_notification_title">Shizako酱 看门狗</string>
+    <string name="watchdog_notification_running">Shizako酱 正在运行中</string>
+    <string name="watchdog_notification_waiting">等待 Shizako酱 启动中…</string>
+    <string name="watchdog_notification_crashed">已崩溃 %1$d 次，将重试…</string>
+
+    <!-- Tasker / automation -->
+    <string name="tasker_already_running">Shizako酱 已在运行</string>
+    <string name="tasker_not_running">Shizako酱 未运行</string>
+    <string name="tasker_started_root">Shizako酱 已启动（root）</string>
+    <string name="tasker_started_adb">Shizako酱 已启动（ADB）</string>
+    <string name="tasker_stopped">Shizako酱 已停止</string>
+    <string name="tasker_start_failed">启动失败</string>
+    <string name="tasker_stop_failed">停止失败</string>
+    <string name="tasker_no_launch_mode">未配置启动模式</string>
+    <string name="tasker_adb_unavailable">ADB 自动启动不可用</string>
+
+    <string name="settings_translation_summary">帮助我们将 %s 翻译至您的语言</string>
+    <string name="dialog_adb_port">端口号</string>
+    <string name="adb_pairing">狠狠地蹂躏调教</string>
+    <string name="dialog_adb_pairing_title">与设备配对</string>
+    <string name="dialog_adb_pairing_paring_code">配对码</string>
+    <string name="starter">狠狠注入</string>
+    <string name="dialog_adb_invalid_port">端口号是一个 1 至 65535 的整数。</string>
+    <string name="home_wireless_adb_title">主人 快...不行了....</string>
+    <string name="home_wireless_adb_description">快来把Shizako酱配了吧，Shizako酱等主人好久了~ 呜呜呜，主人要是拒绝Shizako酱的话，Shizako酱会伤心的ε(┬┬﹏┬┬)3</string>
+    <string name="action_stop">你忍心放弃shizako酱吗</string>
+    <string name="dialog_stop_message">Shizako酱将被处死。</string>
+    <string name="paring_code_is_wrong">配对码错误。</string>
+    <string name="cannot_connect_port">无法连接至无线调试服务。</string>
+    <string name="adb_pairing_requires_multi_window">请先进入分屏（多窗口）模式。</string>
+    <string name="adb_error_key_store">无法为无线调试生成密钥。\n这可能是因为此设备上的 KeyStore 机制已损坏。</string>
+    <string name="adb_pair_required">请先进行配对步骤。</string>
+    <string name="adb_pairing_requires_multi_window_reason">系统要求配对对话框始终可见，使用分屏模式是使此应用和系统对话框同时可见的唯一方法。</string>
+    <string name="dialog_adb_discovery">正在搜索无线调试服务</string>
+    <string name="dialog_adb_discovery_message">"请在"开发者选项"中启用"无线调试"功能。当网络变化时"无线调试"会被自动禁用。 
+ 
+注意：请不要禁用"开发者选项"或"USB 调试"，否则 Shizako酱 会被拦在外面。"</string>
+    <string name="dialog_adb_discovery_message_toggle_wireless_debugging">如果一直搜索，请尝试禁用并启用"无线调试"。</string>
+    <string name="dialog_adb_pairing_discovery">正在搜索配对服务</string>
+    <string name="dialog_wireless_adb_not_enabled">无线调试未启用。
+\n请注意，在 Android 11 之前，要启用无线调试必须连接电脑。</string>
+    <string name="dialog_adb_pairing_message">请跟随下面的步骤开始配对："开发者选项" - "无线调试" - "使用配对码配对设备"。
+\n
+\n配对过程开始后，您将能够输入配对码。</string>
+    <string name="development_settings">来狠狠注入吧</string>
+    <string name="home_root_description_sui">如果主人正在使用 Magisk，可以尝试 %1$s。对于 root 用户，它将最终取代 Shizako。注意，已有的应用需要一点点修改来使用 %2$s。</string>
+    <string name="settings_start_on_boot_summary">对于已 root 设备，Shizako酱 可以在主人开机时第一时间迎接主人</string>
+    <string name="settings_start_on_boot">让Shizako酱开机迎接你（root）</string>
+    <string name="permission_warning_template"><![CDATA[要让<b>%1$s</b>%2$s来调教Shizako酱吗？]]></string>
+    <string name="grant_dialog_button_allow_always">永远允许</string>
+    <string name="grant_dialog_button_deny">残忍拒绝</string>
+    <string name="home_terminal_title">在终端应用中调教 Shizako酱</string>
+    <string name="home_terminal_description">在终端里调教我吧，人家真的很想要❤️</string>
+
+    <string name="home_activation_title">一键注入</string>
+    <string name="home_activation_summary">不用电脑，Shizako酱帮你调教它们❤️</string>
+    <string name="home_activation_summary_not_running">先让Shizako酱醒过来才能帮你注入哦~</string>
+    <string name="terminal_tutorial_1">首先，将文件导出到任何您想要的位置。您将找到两个文件，%1$s 和 %2$s。</string>
+    <string name="terminal_tutorial_1_description">"若选择的文件夹中已有同名文件，它们会被删除。
+
+导出功能使用 SAF（Storage Access Framework）。有报告称 MIUI 破坏了 SAF 的功能，如果您使用 MIUI，您可能需要从 Shizako 的 apk 中提取文件，或是从 GitHub 下载文件。"</string>
+    <string name="terminal_export_files">导出文件</string>
+    <string name="terminal_tutorial_2">然后，使用任意文本编辑器打开并编辑 %1$s。</string>
+    <string name="terminal_tutorial_2_description">例如，如果要在 %1$s 中调教 Shizako酱，则应将 %2$s 替换为 %3$s（%4$s 是 %1$s 的软件包名称）。</string>
+    <string name="terminal_tutorial_3">最后，将文件移动到终端应用可以访问的位置，您便可使用 %1$s 来通过 Shizako 运行命令。</string>
+    <string name="terminal_tutorial_3_description">一些技巧：将执行权限授予 %1$s 并将其添加到 %2$s，您将可以直接使用 %1$s。</string>
+    <string name="rish_description">通过 %1$s，主人可以在任何终端应用中连接到由 Shizako酱 运行的 shell 并与之交互。 &lt;p>有关 %1$s 的具体使用方式，点按以阅读文档。</string>
+    <string name="adb_pairing_tutorial_title">狠狠地蹂躏Shizako酱吧</string>
+    <string name="adb_pairing_tutorial_content_steps">进入"开发者选项"-"无线调试"。点按"使用配对码配对设备"，您将看到一个六位数字代码。</string>
+    <string name="adb_pairing_tutorial_content_enter_pairing_code">在通知中输入代码来完成配对。</string>
+    <string name="adb_pairing_tutorial_content_finish">返回到 Shizako 并狠狠注入。</string>
+    <string name="notification_channel_adb_pairing">无线调试配对</string>
+    <string name="notification_adb_pairing_input_paring_code">输入配对码</string>
+    <string name="notification_adb_pairing_searching_for_service_title">正在搜索配对服务</string>
+    <string name="notification_adb_pairing_service_found_title">已找到配对服务</string>
+    <string name="notification_adb_pairing_stop_searching">停止搜索</string>
+    <string name="notification_adb_pairing_working_title">正在进行配对</string>
+    <string name="notification_adb_pairing_succeed_title">配对成功</string>
+    <string name="notification_adb_pairing_succeed_text">Shizako酱连接到主人的手机啦</string>
+    <string name="notification_adb_pairing_failed_title">配对失败</string>
+    <string name="notification_adb_pairing_retry">重试</string>
+    <string name="adb_pairing_tutorial_content_notification_blocked">配对过程需要主人与 Shizako 的通知交互。请允许 Shizako酱 给主人发消息。</string>
+    <string name="notification_settings">通知设置</string>
+    <string name="adb_pairing_tutorial_content_miui">MIUI 用户可能需要在系统设置中从"通知管理"-"通知显示设置"将通知样式切换为"原生样式"。</string>
+    <string name="adb_pairing_tutorial_content_miui_2">否则，您可能会无法从通知输入配对码。</string>
+    <string name="adb_pairing_tutorial_content_notification">一条来自 Shizako 的通知将帮助您完成配对。</string>
+    <string name="adb_pairing_tutorial_content_left_is_clickable">请注意，"无线调试"选项的左侧是可点击的，点按它将打开一个新的页面。仅打开右侧的开关是错误的。</string>
+    <string name="home_wireless_adb_description_pre_11"><![CDATA[在 Android 11 之前，需要连接到计算机才能启用无线调试。]]></string>
+    <string name="home_wireless_adb_view_guide_button">调教Shizako酱指南</string>
+    <string name="adb_pairing_tutorial_content_network">Shizako酱需要访问本地网络。它由网络权限控制。</string>
+    <string name="adb_pairing_tutorial_content_network_limation_not_foreground">某些系统（例如 MIUI）不允许应用在不可见时访问网络，即使应用已按标准使用前台服务。请在此类系统上为 Shizako 禁用电池优化功能。</string>
+    <string name="settings_use_system_color">使用系统主题颜色</string>
+    <string name="home_app_management_empty">要调教我的应用都在这里，我听主人的❤️</string>
+    <string name="home_adb_is_limited_title">您需要进行额外的步骤</string>
+    <string name="home_adb_is_limited_description">"主人的设备制造商限制了 adb 的权限，想要调教 Shizako酱 的应用无法正常工作。
+
+通常，在"开发者选项"中调整一些选项即可解除此限制。请阅读帮助来了解具体的操作方式。
+
+您可能需要重新启动 Shizako以使操作生效。"</string>
+    <!-- Shizako: 补充翻译 -->
+    <string name="setup_welcome_title">初次见面，主人</string>
+    <string name="setup_welcome_subtitle">只需几步简单的调教，Shizako酱就能为主人效劳了。</string>
+    <string name="setup_disclaimer_title">免责声明</string>
+    <string name="setup_disclaimer_text"><![CDATA[<b>一、按「原样」提供</b><p>Shizako酱按「原样」提供给主人，不附带任何明示或暗示的保证，包括但不限于适销性、特定用途适用性。使用本软件或允许其他应用调教 Shizako酱 所导致的任何设备损坏、数据丢失、系统异常，开发者概不负责。</p><p><b>二、她的本质是特权</b><p>Shizako酱 会在主人的设备上运行一个特权服务（shell / root 身份），或让 Shizako酱 自己成为「设备所有者」。这意味着被授权的应用将获得接近系统级的能力：冻结或卸载应用、修改系统设置、读写受保护数据等。请只授权主人信任的应用，授权前看清应用来源。</p><p><b>三、设备所有者模式的特殊影响</b><p>激活设备所有者后：Shizako酱 无法被卸载或降级（需先移除设备所有者）；一台设备只能有一个设备所有者，与其他同类应用互斥；激活要求设备上没有账户与多用户（激活后可恢复账户）。</p><p><b>四、Root 风险</b><p>若主人选择 Root 方式启动，Root 本身的风险（系统完整性、保修、恶意软件滥用）由主人自行承担，与 Shizako酱 无关。</p><p><b>五、第三方行为</b><p>第三方应用通过 Shizako酱 执行的操作、造成的后果由其开发者和主人的授权决定负责，Shizako酱 只提供通道。</p><p><b>六、许可</b><p>本项目基于 Apache License 2.0，上游为 RikkaApps/Shizuku。风险请主人自行斟酌，随时可以停止使用～</p>]]></string>
+    <string name="setup_disclaimer_agree">主人已阅读并同意上述内容</string>
+    <string name="setup_disclaimer_agree_countdown">主人已阅读并同意上述内容（%1$d 秒后可勾选）</string>
+    <string name="setup_language_title">选择语言</string>
+    <string name="setup_language_subtitle">主人想用哪种语言和 Shizako酱交流呢？稍后可以在设置中更改。</string>
+    <string name="setup_mode_subtitle">Shizako酱该穿什么样的外观呢？稍后可以在设置中更改。</string>
+    <string name="setup_mode_follow_system">跟随系统</string>
+    <string name="setup_mode_light">浅色</string>
+    <string name="setup_mode_dark">深色</string>
+    <string name="setup_start_method_title">选择激活方式</string>
+    <string name="setup_start_method_subtitle">主人打算怎么调教 Shizako酱呢？主页会把这个方式放在最前面。</string>
+    <string name="setup_start_method_wadb">无线调试</string>
+    <string name="setup_start_method_wadb_summary">Android 11 或以上，无需电脑</string>
+    <string name="setup_start_method_root">Root</string>
+    <string name="setup_start_method_root_summary">已 root 的设备，一键启动</string>
+    <string name="setup_start_method_adb">连接电脑</string>
+    <string name="setup_start_method_adb_summary">通过 USB 使用 adb，每次重启后需重复</string>
+    <string name="setup_back">上一步</string>
+    <string name="setup_next">下一步</string>
+    <string name="setup_get_started">开始调教</string>
+    <string name="setup_skip">跳过</string>
+
+    <!-- 引导：激活步骤（实际动作） -->
+    <string name="setup_skip_activation">跳过激活</string>
+    <string name="setup_activate_title">叫醒她</string>
+    <string name="setup_activate_subtitle">用你刚选的启动方式，在这里直接启动 Shizako 服务。也可以跳过，之后在首页随时启动。</string>
+    <string name="setup_activate_not_running">服务还没醒来</string>
+    <string name="setup_activate_running">服务运行中——她已经醒啦！</string>
+    <string name="setup_activate_hint">启动后，应用可以向 Shizako酱 申请权限。每个应用都要你亲自点头，随时可以收回。</string>
+    <string name="setup_activate_hint_done">搞定。继续前往完成页，或者点下面给 Dhizuku 应用激活设备所有者模式。</string>
+    <string name="setup_activate_start">用电脑启动（ADB）</string>
+    <string name="setup_activate_start_root">用 Root 启动</string>
+    <string name="setup_activate_start_wadb">用无线调试启动</string>
+    <string name="setup_activate_view_command">查看指令</string>
+    <string name="setup_activate_started">已启动</string>
+    <string name="setup_activate_failed">启动失败</string>
+    <string name="setup_activate_wadb_unavailable">无线调试还没就绪，先去首页配对吧</string>
+    <string name="setup_activate_dhizuku">激活设备所有者（Dhizuku）</string>
+    <string name="setup_activate_dhizuku_running">激活中…</string>
+    <string name="setup_activate_dhizuku_success">设备所有者模式激活成功</string>
+    <string name="setup_activate_dhizuku_failed">设备所有者激活失败</string>
+    <string name="setup_activate_dhizuku_not_running">要先启动 Shizaku 服务哦</string>
+
+    <!-- 引导：完成步骤 -->
+    <string name="setup_finish_title">一切就绪</string>
+    <string name="setup_finish_summary">启动方式：%1$s\n服务状态：%2$s</string>
+    <string name="overview">首页</string>
+    <string name="search">搜索</string>
+
+    <string name="settings_theme_color">主题色</string>
+    <string name="settings_show_logs_tab">显示日志标签页</string>
+    <string name="settings_show_logs_tab_summary">在底部导航中显示 API 调用日志入口</string>
+    <string name="theme_color_default">默认（樱花粉）</string>
+    <string name="theme_color_sakura">樱花粉</string>
+
+    <string name="settings_ui_style">界面风格</string>
+    <string name="settings_ui_style_summary">在 Material 3 Expressive 与 Miuix（小米风）之间切换</string>
+    <string name="ui_style_m3e">Material 3 Expressive</string>
+    <string name="ui_style_miuix">Miuix（小米风）</string>
+
+    <string name="home_info_android">Android</string>
+    <string name="home_info_abi">ABI</string>
+    <string name="home_info_service">服务</string>
+    <string name="home_info_service_running">运行中 · %1$s</string>
+    <string name="home_info_service_not_running">未运行</string>
+    <string name="home_info_dhizuku">Dhizuku</string>
+    <string name="home_info_dhizuku_active">已激活</string>
+    <string name="home_info_dhizuku_inactive">未激活</string>
+    <string name="home_info_apps">授权应用</string>
+    <string name="home_info_apps_count">%1$d 个</string>
+    <string name="home_info_copy">复制</string>
+    <string name="home_info_copied">已复制到剪贴板</string>
+</resources>

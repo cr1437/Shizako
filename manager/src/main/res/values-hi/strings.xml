@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>    <!-- Shizako: 补充翻译 -->
+    <string name="translation_contributors" />
+    <string name="home_status_service_is_running">%1$s चल रहा है</string>
+    <string name="home_status_service_not_running">%1$s नहीं चल रहा है</string>
+    <string name="home_status_service_version">संस्करण %2$s, %1$s</string>
+    <string name="home_status_service_version_update">संस्करण %2$s, %1$s&lt;br&gt;संस्करण %3$s पर अपडेट करने के लिए फिर से शुरू करें</string>
+    <string name="home_adb_title">कंप्यूटर से कनेक्ट करके शुरू करें</string>
+    <string name="home_adb_description">रूट न होने वाले डिवाइस पर Shizako शुरू करने के लिए adb का उपयोग करना होगा (कंप्यूटर कनेक्शन आवश्यक)। डिवाइस हर बार रीस्टार्ट होने पर यह प्रक्रिया दोहरानी होगी। कृपया &lt;b&gt;&lt;a href=\"%1$s\"&gt;सहायता पढ़ें&lt;/a&gt;&lt;/b&gt;।</string>
+    <string name="home_adb_button_view_help">सहायता पढ़ें</string>
+    <string name="home_adb_button_view_command">कमांड देखें</string>
+    <string name="home_adb_dialog_view_command_message">&lt;font face=\"monospace\"&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* कुछ और बातें भी हैं, कृपया पहले यह पुष्टि करें कि आपने सहायता पढ़ ली है।</string>
+    <string name="home_adb_dialog_view_command_copy_button">कॉपी करें</string>
+    <string name="home_adb_dialog_view_command_button_send">भेजें</string>
+    <string name="home_wireless_adb_title">वायरलेस डीबगिंग से शुरू करें</string>
+    <string name="home_wireless_adb_description">Android 11 या उसके बाद के वर्शन पर आप वायरलेस डीबगिंग सक्षम करके, बिना कंप्यूटर से कनेक्ट किए, सीधे अपने डिवाइस से Shizako शुरू कर सकते हैं।&lt;p&gt;कृपया पहले स्टेप-बाय-स्टेप गाइड देखें।</string>
+    <string name="home_wireless_adb_description_pre_11">Android 11 से पहले, वायरलेस डीबगिंग सक्षम करने के लिए कंप्यूटर से कनेक्ट करना ज़रूरी है।</string>
+    <string name="home_wireless_adb_view_guide_button">स्टेप-बाय-स्टेप गाइड</string>
+    <string name="dialog_adb_discovery">वायरलेस डीबगिंग सेवा खोजी जा रही है</string>
+    <string name="dialog_adb_discovery_message">कृपया „डेवलपर विकल्पों“ में „वायरलेस डीबगिंग“ सक्षम करें। नेटवर्क बदलने पर „वायरलेस डीबगिंग“ स्वतः बंद हो जाती है।
+
+ध्यान दें: „डेवलपर विकल्पों“ या „USB डीबगिंग“ को बंद न करें, वरना Shizako बंद हो जाएगा।</string>
+    <string name="dialog_adb_discovery_message_toggle_wireless_debugging">अगर खोजते रह जाए, तो „वायरलेस डीबगिंग“ बंद करके फिर से चालू करने की कोशिश करें।</string>
+    <string name="dialog_adb_port">पोर्ट</string>
+    <string name="dialog_adb_invalid_port">पोर्ट 1 से 65535 के बीच का पूर्णांक है।</string>
+    <string name="adb_pairing">पेयरिंग</string>
+    <string name="dialog_adb_pairing_title">डिवाइस के साथ पेयर करें</string>
+    <string name="dialog_adb_pairing_discovery">पेयरिंग सेवा खोजी जा रही है</string>
+    <string name="dialog_adb_pairing_paring_code">पेयरिंग कोड</string>
+    <string name="paring_code_is_wrong">पेयरिंग कोड गलत है।</string>
+    <string name="cannot_connect_port">वायरलेस डीबगिंग सेवा से कनेक्ट नहीं हो सकता।</string>
+    <string name="dialog_wireless_adb_not_enabled">वायरलेस डीबगिंग सक्षम नहीं है।
+ध्यान दें: Android 11 से पहले, वायरलेस डीबगिंग सक्षम करने के लिए कंप्यूटर कनेक्शन ज़रूरी है।</string>
+    <string name="dialog_adb_pairing_message">इन चरणों से पेयरिंग शुरू करें: „डेवलपर विकल्प“ – „वायरलेस डीबगिंग“ – „पेयरिंग कोड से डिवाइस पेयर करें“।
+
+पेयरिंग प्रक्रिया शुरू होने के बाद आप पेयरिंग कोड डाल सकेंगे।</string>
+    <string name="adb_pairing_requires_multi_window">कृपया पहले स्प्लिट-स्क्रीन (मल्टी-विंडो) मोड में जाएँ।</string>
+    <string name="adb_pairing_requires_multi_window_reason">सिस्टम को चाहिए कि पेयरिंग डायलॉग हमेशा दिखता रहे; स्प्लिट-स्क्रीन ही एकमात्र तरीका है जिससे यह ऐप और सिस्टम डायलॉग एक साथ दिखें।</string>
+    <string name="adb_error_key_store">वायरलेस डीबगिंग के लिए कुंजी नहीं बनाई जा सकी।
+इसका कारण हो सकता है कि इस डिवाइस का KeyStore तंत्र खराब है।</string>
+    <string name="adb_pair_required">कृपया पहले पेयरिंग चरण पूरा करें।</string>
+    <string name="development_settings">डेवलपर विकल्प</string>
+    <string name="notification_settings">सूचना विकल्प</string>
+    <string name="adb_pairing_tutorial_title">अपने डिवाइस के साथ Shizako पेयर करें</string>
+    <string name="adb_pairing_tutorial_content_notification">Shizako की एक सूचना आपको पेयरिंग पूरा करने में मदद करेगी।</string>
+    <string name="adb_pairing_tutorial_content_steps">„डेवलपर विकल्प“ – „वायरलेस डीबगिंग“ खोलें। „पेयरिंग कोड से डिवाइस पेयर करें“ पर टैप करें; आपको छह अंकों का कोड दिखेगा।</string>
+    <string name="adb_pairing_tutorial_content_enter_pairing_code">पेयरिंग पूरी करने के लिए सूचना में दिया कोड डालें।</string>
+    <string name="adb_pairing_tutorial_content_notification_blocked">पेयरिंग प्रक्रिया में Shizako की सूचना पर कार्रवाई करनी होती है। कृपया Shizako को सूचनाएँ भेजने की अनुमति दें।</string>
+    <string name="adb_pairing_tutorial_content_miui">MIUI उपयोगकर्ताओं को शायद सिस्टम सेटिंग में „सूचनाएँ“ – „सूचना शेड“ से सूचना शैली „Android“ पर बदलनी पड़े।</string>
+    <string name="adb_pairing_tutorial_content_miui_2">वरना आप सूचना से पेयरिंग कोड नहीं डाल पाएँगे।</string>
+    <string name="adb_pairing_tutorial_content_left_is_clickable">ध्यान दें: „वायरलेस डीबगिंग“ विकल्प का बायां हिस्सा टैप करने योग्य है, इसे दबाने पर नया पेज खुलता है। सिर्फ दाईं ओर का स्विच चालू करना सही नहीं है।</string>
+    <string name="adb_pairing_tutorial_content_finish">वापस Shizako पर जाएँ और Shizako शुरू करें।</string>
+    <string name="adb_pairing_tutorial_content_network">Shizako को लोकल नेटवर्क तक पहुँच चाहिए। यह नेटवर्क अनुमति से नियंत्रित होती है।</string>
+    <string name="adb_pairing_tutorial_content_network_limation_not_foreground">कुछ सिस्टम (जैसे MIUI) ऐप्स को दिखने न पर नेटवर्क तक पहुँच नहीं देते, भले ही ऐप स्टैंडर्ड के अनुसार फोरग्राउंड सेवा उपयोग करती हो। ऐसे सिस्टम पर Shizako के लिए बैटरी ऑप्टिमाइज़ेशन बंद करें।</string>
+    <string name="home_root_title">शुरू करें (रूट वाले डिवाइस के लिए)</string>
+    <string name="home_root_description">इसके अलावा, Shizako बूट पर अपने आप शुरू हो सकता है। अगर नहीं, तो जाँचें कि आपका सिस्टम या तृतीय-पक्ष टूल Shizako को प्रतिबंधित तो नहीं कर रहे।&lt;br&gt;आप %s देख सकते हैं।</string>
+    <string name="home_root_description_sui">अगर आप Magisk उपयोग करते हैं, तो %1$s आज़मा सकते हैं। रूट उपयोगकर्ताओं के लिए यह आगे चलकर Shizako की जगह ले लेगा। ध्यान दें: मौजूदा ऐप्स को %2$s उपयोग करने के लिए थोड़ा बदलाव करना होगा।</string>
+    <string name="home_root_button_start">शुरू करें</string>
+    <string name="home_root_button_restart">फिर शुरू करें</string>
+    <string name="home_app_management_title">ऐप प्रबंधन</string>
+    <string name="home_app_management_view_authorized_apps">अधिकृत ऐप्स प्रबंधित करने के लिए टैप करें</string>
+    <string name="home_app_management_empty">जिन ऐप्स ने Shizako माँगा या घोषित किया है वे यहाँ दिखेंगे।</string>
+    <string name="home_learn_more_title">Shizako के बारे में जानें</string>
+    <string name="home_learn_more_description">जानें कि Shizako से कैसे डेवलप करें</string>
+    <string name="home_adb_is_limited_title">एक और कदम चाहिए</string>
+    <string name="home_adb_is_limited_description">आपके डिवाइस के निर्माता ने adb की अनुमतियाँ प्रतिबंधित कर रखी हैं, इसलिए Shizako उपयोग करने वाले ऐप ठीक से नहीं चलेंगे।
+
+आमतौर पर „डेवलपर विकल्पों“ में कुछ विकल्प बदलकर यह प्रतिबंध हटाया जा सकता है। विवरण के लिए सहायता पढ़ें।
+
+बदलाव लागू होने के लिए शायद Shizako को फिर से शुरू करना पड़े।</string>
+    <string name="app_management_dialog_adb_is_limited_title">adb की अनुमति प्रतिबंधित है</string>
+    <string name="app_management_dialog_adb_is_limited_message">बहुत संभव है कि आपके डिवाइस का निर्माता adb की अनुमति प्रतिबंधित रखता है।&lt;p&gt;आपके सिस्टम का समाधान शायद &lt;b&gt;&lt;a href=\"%1$s\"&gt;इस दस्तावेज़&lt;/a&gt;&lt;/b&gt; में हो।</string>
+    <string name="app_management_item_summary_requires_root">* इसके लिए ज़रूरी है कि Shizako रूट के साथ चले</string>
+    <string name="home_terminal_title">टर्मिनल ऐप्स में Shizako उपयोग करें</string>
+    <string name="home_terminal_description">अपनी पसंदीदा टर्मिनल ऐप्स में Shizako के ज़रिए कमांड चलाएँ</string>
+    <string name="home_activation_title">एक-क्लिक सक्रियण</string>
+    <string name="home_activation_summary">कंप्यूटर के बिना Brevent, Stopapp और अन्य सक्रिय करें</string>
+    <string name="home_activation_summary_not_running">एक-क्लिक सक्रियण उपयोग करने के लिए पहले Shizako शुरू करें</string>
+    <string name="terminal_tutorial_1">पहले फ़ाइलें कहीं भी एक्सपोर्ट करें। आपको %1$s और %2$s नाम की दो फ़ाइलें मिलेंगी।</string>
+    <string name="terminal_tutorial_1_description">अगर चुनी गई फ़ोल्डर में इन्हीं नामों की फ़ाइलें हैं तो वे मिट जाएँगी।
+
+एक्सपोर्ट फ़ंक्शन SAF (Storage Access Framework) उपयोग करता है। रिपोर्ट है कि MIUI, SAF की कार्यक्षमता खराब कर देता है। अगर आप MIUI उपयोग करते हैं तो शायद फ़ाइल Shizako के apk से निकालनी पड़े या GitHub से डाउनलोड करनी पड़े।</string>
+    <string name="terminal_export_files">फ़ाइलें एक्सपोर्ट करें</string>
+    <string name="terminal_tutorial_2">फिर किसी भी टेक्स्ट एडिटर में %1$s खोलकर बदलें।</string>
+    <string name="terminal_tutorial_2_description">उदाहरण के लिए, अगर आप %1$s में Shizako उपयोग करना चाहते हैं तो %2$s को %3$s से बदलें (%4$s, %1$s ऐप का पैकेज नाम है)।</string>
+    <string name="terminal_tutorial_3">आख़िर में फ़ाइलों को ऐसी जगह रखें जहाँ आपकी टर्मिनल ऐप पहुँच सके; फिर आप %1$s से Shizako के ज़रिए कमांड चला सकेंगे।</string>
+    <string name="terminal_tutorial_3_description">सुझाव: %1$s को एक्ज़ीक्यूट अनुमति दें और उसे %2$s में जोड़ें, तब आप %1$s सीधे उपयोग कर पाएँगे।</string>
+    <string name="rish_description">%1$s के साथ, किसी भी टर्मिनल ऐप में, आप Shizako द्वारा चलाई गई शेल से कनेक्ट और बातचीत कर सकते हैं। &lt;p&gt;%1$s के विस्तृत उपयोग का दस्तावेज़ देखने के लिए टैप करें।</string>
+    <string name="settings_title">सेटिंग</string>
+    <string name="settings_language">भाषा</string>
+    <string name="settings_user_interface">दिखावट</string>
+    <string name="settings_black_night_theme">काली रात थीम</string>
+    <string name="settings_black_night_theme_summary">डार्क मोड चालू होने पर पूरी काली थीम उपयोग करें</string>
+    <string name="settings_startup">शुरुआत</string>
+    <string name="settings_translation_contributors">अनुवाद योगदानकर्ता</string>
+    <string name="settings_translation">अनुवाद में योग दें</string>
+    <string name="settings_debug">डीबग</string>
+    <string name="settings_crash_logs">क्रैश लॉग</string>
+    <string name="settings_crash_logs_summary">ऐप के अचानक बंद होने पर क्रैश यहाँ सहेजे जाते हैं</string>
+    <string name="settings_crash_logs_empty">कोई क्रैश लॉग नहीं</string>
+    <string name="settings_crash_logs_count">%1$d क्रैश लॉग</string>
+    <string name="settings_crash_logs_share">साझा करें</string>
+    <string name="settings_crash_logs_delete">मिटाएँ</string>
+    <string name="settings_crash_logs_delete_all">सभी मिटाएँ</string>
+    <string name="settings_crash_logs_deleted">मिटाया गया</string>
+    <string name="activation_title">एक-क्लिक सक्रियण</string>
+    <string name="activation_subtitle">जो ADB कमांड पहले कंप्यूटर माँगती थीं, वे यहीं से चलाएँ</string>
+    <string name="activation_service_running">Shizako चल रहा है, सक्रियण के लिए तैयार</string>
+    <string name="activation_service_running_brief">Shizako चल रहा है</string>
+    <string name="activation_service_not_running">Shizako नहीं चल रहा; कृपया पहले होम पेज से सेवा शुरू करें</string>
+    <string name="activation_activate">सक्रिय करें</string>
+    <string name="activation_activated">सक्रिय हुआ</string>
+    <string name="activation_status_not_installed">%1$s · इंस्टॉल नहीं है</string>
+    <string name="activation_status_installed">%1$s · इंस्टॉल है</string>
+    <string name="activation_status_activated">%1$s · पहले से सक्रिय</string>
+    <string name="activation_status_not_activated">%1$s · इंस्टॉल है, सक्रिय नहीं</string>
+    <string name="activation_note_device_owner">इसके लिए पहले सभी खाते और सेकंडरी यूज़र (गेस्ट मोड / ऐप क्लोन) हटाने होंगे; सक्रियण के बाद आप उन्हें वापस जोड़ सकते हैं। निर्माता के ROM की ख़ास बातें लागू हो सकती हैं।</string>
+    <string name="activation_note_brevent">हर रीबूट के बाद Brevent सर्वर फिर से सक्रिय करना होता है।</string>
+    <string name="activation_custom_title">कस्टम कमांड</string>
+    <string name="activation_custom_hint">कोई भी शेल कमांड, जैसे dpm set-device-owner …</string>
+    <string name="activation_custom_empty">कमांड खाली है</string>
+    <string name="activation_run">चलाएँ</string>
+    <string name="activation_running">चल रहा है…</string>
+    <string name="activation_success">सक्रिय हुआ</string>
+    <string name="activation_failed">विफल, नीचे आउटपुट देखें</string>
+    <string name="activation_failed_with_code">विफल (एग्ज़िट कोड %1$d), नीचे आउटपुट देखें</string>
+    <string name="activation_timeout">कमांड अभी भी चल रही है; इंतज़ार छोड़ दिया (सर्वर जैसी कमांड के लिए सामान्य)</string>
+    <string name="activation_output">आउटपुट</string>
+    <string name="activation_output_empty">(अभी कोई आउटपुट नहीं)</string>
+    <string name="activation_copy">कॉपी करें</string>
+    <string name="activation_copied">कॉपी हुआ</string>
+    <string name="activation_back">वापस</string>
+    <string name="settings_translation_summary">%s को अपनी भाषा में अनुवाद करने में हमारी मदद करें</string>
+    <string name="settings_start_on_boot">बूट पर शुरू करें (रूट)</string>
+    <string name="settings_start_on_boot_summary">रूट वाले डिवाइस पर Shizako बूट पर अपने आप शुरू हो सकता है</string>
+    <string name="settings_use_system_color">सिस्टम थीम का रंग उपयोग करें</string>
+    <string name="action_about">ऐप के बारे में</string>
+    <string name="about_view_source_code">%s पर सोर्स कोड देखें</string>
+    <string name="about_author">लेखक</string>
+    <string name="about_based_on">आधारित</string>
+    <string name="about_based_on_text">%s ओपन सोर्स प्रोजेक्ट पर</string>
+    <string name="about_license">लाइसेंस</string>
+    <string name="about_footer">Shizako — ❤️ के साथ बनाया गया</string>
+    <string name="action_stop">Shizako रोकें</string>
+    <string name="dialog_stop_message">Shizako सेवा रोक दी जाएगी।</string>
+    <string name="notification_channel_service_status">सेवा प्रारंभ स्थिति</string>
+    <string name="notification_channel_status">सेवा स्थिति</string>
+    <string name="notification_service_starting">Shizako सेवा शुरू हो रही है…</string>
+    <string name="notification_service_start_failed">Shizako सेवा शुरू नहीं हो सकी।</string>
+    <string name="notification_service_start_no_root">रूट अनुमति माँगना विफल रहा।</string>
+    <string name="notification_working">काम चल रहा है…</string>
+    <string name="notification_channel_adb_pairing">वायरलेस डीबगिंग पेयरिंग</string>
+    <string name="notification_adb_pairing_input_paring_code">पेयरिंग कोड डालें</string>
+    <string name="notification_adb_pairing_searching_for_service_title">पेयरिंग सेवा खोजी जा रही है</string>
+    <string name="notification_adb_pairing_service_found_title">पेयरिंग सेवा मिली</string>
+    <string name="notification_adb_pairing_stop_searching">खोजना रोकें</string>
+    <string name="notification_adb_pairing_working_title">पेयरिंग जारी है</string>
+    <string name="notification_adb_pairing_succeed_title">पेयरिंग सफल</string>
+    <string name="notification_adb_pairing_succeed_text">अब आप Shizako सेवा शुरू कर सकते हैं।</string>
+    <string name="notification_adb_pairing_failed_title">पेयरिंग विफल</string>
+    <string name="notification_adb_pairing_retry">फिर कोशिश करें</string>
+    <string name="tile_service_label">Shizako सेवा</string>
+    <string name="tile_service_subtitle_running">चल रही है</string>
+    <string name="tile_service_subtitle_stopped">रुकी हुई है</string>
+    <string name="tile_wireless_adb_label">वायरलेस डीबगिंग</string>
+    <string name="permission_label">Shizako उपयोग करें</string>
+    <string name="permission_description">ऐप को Shizako उपयोग करने की अनुमति दें।</string>
+    <string name="permission_warning_template">&lt;b&gt;%1$s&lt;/b&gt; ऐप को %2$s की अनुमति दें?</string>
+    <string name="grant_dialog_button_allow_always">हमेशा अनुमति दें</string>
+    <string name="grant_dialog_button_deny">अस्वीकार करें</string>
+    <string name="starter">स्टार्टर</string>
+    <string name="start_with_root_failed">सेवा शुरू नहीं हो सकी क्योंकि रूट अनुमति नहीं मिली या इस डिवाइस में रूट नहीं है।</string>
+    <string name="dialog_cannot_open_browser_title">ब्राउज़र नहीं खुल सका</string>
+    <string name="toast_copied_to_clipboard">%s
+क्लिपबोर्ड पर कॉपी हो गया।</string>
+    <string name="toast_copied_to_clipboard_with_text">&lt;b&gt;%s&lt;/b&gt; क्लिपबोर्ड पर कॉपी हो गया।</string>
+    <string name="dialog_legacy_not_support_title">%1$s आधुनिक Shizako का समर्थन नहीं करता</string>
+    <string name="dialog_legacy_not_support_message">लेगेसी Shizako मार्च 2019 से बंद है। साथ ही, लेगेसी Shizako नए Android सिस्टम पर नहीं चलता।&lt;p&gt;कृपया &lt;b&gt;%1$s&lt;/b&gt; के डेवलपर से इसे अपडेट करने की अपील करें।</string>
+    <string name="dialog_requesting_legacy_title">%1$s लेगेसी Shizako माँग रहा है</string>
+    <string name="dialog_requesting_legacy_message">&lt;b&gt;%1$s&lt;/b&gt; आधुनिक Shizako का समर्थन करता है, लेकिन लेगेसी Shizako माँगता है। इसका कारण हो सकता है कि Shizako नहीं चल रहा; Shizako ऐप में जाँचें।&lt;p&gt;लेगेसी Shizako मार्च 2019 से बंद है।</string>
+    <string name="dialog_requesting_legacy_button_open_shizuku">Shizako खोलें</string>
+    <plurals name="home_app_management_authorized_apps_count">
+        <item quantity="one">%d अधिकृत ऐप</item>
+        <item quantity="other">%d अधिकृत ऐप्स</item>
+    </plurals>
+    <!-- Shizako: 补充翻译 -->
+    <string name="setup_welcome_title">स्वागत है</string>
+    <string name="setup_welcome_subtitle">कुछ त्वरित सेटिंग के साथ Shizako उपयोग के लिए तैयार है।</string>
+    <string name="setup_disclaimer_title">अस्वीकरण</string>
+    <string name="setup_disclaimer_text"><![CDATA[Shizako «जैसा है वैसा ही» बिना किसी वारंटी के उपलब्ध कराया जाता है।<p>Shizako आपके डिवाइस पर एक विशेषाधिकार प्राप्त सेवा चलाकर काम करता है। इस ऐप के उपयोग या ऐप्स को Shizako तक पहुंच देने के कारण होने वाली किसी भी डिवाइस क्षति या डेटा हानि के लिए डेवलपर जिम्मेदार नहीं है।<p>अपने जोखिम पर उपयोग करें।]]></string>
+    <string name="setup_disclaimer_agree">मैंने उपरोक्त पढ़ लिया है और सहमत हूं</string>
+    <string name="setup_language_title">भाषा चुनें</string>
+    <string name="setup_language_subtitle">इसे बाद में सेटिंग में बदला जा सकता है।</string>
+    <string name="setup_mode_subtitle">चुनें कि Shizako कैसा दिखे। इसे बाद में सेटिंग में बदला जा सकता है।</string>
+    <string name="setup_mode_follow_system">सिस्टम के अनुसार</string>
+    <string name="setup_mode_light">हल्का</string>
+    <string name="setup_mode_dark">गहरा</string>
+    <string name="setup_start_method_title">सक्रियण विधि</string>
+    <string name="setup_start_method_subtitle">चुनें कि आप Shizako को कैसे शुरू करने की योजना बनाते हैं। होम पेज उस विधि को पहले दिखाएगा।</string>
+    <string name="setup_start_method_wadb">वायरलेस डिबगिंग</string>
+    <string name="setup_start_method_wadb_summary">Android 11 या इसके बाद, कंप्यूटर की आवश्यकता नहीं</string>
+    <string name="setup_start_method_root">Root</string>
+    <string name="setup_start_method_root_summary">रूटेड डिवाइस के लिए, एक टैप में शुरू करें</string>
+    <string name="setup_start_method_adb">कंप्यूटर से कनेक्ट करें</string>
+    <string name="setup_start_method_adb_summary">USB पर adb का उपयोग करें, हर रीबूट के बाद दोहराएं</string>
+    <string name="setup_back">पीछे</string>
+    <string name="setup_next">अगला</string>
+    <string name="setup_get_started">शुरू करें</string>
+    <string name="setup_skip">छोड़ें</string>
+</resources>

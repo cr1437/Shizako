@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/home_fragment">
+    <fragment
+        android:id="@+id/home_fragment"
+        android:name="moe.shizuku.manager.home.HomeFragment"
+        android:label="home" />
+    <fragment
+        android:id="@+id/apps_fragment"
+        android:name="moe.shizuku.manager.management.AppsFragment"
+        android:label="apps" />
+    <fragment
+        android:id="@+id/logs_fragment"
+        android:name="moe.shizuku.manager.settings.LogsFragment"
+        android:label="logs" />
+    <fragment
+        android:id="@+id/settings_fragment"
+        android:name="moe.shizuku.manager.settings.SettingsTabFragment"
+        android:label="settings" />
+
+    <!-- 次级页（单入口：全部由 MainActivity 承载，带返回键） -->
+    <fragment
+        android:id="@+id/activation_fragment"
+        android:name="moe.shizuku.manager.activation.OneClickActivationFragment"
+        android:label="activation" />
+    <fragment
+        android:id="@+id/adb_pairing_fragment"
+        android:name="moe.shizuku.manager.adb.AdbPairingTutorialFragment"
+        android:label="adb_pairing" />
+    <fragment
+        android:id="@+id/terminal_fragment"
+        android:name="moe.shizuku.manager.shell.ShellTutorialFragment"
+        android:label="terminal" />
+    <fragment
+        android:id="@+id/starter_fragment"
+        android:name="moe.shizuku.manager.starter.StarterFragment"
+        android:label="starter" />
+    <fragment
+        android:id="@+id/dhizuku_fragment"
+        android:name="moe.shizuku.manager.dhizuku.DhizukuManageFragment"
+        android:label="dhizuku" />
+</navigation>

@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <uses-permission
+        android:name="android.permission.WRITE_SECURE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28"
+        tools:ignore="ScopedStorage" />
+    <!-- 一键注入页需要直接检测目标应用的安装状态（Android 11+ 包可见性） -->
+    <uses-permission
+        android:name="android.permission.QUERY_ALL_PACKAGES"
+        tools:ignore="QueryAllPackagesPermission" />
+
+    <queries>
+        <package android:name="me.piebridge.brevent" />
+        <package android:name="web1n.stopapp" />
+        <package android:name="com.catchingnow.icebox" />
+        <package android:name="com.oasisfeng.island" />
+    </queries>
+
+    <uses-feature
+        android:name="android.software.leanback"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false" />
+
+    <permission-group
+        android:name="com.churan.shizako.permission-group.API"
+        android:description="@string/permission_group_description"
+        android:icon="@drawable/ic_system_icon"
+        android:label="@string/permission_group_label" />
+
+    <permission
+        android:name="com.churan.shizako.permission.MANAGER"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="com.churan.shizako.permission.MANAGER" />
+
+    <permission
+        android:name="com.churan.shizako.permission.API_V23"
+        android:description="@string/permission_description"
+        android:icon="@drawable/ic_system_icon"
+        android:label="@string/permission_label"
+        android:permissionGroup="com.churan.shizako.permission-group.API"
+        android:protectionLevel="dangerous" />
+    <!-- strip the uses-permission merged in from the Shizuku-API library aar -->
+    <uses-permission
+        android:name="moe.shizuku.manager.permission.API_V23"
+        tools:node="remove" />
+
+    <permission
+        android:name="${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+        android:protectionLevel="signature"
+        tools:node="remove" />
+    <uses-permission
+        android:name="${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+        tools:node="remove" />
+
+    <application
+        android:name=".ShizukuApplication"
+        android:allowBackup="true"
+        android:autoRevokePermissions="allowed"
+        android:banner="@drawable/ic_launcher"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:directBootAware="true"
+        android:enableOnBackInvokedCallback="true"
+        android:fullBackupContent="@xml/backup_descriptor"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:localeConfig="@xml/locales_config"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning"
+        tools:remove="android:appComponentFactory"
+        tools:targetApi="33">
+
+        <activity
+            android:name=".MainActivity"
+            android:banner="@mipmap/banner"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+
+                <!-- 2023.08.03: Google play enforces that apps with LEANBACK_LAUNCHER Activity must be uploaded with App Bundle format, -->
+                <!-- and possibly additional review steps. To avoid problems, remove it temporarily. -->
+                <!--<category android:name="android.intent.category.LEANBACK_LAUNCHER" />-->
+            </intent-filter>
+            <!-- 系统设置「应用偏好」入口（原 SettingsActivity 的 filter，现为设置 Tab） -->
+            <intent-filter>
+                <action android:name="android.intent.action.APPLICATION_PREFERENCES" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".setup.SetupActivity"
+            android:exported="false"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".update.InstallApkActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name=".authorization.RequestPermissionActivity"
+            android:directBootAware="true"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:permission="android.permission.INTERACT_ACROSS_USERS_FULL"
+            android:theme="@style/GrantPermissions">
+            <intent-filter>
+                <action android:name="${applicationId}.intent.action.REQUEST_PERMISSION" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".legacy.ShellRequestHandlerActivity"
+            android:directBootAware="true"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:theme="@style/GrantPermissions">
+            <intent-filter>
+                <action android:name="rikka.shizuku.intent.action.REQUEST_BINDER" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".legacy.LegacyIsNotSupportedActivity"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:permission="com.churan.shizako.permission.API"
+            android:theme="@style/GrantPermissions">
+            <intent-filter>
+                <action android:name="${applicationId}.intent.action.REQUEST_AUTHORIZATION" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".dhizuku.DhizukuPermissionActivity"
+            android:directBootAware="true"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:theme="@style/GrantPermissions">
+            <intent-filter>
+                <action android:name="${applicationId}.action.REQUEST_DHIZUKU_PERMISSION" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name=".adb.AdbPairingService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="shortService" />
+
+        <service
+            android:name=".tile.ServiceTile"
+            android:enabled="true"
+            android:exported="true"
+            android:icon="@drawable/ic_bolt_24dp"
+            android:label="@string/tile_service_label"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".tile.WirelessAdbTile"
+            android:enabled="true"
+            android:exported="true"
+            android:icon="@drawable/ic_wadb_24"
+            android:label="@string/tile_wireless_adb_label"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".watchdog.WatchdogService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+
+        <receiver
+            android:name=".receiver.BootCompleteReceiver"
+            android:directBootAware="true"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".receiver.ShizukuReceiver"
+            android:directBootAware="true"
+            android:enabled="true"
+            android:exported="true"
+            tools:ignore="ExportedReceiver">
+            <intent-filter>
+                <action android:name="rikka.shizuku.intent.action.REQUEST_BINDER" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".receiver.TaskerReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.churan.shizako.action.START" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.churan.shizako.action.STOP" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.churan.shizako.action.START_ROOT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.churan.shizako.action.START_ADB" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.churan.shizako.action.ACTIVATE_DHIZUKU" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.churan.shizako.action.QUERY_STATUS" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.churan.shizako.action.NOTIFY_INSTALL" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.churan.shizako.action.DOWNLOAD_UPDATE" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".update.UpdateCheckReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.churan.shizako.action.UPDATE_CHECK" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <provider
+            android:name=".ShizukuManagerProvider"
+            android:authorities="${applicationId}.shizuku;moe.shizuku.privileged.api.shizuku"
+            android:directBootAware="true"
+            android:enabled="true"
+            android:exported="true"
+            android:multiprocess="false"
+            android:permission="android.permission.INTERACT_ACROSS_USERS_FULL" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.update_file_provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <!-- Dhizuku（Device Owner）集成：Dhizuku-API 应用通过该 authority
+             发现并连接 Shizako，authority 由客户端按「owner 包名 + 后缀」动态拼接。 -->
+        <provider
+            android:name=".dhizuku.DhizukuProvider"
+            android:authorities="${applicationId}.dhizuku_server.provider"
+            android:directBootAware="true"
+            android:enabled="true"
+            android:exported="true" />
+
+        <receiver
+            android:name=".dhizuku.DhizukuAdminReceiver"
+            android:description="@string/dhizuku_device_owner_desc"
+            android:exported="true"
+            android:label="@string/dhizuku_device_owner_label"
+            android:permission="android.permission.BIND_DEVICE_ADMIN">
+            <meta-data
+                android:name="android.app.device_admin"
+                android:resource="@xml/dhizuku_device_admin" />
+            <intent-filter>
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>

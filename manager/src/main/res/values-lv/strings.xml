@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>    <!-- Shizako: 补充翻译 -->
+    <string name="translation_contributors" />
+    <string name="home_status_service_is_running">%1$s darbojas</string>
+    <string name="home_status_service_not_running">%1$s nedarbojas</string>
+    <string name="home_status_service_version">Versija %2$s, %1$s</string>
+    <string name="home_status_service_version_update">Versija %2$s, %1$s&lt;br&gt;Lai atjauninātu uz versiju %3$s, palaidiet vēlreiz</string>
+    <string name="home_adb_title">Sāciet ar savienojumu ar datoru</string>
+    <string name="home_adb_description">Ierīcēm bez root, lai palaistu Shizako, jāizmanto adb (nepieciešams datora savienojums). Šī darbība jāatkārto pēc katras ierīces restartēšanas. &lt;b&gt;&lt;a href=\"%1$s\"&gt;Izlasiet palīdzību&lt;/a&gt;&lt;/b&gt;.</string>
+    <string name="home_adb_button_view_help">Lasīt palīdzību</string>
+    <string name="home_adb_button_view_command">Skatīt komandu</string>
+    <string name="home_adb_dialog_view_command_message">&lt;font face=\"monospace\"&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* Ir arī citi apsvērumi, lūdzu, pārliecinieties, ka vispirms esat izlasījuši palīdzību.</string>
+    <string name="home_adb_dialog_view_command_copy_button">Kopēt</string>
+    <string name="home_adb_dialog_view_command_button_send">Nosūtīt</string>
+    <string name="home_wireless_adb_title">Palaist, izmantojot Bezvadu atkļūdošanu</string>
+    <string name="home_wireless_adb_description">Android 11 un jaunākās versijās varat iespējot Bezvadu atkļūdošanu un palaist Shizako tieši no ierīces, nesavienojot to ar datoru.&lt;p&gt;Vispirms iepazīstieties ar soli pa solim rokasgrāmatu.</string>
+    <string name="home_wireless_adb_description_pre_11">Pirms Android 11 Bezvadu atkļūdošanas iespējošanai ir nepieciešams savienojums ar datoru.</string>
+    <string name="home_wireless_adb_view_guide_button">Soli pa solim rokasgrāmata</string>
+    <string name="dialog_adb_discovery">Meklē bezvadu atkļūdošanas pakalpojumu</string>
+    <string name="dialog_adb_discovery_message">Iespējojiet „Bezvadu atkļūdošanu“ sadaļā „Izstrādātāja opcijas“. „Bezvadu atkļūdošana“ automātiski tiek atspējota, kad mainās tīkls.
+
+Piezīme: neatspējojiet „Izstrādātāja opcijas“ vai „USB atkļūdošanu“, pretējā gadījumā Shizako tiks apturēta.</string>
+    <string name="dialog_adb_discovery_message_toggle_wireless_debugging">Ja meklēšana ilgst pārāk ilgi, mēģiniet atspējot un atkārtoti iespējot „Bezvadu atkļūdošanu“.</string>
+    <string name="dialog_adb_port">Ports</string>
+    <string name="dialog_adb_invalid_port">Ports ir vesels skaitlis no 1 līdz 65535.</string>
+    <string name="adb_pairing">Pārīšana</string>
+    <string name="dialog_adb_pairing_title">Pārīgot ar ierīci</string>
+    <string name="dialog_adb_pairing_discovery">Meklē pārīšanas pakalpojumu</string>
+    <string name="dialog_adb_pairing_paring_code">Pārīšanas kods</string>
+    <string name="paring_code_is_wrong">Pārīšanas kods ir nepareizs.</string>
+    <string name="cannot_connect_port">Nevar izveidot savienojumu ar bezvadu atkļūdošanas pakalpojumu.</string>
+    <string name="dialog_wireless_adb_not_enabled">Bezvadu atkļūdošana nav iespējota.
+Piezīme: pirms Android 11, lai iespējotu bezvadu atkļūdošanu, obligāti nepieciešams datora savienojums.</string>
+    <string name="dialog_adb_pairing_message">Sāciet pārīšanu šādi: „Izstrādātāja opcijas“ – „Bezvadu atkļūdošana“ – „Pārīgot ierīci ar pārīšanas kodu“.
+
+Kad pārīšanas process būs sācies, varēsiet ievadīt pārīšanas kodu.</string>
+    <string name="adb_pairing_requires_multi_window">Vispirms pārejiet uz sadalītā ekrāna (vairāku logu) režīmu.</string>
+    <string name="adb_pairing_requires_multi_window_reason">Sistēma pieprasa, lai pārīšanas dialoglodziņ vienmēr būtu redzams; sadalītais ekrāns ir vienīgais veids, kā šī lietotne un sistēmas dialoglodziņ var būt redzami vienlaikus.</string>
+    <string name="adb_error_key_store">Nevar ģenerēt atslēgu bezvadu atkļūdošanai.
+Iespējams, šīs ierīces KeyStore mehānisms ir bojāts.</string>
+    <string name="adb_pair_required">Vispirms veiciet pārīšanas soli.</string>
+    <string name="development_settings">Izstrādātāja opcijas</string>
+    <string name="notification_settings">Paziņojumu opcijas</string>
+    <string name="adb_pairing_tutorial_title">Pārīgojiet Shizako ar savu ierīci</string>
+    <string name="adb_pairing_tutorial_content_notification">Shizako paziņojums palīdzēs jums pabeigt pārīšanu.</string>
+    <string name="adb_pairing_tutorial_content_steps">Atveriet „Izstrādātāja opcijas“ – „Bezvadu atkļūdošana“. Pieskarieties „Pārīgot ierīci ar pārīšanas kodu“; jūs redzēsiet sešciparu kodu.</string>
+    <string name="adb_pairing_tutorial_content_enter_pairing_code">Ievadiet kodu no paziņojuma, lai pabeigtu pārīšanu.</string>
+    <string name="adb_pairing_tutorial_content_notification_blocked">Pārīšanas procesam ir jāmijiedarbojas ar Shizako paziņojumu. Atļaujiet lietotnei Shizako publicēt paziņojumus.</string>
+    <string name="adb_pairing_tutorial_content_miui">MIUI lietotājiem, iespējams, sistēmas iestatījumos jāpārslēdz paziņojumu stils uz „Android“ sadaļā „Paziņojumi“ – „Paziņojumu panelis“.</string>
+    <string name="adb_pairing_tutorial_content_miui_2">Pretējā gadījumā jūs, iespējams, nevarēsiet ievadīt pārīšanas kodu no paziņojuma.</string>
+    <string name="adb_pairing_tutorial_content_left_is_clickable">Piezīme: „Bezvadu atkļūdošanas“ opcijas kreisā daļa ir piespiedama un atver jaunu lapu. Tikai slēdža ieslēgšana labajā pusē nav pareizi.</string>
+    <string name="adb_pairing_tutorial_content_finish">Atgriezieties Shizako un palaidiet Shizako.</string>
+    <string name="adb_pairing_tutorial_content_network">Shizako ir nepieciešama piekļuve vietējam tīklam. To pārvalda tīkla atļauja.</string>
+    <string name="adb_pairing_tutorial_content_network_limation_not_foreground">Dažas sistēmas (piemēram, MIUI) neļauj lietotnēm piekļūt tīklam, kad tās nav redzamas, pat ja lietotne izmanto priekšplāna pakalpojumu atbilstoši standartam. Šādās sistēmās atspējojiet akumulatora optimizāciju lietotnei Shizako.</string>
+    <string name="home_root_title">Palaišana (ierīcēm ar root)</string>
+    <string name="home_root_description">Turklāt Shizako var tikt palaista automātiski ierīces startēšanas laikā. Ja tā nav, pārbaudiet, vai jūsu sistēma vai trešo pušu rīki nav ierobežojuši Shizako.&lt;br&gt;Varat apskatīt %s.</string>
+    <string name="home_root_description_sui">Ja izmantojat Magisk, varat izmēģināt %1$s. Lietotājiem ar root tā galu galā aizstās Shizako. Piezīme: esošajām lietotnēm būs nedaudz jāmainās, lai izmantotu %2$s.</string>
+    <string name="home_root_button_start">Palaist</string>
+    <string name="home_root_button_restart">Restartēt</string>
+    <string name="home_app_management_title">Lietotņu pārvaldība</string>
+    <string name="home_app_management_view_authorized_apps">Pieskarieties, lai pārvaldītu autorizētās lietotnes</string>
+    <string name="home_app_management_empty">Šeit tiks rādītas lietotnes, kuras ir pieprasījušas vai deklarējušas Shizako.</string>
+    <string name="home_learn_more_title">Uzziniet vairāk par Shizako</string>
+    <string name="home_learn_more_description">Uzziniet, kā izstrādāt, izmantojot Shizako</string>
+    <string name="home_adb_is_limited_title">Jums jāveic vēl viena darbība</string>
+    <string name="home_adb_is_limited_description">Jūsu ierīces ražotājs ir ierobežojis adb atļaujas, un lietotnes, kas izmanto Shizako, nedarbosies pareizi.
+
+Parasti šo ierobežojumu var noņemt, pielāgojot dažas opcijas „Izstrādātāja opcijās“. Sīkāku informāciju skatiet palīdzībā.
+
+Iespējams, jums būs jārestartē Shizako, lai izmaiņas stātos spēkā.</string>
+    <string name="app_management_dialog_adb_is_limited_title">adb atļauja ir ierobežota</string>
+    <string name="app_management_dialog_adb_is_limited_message">Ir ļoti iespējams, ka jūsu ierīces ražotājs ierobežo adb atļauju.&lt;p&gt;Iespējams, risinājums jūsu sistēmai ir &lt;b&gt;&lt;a href=\"%1$s\"&gt;šajā dokumentā&lt;/a&gt;&lt;/b&gt;.</string>
+    <string name="app_management_item_summary_requires_root">* pieprasa, lai Shizako darbotos ar root</string>
+    <string name="home_terminal_title">Shizako izmantošana termināļa lietotnēs</string>
+    <string name="home_terminal_description">Izpildiet komandas, izmantojot Shizako, jūsu iecienītajās termināļa lietotnēs</string>
+    <string name="home_activation_title">Aktivizēšana ar vienu klikšķi</string>
+    <string name="home_activation_summary">Aktivizējiet Brevent, Stopapp un citus bez datora</string>
+    <string name="home_activation_summary_not_running">Vispirms palaidiet Shizako, lai izmantotu aktivizēšanu ar vienu klikšķi</string>
+    <string name="terminal_tutorial_1">Vispirms eksportējiet failus jebkurā vēlamajā vietā. Jūs atradīsit divus failus: %1$s un %2$s.</string>
+    <string name="terminal_tutorial_1_description">Ja atlasītajā mapē ir faili ar tādu pašu nosaukumu, tie tiks izdzēsti.
+
+Eksportēšanas funkcija izmanto SAF (Storage Access Framework). Ir ziņots, ka MIUI sabojā SAF funkcijas. Ja izmantojat MIUI, iespējams, failu būs jāizvelk no Shizako apk vai jālejupielādē no GitHub.</string>
+    <string name="terminal_export_files">Eksportēt failus</string>
+    <string name="terminal_tutorial_2">Pēc tam atveriet un rediģējiet %1$s jebkurā teksta redaktorā.</string>
+    <string name="terminal_tutorial_2_description">Piemēram, ja vēlaties izmantot Shizako lietotnē %1$s, jums jāaizstāj %2$s ar %3$s (%4$s ir lietotnes %1$s pakotnes nosaukums).</string>
+    <string name="terminal_tutorial_3">Visbeidzot pārvietojiet failus uz vietu, kurai var piekļūt jūsu termināļa lietotne; varēsiet izmantot %1$s, lai izpildītu komandas, izmantojot Shizako.</string>
+    <string name="terminal_tutorial_3_description">Padomi: piešķiriet %1$s izpildes atļauju un pievienojiet to %2$s, un varēsiet izmantot %1$s tieši.</string>
+    <string name="rish_description">Izmantojot %1$s jebkurā termināļa lietotnē, varat izveidot savienojumu un mijiedarboties ar čaulu, kuru palaiž Shizako. &lt;p&gt;Pieskarieties, lai apskatītu dokumentāciju par %1$s detalizētu izmantošanu.</string>
+    <string name="settings_title">Iestatījumi</string>
+    <string name="settings_language">Valoda</string>
+    <string name="settings_user_interface">Izskats</string>
+    <string name="settings_black_night_theme">Melnā nakts tēma</string>
+    <string name="settings_black_night_theme_summary">Izmanto pilnīgi melnu tēmu, ja ir iespējots tumšais režīms</string>
+    <string name="settings_startup">Palaišana</string>
+    <string name="settings_translation_contributors">Tulkošanas atbalstītāji</string>
+    <string name="settings_translation">Piedalieties tulkošanā</string>
+    <string name="settings_debug">Atkļūdošana</string>
+    <string name="settings_crash_logs">Avāriju žurnāli</string>
+    <string name="settings_crash_logs_summary">Avārijas tiek saglabātas šeit, kad lietotne negaidīti aizveras</string>
+    <string name="settings_crash_logs_empty">Nav avāriju žurnālu</string>
+    <string name="settings_crash_logs_count">Avāriju žurnālu skaits: %1$d</string>
+    <string name="settings_crash_logs_share">Kopīgot</string>
+    <string name="settings_crash_logs_delete">Dzēst</string>
+    <string name="settings_crash_logs_delete_all">Dzēst visu</string>
+    <string name="settings_crash_logs_deleted">Izdzēsts</string>
+    <string name="activation_title">Aktivizēšana ar vienu klikšķi</string>
+    <string name="activation_subtitle">Izpildiet ADB komandas, kurām iepriekš bija vajadzīgs dators, tieši šeit</string>
+    <string name="activation_service_running">Shizako darbojas, gatava aktivizēšanai</string>
+    <string name="activation_service_running_brief">Shizako darbojas</string>
+    <string name="activation_service_not_running">Shizako nedarbojas; vispirms palaidiet pakalpojumu no sākumlapas</string>
+    <string name="activation_activate">Aktivizēt</string>
+    <string name="activation_activated">Aktivizēta</string>
+    <string name="activation_status_not_installed">%1$s · nav instalēta</string>
+    <string name="activation_status_installed">%1$s · instalēta</string>
+    <string name="activation_status_activated">%1$s · jau aktivizēta</string>
+    <string name="activation_status_not_activated">%1$s · instalēta, nav aktivizēta</string>
+    <string name="activation_note_device_owner">Nepieciešams, lai vispirms tiktu noņemti visi konti un sekundārie lietotāji (viesu režīms / lietotnes dublējums); pēc aktivizēšanas varat tos pievienot atpakaļ. Var piemist ražotāja ROM īpatnības.</string>
+    <string name="activation_note_brevent">Brevent serveris pēc katras restartēšanas ir jāaktivizē atkārtoti.</string>
+    <string name="activation_custom_title">Pielāgota komanda</string>
+    <string name="activation_custom_hint">Jebkura čaulas komanda, piem., dpm set-device-owner …</string>
+    <string name="activation_custom_empty">Komanda ir tukša</string>
+    <string name="activation_run">Izpildīt</string>
+    <string name="activation_running">Izpilda…</string>
+    <string name="activation_success">Aktivizēta</string>
+    <string name="activation_failed">Neizdevās, skatiet izvadi zemāk</string>
+    <string name="activation_failed_with_code">Neizdevās (izejas kods %1$d), skatiet izvadi zemāk</string>
+    <string name="activation_timeout">Komanda joprojām darbojas; gaidīšana tika pārtraukta (normāli servera tipa komandām)</string>
+    <string name="activation_output">Izvade</string>
+    <string name="activation_output_empty">(vēl nav izvades)</string>
+    <string name="activation_copy">Kopēt</string>
+    <string name="activation_copied">Nokopēts</string>
+    <string name="activation_back">Atpakaļ</string>
+    <string name="settings_translation_summary">Palīdziet mums tulkot %s jūsu valodā</string>
+    <string name="settings_start_on_boot">Palaist ierīces startēšanas laikā (root)</string>
+    <string name="settings_start_on_boot_summary">Ierīcēs ar root Shizako var startēties automātiski ierīces startēšanas laikā</string>
+    <string name="settings_use_system_color">Izmantot sistēmas tēmas krāsu</string>
+    <string name="action_about">Par lietotni</string>
+    <string name="about_view_source_code">Aplūkojiet pirmkodu vietnē %s</string>
+    <string name="about_author">Autors</string>
+    <string name="about_based_on">Pamatojas uz</string>
+    <string name="about_based_on_text">atvērtā pirmkoda projektu %s</string>
+    <string name="about_license">Licence</string>
+    <string name="about_footer">Shizako — Radīts ar ❤️</string>
+    <string name="action_stop">Apturēt Shizako</string>
+    <string name="dialog_stop_message">Shizako pakalpojums tiks apturēts.</string>
+    <string name="notification_channel_service_status">Pakalpojuma startēšanas statuss</string>
+    <string name="notification_channel_status">Pakalpojuma statuss</string>
+    <string name="notification_service_starting">Shizako pakalpojums startē…</string>
+    <string name="notification_service_start_failed">Neizdevās startēt Shizako pakalpojumu.</string>
+    <string name="notification_service_start_no_root">Neizdevās pieprasīt root atļauju.</string>
+    <string name="notification_working">Notiek darbs…</string>
+    <string name="notification_channel_adb_pairing">Bezvadu atkļūdošanas pārīšana</string>
+    <string name="notification_adb_pairing_input_paring_code">Ievadiet pārīšanas kodu</string>
+    <string name="notification_adb_pairing_searching_for_service_title">Meklē pārīšanas pakalpojumu</string>
+    <string name="notification_adb_pairing_service_found_title">Pārīšanas pakalpojums atrasts</string>
+    <string name="notification_adb_pairing_stop_searching">Pārtraukt meklēšanu</string>
+    <string name="notification_adb_pairing_working_title">Notiek pārīšana</string>
+    <string name="notification_adb_pairing_succeed_title">Pārīšana veiksmīga</string>
+    <string name="notification_adb_pairing_succeed_text">Tagad varat startēt Shizako pakalpojumu.</string>
+    <string name="notification_adb_pairing_failed_title">Pārīšana neizdevās</string>
+    <string name="notification_adb_pairing_retry">Mēģināt vēlreiz</string>
+    <string name="tile_service_label">Shizako pakalpojums</string>
+    <string name="tile_service_subtitle_running">Darbojas</string>
+    <string name="tile_service_subtitle_stopped">Apturēts</string>
+    <string name="tile_wireless_adb_label">Bezvadu atkļūdošana</string>
+    <string name="permission_label">piekļūt Shizako</string>
+    <string name="permission_description">Atļaujiet lietotnei izmantot Shizako.</string>
+    <string name="permission_warning_template">Atļaut lietotnei &lt;b&gt;%1$s&lt;/b&gt; %2$s?</string>
+    <string name="grant_dialog_button_allow_always">Vienmēr atļaut</string>
+    <string name="grant_dialog_button_deny">Liegt</string>
+    <string name="starter">Startētājs</string>
+    <string name="start_with_root_failed">Nevar startēt pakalpojumu, jo root atļauja nav piešķirta vai šai ierīcei nav root.</string>
+    <string name="dialog_cannot_open_browser_title">Nevar startēt pārlūkprogrammu</string>
+    <string name="toast_copied_to_clipboard">%s
+ir nokopēts starpliktuvē.</string>
+    <string name="toast_copied_to_clipboard_with_text">&lt;b&gt;%s&lt;/b&gt; ir nokopēts starpliktuvē.</string>
+    <string name="dialog_legacy_not_support_title">%1$s neatbalsta moderno Shizako</string>
+    <string name="dialog_legacy_not_support_message">Mantotā Shizako ir novecojusi kopš 2019. gada marta. Turklāt mantotā Shizako nedarbojas jaunākās Android sistēmās.&lt;p&gt;Lūdziet lietotnes &lt;b&gt;%1$s&lt;/b&gt; izstrādātājam to atjaunināt.</string>
+    <string name="dialog_requesting_legacy_title">%1$s pieprasa mantoto Shizako</string>
+    <string name="dialog_requesting_legacy_message">&lt;b&gt;%1$s&lt;/b&gt; atbalsta moderno Shizako, bet pieprasa mantoto Shizako. Tas varētu būt tāpēc, ka Shizako nedarbojas; pārbaudiet lietotnē Shizako.&lt;p&gt;Mantotā Shizako ir novecojusi kopš 2019. gada marta.</string>
+    <string name="dialog_requesting_legacy_button_open_shizuku">Atvērt Shizako</string>
+    <plurals name="home_app_management_authorized_apps_count">
+        <item quantity="zero">%d autorizētu lietotņu</item>
+        <item quantity="one">%d autorizēta lietotne</item>
+        <item quantity="other">%d autorizētas lietotnes</item>
+    </plurals>
+    <!-- Shizako: 补充翻译 -->
+    <string name="setup_welcome_title">Laipni lūdzam</string>
+    <string name="setup_welcome_subtitle">Ar dažiem ātriem iestatījumiem Shizako ir gatavs lietošanai.</string>
+    <string name="setup_disclaimer_title">Atsakums no atbildības</string>
+    <string name="setup_disclaimer_text"><![CDATA[Shizako tiek piedāvāts «kā ir», bez jebkādas garantijas.<p>Shizako darbojas, izpildot privileģētu pakalpojumu jūsu ierīcē. Izstrādātājs nav atbildīgs par jebkādiem bojājumiem vai datu zudumiem, kas var rasties no šīs lietotnes izmantošanas vai piekļuves piešķiršanas lietotnēm Shizako.<p>Izmantojiet uz savu atbildību.]]></string>
+    <string name="setup_disclaimer_agree">Esmu izlasījis un piekrītu iepriekš minētajam</string>
+    <string name="setup_language_title">Izvēlieties valodu</string>
+    <string name="setup_language_subtitle">Vēlāk to varēsiet mainīt iestatījumos.</string>
+    <string name="setup_mode_subtitle">Izvēlieties, kā Shizako izskatīsies. Vēlāk varēsiet mainīt iestatījumos.</string>
+    <string name="setup_mode_follow_system">Pēc sistēmas</string>
+    <string name="setup_mode_light">Gaišs</string>
+    <string name="setup_mode_dark">Tumšs</string>
+    <string name="setup_start_method_title">Aktivizēšanas metode</string>
+    <string name="setup_start_method_subtitle">Izvēlieties, kā plānojat palaist Shizako. Sākumlapā šī metode tiks rādīta pirmā.</string>
+    <string name="setup_start_method_wadb">Bezvadu atkļūdošana</string>
+    <string name="setup_start_method_wadb_summary">Android 11 un jaunākās, dators nav vajadzīgs</string>
+    <string name="setup_start_method_root">Root</string>
+    <string name="setup_start_method_root_summary">Sakņotām ierīcēm, palaišana ar vienu pieskārienu</string>
+    <string name="setup_start_method_adb">Savienojums ar datoru</string>
+    <string name="setup_start_method_adb_summary">Izmantojiet adb caur USB, atkārtojiet pēc katras restartēšanas</string>
+    <string name="setup_back">Atpakaļ</string>
+    <string name="setup_next">Tālāk</string>
+    <string name="setup_get_started">Sākt</string>
+    <string name="setup_skip">Izlaist</string>
+</resources>

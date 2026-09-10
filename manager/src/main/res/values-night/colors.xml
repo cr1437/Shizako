@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Dark variant of the real-time frosted app bar overlay (BlurView):
+         dark scrim keeps light toolbar text and status bar icons readable
+         while blurred content shows through. -->
+    <color name="appbar_frost_scrim">#D9191C20</color>
+
+    <!-- 亚克力悬浮导航磨砂罩层（夜间）：暗色半透明，保证图标文字可读 -->
+    <color name="nav_frost_scrim">#B3171B21</color>
+
+    <!-- 选中 pill 顶缘镜面高光（夜间）：白色 25%，暗色下收敛 -->
+    <color name="nav_pill_specular">#40FFFFFF</color>
+
+    <!-- One-click activation, dark variants: lighter tones for dark surfaces. -->
+    <color name="activation_status_active">#81C784</color>
+    <color name="activation_status_inactive">#E57373</color>
+    <color name="activation_status_unknown">#B0B0B0</color>
+    <color name="activation_output_success">#81C784</color>
+    <color name="activation_output_error">#E57373</color>
+</resources>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 选中项共享滑动 pill:KernelSU FloatingBottomBar 同款亚克力结构(三层叠加)
+     1) 镜面高光底(全 pill 形状):只有顶缘会被上层让出 1dp 露出,形成"微微光亮"
+        —— 用「上层盖位」而非负边距裁剪,不依赖父容器 clip 行为,各机型表现一致
+     2) 主题色薄纱填充(?colorPrimary 18%):透出下方 BlurView 模糊,亚克力通透感;
+        顶部 inset 1dp 露出高光线
+     3) 同色细描边:勾出玻璃边缘
+     颜色全部走 ?colorPrimary 派生,随 Sakura/M3E/Miuix 主题色板自动换色;
+     高光/薄纱浓度有夜间变体(values-night / color-night)。
+     滑动与果冻回弹动画由 MainActivity.setupNavPill() 驱动。 -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 1 镜面高光底(全 pill 形状) -->
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/ksu_nav_pill_corner_radius" />
+            <solid android:color="@color/nav_pill_specular" />
+        </shape>
+    </item>
+    <!-- 2 主题色薄纱填充,顶部让出高光位 -->
+    <item android:top="@dimen/ksu_nav_pill_highlight_inset">
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/ksu_nav_pill_corner_radius" />
+            <solid android:color="@color/nav_pill_fill" />
+        </shape>
+    </item>
+    <!-- 3 同色细描边(1dp 描边居中外缘,实际可见约 0.5dp) -->
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/ksu_nav_pill_corner_radius" />
+            <stroke
+                android:width="@dimen/card_stroke_width"
+                android:color="@color/nav_pill_stroke" />
+        </shape>
+    </item>
+</layer-list>

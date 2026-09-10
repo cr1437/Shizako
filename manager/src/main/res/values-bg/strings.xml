@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>    <!-- Shizako: 补充翻译 -->
+    <string name="translation_contributors" />
+    <!-- Shizako: 补充翻译 -->
+    <string name="home_status_service_is_running">%1$s работи</string>
+    <string name="home_status_service_not_running">%1$s не работи</string>
+    <string name="home_status_service_version">Версия %2$s, %1$s</string>
+    <string name="home_status_service_version_update">Версия %2$s, %1$s&lt;br&gt;Стартирайте отново, за да актуализирате до версия %3$s</string>
+    <string name="home_adb_title">Започнете, като свържете компютър</string>
+    <string name="home_adb_description">За устройства без root трябва да използвате adb, за да стартирате Shizako (изисква връзка с компютър). Този процес трябва да се повтаря при всяко рестартиране на устройството. Моля, &lt;b&gt;&lt;a href=\"%1$s\"&gt;прочетете помощта&lt;/a&gt;&lt;/b&gt;.</string>
+    <string name="home_adb_button_view_help">Прочетете помощта</string>
+    <string name="home_adb_button_view_command">Преглед на командата</string>
+    <string name="home_adb_dialog_view_command_message">&lt;font face=\"monospace\"&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* Има и други важни моменти; моля, уверете се, че първо сте прочели помощта.</string>
+    <string name="home_adb_dialog_view_command_copy_button">Копиране</string>
+    <string name="home_adb_dialog_view_command_button_send">Изпращане</string>
+    <string name="home_wireless_adb_title">Стартиране чрез безжично отстраняване на грешки</string>
+    <string name="home_wireless_adb_description">На Android 11 и по-нови можете да активирате безжичното отстраняване на грешки и да стартирате Shizako директно от устройството си, без да свързвате компютър.&lt;p&gt;Моля, първо прегледайте стъпковата инструкция.</string>
+    <string name="home_wireless_adb_description_pre_11">Преди Android 11 е необходима връзка с компютър, за да се активира безжичното отстраняване на грешки.</string>
+    <string name="home_wireless_adb_view_guide_button">Стъпкова инструкция</string>
+    <string name="dialog_adb_discovery">Търсене на услугата за безжично отстраняване на грешки</string>
+    <string name="dialog_adb_discovery_message">Моля, активирайте “Безжично отстраняване на грешки” в “Опции за разработчици”. “Безжичното отстраняване на грешки” се деактивира автоматично при смяна на мрежата.
+
+Забележка: не деактивирайте “Опции за разработчици” или “USB отстраняване на грешки”, в противен случай Shizako ще бъде спрян.</string>
+    <string name="dialog_adb_discovery_message_toggle_wireless_debugging">Ако търсенето продължава дълго, опитайте да деактивирате и активирате отново “Безжично отстраняване на грешки”.</string>
+    <string name="dialog_adb_port">Порт</string>
+    <string name="dialog_adb_invalid_port">Портът е цяло число от 1 до 65535.</string>
+    <string name="adb_pairing">Свързване</string>
+    <string name="dialog_adb_pairing_title">Свързване с устройство</string>
+    <string name="dialog_adb_pairing_discovery">Търсене на услуга за свързване</string>
+    <string name="dialog_adb_pairing_paring_code">Код за свързване</string>
+    <string name="paring_code_is_wrong">Кодът за свързване е грешен.</string>
+    <string name="cannot_connect_port">Не може да се установи връзка с услугата за безжично отстраняване на грешки.</string>
+    <string name="dialog_wireless_adb_not_enabled">Безжичното отстраняване на грешки не е активирано.
+Забележка: преди Android 11 за активиране на безжичното отстраняване на грешки е необходима връзка с компютър.</string>
+    <string name="dialog_adb_pairing_message">Моля, започнете свързването със следните стъпки: “Опции за разработчици” - “Безжично отстраняване на грешки” - “Свързване на устройство с код”.
+
+След като процесът на свързване започне, ще можете да въведете кода.</string>
+    <string name="adb_pairing_requires_multi_window">Моля, първо влезте в режим на разделен екран (много прозорци).</string>
+    <string name="adb_pairing_requires_multi_window_reason">Системата изисква диалогът за свързване да е винаги видим; режимът на разделен екран е единственият начин това приложение и системният диалог да са видими едновременно.</string>
+    <string name="adb_error_key_store">Не може да се генерира ключ за безжичното отстраняване на грешки.
+Това може да се дължи на повреден механизъм KeyStore на устройството.</string>
+    <string name="adb_pair_required">Моля, първо преминете през стъпката за свързване.</string>
+    <string name="development_settings">Опции за разработчици</string>
+    <string name="notification_settings">Опции за известия</string>
+    <string name="adb_pairing_tutorial_title">Свържете Shizako с устройството си</string>
+    <string name="adb_pairing_tutorial_content_notification">Известие от Shizako ще ви помогне да завършите свързването.</string>
+    <string name="adb_pairing_tutorial_content_steps">Влезте в “Опции за разработчици” - “Безжично отстраняване на грешки”. Докоснете “Свързване на устройство с код” и ще видите шестцифрен код.</string>
+    <string name="adb_pairing_tutorial_content_enter_pairing_code">Въведете кода в известията, за да завършите свързването.</string>
+    <string name="adb_pairing_tutorial_content_notification_blocked">Процесът на свързване изисква взаимодействие с известие от Shizako. Моля, разрешете на Shizako да показва известия.</string>
+    <string name="adb_pairing_tutorial_content_miui">Потребителите на MIUI може да се наложи да сменят стила на известията на “Android” от “Известие” - “Панел с известия” в системните настройки.</string>
+    <string name="adb_pairing_tutorial_content_miui_2">В противен случай може да не можете да въведете кода за свързване от известията.</string>
+    <string name="adb_pairing_tutorial_content_left_is_clickable">Обърнете внимание: лявата част от опцията “Безжично отстраняване на грешки” е кликваща; тя отваря нова страница. Само включването на превключвателя вдясно е неправилно.</string>
+    <string name="adb_pairing_tutorial_content_finish">Върнете се в Shizako и стартирайте Shizako.</string>
+    <string name="adb_pairing_tutorial_content_network">Shizako се нуждае от достъп до локалната мрежа. Той се управлява от разрешението за мрежа.</string>
+    <string name="adb_pairing_tutorial_content_network_limation_not_foreground">Някои системи (като MIUI) забраняват на приложенията да получават достъп до мрежата, когато не са видими, дори когато приложението използва услуга на преден план по стандарт. На такива системи изключете оптимизацията на батерията за Shizako.</string>
+    <string name="home_root_title">Стартиране (за устройства с root)</string>
+    <string name="home_root_description">Освен това Shizako може да се стартира автоматично при зареждане. Ако не е така, проверете дали системата или инструменти на трети страни не са ограничили Shizako.&lt;br&gt;Може да се обърнете към %s.</string>
+    <string name="home_root_description_sui">Ако използвате Magisk, можете да опитате %1$s. За потребители с root той накрая ще замени Shizako. Забележка: съществуващите приложения трябва да се променят малко, за да използват %2$s.</string>
+    <string name="home_root_button_start">Стартиране</string>
+    <string name="home_root_button_restart">Рестартиране</string>
+    <string name="home_app_management_title">Управление на приложенията</string>
+    <string name="home_app_management_view_authorized_apps">Докоснете за управление на оторизираните приложения</string>
+    <string name="home_app_management_empty">Тук ще се появят приложенията, които са поискали или заявили Shizako.</string>
+    <string name="home_learn_more_title">Научете за Shizako</string>
+    <string name="home_learn_more_description">Научете как да разработвате с Shizako</string>
+    <string name="home_adb_is_limited_title">Необходима е още една стъпка</string>
+    <string name="home_adb_is_limited_description">Производителят на вашето устройство е ограничил разрешенията на adb и приложенията, използващи Shizako, няма да работят правилно.
+
+Обикновено това ограничение може да бъде премахнато чрез промяна на някои опции в “Опции за разработчици”. Моля, прочетете помощта за подробности.
+
+Възможно е да се наложи да рестартирате Shizako, за да влезе в сила промяната.</string>
+    <string name="app_management_dialog_adb_is_limited_title">Разрешението на adb е ограничено</string>
+    <string name="app_management_dialog_adb_is_limited_message">Много е възможно производителят на вашето устройство да ограничава разрешението на adb.&lt;p&gt;Възможно решение за вашата система да има в &lt;b&gt;&lt;a href=\"%1$s\"&gt;този документ&lt;/a&gt;&lt;/b&gt;.</string>
+    <string name="app_management_item_summary_requires_root">* изисква Shizako да работи с root</string>
+    <string name="home_terminal_title">Използване на Shizako в терминални приложения</string>
+    <string name="home_terminal_description">Изпълнявайте команди чрез Shizako в любимите си терминални приложения</string>
+    <string name="home_activation_title">Активиране с едно докосване</string>
+    <string name="home_activation_summary">Активирайте Brevent, Stopapp и др. без компютър</string>
+    <string name="home_activation_summary_not_running">Първо стартирайте Shizako, за да използвате активирането с едно докосване</string>
+    <string name="terminal_tutorial_1">Първо експортирайте файловете, където искате. Ще намерите два файла: %1$s и %2$s.</string>
+    <string name="terminal_tutorial_1_description">Ако в избраната папка има файлове със същите имена, те ще бъдат изтрити.
+
+Функцията за експортиране използва SAF (Storage Access Framework). Съобщава се, че MIUI чупи функциите на SAF. Ако използвате MIUI, може да се наложи да извлечете файла от apk-то на Shizako или да го изтеглите от GitHub.</string>
+    <string name="terminal_export_files">Експортиране на файлове</string>
+    <string name="terminal_tutorial_2">След това отворете и редактирайте %1$s с произволен текстов редактор.</string>
+    <string name="terminal_tutorial_2_description">Например, ако искате да използвате Shizako в %1$s, трябва да замените %2$s с %3$s (%4$s е името на пакета на %1$s).</string>
+    <string name="terminal_tutorial_3">Накрая преместете файловете на място, до което терминалното ви приложение има достъп; тогава ще можете да използвате %1$s за изпълнение на команди чрез Shizako.</string>
+    <string name="terminal_tutorial_3_description">Съвети: дайте на %1$s права за изпълнение и го добавете към %2$s, за да можете да използвате %1$s директно.</string>
+    <string name="rish_description">С %1$s във всяко терминално приложение можете да се свържете и да взаимодействате с обвивката, стартирана от Shizako. &lt;p&gt;Докоснете, за да видите документа за подробното използване на %1$s.</string>
+    <string name="settings_title">Настройки</string>
+    <string name="settings_language">Език</string>
+    <string name="settings_user_interface">Външен вид</string>
+    <string name="settings_black_night_theme">Черна нощна тема</string>
+    <string name="settings_black_night_theme_summary">Използвайте чисто черната тема, когато тъмният режим е активиран</string>
+    <string name="settings_startup">Стартиране</string>
+    <string name="settings_translation_contributors">Преводачи</string>
+    <string name="settings_translation">Участвайте в превода</string>
+    <string name="settings_debug">Отстраняване на грешки</string>
+    <string name="settings_crash_logs">Дневници за сривове</string>
+    <string name="settings_crash_logs_summary">Сривовете се записват тук, когато приложението неочаквано прекъсне</string>
+    <string name="settings_crash_logs_empty">Няма дневници за сривове</string>
+    <string name="settings_crash_logs_count">%1$d дневник(а) за сривове</string>
+    <string name="settings_crash_logs_share">Споделяне</string>
+    <string name="settings_crash_logs_delete">Изтриване</string>
+    <string name="settings_crash_logs_delete_all">Изтриване на всички</string>
+    <string name="settings_crash_logs_deleted">Изтрито</string>
+    <string name="activation_title">Активиране с едно докосване</string>
+    <string name="activation_subtitle">Изпълнете ADB командите, които преди изискваха компютър, направо оттук</string>
+    <string name="activation_service_running">Shizako работи, готов за активиране</string>
+    <string name="activation_service_running_brief">Shizako работи</string>
+    <string name="activation_service_not_running">Shizako не работи; моля, първо стартирайте услугата от началната страница</string>
+    <string name="activation_activate">Активиране</string>
+    <string name="activation_activated">Активирано</string>
+    <string name="activation_status_not_installed">%1$s · не е инсталирано</string>
+    <string name="activation_status_installed">%1$s · инсталирано</string>
+    <string name="activation_status_activated">%1$s · вече е активирано</string>
+    <string name="activation_status_not_activated">%1$s · инсталирано, не е активирано</string>
+    <string name="activation_note_device_owner">Изисква първо да бъдат премахнати всички профили и вторични потребители (гост режим / клонирани приложения); след активирането можете да ги добавите отново. Възможни са особености на ROM от производителя.</string>
+    <string name="activation_note_brevent">Сървърът на Brevent трябва да се активира отново след всяко рестартиране.</string>
+    <string name="activation_custom_title">Потребителска команда</string>
+    <string name="activation_custom_hint">Произволна shell команда, напр. dpm set-device-owner …</string>
+    <string name="activation_custom_empty">Командата е празна</string>
+    <string name="activation_run">Изпълнение</string>
+    <string name="activation_running">Изпълнява се…</string>
+    <string name="activation_success">Активирано</string>
+    <string name="activation_failed">Неуспешно, вижте изхода по-долу</string>
+    <string name="activation_failed_with_code">Неуспешно (код на изхода %1$d), вижте изхода по-долу</string>
+    <string name="activation_timeout">Командата все още се изпълнява; спряно е изчакването (нормално за команди от тип сървър)</string>
+    <string name="activation_output">Изход</string>
+    <string name="activation_output_empty">(все още няма изход)</string>
+    <string name="activation_copy">Копиране</string>
+    <string name="activation_copied">Копирано</string>
+    <string name="activation_back">Назад</string>
+    <string name="settings_translation_summary">Помогнете ни да преведем %s на вашия език</string>
+    <string name="settings_start_on_boot">Стартиране при зареждане (root)</string>
+    <string name="settings_start_on_boot_summary">На устройства с root Shizako може да се стартира автоматично при зареждане</string>
+    <string name="settings_use_system_color">Използване на системния цвят на темата</string>
+    <string name="action_about">Относно</string>
+    <string name="about_view_source_code">Вижте изходния код на %s</string>
+    <string name="about_author">Автор</string>
+    <string name="about_based_on">Базирано на</string>
+    <string name="about_based_on_text">проекта с отворен код %s</string>
+    <string name="about_license">Лиценз</string>
+    <string name="about_footer">Shizako — Създадено с ❤️</string>
+    <string name="action_stop">Спиране на Shizako</string>
+    <string name="dialog_stop_message">Услугата Shizako ще бъде спряна.</string>
+    <string name="notification_channel_service_status">Статус на стартиране на услугата</string>
+    <string name="notification_channel_status">Статус на услугата</string>
+    <string name="notification_service_starting">Услугата Shizako се стартира…</string>
+    <string name="notification_service_start_failed">Неуспешно стартиране на услугата Shizako.</string>
+    <string name="notification_service_start_no_root">Неуспешно искане на root разрешение.</string>
+    <string name="notification_working">Обработка…</string>
+    <string name="notification_channel_adb_pairing">Свързване чрез безжично отстраняване на грешки</string>
+    <string name="notification_adb_pairing_input_paring_code">Въведете код за свързване</string>
+    <string name="notification_adb_pairing_searching_for_service_title">Търсене на услуга за свързване</string>
+    <string name="notification_adb_pairing_service_found_title">Намерена е услуга за свързване</string>
+    <string name="notification_adb_pairing_stop_searching">Спиране на търсенето</string>
+    <string name="notification_adb_pairing_working_title">Свързването е в ход</string>
+    <string name="notification_adb_pairing_succeed_title">Свързването е успешно</string>
+    <string name="notification_adb_pairing_succeed_text">Сега можете да стартирате услугата Shizako.</string>
+    <string name="notification_adb_pairing_failed_title">Неуспешно свързване</string>
+    <string name="notification_adb_pairing_retry">Опитайте отново</string>
+    <string name="tile_service_label">Услуга Shizako</string>
+    <string name="tile_service_subtitle_running">Работи</string>
+    <string name="tile_service_subtitle_stopped">Спряна</string>
+    <string name="tile_wireless_adb_label">Безжично отстраняване на грешки</string>
+    <string name="permission_label">използва Shizako</string>
+    <string name="permission_description">Позволете на приложението да използва Shizako.</string>
+    <string name="permission_warning_template">Да се разреши ли на &lt;b&gt;%1$s&lt;/b&gt; да %2$s?</string>
+    <string name="grant_dialog_button_allow_always">Разрешаване винаги</string>
+    <string name="grant_dialog_button_deny">Отказ</string>
+    <string name="starter">Стартиращ</string>
+    <string name="start_with_root_failed">Услугата не може да бъде стартирана, защото root разрешението не е предоставено или устройството няма root.</string>
+    <string name="dialog_cannot_open_browser_title">Не може да се стартира браузър</string>
+    <string name="toast_copied_to_clipboard">%s
+беше копирано в клипборда.</string>
+    <string name="toast_copied_to_clipboard_with_text">&lt;b&gt;%s&lt;/b&gt; беше копирано в клипборда.</string>
+    <string name="dialog_legacy_not_support_title">%1$s не поддържа модерния Shizako</string>
+    <string name="dialog_legacy_not_support_message">Старият Shizako е остарял от март 2019 г. Освен това старият Shizako не работи на по-нови системи Android.&lt;p&gt;Моля, поискайте от разработчика на &lt;b&gt;%1$s&lt;/b&gt; да обнови приложението.</string>
+    <string name="dialog_requesting_legacy_title">%1$s изисква стария Shizako</string>
+    <string name="dialog_requesting_legacy_message">&lt;b&gt;%1$s&lt;/b&gt; поддържа модерния Shizako, но изисква стария Shizako. Това може да е защото Shizako не работи; проверете в приложението Shizako.&lt;p&gt;Старият Shizako е остарял от март 2019 г.</string>
+    <string name="dialog_requesting_legacy_button_open_shizuku">Отваряне на Shizako</string>
+    <plurals name="home_app_management_authorized_apps_count">
+        <item quantity="one">Оторизирано %d приложение</item>
+        <item quantity="other">Оторизирани %d приложения</item>
+    </plurals>
+    <!-- Shizako: 补充翻译 -->
+    <string name="setup_welcome_title">Добре дошли</string>
+    <string name="setup_welcome_subtitle">С няколко бързи настройки Shizako е готов за използване.</string>
+    <string name="setup_disclaimer_title">Отказ от отговорност</string>
+    <string name="setup_disclaimer_text"><![CDATA[Shizako се предоставя «както е», без никакви гаранции.<p>Shizako работи, като изпълнява привилегирована услуга на устройството ви. Разработчикът не носи отговорност за щети или загуба на данни, произтичащи от използването на приложението или от предоставянето на достъп до Shizako.<p>Използвайте на свой риск.]]></string>
+    <string name="setup_disclaimer_agree">Прочетох и се съгласявам с горното</string>
+    <string name="setup_language_title">Изберете език</string>
+    <string name="setup_language_subtitle">По-късно можете да го промените в настройките.</string>
+    <string name="setup_mode_subtitle">Изберете как да изглежда Shizako. По-късно можете да го промените в настройките.</string>
+    <string name="setup_mode_follow_system">Според системата</string>
+    <string name="setup_mode_light">Светла</string>
+    <string name="setup_mode_dark">Тъмна</string>
+    <string name="setup_start_method_title">Начин на активиране</string>
+    <string name="setup_start_method_subtitle">Изберете как планирате да стартирате Shizako. Началната страница ще покаже този метод първи.</string>
+    <string name="setup_start_method_wadb">Безжична отстраняване на грешки</string>
+    <string name="setup_start_method_wadb_summary">На Android 11 или по-нов, без нужда от компютър</string>
+    <string name="setup_start_method_root">Root</string>
+    <string name="setup_start_method_root_summary">За устройства с root, стартиране с едно докосване</string>
+    <string name="setup_start_method_adb">Свързване към компютър</string>
+    <string name="setup_start_method_adb_summary">Използвайте adb през USB, повтаряйте след всяко рестартиране</string>
+    <string name="setup_back">Назад</string>
+    <string name="setup_next">Напред</string>
+    <string name="setup_get_started">Започнете</string>
+    <string name="setup_skip">Пропусни</string>
+</resources>

@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dialog_adb_discovery_message">"Activeu \"Depuració sense fil\" a \"Opcions de desenvolupador\". La \"depuració sense fil\" es desactiva automàticament quan canvia la xarxa. 
+ 
+Tingueu en compte que no desactiveu les \"Opcions de desenvolupador\" ni la \"depuració USB\", o Shizako s'aturarà."</string>
+    <string name="home_wireless_adb_description_pre_11">Abans d\'Android 11, cal connectar-se a un ordinador per habilitar la depuració sense fil.</string>
+    <string name="dialog_requesting_legacy_button_open_shizuku">Obre Shizako</string>
+    <string name="paring_code_is_wrong">El codi de vinculació és incorrecte.</string>
+    <string name="dialog_adb_pairing_paring_code">Codi d\'aparellament</string>
+    <string name="dialog_adb_pairing_discovery">S\'està buscant el servei d\'aparellament</string>
+    <string name="dialog_adb_pairing_title">Vincula amb el dispositiu</string>
+    <string name="adb_pairing">Maridatge</string>
+    <string name="dialog_adb_invalid_port">El port és un nombre enter que va de l\'1 al 65535.</string>
+    <string name="dialog_adb_discovery_message_toggle_wireless_debugging">Si us plau, proveu de desactivar i activar \"Depuració sense fil\" si continua cercant.</string>
+    <string name="dialog_adb_discovery">Cercant servei de depuració sense fil</string>
+    <string name="home_wireless_adb_view_guide_button">Guia pas a pas</string>
+    <string name="home_wireless_adb_title">Comenceu mitjançant la depuració sense fil</string>
+    <string name="home_adb_dialog_view_command_button_send">Enviar</string>
+    <string name="home_adb_dialog_view_command_copy_button">Còpia</string>
+    <string name="home_adb_button_view_command">Veure comanda</string>
+    <string name="home_adb_button_view_help">Llegeix l\'ajuda</string>
+    <string name="home_adb_title">Comenceu connectant-vos a un ordinador</string>
+    <!-- Shizako: 补充翻译 -->
+    <string name="translation_contributors" />
+    <string name="home_status_service_is_running">%1$s s\'està executant</string>
+    <string name="home_status_service_not_running">%1$s no s\'està executant</string>
+    <string name="home_status_service_version">Versió %2$s, %1$s</string>
+    <string name="home_status_service_version_update">Versió %2$s, %1$s&lt;br&gt;Torneu a iniciar per actualitzar a la versió %3$s</string>
+    <string name="home_adb_description">Per als dispositius sense root, cal utilitzar adb per iniciar Shizako (requereix connexió a un ordinador). Aquest procés s\'ha de repetir cada vegada que es reiniciï el dispositiu. &lt;b&gt;&lt;a href=\"%1$s\"&gt;Llegiu l\'ajuda&lt;/a&gt;&lt;/b&gt;.</string>
+    <string name="home_adb_dialog_view_command_message">&lt;font face=\"monospace\"&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* Hi ha altres consideracions; confirmeu que heu llegit l\'ajuda abans.</string>
+    <string name="home_wireless_adb_description">A Android 11 o posterior, podeu activar la depuració sense fil i iniciar Shizako directament des del dispositiu, sense connectar-lo a un ordinador.&lt;p&gt;Consulteu primer la guia pas a pas.</string>
+    <string name="dialog_adb_port">Port</string>
+    <string name="cannot_connect_port">No es pot connectar al servei de depuració sense fil.</string>
+    <string name="dialog_wireless_adb_not_enabled">La depuració sense fil no està activada.
+Nota: abans d\'Android 11, per activar la depuració sense fil és imprescindible la connexió a un ordinador.</string>
+    <string name="dialog_adb_pairing_message">Inicieu l\'aparellament seguint aquests passos: „Opcions de desenvolupador“ – „Depuració sense fil“ – „Aparella el dispositiu amb un codi“.
+
+Un cop comenci el procés d\'aparellament, podreu introduir el codi.</string>
+    <string name="adb_pairing_requires_multi_window">Entre primer en mode de pantalla dividida (multifinestra).</string>
+    <string name="adb_pairing_requires_multi_window_reason">El sistema requereix que el diàleg d\'aparellament sempre estigui visible; el mode de pantalla dividida és l\'única manera que aquesta aplicació i el diàleg del sistema siguin visibles alhora.</string>
+    <string name="adb_error_key_store">No es pot generar la clau per a la depuració sense fil.
+Pot ser que el mecanisme KeyStore d\'aquest dispositiu estigui malmès.</string>
+    <string name="adb_pair_required">Completeu primer el pas d\'aparellament.</string>
+    <string name="development_settings">Opcions de desenvolupador</string>
+    <string name="notification_settings">Opcions de notificacions</string>
+    <string name="adb_pairing_tutorial_title">Aparella Shizako amb el teu dispositiu</string>
+    <string name="adb_pairing_tutorial_content_notification">Una notificació de Shizako us ajudarà a completar l\'aparellament.</string>
+    <string name="adb_pairing_tutorial_content_steps">Entreu a „Opcions de desenvolupador“ – „Depuració sense fil“. Toqueu „Aparella el dispositiu amb un codi“; veureu un codi de sis dígits.</string>
+    <string name="adb_pairing_tutorial_content_enter_pairing_code">Introduïu el codi de la notificació per completar l\'aparellament.</string>
+    <string name="adb_pairing_tutorial_content_notification_blocked">El procés d\'aparellament requereix interactuar amb una notificació de Shizako. Permeteu que Shizako enviï notificacions.</string>
+    <string name="adb_pairing_tutorial_content_miui">Els usuaris de MIUI potser han de canviar l\'estil de notificació a „Android“ a „Notificacions“ – „Panell de notificacions“ a la configuració del sistema.</string>
+    <string name="adb_pairing_tutorial_content_miui_2">Altrament, potser no podreu introduir el codi d\'aparellament des de la notificació.</string>
+    <string name="adb_pairing_tutorial_content_left_is_clickable">Tingueu en compte que la part esquerra de l\'opció „Depuració sense fil“ és clicable i obre una pàgina nova. Només activar l\'interruptor de la dreta és incorrecte.</string>
+    <string name="adb_pairing_tutorial_content_finish">Torneu a Shizako i inicieu Shizako.</string>
+    <string name="adb_pairing_tutorial_content_network">Shizako necessita accés a la xarxa local, controlat pel permís de xarxa.</string>
+    <string name="adb_pairing_tutorial_content_network_limation_not_foreground">Alguns sistemes (com MIUI) no permeten que les aplicacions accedeixin a la xarxa quan no són visibles, tot i que l\'aplicació utilitzi un servei en primer pla segons l\'estàndard. En aquests sistemes, desactiveu l\'optimització de bateria per a Shizako.</string>
+    <string name="home_root_title">Inici (per a dispositius amb root)</string>
+    <string name="home_root_description">A més, Shizako es pot iniciar automàticament en arrencar el sistema. Si no, comproveu si el sistema o eines de terços han restringit Shizako.&lt;br&gt;Podeu consultar %s.</string>
+    <string name="home_root_description_sui">Si feu servir Magisk, podeu provar %1$s. Per als usuaris amb root, acabarà substituint Shizako. Nota: les aplicacions existents s\'han de modificar una mica per utilitzar %2$s.</string>
+    <string name="home_root_button_start">Iniciar</string>
+    <string name="home_root_button_restart">Reiniciar</string>
+    <string name="home_app_management_title">Gestió d\'aplicacions</string>
+    <string name="home_app_management_view_authorized_apps">Toqueu per gestionar les aplicacions autoritzades</string>
+    <string name="home_app_management_empty">Aquí es mostraran les aplicacions que hagin sol·licitat o declarat Shizako.</string>
+    <string name="home_learn_more_title">Coneixeu Shizako</string>
+    <string name="home_learn_more_description">Apreneu com desenvolupar amb Shizako</string>
+    <string name="home_adb_is_limited_title">Heu de fer un pas addicional</string>
+    <string name="home_adb_is_limited_description">El fabricant del vostre dispositiu ha restringit els permisos d\'adb i les aplicacions que utilitzen Shizako no funcionaran correctament.
+
+Normalment, aquesta limitació es pot eliminar ajustant algunes opcions a „Opcions de desenvolupador“. Llegiu l\'ajuda per als detalls.
+
+Potser haureu de reiniciar Shizako perquè el canvi tingui efecte.</string>
+    <string name="app_management_dialog_adb_is_limited_title">El permís d\'adb està limitat</string>
+    <string name="app_management_dialog_adb_is_limited_message">És molt possible que el fabricant del vostre dispositiu limiti el permís d\'adb.&lt;p&gt;Potser hi ha una solució per al vostre sistema en &lt;b&gt;&lt;a href=\"%1$s\"&gt;aquest document&lt;/a&gt;&lt;/b&gt;.</string>
+    <string name="app_management_item_summary_requires_root">* requereix que Shizako s\'executi amb root</string>
+    <string name="home_terminal_title">Utilitzar Shizako a aplicacions de terminal</string>
+    <string name="home_terminal_description">Executeu ordres mitjançant Shizako a les aplicacions de terminal que us agradin</string>
+    <string name="home_activation_title">Activació amb un toc</string>
+    <string name="home_activation_summary">Activeu Brevent, Stopapp i més sense ordinador</string>
+    <string name="home_activation_summary_not_running">Inicieu primer Shizako per utilitzar l\'activació amb un toc</string>
+    <string name="terminal_tutorial_1">Primer, exporteu els fitxers on vulgueu. Hi trobareu dos fitxers: %1$s i %2$s.</string>
+    <string name="terminal_tutorial_1_description">Si hi ha fitxers amb el mateix nom a la carpeta seleccionada, se suprimiran.
+
+La funció d\'exportació utilitza SAF (Storage Access Framework). S\'ha informat que MIUI trenca les funcions del SAF. Si feu servir MIUI, potser haureu d\'extreure el fitxer de l\'apk de Shizako o baixar-lo del GitHub.</string>
+    <string name="terminal_export_files">Exportar fitxers</string>
+    <string name="terminal_tutorial_2">Després, obriu i editeu %1$s amb qualsevol editor de text.</string>
+    <string name="terminal_tutorial_2_description">Per exemple, si voleu utilitzar Shizako a %1$s, heu de substituir %2$s per %3$s (%4$s és el nom del paquet de l\'aplicació %1$s).</string>
+    <string name="terminal_tutorial_3">Finalment, moveu els fitxers a un lloc on hi pugui accedir la vostra aplicació de terminal; podreu utilitzar %1$s per executar ordres mitjançant Shizako.</string>
+    <string name="terminal_tutorial_3_description">Consells: concediu permís d\'execució a %1$s i afegiu-lo a %2$s, i podreu utilitzar %1$s directament.</string>
+    <string name="rish_description">Amb %1$s, en qualsevol aplicació de terminal, podeu connectar-vos i interactuar amb el shell que executa Shizako. &lt;p&gt;Toqueu per veure la documentació sobre l\'ús detallat de %1$s.</string>
+    <string name="settings_title">Paràmetres</string>
+    <string name="settings_language">Idioma</string>
+    <string name="settings_user_interface">Aparença</string>
+    <string name="settings_black_night_theme">Tema negre nocturn</string>
+    <string name="settings_black_night_theme_summary">Utilitza el tema completament negre quan el mode fosc està actiu</string>
+    <string name="settings_startup">Inici</string>
+    <string name="settings_translation_contributors">Col·laboradors de la traducció</string>
+    <string name="settings_translation">Participeu en la traducció</string>
+    <string name="settings_debug">Depuració</string>
+    <string name="settings_crash_logs">Registres d\'errors</string>
+    <string name="settings_crash_logs_summary">Els errors es guarden aquí quan l\'aplicació es tanca inesperadament</string>
+    <string name="settings_crash_logs_empty">No hi ha registres d\'errors</string>
+    <string name="settings_crash_logs_count">Registres d\'errors: %1$d</string>
+    <string name="settings_crash_logs_share">Compartir</string>
+    <string name="settings_crash_logs_delete">Suprimir</string>
+    <string name="settings_crash_logs_delete_all">Suprimir-ho tot</string>
+    <string name="settings_crash_logs_deleted">Suprimit</string>
+    <string name="activation_title">Activació amb un toc</string>
+    <string name="activation_subtitle">Executeu les ordres ADB que abans requerien un ordinador, directament aquí</string>
+    <string name="activation_service_running">Shizako s\'està executant, a punt per activar</string>
+    <string name="activation_service_running_brief">Shizako s\'està executant</string>
+    <string name="activation_service_not_running">Shizako no s\'està executant; inicieu primer el servei des de la pàgina principal</string>
+    <string name="activation_activate">Activar</string>
+    <string name="activation_activated">Activat</string>
+    <string name="activation_status_not_installed">%1$s · no instal·lada</string>
+    <string name="activation_status_installed">%1$s · instal·lada</string>
+    <string name="activation_status_activated">%1$s · ja activada</string>
+    <string name="activation_status_not_activated">%1$s · instal·lada, no activada</string>
+    <string name="activation_note_device_owner">Requereix eliminar primer tots els comptes i usuaris secundaris (mode convidat / aplicació dual); els podeu tornar a afegir després de l\'activació. Poden haver-hi particularitats del ROM del fabricant.</string>
+    <string name="activation_note_brevent">El servidor de Brevent s\'ha de tornar a activar després de cada reinici.</string>
+    <string name="activation_custom_title">Ordre personalitzada</string>
+    <string name="activation_custom_hint">Qualsevol ordre del shell, p. ex. dpm set-device-owner …</string>
+    <string name="activation_custom_empty">L\'ordre és buida</string>
+    <string name="activation_run">Executar</string>
+    <string name="activation_running">S\'està executant…</string>
+    <string name="activation_success">Activat</string>
+    <string name="activation_failed">Ha fallat, vegeu la sortida a continuació</string>
+    <string name="activation_failed_with_code">Ha fallat (codi de sortida %1$d), vegeu la sortida a continuació</string>
+    <string name="activation_timeout">L\'ordre encara s\'està executant; s\'ha deixat d\'esperar (normal per a ordres de tipus servidor)</string>
+    <string name="activation_output">Sortida</string>
+    <string name="activation_output_empty">(encara no hi ha sortida)</string>
+    <string name="activation_copy">Copiar</string>
+    <string name="activation_copied">Copiat</string>
+    <string name="activation_back">Enrere</string>
+    <string name="settings_translation_summary">Ajudeu-nos a traduir %s al vostre idioma</string>
+    <string name="settings_start_on_boot">Iniciar en arrencar (root)</string>
+    <string name="settings_start_on_boot_summary">En dispositius amb root, Shizako es pot iniciar automàticament en arrencar</string>
+    <string name="settings_use_system_color">Utilitzar el color del tema del sistema</string>
+    <string name="action_about">Quant a</string>
+    <string name="about_view_source_code">Vegeu el codi font a %s</string>
+    <string name="about_author">Autor</string>
+    <string name="about_based_on">Basat en</string>
+    <string name="about_based_on_text">el projecte de codi obert %s</string>
+    <string name="about_license">Llicència</string>
+    <string name="about_footer">Shizako — Fet amb ❤️</string>
+    <string name="action_stop">Aturar Shizako</string>
+    <string name="dialog_stop_message">El servei de Shizako s\'aturarà.</string>
+    <string name="notification_channel_service_status">Estat d\'inici del servei</string>
+    <string name="notification_channel_status">Estat del servei</string>
+    <string name="notification_service_starting">El servei de Shizako s\'està iniciant…</string>
+    <string name="notification_service_start_failed">No s\'ha pogut iniciar el servei de Shizako.</string>
+    <string name="notification_service_start_no_root">No s\'ha pogut demanar el permís de root.</string>
+    <string name="notification_working">S\'està treballant…</string>
+    <string name="notification_channel_adb_pairing">Aparellament de depuració sense fil</string>
+    <string name="notification_adb_pairing_input_paring_code">Introduïu el codi d\'aparellament</string>
+    <string name="notification_adb_pairing_searching_for_service_title">Cercant el servei d\'aparellament</string>
+    <string name="notification_adb_pairing_service_found_title">Servei d\'aparellament trobat</string>
+    <string name="notification_adb_pairing_stop_searching">Aturar la cerca</string>
+    <string name="notification_adb_pairing_working_title">Aparellament en curs</string>
+    <string name="notification_adb_pairing_succeed_title">Aparellament correcte</string>
+    <string name="notification_adb_pairing_succeed_text">Ara podeu iniciar el servei de Shizako.</string>
+    <string name="notification_adb_pairing_failed_title">L\'aparellament ha fallat</string>
+    <string name="notification_adb_pairing_retry">Tornar-ho a provar</string>
+    <string name="tile_service_label">Servei de Shizako</string>
+    <string name="tile_service_subtitle_running">En execució</string>
+    <string name="tile_service_subtitle_stopped">Aturat</string>
+    <string name="tile_wireless_adb_label">Depuració sense fil</string>
+    <string name="permission_label">accedir a Shizako</string>
+    <string name="permission_description">Permet que l\'aplicació utilitzi Shizako.</string>
+    <string name="permission_warning_template">Voleu permetre que &lt;b&gt;%1$s&lt;/b&gt; %2$s?</string>
+    <string name="grant_dialog_button_allow_always">Permetre sempre</string>
+    <string name="grant_dialog_button_deny">Denegar</string>
+    <string name="starter">Iniciador</string>
+    <string name="start_with_root_failed">No es pot iniciar el servei perquè el permís de root no s\'ha concedit o aquest dispositiu no té root.</string>
+    <string name="dialog_cannot_open_browser_title">No es pot obrir el navegador</string>
+    <string name="toast_copied_to_clipboard">%s
+s\'ha copiat al porta-retalls.</string>
+    <string name="toast_copied_to_clipboard_with_text">&lt;b&gt;%s&lt;/b&gt; s\'ha copiat al porta-retalls.</string>
+    <string name="dialog_legacy_not_support_title">%1$s no és compatible amb el Shizako modern</string>
+    <string name="dialog_legacy_not_support_message">El Shizako antic està obsolet des de març de 2019. A més, el Shizako antic no funciona als sistemes Android més nous.&lt;p&gt;Demaneu al desenvolupador de &lt;b&gt;%1$s&lt;/b&gt; que l\'actualitzi.</string>
+    <string name="dialog_requesting_legacy_title">%1$s demana el Shizako antic</string>
+    <string name="dialog_requesting_legacy_message">&lt;b&gt;%1$s&lt;/b&gt; és compatible amb el Shizako modern, però demana el Shizako antic. Això pot ser perquè Shizako no s\'està executant; comproveu-ho a l\'aplicació Shizako.&lt;p&gt;El Shizako antic està obsolet des de març de 2019.</string>
+    <plurals name="home_app_management_authorized_apps_count">
+        <item quantity="one">%d aplicació autoritzada</item>
+        <item quantity="other">%d aplicacions autoritzades</item>
+    </plurals>
+    <!-- Shizako: 补充翻译 -->
+    <string name="setup_welcome_title">Benvingut</string>
+    <string name="setup_welcome_subtitle">Amb uns quants ajustos ràpids, Shizako estarà a punt per usar-se.</string>
+    <string name="setup_disclaimer_title">Avís legal</string>
+    <string name="setup_disclaimer_text"><![CDATA[Shizako es proporciona «tal com és», sense cap tipus de garantia.<p>Shizako funciona executant un servei privilegiat al dispositiu. El desenvolupador no és responsable de cap dany o pèrdua de dades que pugui resultar de l\'ús d\'aquesta aplicació o de concedir accés a Shizako.<p>Utilitzeu-lo sota la vostra responsabilitat.]]></string>
+    <string name="setup_disclaimer_agree">He llegit i accepto l\'anterior</string>
+    <string name="setup_language_title">Trieu l’idioma</string>
+    <string name="setup_language_subtitle">Podreu canviar-lo més endavant als ajustos.</string>
+    <string name="setup_mode_subtitle">Trieu com es veurà Shizako. Podreu canviar-ho més endavant als ajustos.</string>
+    <string name="setup_mode_follow_system">Segueix el sistema</string>
+    <string name="setup_mode_light">Clar</string>
+    <string name="setup_mode_dark">Fosc</string>
+    <string name="setup_start_method_title">Mètode d\'activació</string>
+    <string name="setup_start_method_subtitle">Trieu com penseu iniciar Shizako. La pàgina principal mostrarà aquest mètode primer.</string>
+    <string name="setup_start_method_wadb">Depuració sense fil</string>
+    <string name="setup_start_method_wadb_summary">A Android 11 o superior, sense necessitat d\'ordinador</string>
+    <string name="setup_start_method_root">Root</string>
+    <string name="setup_start_method_root_summary">Per a dispositius amb root, un toc per començar</string>
+    <string name="setup_start_method_adb">Connecta\'t a un ordinador</string>
+    <string name="setup_start_method_adb_summary">Utilitza adb per USB, repeteix-ho després de cada reinici</string>
+    <string name="setup_back">Enrere</string>
+    <string name="setup_next">Següent</string>
+    <string name="setup_get_started">Comença</string>
+    <string name="setup_skip">Omet</string>
+</resources>

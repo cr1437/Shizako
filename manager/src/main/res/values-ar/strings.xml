@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home_status_service_version">الإصدار %2$s, %1$s</string>
+    <string name="home_status_service_not_running">%1$s لا يعمل</string>
+    <string name="home_status_service_is_running">%1$s يعمل بنجاح</string>
+    <string name="home_adb_title">ابدأ بالاتصال بجهاز كمبيوتر</string>
+    <string name="home_adb_button_view_help">اقرأ التعليمات</string>
+    <string name="home_adb_button_view_command">عرض الأمر</string>
+    <string name="home_adb_dialog_view_command_copy_button">نسخ</string>
+    <string name="home_adb_dialog_view_command_button_send">إرسال</string>
+    <string name="home_status_service_version_update">الإصدار %2$s, %1$s&lt;br&gt;اعد تشغيل التطبيق من جديد للتحديث إلى الإصدار %3$s</string>
+    <string name="home_adb_description">"بالنسبة للأجهزة التي لا تحتوي على الجذر (Root) ، تحتاج إلى استخدام adb لبدء Shizako (يتطلب اتصال الكمبيوتر). يجب تكرار هذه العملية في كل مرة يتم فيها إعادة تشغيل الجهاز. يرجى  &lt;b>&lt;a href=\"%1$s\">قراءة التعليمات&lt;/a>&lt;/b> ."</string>
+    <string name="dialog_adb_discovery_message">يرجى تمكين \"التصحيح اللاسلكي\" في \"خيارات المطور\". \"تصحيح لاسلكي\" يتم تعطيلها عندما تتغير الشبكة تلقائيا.
+\n
+\n ملاحظة، لا تعطل \"خيارات المطور\" أو \"تصحيح USB\"، أو سيتم إيقاف شيزوكو</string>
+    <string name="dialog_adb_port">المنفذ</string>
+    <string name="adb_pairing">الاقتران</string>
+    <string name="home_adb_dialog_view_command_message">font face=monospace&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* هناك بعض الاعتبارات الأخرى، يرجى تأكيد أنك قرأت التعليمات أولا.</string>
+    <string name="home_wireless_adb_title">البدء باستخدام التصحيح اللاسلكي</string>
+    <string name="home_wireless_adb_description">على أندرويد 11 وما فوق ، يمكنك تفعيل التصحيح اللاسلكي وبدء Shizako مباشرة من جهازك ، دون الاحتياج إتصال بالكمبيوتر.&lt;p>يرجى الإطلاع أولاً على التعليمات المفصلة خطوة بخطوة.</string>
+    <string name="dialog_adb_discovery">البحث عن خدمة التصحيح اللاسلكي</string>
+    <string name="dialog_adb_invalid_port">المنفذ هو عدد صحيح يتراوح من 1 إلى 65535.</string>
+    <string name="home_wireless_adb_view_guide_button">‌دليل خطوة بخطوة</string>
+    <string name="dialog_adb_pairing_title">إقران مع الجهاز</string>
+    <string name="home_wireless_adb_description_pre_11">على الأجهزة الأقدم من إصدار الأندرويد 11 ، يلزم الاتصال بجهاز كمبيوتر لتمكين المعالجة/التصحيح اللاسلكي.</string>
+    <string name="dialog_adb_pairing_discovery">جاري البحث على جهاز للإتصال</string>
+    <string name="translation_contributors">‮المشاركين في الترجمة</string>
+    <string name="settings_startup">بدء</string>
+    <string name="settings_black_night_theme_summary">استخدم سمة السواد النقيّ إذ الوضع الليلي الذي بالجهاز مفعل</string>
+    <string name="settings_black_night_theme">وضع السواد النقيّ</string>
+    <string name="settings_user_interface">المظهر</string>
+    <string name="settings_language">اللغة</string>
+    <string name="settings_title">الإعدادات</string>
+    <string name="rish_description">باستخدام %1$s ، في أي تطبيق طرفي ، يمكنك الاتصال والتفاعل مع عمليات تشغيل shell بواسطة Shizako. &lt;p> حول الاستخدام التفصيلي %1$s ، انقر لعرض المستند.</string>
+    <string name="terminal_tutorial_3_description">بعض النصائح: امنح إذن التنفيذ لـ %1$s وأضفه إلى%2$s ، ستتمكن من استخدام %1$s مباشرةً.</string>
+    <string name="terminal_tutorial_3">أخيرًا ، انقل الملفات إلى مكان يمكن لتطبيقك الطرفي الوصول إليه ، وستتمكن من استخدام %1$s لتشغيل الأوامر من خلال Shizako.</string>
+    <string name="terminal_tutorial_2_description">على سبيل المثال ، إذا كنت تريد استخدام Shizako في %1$s ، فيجب استبدال %2$s بـ %3$s (%4$s هو اسم الحزمة %1$s).</string>
+    <string name="terminal_tutorial_2">بعد ذلك ، استخدم أي محرر نصوص لفتح %1$s وقم بتعديله.</string>
+    <string name="terminal_export_files">تصدير الملفات</string>
+    <string name="terminal_tutorial_1_description">"إذا كانت هناك ملفات بنفس الاسم في المجلد المحدد ، فسيتم حذفها. 
+ 
+تستخدم وظيفة التصدير SAF (إطار عمل الوصول إلى التخزين). يُذكر أن MIUI قد يخرب وظائف SAF. إذا كنت من تستخدمي MIUI ، فقد تضطر إلى استخراج الملف من APK Shizako أو تنزيله من GitHub."</string>
+    <string name="terminal_tutorial_1">أولاً ، قم بتصدير الملفات إلى أي مكان تريده. ستجد ملفين, %1$s و %2$s.</string>
+    <string name="home_terminal_description">قم بتشغيل الأوامر من خلال Shizako في تطبيقات المحطة التي تريدها</string>
+    <string name="home_terminal_title">استخدم Shizako في تطبيقات المحطة</string>
+    <string name="app_management_item_summary_requires_root">* يطلب Shizako الجذر (الروت) للعمل</string>
+    <string name="app_management_dialog_adb_is_limited_message">من المحتمل جدًا أن تحدد الشركة المصنعة للجهاز إذن adb. &lt;p&gt; قد يكون هناك حل لنظامك في &lt;b&gt;&lt;a href=\"%1$s\"&gt;هذا المستند&lt;/a&gt;&lt;/b&gt;.</string>
+    <string name="app_management_dialog_adb_is_limited_title">إذن الADB محدود</string>
+    <string name="home_adb_is_limited_description">"قامت الشركة المصنعة لجهازك بتقييد أذونات adb ولن تعمل التطبيقات التي تستخدم Shizako بشكل صحيح. 
+ 
+عادة ، يمكن رفع هذا القيد عن طريق تعديل بعض الخيارات في \"خيارات المطور\". يرجى قراءة التعليمات للحصول على تفاصيل حول كيفية القيام بذلك. 
+ 
+قد تحتاج إلى إعادة تشغيل Shizako حتى تدخل العملية حيز التنفيذ."</string>
+    <string name="home_adb_is_limited_title">أنت بحاجة إلى اتخاذ خطوة إضافية</string>
+    <string name="home_learn_more_description">تعلم كيف تطور مع Shizako</string>
+    <string name="home_learn_more_title">معلومات عن Shizako</string>
+    <string name="home_app_management_empty">ستظهر هنا التطبيقات التي تتطلب Shizako.</string>
+    <string name="home_app_management_view_authorized_apps">انقر لإدارة التطبيقات المصرح بها</string>
+    <plurals name="home_app_management_authorized_apps_count">
+        <item quantity="zero">تطبيق %d معتمد</item>
+        <item quantity="one">تطبيقات %d معتمدة</item>
+        <item quantity="two">تطبيقات %d معتمدة</item>
+        <item quantity="few">تطبيقات %d معتمدة</item>
+        <item quantity="many">تطبيقات %d معتمدة</item>
+        <item quantity="other">تطبيقات %d معتمدة</item>
+    </plurals>
+    <string name="home_app_management_title">الإدارة التطبيقية</string>
+    <string name="home_root_button_restart">إعادة البدء بالتشغيل</string>
+    <string name="home_root_button_start">البدء بالتشغيل</string>
+    <string name="home_root_description_sui">إذا كنت تستخدم Magisk ، فيمكنك تجربة %1$s. بالنسبة لمستخدمي الجذر (الروت) ، سيحل في مكان Shizako. ملاحظة ، تحتاج التطبيقات الحالية إلى التغيير بسيط لاستخدام %2$s.</string>
+    <string name="home_root_description">"بالإضافة إلى ذلك ، يمكن بدء تشغيل Shizako تلقائياً عند حالة التشغيل بعد القفل. إذا لم يكن الأمر كذلك ، فيرجى التحقق مما إذا كان نظامك أو أدوات الجهات الخارجية (تطبيقات خارجية) قد حد أو عطل Shizako. 
+&lt;br> يمكنك الرجوع إلى %s."</string>
+    <string name="home_root_title">ابدأ (للأجهزة المجذرة)</string>
+    <string name="adb_pairing_tutorial_content_network_limation_not_foreground">بعض الأنظمة (مثل MIUI) لا تسمح للتطبيقات بالوصول إلى الشبكة عندما لا تكون مرئية ، حتى إذا كان التطبيق يستخدم الخدمة الأمامية كمعيار. يرجى تعطيل ميزات تحسين البطارية لـShizako على هذه الأنظمة.</string>
+    <string name="adb_pairing_tutorial_content_network">يحتاج Shizako للوصول إلى الشبكة المحلية. يتم التحكم بها عن طريق إذن الشبكة.</string>
+    <string name="adb_pairing_tutorial_content_finish">إرجع إلى Shizako وقم بتشغيل Shizako.</string>
+    <string name="adb_pairing_tutorial_content_left_is_clickable">يرجى ملاحظة أن الجزء الأيسر من خيار \"التصحيح اللاسلكي\" قابل للنقر عليه ، وسيؤدي النقر عليه إلى فتح صفحة جديدة. تفعيل \"التصحيح اللاسلكي\" من المفتاح الأيمن قد يكون غير صحيح.</string>
+    <string name="adb_pairing_tutorial_content_miui_2">بخلاف ذلك ، قد لا تتمكن من إدخال رمز الاقتران من الإشعار.</string>
+    <string name="adb_pairing_tutorial_content_miui">قد يحتاج مستخدمو MIUI إلى تبديل نمط الإعلام إلى \"Android\" من \"Notification\" - \"Notification Shade\" في إعدادات النظام.</string>
+    <string name="adb_pairing_tutorial_content_notification_blocked">تحتاج عملية الاقتران إلى التفاعل مع إشعار من Shizako. يرجى السماح لشيزوكو بنشر الإخطارات.</string>
+    <string name="adb_pairing_tutorial_content_enter_pairing_code">أدخل الرمز في إشعار Shizako المرسل لإكمال الاقتران.</string>
+    <string name="adb_pairing_tutorial_content_steps">أدخل \"خيارات المطور\" - \"التصحيح اللاسلكي\". انقر على \"إقران الجهاز برمز الإقران\" ، وسترى رمزًا مكونًا من ستة أرقام.</string>
+    <string name="adb_pairing_tutorial_content_notification">سيساعدك إشعار من Shizako على إكمال الاقتران.</string>
+    <string name="adb_pairing_tutorial_title">قم بإقران Shizako بجهازك</string>
+    <string name="notification_settings">إعداد الإشعارات</string>
+    <string name="development_settings">خيارات للمطور</string>
+    <string name="adb_pair_required">يرجى المرور بخطوة الاقتران أولاً.</string>
+    <string name="adb_error_key_store">تعذر إنشاء مفتاح لتصحيح الأخطاء اللاسلكية.
+\nقد يكون هذا بسبب تعطل آلية KeyStore لهذا الجهاز.</string>
+    <string name="adb_pairing_requires_multi_window_reason">يتطلب النظام أن يكون مربع حوار الاقتران مرئيًا دائمًا ، واستخدام وضع تقسيم الشاشة هو الطريقة الوحيدة للسماح لهذا التطبيق ومربع حوار النظام بالظهور في نفس الوقت.</string>
+    <string name="adb_pairing_requires_multi_window">الرجاء إدخال وضع تقسيم الشاشة (متعدد النوافذ) أولاً.</string>
+    <string name="dialog_adb_pairing_message">يرجى بدء الاقتران بالخطوات التالية: \"خيارات المطور\" - \"التصحيح اللاسلكي\" - \"إقران الجهاز باستخدام رمز الاقتران\".
+\n
+\nبعد بدء عملية الاقتران ، ستتمكن من إدخال رمز الاقتران.</string>
+    <string name="dialog_wireless_adb_not_enabled">التصحيح اللاسلكي غير ممكّن.
+\nملاحظة ، قبل Android 11 ، لتمكين التصحيح اللاسلكي ، يجب أن يكون الاتصال بالكمبيوتر أمرًا ضروريًا.</string>
+    <string name="cannot_connect_port">لا يمكن الاتصال بخدمة تصحيح الأخطاء اللاسلكية.</string>
+    <string name="paring_code_is_wrong">رمز الاقتران خاطئ.</string>
+    <string name="dialog_adb_pairing_paring_code">كود الاقتران</string>
+    <string name="dialog_adb_discovery_message_toggle_wireless_debugging">يرجى محاولة تعطيل \"التصحيح اللاسلكي\" وتمكينه إذا استمر في البحث.</string>
+    <string name="dialog_stop_message">سيتم إيقاف خدمة Shizako.</string>
+    <string name="action_stop">إيقاف Shizako</string>
+    <string name="notification_service_starting">بدأت خدمة Shizako…</string>
+    <string name="notification_adb_pairing_service_found_title">تم العثور على خدمة الاقتران</string>
+    <string name="permission_label">الوصول إلى Shizako</string>
+    <string name="permission_description">اسمح للتطبيق باستخدام Shizako.</string>
+    <string name="permission_warning_template">هل تريد السماح لـ <b>%1$s</b> بـ %2$s؟</string>
+    <string name="dialog_requesting_legacy_button_open_shizuku">افتح Shizako</string>
+    <string name="settings_start_on_boot">ابدأ عند التشغيل من حالة القفل (تحتاج جذر/روت)</string>
+    <string name="action_about">حول</string>
+    <string name="notification_adb_pairing_succeed_title">تم الاقتران بنجاح</string>
+    <string name="dialog_requesting_legacy_message">يحتوي &lt;b> %1$s &lt;/b> على دعم Shizako الحديث ، لكنه يتطلب شيزوكو القديم. قد يكون هذا بسبب عدم تشغيل Shizako ، يرجى التحقق في تطبيق Shizako. &lt;p> تم إيقاف Legacy Shizako منذ آذار (مارس) 2019.</string>
+    <string name="settings_translation_summary">ساعدنا في ترجمة %s إلى لغتك</string>
+    <string name="settings_start_on_boot_summary">بالنسبة للأجهزة المجذرة (تستخدم الروت) ، يمكن لـShizako البدء تلقائيًا عند التشغيل من حالة القفل</string>
+    <string name="settings_use_system_color">استخدم لون سمة النظام</string>
+    <string name="notification_service_start_no_root">فشل في طلب إذن الجذر (الروت).</string>
+    <string name="notification_adb_pairing_searching_for_service_title">البحث عن خدمة الاقتران</string>
+    <string name="notification_adb_pairing_succeed_text">يمكنك بدء خدمة Shizako الآن.</string>
+    <string name="toast_copied_to_clipboard_with_text">تم نسخ <b>%s</b> إلى الحافظة.</string>
+    <string name="notification_channel_service_status">بدء حالة الخدمة</string>
+    <string name="notification_service_start_failed">فشل بدء تشغيل خدمة Shizako.</string>
+    <string name="notification_working">يعمل…</string>
+    <string name="start_with_root_failed">لا يمكن بدء الخدمة لأنه لم يتم منح إذن الجذر (الروت) أو قد يكون هذا الجهاز ليس مزوّدًا بحق الوصول إلى الجذر (الروت).</string>
+    <string name="dialog_requesting_legacy_title">يطلب %1$s تطبيق Shizako القديم</string>
+    <string name="dialog_legacy_not_support_message">تم إهمال Legacy Shizako منذ آذار (مارس) 2019. أيضًا ، لا يعمل Shizako القديم على أنظمة Android الأحدث. &lt;p> يُرجى مطالبة مطور &lt;b> %1$s &lt;/b> بالتحديث.</string>
+    <string name="settings_translation_contributors">المساهمون في الترجمة</string>
+    <string name="settings_translation">شارك في الترجمة</string>
+    <string name="about_view_source_code">عرض التعليمات البرمجية المصدر في %s</string>
+    <string name="notification_channel_adb_pairing">اقتران التصحيح/العلاج اللاسلكي</string>
+    <string name="notification_adb_pairing_input_paring_code">أدخل رمز الاقتران</string>
+    <string name="notification_adb_pairing_stop_searching">توقف عن البحث</string>
+    <string name="notification_adb_pairing_working_title">الاقتران قيد التقدم</string>
+    <string name="notification_adb_pairing_failed_title">فشل الاقتران</string>
+    <string name="notification_adb_pairing_retry">أعد المحاولة</string>
+    <string name="grant_dialog_button_allow_always">السماح في كل وقت</string>
+    <string name="grant_dialog_button_deny">منع</string>
+    <string name="starter">مفتاح التشغيل</string>
+    <string name="dialog_cannot_open_browser_title">لا يمكن بدء المتصفح</string>
+    <string name="toast_copied_to_clipboard">%s
+\n تم نسخه إلى الحافظة.</string>
+    <string name="dialog_legacy_not_support_title">%1$s لا يدعم النسخة الحديثة من Shizako</string>
+    <!-- Shizako: 补充翻译 -->
+    <string name="home_activation_title">تفعيل بنقرة واحدة</string>
+    <string name="home_activation_summary">فعِّل Brevent وStopapp وغيرها دون حاجة إلى حاسوب</string>
+    <string name="home_activation_summary_not_running">ابدأ تشغيل Shizako أولاً لاستخدام التفعيل بنقرة واحدة</string>
+    <string name="settings_debug">تصحيح الأخطاء</string>
+    <string name="settings_crash_logs">سجلات الأعطال</string>
+    <string name="settings_crash_logs_summary">تُحفظ الأعطال هنا عندما يُغلق التطبيق بشكل غير متوقع</string>
+    <string name="settings_crash_logs_empty">لا توجد سجلات أعطال</string>
+    <string name="settings_crash_logs_count">%1$d سجل أعطال</string>
+    <string name="settings_crash_logs_share">مشاركة</string>
+    <string name="settings_crash_logs_delete">حذف</string>
+    <string name="settings_crash_logs_delete_all">حذف الكل</string>
+    <string name="settings_crash_logs_deleted">تم الحذف</string>
+    <string name="activation_title">تفعيل بنقرة واحدة</string>
+    <string name="activation_subtitle">نفِّذ أوامر ADB التي كانت تتطلب حاسوباً من هنا مباشرة</string>
+    <string name="activation_service_running">Shizako يعمل، وجاهز للتفعيل</string>
+    <string name="activation_service_running_brief">Shizako يعمل</string>
+    <string name="activation_service_not_running">Shizako لا يعمل؛ يرجى بدء الخدمة من الصفحة الرئيسية أولاً</string>
+    <string name="activation_activate">تفعيل</string>
+    <string name="activation_activated">مفعَّل</string>
+    <string name="activation_status_not_installed">%1$s · غير مثبت</string>
+    <string name="activation_status_installed">%1$s · مثبت</string>
+    <string name="activation_status_activated">%1$s · مفعَّل بالفعل</string>
+    <string name="activation_status_not_activated">%1$s · مثبت، غير مفعَّل</string>
+    <string name="activation_note_device_owner">يتطلب إزالة جميع الحسابات والمستخدمين الثانويين (وضع الضيف / استنساخ التطبيقات) أولاً؛ يمكنك إعادتها بعد التفعيل. قد توجد قيود خاصة بنظام الشركة المصنعة.</string>
+    <string name="activation_note_brevent">يحتاج خادم Brevent إلى إعادة التفعيل بعد كل إعادة تشغيل.</string>
+    <string name="activation_custom_title">أمر مخصص</string>
+    <string name="activation_custom_hint">أي أمر shell، مثال: dpm set-device-owner …</string>
+    <string name="activation_custom_empty">الأمر فارغ</string>
+    <string name="activation_run">تشغيل</string>
+    <string name="activation_running">جارٍ التشغيل…</string>
+    <string name="activation_success">تم التفعيل</string>
+    <string name="activation_failed">فشل، راجع المخرجات أدناه</string>
+    <string name="activation_failed_with_code">فشل (رمز الخروج %1$d)، راجع المخرجات أدناه</string>
+    <string name="activation_timeout">لا يزال الأمر قيد التشغيل؛ تم إيقاف الانتظار (وهذا طبيعي للأوامر الشبيهة بالخوادم)</string>
+    <string name="activation_output">المخرجات</string>
+    <string name="activation_output_empty">(لا توجد مخرجات بعد)</string>
+    <string name="activation_copy">نسخ</string>
+    <string name="activation_copied">تم النسخ</string>
+    <string name="activation_back">رجوع</string>
+    <string name="about_author">المطوِّر</string>
+    <string name="about_based_on">مبني على</string>
+    <string name="about_based_on_text">مشروع %s مفتوح المصدر</string>
+    <string name="about_license">الترخيص</string>
+    <string name="about_footer">Shizako — صُنع بكل ❤️</string>
+    <string name="notification_channel_status">حالة الخدمة</string>
+    <string name="tile_service_label">خدمة Shizako</string>
+    <string name="tile_service_subtitle_running">يعمل</string>
+    <string name="tile_service_subtitle_stopped">متوقف</string>
+    <string name="tile_wireless_adb_label">تصحيح الأخطاء اللاسلكي</string>
+    <!-- Shizako: 补充翻译 -->
+    <string name="setup_welcome_title">مرحبًا</string>
+    <string name="setup_welcome_subtitle">ببضع إعدادات سريعة، سيصبح Shizako جاهزًا للاستخدام.</string>
+    <string name="setup_disclaimer_title">إخلاء المسؤولية</string>
+    <string name="setup_disclaimer_text"><![CDATA[يُقدَّم Shizako «كما هو» دون أي ضمان.<p>يعمل Shizako بتشغيل خدمة ذات صلاحيات على جهازك. المطوّر غير مسؤول عن أي ضرر أو فقدان بيانات قد ينتج عن استخدام هذا التطبيق أو منح التطبيقات صلاحية الوصول إلى Shizako.<p>استخدمه على مسؤوليتك الخاصة.]]></string>
+    <string name="setup_disclaimer_agree">لقد قرأت ما سبق وأوافق عليه</string>
+    <string name="setup_language_title">اختر اللغة</string>
+    <string name="setup_language_subtitle">يمكنك تغييرها لاحقًا من الإعدادات.</string>
+    <string name="setup_mode_subtitle">اختر مظهر Shizako. يمكنك تغييره لاحقًا من الإعدادات.</string>
+    <string name="setup_mode_follow_system">اتبع النظام</string>
+    <string name="setup_mode_light">فاتح</string>
+    <string name="setup_mode_dark">داكن</string>
+    <string name="setup_start_method_title">طريقة التفعيل</string>
+    <string name="setup_start_method_subtitle">اختر الطريقة التي ستبدأ بها Shizako. ستظهر هذه الطريقة أولاً في الصفحة الرئيسية.</string>
+    <string name="setup_start_method_wadb">التصحيح اللاسلكي</string>
+    <string name="setup_start_method_wadb_summary">على Android 11 أو أحدث، دون الحاجة إلى كمبيوتر</string>
+    <string name="setup_start_method_root">Root</string>
+    <string name="setup_start_method_root_summary">للأجهزة المكسورة الصلاحية، بدء بلمسة واحدة</string>
+    <string name="setup_start_method_adb">الاتصال بكمبيوتر</string>
+    <string name="setup_start_method_adb_summary">استخدم adb عبر USB، وكرّره بعد كل إعادة تشغيل</string>
+    <string name="setup_back">رجوع</string>
+    <string name="setup_next">التالي</string>
+    <string name="setup_get_started">ابدأ</string>
+    <string name="setup_skip">تخطي</string>
+</resources>

@@ -1,0 +1,414 @@
+<resources>
+    <string name="app_name" translatable="false">Shizako</string>
+
+    <!-- To translators: you can leave your here -->
+    <string name="translation_contributors" />
+
+    <!-- Home - Status -->
+    <string name="home_status_service_is_running">%1$s is running</string>
+    <string name="home_status_service_not_running">%1$s is not running</string>
+    <string name="home_status_service_version">Version %2$s, %1$s</string>
+    <string name="home_status_service_version_update"><![CDATA[Version %2$s, %1$s<br>Start again to update to version %3$s]]></string>
+
+    <!-- Home - Adb -->
+    <string name="home_adb_title"><![CDATA[Start by connecting to a computer]]></string>
+    <string name="home_adb_description">For devices without root, you need to use adb to start Shizako (requires computer connection). This process needs to be repeated every time the device is restarted. Please &lt;b>&lt;a href=\"%1$s\">read the help&lt;/a>&lt;/b>.</string>
+    <string name="home_adb_button_view_help">Read help</string>
+    <string name="home_adb_button_view_command">View command</string>
+    <string name="home_adb_dialog_view_command_message"><![CDATA[<font face="monospace">%1$s</font><br><br>* There are some other considerations, please confirm that you have read the help first.]]></string>
+    <string name="home_adb_dialog_view_command_copy_button">Copy</string>
+    <string name="home_adb_dialog_view_command_button_send">Send</string>
+
+    <!-- Home - Dhizuku (Device Owner) -->
+    <string name="home_dhizuku_title">Activate via Device Owner</string>
+    <string name="home_dhizuku_description">Make Shizako the Device Owner of your device and she keeps her privileges without root and without keeping wireless debugging on. Run the command once from a computer, then Dhizuku-API apps (like Hail or FreezeYou) can borrow her power directly.</string>
+    <string name="home_dhizuku_description_active">Device Owner mode is active — authorized apps can now use Shizako\'s Device Owner privileges. You can revoke them anytime.</string>
+    <string name="home_dhizuku_button_view_command">View command</string>
+    <string name="home_dhizuku_button_manage">Authorized apps</string>
+    <string name="home_dhizuku_button_activate">One-tap activate</string>
+    <string name="home_dhizuku_button_activating">Activating…</string>
+    <string name="home_dhizuku_activate_success">Device Owner mode activated</string>
+    <string name="home_dhizuku_activate_failed">Activation failed: %1$s</string>
+    <string name="home_dhizuku_description_ready">Shizuku mode is running, so Device Owner mode can be activated right here — no computer needed.</string>
+    <string name="home_dhizuku_dialog_view_command_message"><![CDATA[<font face="monospace">%1$s</font><br><br>* Run it once from a computer with USB debugging enabled. No account may exist on the device, otherwise the command fails.]]></string>
+
+    <!-- Dhizuku -->
+    <string name="dhizuku_device_owner_label">Shizako (Device Owner)</string>
+    <string name="dhizuku_device_owner_desc">Required for Dhizuku mode: lets Shizako share her Device Owner privileges with authorized apps.</string>
+    <string name="dhizuku_device_owner_enabled">Shizako is now the Device Owner</string>
+    <string name="dhizuku_device_owner_disabled">Device Owner mode disabled</string>
+    <string name="dhizuku_manage_title">Dhizuku authorized apps</string>
+    <string name="dhizuku_manage_empty">No apps authorized yet.\nApps that support Dhizuku will ask for permission on first use.</string>
+    <string name="dhizuku_revoke_title">Revoke access</string>
+    <string name="dhizuku_revoke_message">Stop letting %1$s use Device Owner privileges?</string>
+    <string name="dhizuku_revoke_confirm">Revoke</string>
+    <string name="dhizuku_permission_warning_template"><![CDATA[Let <b>%1$s</b>%2$s borrow Shizako\'s Device Owner power?]]></string>
+
+    <!-- Home - Wireless Adb -->
+    <string name="home_wireless_adb_title"><![CDATA[Start via Wireless debugging]]></string>
+    <string name="home_wireless_adb_description">On Android 11 or above, you can enable Wireless debugging and start Shizako directly from your device, without connecting to a computer.&lt;p>Please view the step-by-step guide first.</string>
+    <string name="home_wireless_adb_description_pre_11"><![CDATA[Before Android 11, connecting to a computer is required to enable Wireless debugging.]]></string>
+    <string name="home_wireless_adb_view_guide_button">Step-by-step guide</string>
+
+    <!-- Adb -->
+    <string name="dialog_adb_discovery">Searching for wireless debugging service</string>
+    <string name="dialog_adb_discovery_message">"Please enable \"Wireless debugging\" in \"Developer options\". \"Wireless debugging\" is automatically disabled when network changes.
+
+Note, do not disable \"Developer options\" or \"USB debugging\", or Shizako will be stopped."</string>
+    <string name="dialog_adb_discovery_message_toggle_wireless_debugging">Please try to disable and enable \"Wireless debugging\" if it keeps searching.</string>
+    <string name="dialog_adb_port">Port</string>
+    <string name="dialog_adb_invalid_port">Port is an integer ranging from 1 to 65535.</string>
+    <string name="adb_pairing">Pairing</string>
+    <string name="dialog_adb_pairing_title">Pair with device</string>
+    <string name="dialog_adb_pairing_discovery">Searching for pairing service</string>
+    <string name="dialog_adb_pairing_paring_code">Pairing code</string>
+    <string name="paring_code_is_wrong">Pairing code is wrong.</string>
+    <string name="cannot_connect_port">Can\'t connect to wireless debugging service.</string>
+    <string name="dialog_wireless_adb_not_enabled">Wireless debugging is not enabled.\nNote, before Android 11, to enable wireless debugging, computer connection is a must.</string>
+    <string name="dialog_adb_pairing_message">Please start paring by the following steps: \"Developer Options\" - \"Wireless debugging\" - \"Pairing device using pairing code\".\n\nAfter the pairing process starts, you will able to input the pairing code.</string>
+    <string name="adb_pairing_requires_multi_window">Please enter split-screen (multi-window) mode first.</string>
+    <string name="adb_pairing_requires_multi_window_reason">The system requires the pairing dialog always visible, using split-screen mode is the only way to let this app and system dialog visible at the same time.</string>
+    <string name="adb_error_key_store">Unable to generate key for wireless debugging.\nThis may be because KeyStore mechanism of this device is broken.</string>
+    <string name="adb_pair_required">Please go through the pairing step first.</string>
+    <string name="development_settings">Developer options</string>
+    <string name="notification_settings">Notification options</string>
+    <string name="adb_pairing_tutorial_title">Pair Shizako with your device</string>
+    <string name="adb_pairing_tutorial_content_notification">A notification from Shizako will help you complete the pairing.</string>
+    <string name="adb_pairing_tutorial_content_steps">Enter \"Developer options\" - \"Wireless debugging\". Tap \"Pair device with pairing code\", you will see a six-digit code.</string>
+    <string name="adb_pairing_tutorial_content_enter_pairing_code">Enter the code in the notification to complete pairing.</string>
+    <string name="adb_pairing_tutorial_content_notification_blocked">The pairing process needs you to interact with a notification from Shizako. Please allow Shizako to post notifications.</string>
+    <string name="adb_pairing_tutorial_content_miui">MIUI users may need to switch notification style to \"Android\" from \"Notification\" - \"Notification shade\" in system settings.</string>
+    <string name="adb_pairing_tutorial_content_miui_2">Otherwise, you may not able to enter paring code from the notification.</string>
+    <string name="adb_pairing_tutorial_content_left_is_clickable">Please note, left part of the \"Wireless debugging\" option is clickable, tapping it will open a new page. Only turing on the switch on the right is incorrect.</string>
+    <string name="adb_pairing_tutorial_content_finish">Back to Shizako and start Shizako.</string>
+    <string name="adb_pairing_tutorial_content_network">Shizako needs to access local network. It is controlled by the network permission.</string>
+    <string name="adb_pairing_tutorial_content_network_limation_not_foreground">Some systems (such as MIUI) disallow apps to access the network when they are not visible, even if the app uses foreground service as standard. Please disable battery optimization features for Shizako on such systems.</string>
+
+    <!-- Home - Root -->
+    <string name="home_root_title"><![CDATA[Start (for rooted devices)]]></string>
+    <string name="home_root_description">In addition, Shizako can be started automatically on boot. If not, please check if your system or third-party tools have restricted Shizako.&lt;br>You can refer to %s.</string>
+    <string name="home_root_description_sui">If you are using Magisk, you can try %1$s. For root users, it will eventually replace Shizako. Note, existing applications needs to change a little to use %2$s.</string>
+    <string name="home_root_button_start">Start</string>
+    <string name="home_root_button_restart">Restart</string>
+
+    <!-- Home - Application management -->
+    <string name="home_app_management_title">Application management</string>
+    <plurals name="home_app_management_authorized_apps_count">
+        <item quantity="one"><![CDATA[Authorized %d application]]></item>
+        <item quantity="other"><![CDATA[Authorized %d applications]]></item>
+    </plurals>
+    <string name="home_app_management_view_authorized_apps"><![CDATA[Tap to manage authorized apps]]></string>
+    <string name="home_app_management_empty">Apps that has requested or declared Shizako will show here.</string>
+
+    <!-- Home - Learn more -->
+    <string name="home_learn_more_title">Learn Shizako</string>
+    <string name="home_learn_more_description">Learn how to develop with Shizako</string>
+
+    <!-- Home - Adb permissions limited -->
+    <string name="home_adb_is_limited_title">You need to take an extra step</string>
+    <string name="home_adb_is_limited_description">"Your device manufacturer has restricted adb permissions and apps using Shizako will not work properly.
+
+Usually, this limitation can be lifted by adjusting some options in \"Developer options\". Please read the help for details on how to do this.
+
+You may need to restart Shizako for the operation to take effect."</string>
+
+    <!-- Application management -->
+    <string name="app_management_dialog_adb_is_limited_title">The permission of adb is limited</string>
+    <string name="app_management_dialog_adb_is_limited_message"><![CDATA[It\'s highly possible that your device manufacturer limits the permission of adb.<p>There may be a solution for your system in <b><a href=\"%1$s\">this document</a></b>.]]></string>
+    <string name="app_management_item_summary_requires_root">* requires Shizako runs with root</string>
+
+    <!-- Terminal -->
+    <string name="home_terminal_title">Use Shizako in terminal apps</string>
+    <string name="home_terminal_description">Run commands through Shizako in terminal apps you like</string>
+
+    <!-- One-click activation home card -->
+    <string name="home_activation_title">One-click activation</string>
+    <string name="home_activation_summary">Activate Brevent, Stopapp and more without a computer</string>
+    <string name="home_activation_summary_not_running">Start Shizako first to use one-click activation</string>
+    <string name="terminal_tutorial_1">First, Export files to any where you want. You will find two files, %1$s and %2$s.</string>
+    <string name="terminal_tutorial_1_description">"If there are files with the same name in the selected folder, they will be deleted.
+
+The export function uses SAF (Storage Access Framework). It's reported that MIUI breaks the functions of SAF. If you are using MIUI, you may have to extract the file from Shizako's apk or download from GitHub."</string>
+    <string name="terminal_export_files">Export files</string>
+    <string name="terminal_tutorial_2">Then, use any text editor to open and edit %1$s.</string>
+    <string name="terminal_tutorial_2_description">For example, if you want to use Shizako in %1$s, you should replace %2$s with %3$s (%4$s is the package name of %1$s).</string>
+    <string name="terminal_tutorial_3">Finally, move the files to somewhere where your terminal app can access, you will be able to use %1$s to run commands through Shizako.</string>
+    <string name="terminal_tutorial_3_description">Some tips: grant execute permission to %1$s and add it to %2$s, you will able to use %1$s directly.</string>
+    <string name="rish_description">With %1$s, in any terminal app, you can connect to and interact with the shell runs by Shizako. &lt;p>About the detailed usage %1$s, tap to view the document.</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_language">Language</string>
+    <string name="settings_user_interface">Appearance</string>
+    <string name="settings_black_night_theme">Black night theme</string>
+    <string name="settings_black_night_theme_summary">Use the pure black theme if night mode is enabled</string>
+    <string name="settings_startup">Startup</string>
+    <string name="settings_translation_contributors">Translation contributors</string>
+    <string name="settings_translation">Participate in translation</string>
+
+    <string name="settings_debug">Debug</string>
+    <string name="settings_crash_logs">Crash logs</string>
+    <string name="settings_crash_logs_summary">Crashes are saved here when the app unexpectedly exits</string>
+    <string name="settings_crash_logs_empty">No crash logs</string>
+    <string name="settings_crash_logs_count">%1$d crash log(s)</string>
+    <string name="settings_crash_logs_share">Share</string>
+    <string name="settings_crash_logs_delete">Delete</string>
+    <string name="settings_crash_logs_delete_all">Delete all</string>
+    <string name="settings_crash_logs_deleted">Deleted</string>
+
+    <!-- Setup wizard -->
+    <string name="setup_welcome_title">Welcome</string>
+    <string name="setup_welcome_subtitle">A few quick settings and Shizako is ready to use.</string>
+    <string name="setup_disclaimer_title">Disclaimer</string>
+    <string name="setup_disclaimer_text"><![CDATA[<b>1. Provided "as is"</b><p>Shizako is provided "as is", without warranty of any kind, express or implied, including but not limited to merchantability and fitness for a particular purpose. The developer is not responsible for any device damage, data loss, or system malfunction resulting from using this app or granting apps access to Shizako.</p><p><b>2. It grants real privilege</b><p>Shizako runs a privileged service on your device (shell / root identity), or makes Shizako itself the Device Owner. Authorized apps gain near-system capabilities: freezing or uninstalling apps, changing system settings, reading/writing protected data. Only authorize apps you trust, and check where they come from.</p><p><b>3. Device Owner side effects</b><p>After activating Device Owner: Shizako cannot be uninstalled or downgraded until the Device Owner role is removed; only one Device Owner can exist per device; activation requires no accounts or secondary users (accounts can be restored afterwards).</p><p><b>4. Root risks</b><p>If you start Shizako with root, the risks of rooting itself (system integrity, warranty, malware abuse) are yours to bear.</p><p><b>5. Third-party behavior</b><p>Actions performed by third-party apps through Shizako, and their consequences, are between you and those apps. Shizako only provides the channel.</p><p><b>6. License</b><p>Apache License 2.0, based on RikkaApps/Shizuku. Use at your own risk — you can stop using Shizako at any time.</p>]]></string>
+    <string name="setup_disclaimer_agree">I have read and agree to the above</string>
+    <string name="setup_disclaimer_agree_countdown">I have read and agree to the above (%1$d s)</string>
+    <string name="setup_language_title">Choose language</string>
+    <string name="setup_language_subtitle">You can change this later in Settings.</string>
+    <string name="setup_mode_subtitle">Choose how Shizako looks. You can change this later in Settings.</string>
+    <string name="setup_mode_follow_system">Follow system</string>
+    <string name="setup_mode_light">Light</string>
+    <string name="setup_mode_dark">Dark</string>
+    <string name="setup_start_method_title">Activation method</string>
+    <string name="setup_start_method_subtitle">Pick how you plan to start Shizako. The home page will show that method first.</string>
+    <string name="setup_start_method_wadb">Wireless debugging</string>
+    <string name="setup_start_method_wadb_summary">On Android 11 or above, no computer needed</string>
+    <string name="setup_start_method_root">Root</string>
+    <string name="setup_start_method_root_summary">For rooted devices, one tap to start</string>
+    <string name="setup_start_method_adb">Connect to a computer</string>
+    <string name="setup_start_method_adb_summary">Use adb over USB, repeat after each reboot</string>
+    <string name="setup_back">Back</string>
+    <string name="setup_next">Next</string>
+    <string name="setup_get_started">Get started</string>
+    <string name="setup_skip">Skip</string>
+
+    <!-- Setup: activation step (real actions) -->
+    <string name="setup_skip_activation">Skip activation</string>
+    <string name="setup_activate_title">Wake her up</string>
+    <string name="setup_activate_subtitle">Start the Shizako service right here with the method you picked. You can skip this and do it later from the home page.</string>
+    <string name="setup_activate_not_running">Service not running yet</string>
+    <string name="setup_activate_running">Service is running — she is awake!</string>
+    <string name="setup_activate_hint">After starting, apps can ask Shizako for permission. You approve every app yourself and can revoke anytime.</string>
+    <string name="setup_activate_hint_done">All set. Continue to finish, or activate Device Owner mode below for Dhizuku apps.</string>
+    <string name="setup_activate_start">Start via computer (ADB)</string>
+    <string name="setup_activate_start_root">Start with root</string>
+    <string name="setup_activate_start_wadb">Start via wireless debugging</string>
+    <string name="setup_activate_view_command">View command</string>
+    <string name="setup_activate_started">Started</string>
+    <string name="setup_activate_failed">Failed to start</string>
+    <string name="setup_activate_wadb_unavailable">Wireless debugging is not ready yet. Pair it on the home page first.</string>
+    <string name="setup_activate_dhizuku">Activate Device Owner (Dhizuku)</string>
+    <string name="setup_activate_dhizuku_running">Activating…</string>
+    <string name="setup_activate_dhizuku_success">Device Owner mode activated</string>
+    <string name="setup_activate_dhizuku_failed">Device Owner activation failed</string>
+    <string name="setup_activate_dhizuku_not_running">Start the Shizaku service first</string>
+
+    <!-- Setup: finish step -->
+    <string name="setup_finish_title">Everything is ready</string>
+    <string name="setup_finish_summary">Start method: %1$s\nService: %2$s</string>
+
+    <!-- One-click activation -->
+    <string name="activation_title">One-click activation</string>
+    <string name="activation_subtitle">Run the ADB commands that used to require a computer, right from here</string>
+    <string name="activation_service_running">Shizako is running, ready to activate</string>
+    <string name="activation_service_running_brief">Shizako is running</string>
+    <string name="activation_service_not_running">Shizako is not running, please start the service from the home page first</string>
+    <string name="activation_activate">Activate</string>
+    <string name="activation_download">Download</string>
+    <string name="activation_downloading">Downloading…</string>
+    <string name="activation_download_failed">Download failed, please try again</string>
+    <string name="activation_error_multiple_users">The device still has multiple users (guest mode / app twin). Remove them in Settings first, then inject again.</string>
+    <string name="activation_error_multiple_accounts">The device still has accounts. Remove them in Settings first, then inject again (you can add them back afterwards).</string>
+    <string name="activation_activated">Activated</string>
+    <string name="activation_status_not_installed">%1$s · not installed</string>
+    <string name="activation_status_installed">%1$s · installed</string>
+    <string name="activation_status_activated">%1$s · already activated</string>
+    <string name="activation_status_not_activated">%1$s · installed, not activated</string>
+    <string name="activation_status_checking" translatable="false">%1$s</string>
+    <string name="activation_note_device_owner">Requires all accounts and secondary users (guest mode / app twin) to be removed first; you can add them back after activation. Note: Island creates its own work-profile user — it counts as a secondary user, so Device Owner and Island cannot coexist on one device. Vendor ROM quirks may apply.</string>
+    <string name="activation_note_brevent">The Brevent server needs to be activated again after every reboot.</string>
+    <string name="activation_custom_title">Custom command</string>
+    <string name="activation_custom_hint">Any shell command, e.g. dpm set-device-owner …</string>
+    <string name="activation_custom_empty">Command is empty</string>
+    <string name="activation_run">Run</string>
+    <string name="activation_running">Running…</string>
+    <string name="activation_success">Activated</string>
+    <string name="activation_failed">Failed, see output below</string>
+    <string name="activation_failed_with_code">Failed (exit code %1$d), see output below</string>
+    <string name="activation_timeout">The command is still running; stopped waiting (normal for server-like commands)</string>
+    <string name="activation_output">Output</string>
+    <string name="activation_output_empty">(no output yet)</string>
+    <string name="activation_copy">Copy</string>
+    <string name="activation_copied">Copied</string>
+    <string name="activation_back">Back</string>
+
+    <string name="settings_translation_summary">Help us translate %s into your language</string>
+    <string name="settings_start_on_boot">Start on boot (root)</string>
+    <string name="settings_start_on_boot_summary">For rooted devices, Shizako is able to start automatically on boot</string>
+    <string name="settings_use_system_color">Use system theme color</string>
+    <string name="settings_high_refresh_rate">High refresh rate</string>
+    <string name="settings_high_refresh_rate_summary">Run animations at the display\'s highest refresh rate; disable to follow the system default (saves power)</string>
+
+    <string name="settings_stability">Stability &amp; automation</string>
+    <string name="settings_watchdog">Watchdog</string>
+    <string name="settings_watchdog_summary">Auto-restart Shizuku if it crashes. A persistent notification will show the watchdog status.</string>
+    <string name="settings_auto_update">Auto-update</string>
+    <string name="settings_auto_update_summary">Automatically check for new releases on GitHub every day and notify when an update is available</string>
+
+    <!-- API audit log -->
+    <string name="settings_api_log">API call log</string>
+    <string name="settings_api_log_summary">See which apps called privileged APIs through Shizako</string>
+    <string name="api_log_title">API call log</string>
+    <string name="api_log_refresh">Refresh</string>
+    <string name="api_log_unavailable">Cannot read the log. Start Shizako first — the log is written by the server.</string>
+    <string name="api_log_empty">No API calls recorded yet.</string>
+
+    <!-- Tasker Dhizuku -->
+    <string name="tasker_dhizuku_already">Device Owner mode is already active</string>
+    <string name="tasker_dhizuku_not_running">Start Shizuku mode first to activate Device Owner</string>
+    <string name="tasker_dhizuku_success">Device Owner mode activated</string>
+    <string name="tasker_dhizuku_failed">Device Owner activation failed</string>
+
+    <!-- Install notification -->
+    <string name="notify_install_channel">Updates</string>
+    <string name="notify_install_title">Shizako update ready</string>
+    <string name="notify_install_text">Tap to install %1$s</string>
+    <string name="tasker_install_apk_missing">No Shizako APK found in Download</string>
+    <string name="tasker_download_bad_url">Download URL missing or invalid</string>
+
+    <!-- Update -->
+    <string name="settings_check_update">Check for updates</string>
+    <string name="settings_check_update_summary">Check GitHub for new releases</string>
+    <string name="update_checking">Checking for updates\u2026</string>
+    <string name="update_up_to_date">You are up to date</string>
+    <string name="update_available_title">Update available</string>
+    <string name="update_available_text">Version %1$s is available</string>
+    <string name="update_dialog_message">Version %1$s is available\n\n%2$s</string>
+    <string name="update_download">Download</string>
+    <string name="update_downloading">Downloading\u2026</string>
+    <string name="update_downloading_progress">Downloading\u2026 %1$d%%</string>
+    <string name="update_check_failed">Check failed: %1$s</string>
+    <string name="update_download_failed">Download failed: %1$s</string>
+    <string name="update_install_failed">Install failed: %1$s</string>
+    <string name="update_channel_name">Shizako updates</string>
+    <string name="update_download_channel">Shizako download</string>
+    <string name="update_retrying">Retrying (attempt %1$d/%2$d)\u2026</string>
+    <string name="update_connecting">Connecting\u2026</string>
+    <string name="update_downloading_detail">%1$s / %2$s (%3$d%%)</string>
+    <string name="update_download_complete">Download complete</string>
+    <string name="update_tap_to_install">Tap to install (%1$s)</string>
+    <string name="update_download_failed_title">Download failed</string>
+    <string name="update_speed">%1$s/s</string>
+    <string name="update_download_cancelled">Download cancelled</string>
+
+    <!-- Watchdog -->
+    <string name="watchdog_channel_name">Shizako watchdog</string>
+    <string name="watchdog_notification_title">Shizako watchdog</string>
+    <string name="watchdog_notification_running">Shizako is running</string>
+    <string name="watchdog_notification_waiting">Waiting for Shizako to start\u2026</string>
+    <string name="watchdog_notification_crashed">Crashed %1$d times, will retry\u2026</string>
+
+    <!-- Tasker / automation -->
+    <string name="tasker_already_running">Shizako is already running</string>
+    <string name="tasker_not_running">Shizako is not running</string>
+    <string name="tasker_started_root">Shizako started (root)</string>
+    <string name="tasker_started_adb">Shizako started (ADB)</string>
+    <string name="tasker_stopped">Shizako stopped</string>
+    <string name="tasker_start_failed">Failed to start Shizako</string>
+    <string name="tasker_stop_failed">Failed to stop Shizako</string>
+    <string name="tasker_no_launch_mode">No launch mode configured</string>
+    <string name="tasker_adb_unavailable">ADB auto-start not available</string>
+
+    <!-- About -->
+    <string name="action_about">About</string>
+    <string name="about_view_source_code"><![CDATA[View source code at %s]]></string>
+    <string name="about_author">Author</string>
+    <string name="about_author_name" translatable="false">初然</string>
+    <string name="about_based_on">Based on</string>
+    <string name="about_based_on_text"><![CDATA[%s open source project]]></string>
+    <string name="about_license">License</string>
+    <string name="about_license_text" translatable="false">Apache License 2.0</string>
+    <string name="about_footer">Shizako — Made with ❤️</string>
+
+    <!-- Stop -->
+    <string name="action_stop">Stop Shizako</string>
+    <string name="dialog_stop_message">Shizako service will be stopped.</string>
+
+    <!-- Notification -->
+    <string name="notification_channel_service_status">Service start status</string>
+    <string name="notification_channel_status">Service status</string>
+    <string name="notification_service_starting">Shizako service is starting…</string>
+    <string name="notification_service_start_failed">Start Shizako service failed.</string>
+    <string name="notification_service_start_no_root">Failed to request root permission.</string>
+    <string name="notification_working">Working…</string>
+    <string name="notification_channel_adb_pairing">Wireless debugging pairing</string>
+    <string name="notification_adb_pairing_input_paring_code">Enter pairing code</string>
+    <string name="notification_adb_pairing_searching_for_service_title">Searching for pairing service</string>
+    <string name="notification_adb_pairing_service_found_title">Pairing service found</string>
+    <string name="notification_adb_pairing_stop_searching">Stop searching</string>
+    <string name="notification_adb_pairing_working_title">Pairing in progress</string>
+    <string name="notification_adb_pairing_succeed_title">Pairing successful</string>
+    <string name="notification_adb_pairing_succeed_text">You can start Shizako service now.</string>
+    <string name="notification_adb_pairing_failed_title">Pairing failed</string>
+    <string name="notification_adb_pairing_retry">Retry</string>
+
+    <!-- Quick settings tiles -->
+    <string name="tile_service_label">Shizako service</string>
+    <string name="tile_service_subtitle_running">Running</string>
+    <string name="tile_service_subtitle_stopped">Stopped</string>
+    <string name="tile_wireless_adb_label">Wireless debugging</string>
+    <string name="tile_wireless_adb_subtitle" translatable="false">Shizako</string>
+
+    <!-- Permission related, appears in system permission UI -->
+    <string name="permission_group_label" translatable="false">Shizako</string>
+    <string name="permission_group_description" translatable="false">@string/permission_label</string>
+    <string name="permission_label">access Shizako</string>
+    <string name="permission_description">Allow the app to use Shizako.</string>
+    <string name="permission_warning_template"><![CDATA[Allow <b>%1$s</b> to %2$s?]]></string>
+    <string name="grant_dialog_button_allow_always">Allow all the time</string>
+    <string name="grant_dialog_button_deny">"Deny"</string>
+
+    <!-- Starter -->
+    <string name="starter">Starter</string>
+    <string name="starting_root_shell" translatable="false">Starting root shell…</string>
+    <string name="start_with_root_failed">Can\'t start service because root permission is not granted or this device is not rooted.</string>
+
+    <!-- Misc -->
+    <string name="dialog_cannot_open_browser_title">Can\'t start browser</string>
+    <string name="toast_copied_to_clipboard">%s\nhas been copied to clipboard.</string>
+    <string name="toast_copied_to_clipboard_with_text"><![CDATA[<b>%s</b> has been copied to clipboard.]]></string>
+
+    <!-- Messages for legacy -->
+    <string name="dialog_legacy_not_support_title">%1$s does not support modern Shizako</string>
+    <string name="dialog_legacy_not_support_message">Legacy Shizako has been deprecated since March 2019. Also, legacy Shizako does not work on newer Android systems.&lt;p>Please ask the developer of &lt;b>%1$s&lt;/b> to update.</string>
+    <string name="dialog_requesting_legacy_title">%1$s is requesting legacy Shizako</string>
+    <string name="dialog_requesting_legacy_message">"&lt;b>%1$s&lt;/b> has modern Shizako support, but it's requesting legacy Shizako. This could because Shizako is not running, please check in Shizako app.&lt;p>Legacy Shizako has been deprecated since March 2019."</string>
+    <string name="dialog_requesting_legacy_button_open_shizuku">Open Shizako</string>
+
+    <string name="overview">Home</string>
+    <string name="search">Search</string>
+
+    <string name="settings_theme_color">Theme color</string>
+    <string name="settings_show_logs_tab">Show logs tab</string>
+    <string name="settings_show_logs_tab_summary">Show the API call log entry in the bottom navigation</string>
+    <string name="theme_color_default">Default (Sakura)</string>
+    <string name="theme_color_sakura">Sakura pink</string>
+
+    <string name="settings_ui_style">Interface style</string>
+    <string name="settings_ui_style_summary">Switch between Material 3 Expressive and Miuix looks</string>
+    <string name="ui_style_m3e">Material 3 Expressive</string>
+    <string name="ui_style_miuix">Miuix</string>
+
+    <string name="home_info_android">Android</string>
+    <string name="home_info_abi">ABI</string>
+    <string name="home_info_service">Service</string>
+    <string name="home_info_service_running">Running · %1$s</string>
+    <string name="home_info_service_not_running">Not running</string>
+    <string name="home_info_dhizuku">Dhizuku</string>
+    <string name="home_info_dhizuku_active">Activated</string>
+    <string name="home_info_dhizuku_inactive">Not activated</string>
+    <string name="home_info_apps">Authorized apps</string>
+    <string name="home_info_apps_count">%1$d</string>
+    <string name="home_info_copy">Copy</string>
+    <string name="home_info_copied">Copied to clipboard</string>
+</resources>

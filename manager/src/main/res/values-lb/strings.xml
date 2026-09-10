@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>    <!-- Shizako: 补充翻译 -->
+    <string name="translation_contributors" />
+    <string name="home_status_service_is_running">%1$s leeft</string>
+    <string name="home_status_service_not_running">%1$s leeft net</string>
+    <string name="home_status_service_version">Versioun %2$s, %1$s</string>
+    <string name="home_status_service_version_update">Versioun %2$s, %1$s&lt;br&gt;Start nei fir op Versioun %3$s ze aktualiséieren</string>
+    <string name="home_adb_title">Fänkt mat enger Verbindung mat engem Computer un</string>
+    <string name="home_adb_description">Fir Apparater ouni Root musst Dir adb benotze fir Shizako ze starten (et ass eng Verbindung mat engem Computer néideg). Dëse Prozess muss all Kéier widderholl ginn, wann d\'Apparat nei gestart gëtt. &lt;b&gt;&lt;a href=\"%1$s\"&gt;Liest d\'Hëllef&lt;/a&gt;&lt;/b&gt;.</string>
+    <string name="home_adb_button_view_help">Hëllef liesen</string>
+    <string name="home_adb_button_view_command">Uerder uweisen</string>
+    <string name="home_adb_dialog_view_command_message">&lt;font face=\"monospace\"&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* Et ginn nach aner Consideratiounen, confirméiert wgl. datt Dir d\'Hëllef scho gelies hutt.</string>
+    <string name="home_adb_dialog_view_command_copy_button">Kopiéieren</string>
+    <string name="home_adb_dialog_view_command_button_send">Schécken</string>
+    <string name="home_wireless_adb_title">Start iwwer d\'Drahtlos Debuggen</string>
+    <string name="home_wireless_adb_description">Op Android 11 a méi nei kënnt Dir d\'Drahtlos Debuggen aktivéieren an Shizako direkt vun Ärem Apparat starten, ouni e Computer ze verbannen.&lt;p&gt;Kuckt Iech wgl. d\'Schrëtt-fir-Schrëtt Uleedung un.</string>
+    <string name="home_wireless_adb_description_pre_11">Virun Android 11 ass eng Verbindung mat engem Computer néideg, fir d\'Drahtlos Debuggen z\'aktivéieren.</string>
+    <string name="home_wireless_adb_view_guide_button">Schrëtt-fir-Schrëtt Uleedung</string>
+    <string name="dialog_adb_discovery">Sichen no dem Drahtlos-Debugging-Service</string>
+    <string name="dialog_adb_discovery_message">Aktivéiert wgl. „Drahtlos Debuggen“ an den „Entwéckleroptiounen“. „Drahtlos Debuggen“ gëtt automatesch desaktivéiert, wann sech d\'Netzwierk ännert.
+
+Hiweis: Desaktivéiert net d\'„Entwéckleroptiounen“ oder „USB-Debuggen“, soss gëtt Shizako gestoppt.</string>
+    <string name="dialog_adb_discovery_message_toggle_wireless_debugging">Wann d\'Sichen ze long dauert, probéiert „Drahtlos Debuggen“ ze desaktivéieren an erëm z\'aktivéieren.</string>
+    <string name="dialog_adb_port">Port</string>
+    <string name="dialog_adb_invalid_port">De Port ass eng ganz Zuel tëschent 1 an 65535.</string>
+    <string name="adb_pairing">Kopplung</string>
+    <string name="dialog_adb_pairing_title">Mat dem Apparat kopplen</string>
+    <string name="dialog_adb_pairing_discovery">Sichen no dem Kopplungsservice</string>
+    <string name="dialog_adb_pairing_paring_code">Kopplungscode</string>
+    <string name="paring_code_is_wrong">De Kopplungscode ass falsch.</string>
+    <string name="cannot_connect_port">Et kann net mam Drahtlos-Debugging-Service verbuede ginn.</string>
+    <string name="dialog_wireless_adb_not_enabled">Drahtlos Debuggen ass net aktivéiert.
+Hiweis: virdrun Android 11 ass fir d\'Aktivéierung vum Drahtlos Debuggen eng Computerconnection obligatoresch.</string>
+    <string name="dialog_adb_pairing_message">Start d\'Kopplung mat dëse Schrëtt: „Entwéckleroptiounen“ – „Drahtlos Debuggen“ – „Apparat mat Kopplungscode kopplen“.
+
+Nom Start vum Kopplungsprozess kënnt Dir de Kopplungscode aginn.</string>
+    <string name="adb_pairing_requires_multi_window">Wiesselt wgl. fir an de Split-Screen (Multi-Fenster) Modus.</string>
+    <string name="adb_pairing_requires_multi_window_reason">De System erfuerdert, datt de Kopplungsdialog ëmmer siichtbar ass; de Split-Screen ass déi eenzeg Manéier, datt dës App an de Systemdialog gläichzäiteg siichtbar sinn.</string>
+    <string name="adb_error_key_store">Et kann kee Schlëssel fir d\'Drahtlos Debuggen generéiert ginn.
+Dat ka sinn, well de KeyStore-Mechanismus vun dësem Apparat futti ass.</string>
+    <string name="adb_pair_required">Maacht wgl. fir de Kopplungsschrëtt.</string>
+    <string name="development_settings">Entwéckleroptiounen</string>
+    <string name="notification_settings">Notifikatiounsoptiounen</string>
+    <string name="adb_pairing_tutorial_title">Kopplt Shizako mat Ärem Apparat</string>
+    <string name="adb_pairing_tutorial_content_notification">Eng Notifikatioun vu Shizako hëlleft Iech d\'Kopplung ofzeschléissen.</string>
+    <string name="adb_pairing_tutorial_content_steps">Gitt op „Entwéckleroptiounen“ – „Drahtlos Debuggen“. Tippt op „Apparat mat Kopplungscode kopplen“; Dir gesitt e sechsstellege Code.</string>
+    <string name="adb_pairing_tutorial_content_enter_pairing_code">Gitt de Code an der Notifikatioun an, fir d\'Kopplung ofzeschléissen.</string>
+    <string name="adb_pairing_tutorial_content_notification_blocked">De Kopplungsprozess erfuerdert d\'Interaktioun mat enger Notifikatioun vu Shizako. Erlaabt Shizako Notifikatiounen ze schécken.</string>
+    <string name="adb_pairing_tutorial_content_miui">MIUI-Benotzer mussen wuel de Notifikatiounsstil op „Android“ am Beräich „Notifikatiounen“ – „Notifikatiounspanel“ an de Systemastellungen änneren.</string>
+    <string name="adb_pairing_tutorial_content_miui_2">Soss kënnt Dir wuel de Kopplungscode net vun der Notifikatioun aginn.</string>
+    <string name="adb_pairing_tutorial_content_left_is_clickable">Hiweis: de lénken Deel vun der Optioun „Drahtlos Debuggen“ ass klickbar an ëffnet eng nei Säit. Nëmmen de Schalter riets unzemaachen ass falsch.</string>
+    <string name="adb_pairing_tutorial_content_finish">Gitt zréck op Shizako a start Shizako.</string>
+    <string name="adb_pairing_tutorial_content_network">Shizako brauch Zougrëff op dat lokal Netzwierk. Dat gëtt duerch d\'Netzwierkberechtigung kontrolléiert.</string>
+    <string name="adb_pairing_tutorial_content_network_limation_not_foreground">E puer Systemer (wéi MIUI) erlaben den Appen net den Zougrëff op d\'Netzwierk, wann se net siichtbar sinn, och wann d\'App en Noufrëscht-Service nom Standard benotzt. Op esou Systemer desaktivéiert wgl. d\'Batterieoptiméierung fir Shizako.</string>
+    <string name="home_root_title">Starte (fir Apparater mat Root)</string>
+    <string name="home_root_description">Zousätzlich kann Shizako automatesch beim Boote vum System gestart ginn. Wa net, dann iwwerpréift, ob Äre System oder Drëttpartei-Tools Shizako limitéiert hunn.&lt;br&gt;Dir kënnt %s kucken.</string>
+    <string name="home_root_description_sui">Wann Dir Magisk benotzt, kënnt Dir %1$s probéieren. Fir Root-Benotzer wäert et Shizako mat der Zäit ersetzen. Hiweis: existent Appen mussen e bëssi geännert ginn, fir %2$s ze benotzen.</string>
+    <string name="home_root_button_start">Starten</string>
+    <string name="home_root_button_restart">Nei starten</string>
+    <string name="home_app_management_title">Appverwaltung</string>
+    <string name="home_app_management_view_authorized_apps">Tippe fir autoriséiert Appen ze verwalten</string>
+    <string name="home_app_management_empty">Appe déi Shizako ugefrot oder deklaréiert hunn, ginn hei ugewisen.</string>
+    <string name="home_learn_more_title">Kennt Shizako kennen</string>
+    <string name="home_learn_more_description">Fannt eraus, wéi Dir mat Shizako entwéckelt</string>
+    <string name="home_adb_is_limited_title">Dir musst nach ee Schrëtt maachen</string>
+    <string name="home_adb_is_limited_description">Den Hiersteller vun Ärem Apparat huet d\'adb-Berechtigung limitéiert an Appen déi Shizako benotzen funktionnéieren net richteg.
+
+Normalerweis kann dës Limitatioun duerch d\'Upassung vun e puer Optiounen an den „Entwéckleroptiounen“ opgehuewe ginn. Liest d\'Hëllef fir Detailer.
+
+Dir musst wuel Shizako nei starten, fir datt et wirksam gëtt.</string>
+    <string name="app_management_dialog_adb_is_limited_title">D\'Berechtigung vun adb ass limitéiert</string>
+    <string name="app_management_dialog_adb_is_limited_message">Et ass ganz méiglech, datt den Hiersteller vun Ärem Apparat d\'Berechtigung vun adb limitéiert.&lt;p&gt;Et ka sinn, datt et eng Léisung fir Äre System an &lt;b&gt;&lt;a href=\"%1$s\"&gt;dësem Dokument&lt;/a&gt;&lt;/b&gt; gëtt.</string>
+    <string name="app_management_item_summary_requires_root">* erfuerdert datt Shizako mat Root leeft</string>
+    <string name="home_terminal_title">Shizako an Terminal-Appen benotzen</string>
+    <string name="home_terminal_description">Féiert Uerden iwwer Shizako an Är léifsten Terminal-Appen aus</string>
+    <string name="home_activation_title">Aktivéierung mat engem Klick</string>
+    <string name="home_activation_summary">Aktivéiert Brevent, Stopapp a méi ouni Computer</string>
+    <string name="home_activation_summary_not_running">Startt fir d\'éischt Shizako, fir d\'Aktivéierung mat engem Klick ze benotzen</string>
+    <string name="terminal_tutorial_1">Exportéiert fir d\'éischt d\'Dateien wou Dir wëllt. Dir fannt zwou Dateien: %1$s an %2$s.</string>
+    <string name="terminal_tutorial_1_description">Wann et Dateie mat dem selwechten Numm am ausgewielten Dossier gëtt, ginn se geläscht.
+
+D\'Export-Funktioun benotzt SAF (Storage Access Framework). Et gëtt gemellt, datt MIUI d\'Funktioune vu SAF futti mécht. Wann Dir MIUI benotzt, musst Dir wuel d\'Datei aus dem apk vun Shizako extrahéieren oder vu GitHub eroflueden.</string>
+    <string name="terminal_export_files">Dateien exportéieren</string>
+    <string name="terminal_tutorial_2">Derno ëffnet an ännert %1$s an engem belibegen Texteditor.</string>
+    <string name="terminal_tutorial_2_description">Zum Beispill, wann Dir Shizako an %1$s benotze wëllt, sollt Dir %2$s duerch %3$s ersetzen (%4$s ass de Paknumm vun der App %1$s).</string>
+    <string name="terminal_tutorial_3">Zum Schluss versetzt d\'Dateien op eng Plaz, wou Är Terminal-App Zougrëff huet; Dir kënnt dann %1$s benotzen, fir Uerden iwwer Shizako auszeféieren.</string>
+    <string name="terminal_tutorial_3_description">Tipps: gitt %1$s d\'Ausféierungsberechtigung a füügt et an %2$s an, da kënnt Dir %1$s direkt benotzen.</string>
+    <string name="rish_description">Mat %1$s kënnt Dir an enger belibeger Terminal-App Iech mat der Shell verbannen, déi vu Shizako gestart gëtt. &lt;p&gt;Tippe fir d\'Dokumentatioun iwwer d\'detailéiert Benotzung vun %1$s ze kucken.</string>
+    <string name="settings_title">Astellungen</string>
+    <string name="settings_language">Sprooch</string>
+    <string name="settings_user_interface">Ausgesinn</string>
+    <string name="settings_black_night_theme">Schwaarz Nuechtsthema</string>
+    <string name="settings_black_night_theme_summary">Benotzt e komplett schwaarzt Thema, wann den Donkelmodus aktivéiert ass</string>
+    <string name="settings_startup">Start</string>
+    <string name="settings_translation_contributors">Iwwersetzer</string>
+    <string name="settings_translation">Maacht bei der Iwwersetzung mat</string>
+    <string name="settings_debug">Debuggen</string>
+    <string name="settings_crash_logs">Ofsturzlogbicher</string>
+    <string name="settings_crash_logs_summary">Ofstierzer ginn hei gespäichert, wann d\'App onerwaart ophält</string>
+    <string name="settings_crash_logs_empty">Keng Ofsturzlogbicher</string>
+    <string name="settings_crash_logs_count">Ofsturzlogbicher: %1$d</string>
+    <string name="settings_crash_logs_share">Deelen</string>
+    <string name="settings_crash_logs_delete">Läschen</string>
+    <string name="settings_crash_logs_delete_all">Alles läschen</string>
+    <string name="settings_crash_logs_deleted">Geläscht</string>
+    <string name="activation_title">Aktivéierung mat engem Klick</string>
+    <string name="activation_subtitle">Féiert d\'ADB-Uerden aus, déi fréier en Computer gebraucht hunn, direkt hei</string>
+    <string name="activation_service_running">Shizako leeft, bereet fir ze aktivéieren</string>
+    <string name="activation_service_running_brief">Shizako leeft</string>
+    <string name="activation_service_not_running">Shizako leeft net; startt wgl. de Service vun der Haaptsäit</string>
+    <string name="activation_activate">Aktivéieren</string>
+    <string name="activation_activated">Aktivéiert</string>
+    <string name="activation_status_not_installed">%1$s · net installéiert</string>
+    <string name="activation_status_installed">%1$s · installéiert</string>
+    <string name="activation_status_activated">%1$s · scho aktivéiert</string>
+    <string name="activation_status_not_activated">%1$s · installéiert, net aktivéiert</string>
+    <string name="activation_note_device_owner">Erfuerdert datt virdrun all Konten a sekundär Benotzer (Gäschtmodus / App-Klon) geläscht ginn; no der Aktivéierung kënnt Dir se erëm bäifügen. Et kënnen Hiersteller-ROM-Eegentéinlechkeeten ginn.</string>
+    <string name="activation_note_brevent">De Brevent-Server muss nom all Neistart erëm aktivéiert ginn.</string>
+    <string name="activation_custom_title">Personaliséierten Uerdnung</string>
+    <string name="activation_custom_hint">Belibeg Shell-Uerdung, z.B. dpm set-device-owner …</string>
+    <string name="activation_custom_empty">D\'Uerdnung ass eidel</string>
+    <string name="activation_run">Ausféieren</string>
+    <string name="activation_running">Leeft…</string>
+    <string name="activation_success">Aktivéiert</string>
+    <string name="activation_failed">Feelgeschloen, kuckt d\'Ausgab hei ënnen</string>
+    <string name="activation_failed_with_code">Feelgeschloen (Exit-Code %1$d), kuckt d\'Ausgab hei ënnen</string>
+    <string name="activation_timeout">D\'Uerdnung leeft nach ëmmer; d\'Waarde gouf gestoppt (normal fir Server-arteg Uerden)</string>
+    <string name="activation_output">Ausgab</string>
+    <string name="activation_output_empty">(nach keng Ausgab)</string>
+    <string name="activation_copy">Kopiéieren</string>
+    <string name="activation_copied">Kopéiert</string>
+    <string name="activation_back">Zréck</string>
+    <string name="settings_translation_summary">Hëlleft eis %s an Är Sprooch z\'iwwersetzen</string>
+    <string name="settings_start_on_boot">Beim Boote starten (Root)</string>
+    <string name="settings_start_on_boot_summary">Op Apparater mat Root kann Shizako beim Boote automatesch starten</string>
+    <string name="settings_use_system_color">D\'Faarf vum Systemthema benotzen</string>
+    <string name="action_about">Iwwer</string>
+    <string name="about_view_source_code">Kuckt de Quellcode op %s</string>
+    <string name="about_author">Auteur</string>
+    <string name="about_based_on">Baséiert op</string>
+    <string name="about_based_on_text">dem Open-Source-Projet %s</string>
+    <string name="about_license">Lizenz</string>
+    <string name="about_footer">Shizako — Gemaach mat ❤️</string>
+    <string name="action_stop">Shizako stoppen</string>
+    <string name="dialog_stop_message">De Service vu Shizako gëtt gestoppt.</string>
+    <string name="notification_channel_service_status">Startstatus vum Service</string>
+    <string name="notification_channel_status">Service-Status</string>
+    <string name="notification_service_starting">De Service vu Shizako start…</string>
+    <string name="notification_service_start_failed">De Start vum Service vu Shizako ass feelgeschloen.</string>
+    <string name="notification_service_start_no_root">D\'Ufro vu Root-Berechtigung ass feelgeschloen.</string>
+    <string name="notification_working">Aarbecht…</string>
+    <string name="notification_channel_adb_pairing">Kopplung vum Drahtlos Debuggen</string>
+    <string name="notification_adb_pairing_input_paring_code">Gitt de Kopplungscode an</string>
+    <string name="notification_adb_pairing_searching_for_service_title">Sichen no dem Kopplungsservice</string>
+    <string name="notification_adb_pairing_service_found_title">Kopplungsservice fonnt</string>
+    <string name="notification_adb_pairing_stop_searching">Siche stoppen</string>
+    <string name="notification_adb_pairing_working_title">Kopplung leeft</string>
+    <string name="notification_adb_pairing_succeed_title">Kopplung erfollegräich</string>
+    <string name="notification_adb_pairing_succeed_text">Dir kënnt elo de Service vu Shizako starten.</string>
+    <string name="notification_adb_pairing_failed_title">Kopplung feelgeschloen</string>
+    <string name="notification_adb_pairing_retry">Nach emol probéieren</string>
+    <string name="tile_service_label">Shizako-Service</string>
+    <string name="tile_service_subtitle_running">Leeft</string>
+    <string name="tile_service_subtitle_stopped">Gestoppt</string>
+    <string name="tile_wireless_adb_label">Drahtlos Debuggen</string>
+    <string name="permission_label">Shizako benotzen</string>
+    <string name="permission_description">Erlaabt der App Shizako ze benotzen.</string>
+    <string name="permission_warning_template">Erlaaben datt &lt;b&gt;%1$s&lt;/b&gt; %2$s?</string>
+    <string name="grant_dialog_button_allow_always">Ëmmer erlaben</string>
+    <string name="grant_dialog_button_deny">Verweigern</string>
+    <string name="starter">Starter</string>
+    <string name="start_with_root_failed">De Service kann net gestart ginn, well d\'Root-Berechtigung net ginn ass oder dësen Apparat keen Root huet.</string>
+    <string name="dialog_cannot_open_browser_title">De Browser kann net gestart ginn</string>
+    <string name="toast_copied_to_clipboard">%s
+ass an d\'Tëschespäicher kopéiert ginn.</string>
+    <string name="toast_copied_to_clipboard_with_text">&lt;b&gt;%s&lt;/b&gt; ass an d\'Tëschespäicher kopéiert ginn.</string>
+    <string name="dialog_legacy_not_support_title">%1$s ënnerstëtzt déi modern Shizako net</string>
+    <string name="dialog_legacy_not_support_message">Déi al Shizako ass zënter Mäerz 2019 verworf. Zousätzlich funktionnéiert déi al Shizako net méi op neien Android-Systemer.&lt;p&gt;Bitt den Entwéckler vu &lt;b&gt;%1$s&lt;/b&gt; se z\'aktualiséieren.</string>
+    <string name="dialog_requesting_legacy_title">%1$s ufrot déi al Shizako</string>
+    <string name="dialog_requesting_legacy_message">&lt;b&gt;%1$s&lt;/b&gt; huet Ënnerstëtzung fir déi modern Shizako, ufrot awer déi al Shizako. Dat ka sinn, well Shizako net leeft; iwwerpréift et an der Shizako-App.&lt;p&gt;Déi al Shizako ass zënter Mäerz 2019 verworf.</string>
+    <string name="dialog_requesting_legacy_button_open_shizuku">Shizako opmaachen</string>
+    <plurals name="home_app_management_authorized_apps_count">
+        <item quantity="one">%d autoriséiert App</item>
+        <item quantity="other">%d autoriséiert Appen</item>
+    </plurals>
+    <!-- Shizako: 补充翻译 -->
+    <string name="setup_welcome_title">Wëllkomm</string>
+    <string name="setup_welcome_subtitle">Mat e puer schnellen Astellungen ass Shizako prett fir de Gebrauch.</string>
+    <string name="setup_disclaimer_title">Haftungsausschluss</string>
+    <string name="setup_disclaimer_text"><![CDATA[Shizako gëtt «wéi et ass» ubueden, ouni eng Garantie vun iergendenger Aart.<p>Shizako funktionéiert andeems en privilegéierten Service op dengem Apparat leeft. Den Entwéckler ass net responsabel fir Schued um Apparat oder Dateiverloss, déi duerch d\'Benotze vun dëser App oder duerch d\'Zougrëff op Shizako entstoe kënnen.<p>Benotzt op eegent Risiko.]]></string>
+    <string name="setup_disclaimer_agree">Ech hunn dat uewen gelies an averstan</string>
+    <string name="setup_language_title">Sprooch wielen</string>
+    <string name="setup_language_subtitle">Dir kënnt dat méi spéit an den Astellungen änneren.</string>
+    <string name="setup_mode_subtitle">Wielt, wéi Shizako ausgesäit. Dir kënnt dat méi spéit an den Astellungen änneren.</string>
+    <string name="setup_mode_follow_system">Dem System follegen</string>
+    <string name="setup_mode_light">Hell</string>
+    <string name="setup_mode_dark">Däischter</string>
+    <string name="setup_start_method_title">Aktivéierungsmethod</string>
+    <string name="setup_start_method_subtitle">Wiel wéi du Shizako wëlls starten. D\'Haaptsäit weist dës Method als éischt.</string>
+    <string name="setup_start_method_wadb">Kabellose Debugging</string>
+    <string name="setup_start_method_wadb_summary">Op Android 11 oder méi nei, kee Computer néideg</string>
+    <string name="setup_start_method_root">Root</string>
+    <string name="setup_start_method_root_summary">Fir gerout Apparater, Start mat engem Tipp</string>
+    <string name="setup_start_method_adb">Mat engem computer verbannen</string>
+    <string name="setup_start_method_adb_summary">adb iwwer USB benotzen, no all Neistart widderhuelen</string>
+    <string name="setup_back">Zréck</string>
+    <string name="setup_next">Weider</string>
+    <string name="setup_get_started">Ufänken</string>
+    <string name="setup_skip">Iwwersprangen</string>
+</resources>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Base.AppTheme.Light" parent="Theme.Material3.Light.Shizuku">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+
+        <item name="android:windowBackground">@drawable/window_bg</item>
+        <item name="appColorPrimary">@color/app_color_light</item>
+        <item name="homeCardStyle">@style/Card.Light</item>
+
+        <!-- KernelSU 设计系统（M3E 默认）：统一形状 + 卡片样式 + 分组背景 -->
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Ksu.Medium</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.Ksu.Large</item>
+        <item name="ksuCardStyle">@style/Widget.Ksu.Card</item>
+        <item name="ksuSectionBackground">?colorSurfaceContainer</item>
+
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Light" parent="Base.AppTheme.Light" />
+
+    <style name="Base.AppTheme" parent="Theme.Material3.Dark.Shizuku">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowBackground">@drawable/window_bg</item>
+        <item name="appColorPrimary">@color/app_color_dark</item>
+        <item name="homeCardStyle">@style/Card</item>
+
+        <!-- KernelSU 设计系统（M3E 默认）：统一形状 + 卡片样式 + 分组背景 -->
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Ksu.Medium</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.Ksu.Large</item>
+        <item name="ksuCardStyle">@style/Widget.Ksu.Card</item>
+        <item name="ksuSectionBackground">?colorSurfaceContainer</item>
+
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme" parent="Base.AppTheme" />
+
+</resources>

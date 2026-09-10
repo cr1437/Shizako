@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="theme_color_names">
+        <item>@string/theme_color_default</item>
+        <item>@string/theme_color_sakura</item>
+        <item>红</item><item>粉</item><item>紫</item><item>深紫</item>
+        <item>靛蓝</item><item>蓝</item><item>浅蓝</item><item>青</item>
+        <item>蓝绿</item><item>绿</item><item>浅绿</item><item>黄绿</item>
+        <item>黄</item><item>琥珀</item><item>橙</item><item>深橙</item>
+        <item>棕</item><item>蓝灰</item>
+    </string-array>
+</resources>

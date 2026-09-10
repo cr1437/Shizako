@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>    <!-- Shizako: 补充翻译 -->
+    <string name="translation_contributors" />
+    <string name="home_status_service_is_running">%1$s beží</string>
+    <string name="home_status_service_not_running">%1$s nebeží</string>
+    <string name="home_status_service_version">Verzia %2$s, %1$s</string>
+    <string name="home_status_service_version_update">Verzia %2$s, %1$s&lt;br&gt;Ak chcete aktualizovať na verziu %3$s, spustite znova</string>
+    <string name="home_adb_title">Začnite pripojením k počítaču</string>
+    <string name="home_adb_description">Pre zariadenia bez rootu musíte Shizako spustiť pomocou adb (vyžaduje pripojenie k počítaču). Tento postup je potrebné zopakovať po každom reštarte zariadenia. &lt;b&gt;&lt;a href=\"%1$s\"&gt;Prečítajte si pomocníka&lt;/a&gt;&lt;/b&gt;.</string>
+    <string name="home_adb_button_view_help">Prečítať pomocníka</string>
+    <string name="home_adb_button_view_command">Zobraziť príkaz</string>
+    <string name="home_adb_dialog_view_command_message">&lt;font face=\"monospace\"&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* Existujú aj ďalšie okolnosti, najprv sa uistite, že ste si prečítali pomocníka.</string>
+    <string name="home_adb_dialog_view_command_copy_button">Kopírovať</string>
+    <string name="home_adb_dialog_view_command_button_send">Odoslať</string>
+    <string name="home_wireless_adb_title">Spustiť cez Bezdrôtové ladenie</string>
+    <string name="home_wireless_adb_description">V Androide 11 a novších môžete zapnúť Bezdrôtové ladenie a spustiť Shizako priamo zo zariadenia bez pripojenia k počítaču.&lt;p&gt;Najprv si pozrite podrobný návod.</string>
+    <string name="home_wireless_adb_description_pre_11">Pred Androidom 11 je na zapnutie Bezdrôtového ladenia potrebné pripojenie k počítaču.</string>
+    <string name="home_wireless_adb_view_guide_button">Podrobný návod</string>
+    <string name="dialog_adb_discovery">Vyhľadáva sa služba bezdrôtového ladenia</string>
+    <string name="dialog_adb_discovery_message">Povoľte „Bezdrôtové ladenie“ v časti „Možnosti pre vývojárov“. Po zmene siete sa „Bezdrôtové ladenie“ automaticky vypne.
+
+Poznámka: nevypínajte „Možnosti pre vývojárov“ ani „Ladenie USB“, inak sa Shizako zastaví.</string>
+    <string name="dialog_adb_discovery_message_toggle_wireless_debugging">Ak sa vyhľadávanie dlho nekončí, skúste „Bezdrôtové ladenie“ vypnúť a znova zapnúť.</string>
+    <string name="dialog_adb_port">Port</string>
+    <string name="dialog_adb_invalid_port">Port je celé číslo od 1 do 65535.</string>
+    <string name="adb_pairing">Párovanie</string>
+    <string name="dialog_adb_pairing_title">Spárovanie so zariadením</string>
+    <string name="dialog_adb_pairing_discovery">Vyhľadáva sa párovacia služba</string>
+    <string name="dialog_adb_pairing_paring_code">Párovací kód</string>
+    <string name="paring_code_is_wrong">Párovací kód je nesprávny.</string>
+    <string name="cannot_connect_port">Nedá sa pripojiť k službe bezdrôtového ladenia.</string>
+    <string name="dialog_wireless_adb_not_enabled">Bezdrôtové ladenie nie je zapnuté.
+Poznámka: pred Androidom 11 je na zapnutie bezdrôtového ladenia nevyhnutné pripojenie k počítaču.</string>
+    <string name="dialog_adb_pairing_message">Párovanie spustíte podľa nasledujúcich krokov: „Možnosti pre vývojárov“ – „Bezdrôtové ladenie“ – „Spárovať zariadenie párovacím kódom“.
+
+Po spustení párovania budete môcť zadať párovací kód.</string>
+    <string name="adb_pairing_requires_multi_window">Najprv prejdite do režimu rozdelenej obrazovky (viac okien).</string>
+    <string name="adb_pairing_requires_multi_window_reason">Systém vyžaduje, aby bol párovací dialóg stále viditeľný; rozdelená obrazovka je jediný spôsob, ako mať túto aplikáciu a systémový dialóg zobrazené súčasne.</string>
+    <string name="adb_error_key_store">Nepodarilo sa vygenerovať kľúč pre bezdrôtové ladenie.
+Možno je mechanizmus KeyStore tohto zariadenia poškodený.</string>
+    <string name="adb_pair_required">Najprv vykonajte krok párovania.</string>
+    <string name="development_settings">Možnosti pre vývojárov</string>
+    <string name="notification_settings">Možnosti oznámení</string>
+    <string name="adb_pairing_tutorial_title">Spárujte Shizako so zariadením</string>
+    <string name="adb_pairing_tutorial_content_notification">S párovaním vám pomôže oznámenie od Shizako.</string>
+    <string name="adb_pairing_tutorial_content_steps">Otvorte „Možnosti pre vývojárov“ – „Bezdrôtové ladenie“. Klepnite na „Spárovať zariadenie párovacím kódom“; uvidíte šesťmiestny kód.</string>
+    <string name="adb_pairing_tutorial_content_enter_pairing_code">Kód z oznámenia zadajte a párovanie dokončite.</string>
+    <string name="adb_pairing_tutorial_content_notification_blocked">Pri párovaní je potrebné interagovať s oznámením od Shizako. Povoľte aplikácii Shizako posielať oznámenia.</string>
+    <string name="adb_pairing_tutorial_content_miui">Používatelia MIUI možno budú musieť v systémových nastaveniach zmeniť štýl oznámení na „Android“ v časti „Oznámenia“ – „Panel oznámení“.</string>
+    <string name="adb_pairing_tutorial_content_miui_2">Inak sa vám nemusí podariť zadať párovací kód z oznámenia.</string>
+    <string name="adb_pairing_tutorial_content_left_is_clickable">Poznámka: ľavá časť položky „Bezdrôtové ladenie“ je klikateľná a otvorí novú stránku. Samotné zapnutie prepínača vpravo nie je správne.</string>
+    <string name="adb_pairing_tutorial_content_finish">Vráťte sa do Shizako a spustite Shizako.</string>
+    <string name="adb_pairing_tutorial_content_network">Shizako potrebuje prístup k lokálnej sieti. Ten je riadený sieťovým oprávnením.</string>
+    <string name="adb_pairing_tutorial_content_network_limation_not_foreground">Niektoré systémy (napríklad MIUI) zakazujú aplikáciám prístup k sieti, keď nie sú viditeľné, aj keď aplikácia štandardne používa službu v popredí. V takýchto systémoch pre Shizako vypnite optimalizáciu batérie.</string>
+    <string name="home_root_title">Spustenie (pre zariadenia s rootom)</string>
+    <string name="home_root_description">Okrem toho sa Shizako môže spúšťať automaticky pri štarte systému. Ak nie, skontrolujte, či váš systém alebo nástroje tretích strán neobmedzujú Shizako.&lt;br&gt;Môžete si pozrieť %s.</string>
+    <string name="home_root_description_sui">Ak používate Magisk, môžete vyskúšať %1$s. Pre používateľov s rootom časom nahradí Shizako. Poznámka: existujúce aplikácie sa budú musieť trochu zmeniť, aby mohli používať %2$s.</string>
+    <string name="home_root_button_start">Spustiť</string>
+    <string name="home_root_button_restart">Reštartovať</string>
+    <string name="home_app_management_title">Správa aplikácií</string>
+    <string name="home_app_management_view_authorized_apps">Klepnutím spravujete autorizované aplikácie</string>
+    <string name="home_app_management_empty">Tu sa zobrazia aplikácie, ktoré si vyžiadali alebo deklarovali Shizako.</string>
+    <string name="home_learn_more_title">Zoznámte sa so Shizako</string>
+    <string name="home_learn_more_description">Zistite, ako vyvíjať so Shizako</string>
+    <string name="home_adb_is_limited_title">Musíte vykonať ešte jeden krok</string>
+    <string name="home_adb_is_limited_description">Výrobca vášho zariadenia obmedzil oprávnenia adb a aplikácie používajúce Shizako nebudú správne fungovať.
+
+Zvyčajne sa toto obmedzenie dá odstrániť úpravou niektorých možností v „Možnostiach pre vývojárov“. Podrobnosti nájdete v pomocníkovi.
+
+Aby sa zmena prejavila, možno budete musieť Shizako reštartovať.</string>
+    <string name="app_management_dialog_adb_is_limited_title">Oprávnenie adb je obmedzené</string>
+    <string name="app_management_dialog_adb_is_limited_message">Je veľmi pravdepodobné, že výrobca vášho zariadenia obmedzuje oprávnenie adb.&lt;p&gt;Riešenie pre váš systém možno nájdete v &lt;b&gt;&lt;a href=\"%1$s\"&gt;tomto dokumente&lt;/a&gt;&lt;/b&gt;.</string>
+    <string name="app_management_item_summary_requires_root">* vyžaduje, aby Shizako bežalo s rootom</string>
+    <string name="home_terminal_title">Použitie Shizako v terminálových aplikáciách</string>
+    <string name="home_terminal_description">Spúšťajte príkazy cez Shizako v terminálových aplikáciách, ktoré máte radi</string>
+    <string name="home_activation_title">Jednokliková aktivácia</string>
+    <string name="home_activation_summary">Aktivujte Brevent, Stopapp a ďalšie bez počítača</string>
+    <string name="home_activation_summary_not_running">Ak chcete použiť jednoklikovú aktiváciu, najprv spustite Shizako</string>
+    <string name="terminal_tutorial_1">Najprv exportujte súbory kamkoľvek chcete. Nájdete dva súbory: %1$s a %2$s.</string>
+    <string name="terminal_tutorial_1_description">Ak sa v vybratej zložke nachádzajú súbory s rovnakým názvom, budú vymazané.
+
+Funkcia exportu používa SAF (Storage Access Framework). Podľa hlásení MIUI funkcie SAF narušuje. Ak používate MIUI, možno budete musieť súbor extrahovať z apk Shizako alebo stiahnuť z GitHubu.</string>
+    <string name="terminal_export_files">Exportovať súbory</string>
+    <string name="terminal_tutorial_2">Potom otvorte a upravte %1$s v ľubovoľnom textovom editore.</string>
+    <string name="terminal_tutorial_2_description">Napríklad ak chcete Shizako použiť v %1$s, mali by ste nahradiť %2$s za %3$s (%4$s je názov balíka aplikácie %1$s).</string>
+    <string name="terminal_tutorial_3">Nakoniec presuňte súbory na miesto, kde k nim má prístup vaša terminálová aplikácia; %1$s budete môcť používať na spúšťanie príkazov cez Shizako.</string>
+    <string name="terminal_tutorial_3_description">Tipy: udeľte %1$s oprávnenie na vykonávanie a pridajte ho do %2$s, potom budete môcť %1$s používať priamo.</string>
+    <string name="rish_description">S %1$s sa v ľubovoľnej terminálovej aplikácii môžete pripojiť a komunikovať so shellom, ktorý spúšťa Shizako. &lt;p&gt;Klepnutím si zobrazíte dokument o podrobnom používaní %1$s.</string>
+    <string name="settings_title">Nastavenia</string>
+    <string name="settings_language">Jazyk</string>
+    <string name="settings_user_interface">Vzhľad</string>
+    <string name="settings_black_night_theme">Čierny nočný motív</string>
+    <string name="settings_black_night_theme_summary">Pri zapnutom nočnom režime použije čisto čierny motív</string>
+    <string name="settings_startup">Spustenie</string>
+    <string name="settings_translation_contributors">Prispievatelia do prekladu</string>
+    <string name="settings_translation">Zúčastnite sa na preklade</string>
+    <string name="settings_debug">Ladenie</string>
+    <string name="settings_crash_logs">Záznamy o pádoch</string>
+    <string name="settings_crash_logs_summary">Tu sa ukladajú záznamy o pádoch, keď sa aplikácia neočakávane ukončí</string>
+    <string name="settings_crash_logs_empty">Žiadne záznamy o pádoch</string>
+    <string name="settings_crash_logs_count">Počet záznamov o pádoch: %1$d</string>
+    <string name="settings_crash_logs_share">Zdieľať</string>
+    <string name="settings_crash_logs_delete">Odstrániť</string>
+    <string name="settings_crash_logs_delete_all">Odstrániť všetko</string>
+    <string name="settings_crash_logs_deleted">Odstránené</string>
+    <string name="activation_title">Jednokliková aktivácia</string>
+    <string name="activation_subtitle">Spustite ADB príkazy, na ktoré ste doteraz potrebovali počítač, priamo tu</string>
+    <string name="activation_service_running">Shizako beží, pripravené na aktiváciu</string>
+    <string name="activation_service_running_brief">Shizako beží</string>
+    <string name="activation_service_not_running">Shizako nebeží; najprv spustite službu z domovskej stránky</string>
+    <string name="activation_activate">Aktivovať</string>
+    <string name="activation_activated">Aktivované</string>
+    <string name="activation_status_not_installed">%1$s · nenainštalované</string>
+    <string name="activation_status_installed">%1$s · nainštalované</string>
+    <string name="activation_status_activated">%1$s · už aktivované</string>
+    <string name="activation_status_not_activated">%1$s · nainštalované, neaktivované</string>
+    <string name="activation_note_device_owner">Vyžaduje, aby boli najprv odstránené všetky účty a sekundárni používatelia (hosťovský režim / klon aplikácie); po aktivácii ich môžete pridať späť. Môžu sa vyskytnúť osobitnosti ROM výrobcu.</string>
+    <string name="activation_note_brevent">Server Brevent je potrebné po každom reštarte znova aktivovať.</string>
+    <string name="activation_custom_title">Vlastný príkaz</string>
+    <string name="activation_custom_hint">Ľubovoľný príkaz shellu, napr. dpm set-device-owner …</string>
+    <string name="activation_custom_empty">Príkaz je prázdny</string>
+    <string name="activation_run">Spustiť</string>
+    <string name="activation_running">Spúšťa sa…</string>
+    <string name="activation_success">Aktivované</string>
+    <string name="activation_failed">Zlyhalo, pozrite výstup nižšie</string>
+    <string name="activation_failed_with_code">Zlyhalo (výstupný kód %1$d), pozrite výstup nižšie</string>
+    <string name="activation_timeout">Príkaz stále beží; čakanie bolo ukončené (normálne pre príkazy typu server)</string>
+    <string name="activation_output">Výstup</string>
+    <string name="activation_output_empty">(zatiaľ žiadny výstup)</string>
+    <string name="activation_copy">Kopírovať</string>
+    <string name="activation_copied">Skopírované</string>
+    <string name="activation_back">Späť</string>
+    <string name="settings_translation_summary">Pomôžte nám preložiť %s do vášho jazyka</string>
+    <string name="settings_start_on_boot">Spustiť pri štarte (root)</string>
+    <string name="settings_start_on_boot_summary">Pre zariadenia s rootom sa Shizako môže pri štarte spustiť automaticky</string>
+    <string name="settings_use_system_color">Použiť farbu systémového motívu</string>
+    <string name="action_about">O aplikácii</string>
+    <string name="about_view_source_code">Zdrojový kód nájdete na %s</string>
+    <string name="about_author">Autor</string>
+    <string name="about_based_on">Založené na</string>
+    <string name="about_based_on_text">open source projekte %s</string>
+    <string name="about_license">Licencia</string>
+    <string name="about_footer">Shizako — Vytvorené s ❤️</string>
+    <string name="action_stop">Zastaviť Shizako</string>
+    <string name="dialog_stop_message">Služba Shizako bude zastavená.</string>
+    <string name="notification_channel_service_status">Stav spustenia služby</string>
+    <string name="notification_channel_status">Stav služby</string>
+    <string name="notification_service_starting">Služba Shizako sa spúšťa…</string>
+    <string name="notification_service_start_failed">Spustenie služby Shizako zlyhalo.</string>
+    <string name="notification_service_start_no_root">Vyžiadanie oprávnenia root zlyhalo.</string>
+    <string name="notification_working">Pracuje sa…</string>
+    <string name="notification_channel_adb_pairing">Párovanie bezdrôtového ladenia</string>
+    <string name="notification_adb_pairing_input_paring_code">Zadajte párovací kód</string>
+    <string name="notification_adb_pairing_searching_for_service_title">Vyhľadáva sa párovacia služba</string>
+    <string name="notification_adb_pairing_service_found_title">Párovacia služba nájdená</string>
+    <string name="notification_adb_pairing_stop_searching">Zastaviť vyhľadávanie</string>
+    <string name="notification_adb_pairing_working_title">Prebieha párovanie</string>
+    <string name="notification_adb_pairing_succeed_title">Párovanie úspešné</string>
+    <string name="notification_adb_pairing_succeed_text">Teraz môžete spustiť službu Shizako.</string>
+    <string name="notification_adb_pairing_failed_title">Párovanie zlyhalo</string>
+    <string name="notification_adb_pairing_retry">Skúsiť znova</string>
+    <string name="tile_service_label">Služba Shizako</string>
+    <string name="tile_service_subtitle_running">Beží</string>
+    <string name="tile_service_subtitle_stopped">Zastavené</string>
+    <string name="tile_wireless_adb_label">Bezdrôtové ladenie</string>
+    <string name="permission_label">pristupovať k Shizako</string>
+    <string name="permission_description">Umožnite aplikácii používať Shizako.</string>
+    <string name="permission_warning_template">Povoliť aplikácii &lt;b&gt;%1$s&lt;/b&gt; %2$s?</string>
+    <string name="grant_dialog_button_allow_always">Vždy povoliť</string>
+    <string name="grant_dialog_button_deny">Zamietnuť</string>
+    <string name="starter">Spúšťač</string>
+    <string name="start_with_root_failed">Službu nemožno spustiť, pretože oprávnenie root nie je udelené alebo toto zariadenie nemá root.</string>
+    <string name="dialog_cannot_open_browser_title">Prehliadač sa nedá spustiť</string>
+    <string name="toast_copied_to_clipboard">%s
+bolo skopírované do schránky.</string>
+    <string name="toast_copied_to_clipboard_with_text">&lt;b&gt;%s&lt;/b&gt; bolo skopírované do schránky.</string>
+    <string name="dialog_legacy_not_support_title">%1$s nepodporuje moderné Shizako</string>
+    <string name="dialog_legacy_not_support_message">Staršie Shizako je zastarané od marca 2019. Okrem toho staršie Shizako nefunguje na novších systémoch Android.&lt;p&gt;Požiadajte vývojára aplikácie &lt;b&gt;%1$s&lt;/b&gt;, aby ju aktualizoval.</string>
+    <string name="dialog_requesting_legacy_title">%1$s vyžaduje staršie Shizako</string>
+    <string name="dialog_requesting_legacy_message">&lt;b&gt;%1$s&lt;/b&gt; podporuje moderné Shizako, ale vyžaduje staršie Shizako. Môže to byť tým, že Shizako nebeží; skontrolujte to v aplikácii Shizako.&lt;p&gt;Staršie Shizako je zastarané od marca 2019.</string>
+    <string name="dialog_requesting_legacy_button_open_shizuku">Otvoriť Shizako</string>
+    <plurals name="home_app_management_authorized_apps_count">
+        <item quantity="one">%d autorizovaná aplikácia</item>
+        <item quantity="few">%d autorizované aplikácie</item>
+        <item quantity="many">%d autorizovaných aplikácií</item>
+    </plurals>
+    <!-- Shizako: 补充翻译 -->
+    <string name="setup_welcome_title">Vitajte</string>
+    <string name="setup_welcome_subtitle">Niekoľko rýchlych nastavení a Shizako je pripravené na používanie.</string>
+    <string name="setup_disclaimer_title">Zrieknutie sa zodpovednosti</string>
+    <string name="setup_disclaimer_text"><![CDATA[Shizako sa poskytuje «tak, ako je», bez akejkoľvek záruky.<p>Shizako funguje spustením privilegovanej služby na vašom zariadení. Vývojár nezodpovedá za akékoľvek poškodenie zariadenia alebo stratu údajov, ktoré môžu vyplývať z používania tejto aplikácie alebo udelenia prístupu k Shizako.<p>Používate na vlastné riziko.]]></string>
+    <string name="setup_disclaimer_agree">Prečítal som si vyššie uvedené a súhlasím</string>
+    <string name="setup_language_title">Vyberte jazyk</string>
+    <string name="setup_language_subtitle">Neskôr ho môžete zmeniť v nastaveniach.</string>
+    <string name="setup_mode_subtitle">Vyberte, ako bude Shizako vyzerať. Neskôr to môžete zmeniť v nastaveniach.</string>
+    <string name="setup_mode_follow_system">Podľa systému</string>
+    <string name="setup_mode_light">Svetlý</string>
+    <string name="setup_mode_dark">Tmavý</string>
+    <string name="setup_start_method_title">Spôsob aktivácie</string>
+    <string name="setup_start_method_subtitle">Vyberte, ako plánujete Shizako spustiť. Domovská stránka zobrazí tento spôsob ako prvý.</string>
+    <string name="setup_start_method_wadb">Bezdrôtové ladenie</string>
+    <string name="setup_start_method_wadb_summary">Na Androide 11 a novšom, bez potreby počítača</string>
+    <string name="setup_start_method_root">Root</string>
+    <string name="setup_start_method_root_summary">Pre zariadenia s rootom, spustenie jedným klepnutím</string>
+    <string name="setup_start_method_adb">Pripojenie k počítaču</string>
+    <string name="setup_start_method_adb_summary">Použite adb cez USB, zopakujte po každom reštarte</string>
+    <string name="setup_back">Späť</string>
+    <string name="setup_next">Ďalej</string>
+    <string name="setup_get_started">Začať</string>
+    <string name="setup_skip">Preskočiť</string>
+</resources>

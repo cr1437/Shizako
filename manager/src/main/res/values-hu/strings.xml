@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">Shizako HU</string>
+    <!-- To translators: you can leave your here -->
+    <string name="translation_contributors">gidano - sympda.blog.hu</string>
+    <!-- Home - Status -->
+    <string name="home_status_service_is_running">A %1$s fut</string>
+    <string name="home_status_service_not_running">A %1$s nem fut</string>
+    <string name="home_status_service_version">Verzió %2$s, %1$s</string>
+    <string name="home_status_service_version_update"><![CDATA[Verzió %2$s, %1$s<br>Kezdje újra a %3$s verzióra való frissítéshez]]></string>
+    <!-- Home - Adb -->
+    <string name="home_adb_title"><![CDATA[Kezdje a számítógéphez való csatlakozással]]></string>
+    <string name="home_adb_description">Root nélküli eszközök esetén az adb-t kell használnia a Shizako elindításához (számítógépes kapcsolat szükséges). Ezt a folyamatot minden alkalommal meg kell ismételni az eszköz újraindításakor. Kérem &lt;b>&lt;a href=\"%1$s\">olvassa el a súgót&lt;/a>&lt;/b>.</string>
+    <string name="home_adb_button_view_help">Olvassa el a súgót</string>
+    <string name="home_adb_button_view_command">Parancs megtekintés</string>
+    <string name="home_adb_dialog_view_command_message">&lt;font face=monospace&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* Vannak más szempontok is, kérjük erősítse meg, hogy először elolvasta a súgót.</string>
+    <string name="home_adb_dialog_view_command_copy_button">Másolás</string>
+    <string name="home_adb_dialog_view_command_button_send">Küldés</string>
+    <!-- Home - Wireless Adb -->
+    <string name="home_wireless_adb_title"><![CDATA[Kezdje a vezeték nélküli hibakereséssel]]></string>
+    <string name="home_wireless_adb_description">Android 11 vagy újabb rendszeren engedélyezheti a vezeték nélküli hibakeresést, és közvetlenül az eszközéről indíthatja el a Shizakot, anélkül, hogy számítógéphez csatlakozna..&lt;p>Először tekintse meg a lépésről lépésre szóló útmutatót.</string>
+    <string name="home_wireless_adb_description_pre_11"><![CDATA[Az Android 11 előtt a vezeték nélküli hibakeresés engedélyezéséhez csatlakozni kell egy számítógéphez.]]></string>
+    <string name="home_wireless_adb_view_guide_button">Lépésről-lépésre útmutató</string>
+    <!-- Adb -->
+    <string name="dialog_adb_discovery">Vezeték nélküli hibakereső szolgáltatás keresése</string>
+    <string name="dialog_adb_discovery_message">"Engedélyezze a \"Vezeték nélküli hibakeresés\"t a \"Fejlesztői lehetőségek\"nél. A \"Vezeték nélküli hibakeresés\" hálózatváltáskor auto. le van tiltva.
+
+Megj.: ne tiltsa le a \"Fejlesztői lehetőségek\"et vagy az \"USB hibakeresés\"t, ekkor a Shizako le fog állni."</string>
+    <string name="dialog_adb_port">Port</string>
+    <string name="dialog_adb_invalid_port">A port egy 1 és 65535 közötti egész szám.</string>
+    <string name="adb_pairing">Párosítás</string>
+    <string name="dialog_adb_pairing_title">Párosítás a készülékkel</string>
+    <string name="dialog_adb_pairing_discovery">Párosítási szolgáltatás keresése</string>
+    <string name="dialog_adb_pairing_paring_code">Párosítási kód</string>
+    <string name="paring_code_is_wrong">Hibás a párosítási kód.</string>
+    <string name="cannot_connect_port">Nem lehet csatlakozni a vezeték nélküli hibakereső szolgáltatáshoz.</string>
+    <string name="dialog_wireless_adb_not_enabled">Vezeték nélküli hibakeresés nincs engedélyezve.\nNe feledje, hogy az Android 11 előtt a vezeték nélküli hibakeresés engedélyezéséhez számítógépes csatlakozásra van szükség.</string>
+    <string name="dialog_adb_pairing_message">Kezdje el a párosítást a következő lépésekkel: \"Fejlesztői lehetőségek\" - \"Vezeték nélküli hibakeresés\" - \"Eszköz párosítása párosítási kóddal\".\n\nA párosítási folyamat megkezdése után beírhatja a párosítási kódot.</string>
+    <string name="adb_pairing_requires_multi_window">Kérjük, először lépjen az osztott képernyős (több ablakos) módba.</string>
+    <string name="adb_pairing_requires_multi_window_reason">A rendszer megköveteli, hogy a párosítási párbeszédpanel mindig látható legyen, az osztott képernyős mód az egyetlen módja annak, hogy ez az alkalmazás és a rendszer párbeszédpanel egyszerre látható legyen.</string>
+    <string name="adb_error_key_store">Nem sikerült létrehozni a kulcsot a vezeték nélküli hibakereséshez.\nEz azért lehet, mert az eszköz KeyStore mechanizmusa meghibásodott.</string>
+    <string name="adb_pair_required">Kérjük először végezze el a párosítási lépést.</string>
+    <string name="development_settings">Fejlesztői lehetőségek</string>
+    <string name="notification_settings">Értesítési lehetőségek</string>
+    <string name="adb_pairing_tutorial_title">Párosítsa a Shizakot készülékével</string>
+    <string name="adb_pairing_tutorial_content_notification">A Shizako értesítése segít a párosítás befejezésében.</string>
+    <string name="adb_pairing_tutorial_content_steps">Lépjen a \"Fejlesztői lehetőségek\" - \"Vezeték nélküli hibakeresés\" menüpontra. Koppintson az \"Eszköz párosítása párosítási kóddal\" lehetőségre, és megjelenik egy hatjegyű kód.</string>
+    <string name="adb_pairing_tutorial_content_enter_pairing_code">A párosítás befejezéséhez írja be az értesítésben lévő kódot.</string>
+    <string name="adb_pairing_tutorial_content_notification_blocked">A párosítási folyamat során kapcsolatba kell lépni Shizako értesítésével. Kérjük, engedélyezze a Shizakonak, hogy értesítéseket tegyen közzé.</string>
+    <string name="adb_pairing_tutorial_content_miui">Előfordulhat, hogy a MIUI-felhasználóknak át kell váltaniuk az értesítési stílust \"Android\"-ra a \"Értesítés\" - \"Értesítési árnyék\" lehetőségről a rendszerbeállításokban.</string>
+    <string name="adb_pairing_tutorial_content_miui_2">Ellenkező esetben előfordulhat, hogy nem tudja megadni a párosítási kódot az értesítésből.</string>
+    <string name="adb_pairing_tutorial_content_left_is_clickable">Felhívjuk figyelmét, hogy a \"Vezeték nélküli hibakeresés\" opció bal oldali része kattintható, rákattintva egy új oldal nyílik meg. A jobb oldali kapcsoló bekapcsolása helytelen.</string>
+    <string name="adb_pairing_tutorial_content_finish">Vissza és Shizako elindítása.</string>
+    <string name="adb_pairing_tutorial_content_network">A Shizakonak hozzá kell férnie a helyi hálózathoz. A hálózati engedély vezérli.</string>
+    <string name="adb_pairing_tutorial_content_network_limation_not_foreground">Egyes rendszerek (például a MIUI) nem engedélyezik az alkalmazások számára, hogy hozzáférjenek a hálózathoz ha nem láthatók, még akkor sem, ha az alkalmazás alapértelmezés szerint előtérbeli szolgáltatást használ. Kapcsolja ki a Shizako akku optimalizálási funkcióit az ilyen rendszereken.</string>
+    <!-- Home - Root -->
+    <string name="home_root_title">Indítás (rootolt eszközökhöz)</string>
+    <string name="home_root_description">Ezenkívül a Shizako automatikusan elindítható rendszerindításkor. Ha nem, ellenőrizze, hogy rendszere vagy harmadik féltől származó eszközei nem korlátozták-e a Shizakot.&lt;br>A következőre hivatkozhat: %s.</string>
+    <string name="home_root_description_sui">Ha Magisk-et használ, megpróbálhatja a %1$s-t. A root felhasználók számára végül felváltja a Shizakot. Megj.: a meglévő alkalmazásokat kissé módosítani kell a %2$s használatához.</string>
+    <string name="home_root_button_start">Indítás</string>
+    <string name="home_root_button_restart">Újraindítás</string>
+    <!-- Home - Application management -->
+    <string name="home_app_management_title">Alkalmazáskezelés</string>
+    <plurals name="home_app_management_authorized_apps_count">
+        <item quantity="one"><![CDATA[%d app engedélyezett]]></item>
+        <item quantity="other"><![CDATA[%d app engedélyezett]]></item>
+    </plurals>
+    <string name="home_app_management_view_authorized_apps"><![CDATA[Érintse meg az engedélyezett alkalmazások kezeléséhez]]></string>
+    <string name="home_app_management_empty">Itt jelennek meg azok az alkalmazások, amelyek Shizakot kértek vagy bejelentettek.</string>
+    <!-- Home - Learn more -->
+    <string name="home_learn_more_title">Tanulja a Shizakot</string>
+    <string name="home_learn_more_description">Tanuljon meg fejlődni a Shizakoval</string>
+    <!-- Home - Adb permissions limited -->
+    <string name="home_adb_is_limited_title">Egy plusz lépést kell tennie</string>
+    <string name="home_adb_is_limited_description">"Az eszköz gyártója korlátozta az adb-engedélyeket, és a Shizako-t használó alkalmazások nem működnek megfelelően.
+
+Általában ez a korlátozás bizonyos beállítások módosításával feloldható a \"Fejlesztői lehetőségek\"-nél. Kérjük, olvassa el a súgót ennek részleteiért.
+
+Lehet, hogy újra kell indítania a Shizakot, hogy a művelet érvénybe lépjen."</string>
+    <!-- Application management -->
+    <string name="app_management_dialog_adb_is_limited_title">Az adb engedélye korlátozott</string>
+    <string name="app_management_dialog_adb_is_limited_message"><![CDATA[Nagyon valószínű, hogy az eszköz gyártója korlátozza az adb engedélyét.<p>Lehet, hogy van megoldás a rendszeréhez ebben a <b><a href=\"%1$s\">dokumentumban</a></b>.]]></string>
+    <string name="app_management_item_summary_requires_root">* szükséges, hogy a Shizako root-on fusson</string>
+    <!-- Terminal -->
+    <string name="home_terminal_title">Használja a Shizakot a terminál appokban</string>
+    <string name="home_terminal_description">Futtasson parancsokat a Shizako-n keresztül a kívánt terminálalkalmazásokban</string>
+    <string name="terminal_tutorial_1">Először is exportálja a fájlokat a kívánt helyre. Két fájlt fog találni, %1$s és %2$s.</string>
+    <string name="terminal_tutorial_1_description">"Ha a kiválasztott mappában vannak azonos nevű fájlok, akkor azok törlődnek.
+
+Az export funkció SAF-et használ (Storage Access Framework). A jelentések szerint a MIUI megszakítja a SAF funkcióit. Ha MIUI-t használ, előfordulhat, hogy ki kell csomagolnia a fájlt a Shizako apk-jából, vagy le kell töltenie a GitHubról."</string>
+    <string name="terminal_export_files">Fájlok exportálása</string>
+    <string name="terminal_tutorial_2">Ezután bármelyik szövegszerkesztővel nyissa meg és szerkessze a %1$s fájlt.</string>
+    <string name="terminal_tutorial_2_description">Ha például a Shizakot szeretné használni a %1$s alkalmazásban, cserélje ki a %2$s kifejezést a következőre: %3$s (%4$s a csomag neve ennek: %1$s).</string>
+    <string name="terminal_tutorial_3">Végül helyezze át a fájlokat valahova, ahol a terminálalkalmazása hozzáférhet, így a %1$s segítségével parancsokat futtathat a Shizako-n keresztül..</string>
+    <string name="terminal_tutorial_3_description">Néhány tipp: adjon végrehajtási engedélyt a következőnek: %1$s, és adja hozzá a következőhöz: %2$s, így közvetlenül használhatja a %1$s-t.</string>
+    <string name="rish_description">A %1$s segítségével bármely terminálalkalmazásban csatlakozhat a Shizako által futtatott shellhez, és kommunikálhat vele. &lt;p>A %1$s részletes használatáról, érintse a dokumentum megtekintéséhez.</string>
+    <!-- Settings -->
+    <string name="settings_title">Beállítások</string>
+    <string name="settings_language">Nyelv</string>
+    <string name="settings_user_interface">Megjelenés</string>
+    <string name="settings_black_night_theme">Sötét éj téma</string>
+    <string name="settings_black_night_theme_summary">Használja a tiszta fekete témát, ha az éjszakai mód be van kapcsolva</string>
+    <string name="settings_startup">Üzembe helyezés</string>
+    <string name="settings_translation_contributors">Fordítási közreműködők</string>
+    <string name="settings_translation">Vegyen részt a fordításban</string>
+    <string name="settings_translation_summary">Segítsen nekünk lefordítani a %s-t az Ön nyelvére</string>
+    <string name="settings_start_on_boot">Induljon rendszerindításkor (root)</string>
+    <string name="settings_start_on_boot_summary">Rootolt eszközök esetén a Shizako képes auto. elindulni rendszerindításkor</string>
+    <string name="settings_use_system_color">Használja a rendszertéma színét</string>
+    <!-- About -->
+    <string name="action_about">Rólunk</string>
+    <string name="about_view_source_code"><![CDATA[Forráskód megtekintése itt: %s]]></string>
+    <!-- Stop -->
+    <string name="action_stop">A Shizako leállítása</string>
+    <string name="dialog_stop_message">A Shizako szolgáltatás leáll.</string>
+    <!-- Notification -->
+    <string name="notification_channel_service_status">Szolgáltatásindítási állapot</string>
+    <string name="notification_service_starting">A Shizako szolgáltatás indul…</string>
+    <string name="notification_service_start_failed">A Shizako szolgáltatás indítása nem sikerült.</string>
+    <string name="notification_service_start_no_root">Nem sikerült root engedélyt kérni.</string>
+    <string name="notification_working">Dolgozom…</string>
+    <string name="notification_channel_adb_pairing">Vezeték nélküli hibakeresés pairing</string>
+    <string name="notification_adb_pairing_input_paring_code">Írja be a párosítási kódot</string>
+    <string name="notification_adb_pairing_searching_for_service_title">Párosítási szolgáltatás keresése</string>
+    <string name="notification_adb_pairing_service_found_title">Párosítási szolgáltatás található</string>
+    <string name="notification_adb_pairing_stop_searching">A keresés leállítása</string>
+    <string name="notification_adb_pairing_working_title">A párosítás folyamatban</string>
+    <string name="notification_adb_pairing_succeed_title">A párosítás sikeres</string>
+    <string name="notification_adb_pairing_succeed_text">Most elindíthatja a Shizako szolgáltatást.</string>
+    <string name="notification_adb_pairing_failed_title">A párosítás nem sikerült</string>
+    <string name="notification_adb_pairing_retry">Újra</string>
+    <!-- Permission related, appears in system permission UI -->
+    <string name="permission_group_label" translatable="false">Shizako</string>
+    <string name="permission_group_description" translatable="false">@string/permission_label</string>
+    <string name="permission_label">Shizako hozzáférés</string>
+    <string name="permission_description">Engedélyezze az app számára a Shizako használatát.</string>
+    <string name="permission_warning_template"><![CDATA[Engedélyezi <b>%1$s</b> ide, %2$s?]]></string>
+    <string name="grant_dialog_button_allow_always">Mindig engedje meg</string>
+    <string name="grant_dialog_button_deny">"Megtagad"</string>
+    <!-- Starter -->
+    <string name="starter">Indító</string>
+    <string name="starting_root_shell" translatable="false">Root shell indítása…</string>
+    <string name="start_with_root_failed">A szolgáltatás nem indítható el, mert nincs root jogosultság megadva, vagy ez az eszköz nincs rootolva.</string>
+    <!-- Misc -->
+    <string name="dialog_cannot_open_browser_title">Nem lehet elindítani a böngészőt</string>
+    <string name="toast_copied_to_clipboard">%s\n a vágólapra másolva.</string>
+    <string name="toast_copied_to_clipboard_with_text"><![CDATA[<b>%s</b> a vágólapra másolva.]]></string>
+    <!-- Messages for legacy -->
+    <string name="dialog_legacy_not_support_title">%1$s nem támogatja a modern Shizakot</string>
+    <string name="dialog_legacy_not_support_message">Az örökölt Shizako 2019 márciusa óta elavult. Ezenkívül a régi Shizako nem működik újabb Android-rendszereken.&lt;p>Kérdezze meg a fejlesztőt &lt;b>%1$s&lt;/b> frissítéséről.</string>
+    <string name="dialog_requesting_legacy_title">%1$s az örökölt Shizakot kéri</string>
+    <string name="dialog_requesting_legacy_message">&lt;b>%1$s&lt;/b> modern Shizako támogatással rendelkezik, de az örökölt Shizakot kéri. Ez azért lehet, mert a Shizako nem fut, ellenőrizze a Shizako alkalmazást.&lt;p>Az örökölt Shizako 2019 márciusa óta elavult.</string>
+    <string name="dialog_requesting_legacy_button_open_shizuku">Nyissa meg a Shizakot</string>
+    <string name="dialog_adb_discovery_message_toggle_wireless_debugging">Próbálja kikapcsolni majd engedélyezni a \"Vezeték nélküli hibakeresés\" opciót, ha továbbra is keres.</string>
+    <!-- Shizako: 补充翻译 -->
+    <string name="home_activation_title">Egykattintásos aktiválás</string>
+    <string name="home_activation_summary">Brevent, Stopapp és mások aktiválása számítógép nélkül</string>
+    <string name="home_activation_summary_not_running">Indítsa el előbb a Shizako-t az egykattintásos aktiváláshoz</string>
+    <string name="settings_debug">Hibakeresés</string>
+    <string name="settings_crash_logs">Összeomlási naplók</string>
+    <string name="settings_crash_logs_summary">Az összeomlások ide kerülnek mentésre, ha az app váratlanul kilép</string>
+    <string name="settings_crash_logs_empty">Nincsenek összeomlási naplók</string>
+    <string name="settings_crash_logs_count">%1$d összeomlási napló</string>
+    <string name="settings_crash_logs_share">Megosztás</string>
+    <string name="settings_crash_logs_delete">Törlés</string>
+    <string name="settings_crash_logs_delete_all">Összes törlése</string>
+    <string name="settings_crash_logs_deleted">Törölve</string>
+    <string name="activation_title">Egykattintásos aktiválás</string>
+    <string name="activation_subtitle">Futtassa itt azokat az ADB parancsokat, amelyek korábban számítógépet igényeltek</string>
+    <string name="activation_service_running">A Shizako fut, készen áll az aktiválásra</string>
+    <string name="activation_service_running_brief">A Shizako fut</string>
+    <string name="activation_service_not_running">A Shizako nem fut; először indítsa el a szolgáltatást a kezdőképernyőről</string>
+    <string name="activation_activate">Aktiválás</string>
+    <string name="activation_activated">Aktiválva</string>
+    <string name="activation_status_not_installed">%1$s · nincs telepítve</string>
+    <string name="activation_status_installed">%1$s · telepítve</string>
+    <string name="activation_status_activated">%1$s · már aktiválva</string>
+    <string name="activation_status_not_activated">%1$s · telepítve, nincs aktiválva</string>
+    <string name="activation_note_device_owner">Először az összes fiókot és másodlagos felhasználót (vendégmód / alkalmazás-iker) el kell távolítani; az aktiválás után újra hozzáadhatók. A gyártó ROM-jától függően sajátosságok lehetnek.</string>
+    <string name="activation_note_brevent">A Brevent kiszolgálóját minden újraindítás után újra kell aktiválni.</string>
+    <string name="activation_custom_title">Egyéni parancs</string>
+    <string name="activation_custom_hint">Bármilyen shell parancs, pl. dpm set-device-owner …</string>
+    <string name="activation_custom_empty">A parancs üres</string>
+    <string name="activation_run">Futtatás</string>
+    <string name="activation_running">Futtatás…</string>
+    <string name="activation_success">Aktiválva</string>
+    <string name="activation_failed">Sikertelen, lásd a lentebbi kimenetet</string>
+    <string name="activation_failed_with_code">Sikertelen (kilépési kód: %1$d), lásd a lentebbi kimenetet</string>
+    <string name="activation_timeout">A parancs még fut; a várakozás megszakítva (szerverjellegű parancsoknál ez normális)</string>
+    <string name="activation_output">Kimenet</string>
+    <string name="activation_output_empty">(még nincs kimenet)</string>
+    <string name="activation_copy">Másolás</string>
+    <string name="activation_copied">Kimásolva</string>
+    <string name="activation_back">Vissza</string>
+    <string name="about_author">Szerző</string>
+    <string name="about_based_on">Alapul</string>
+    <string name="about_based_on_text">%s nyílt forráskódú projekt</string>
+    <string name="about_license">Licenc</string>
+    <string name="about_footer">Shizako — ❤️-vel készült</string>
+    <string name="notification_channel_status">Szolgáltatás állapota</string>
+    <string name="tile_service_label">Shizako szolgáltatás</string>
+    <string name="tile_service_subtitle_running">Fut</string>
+    <string name="tile_service_subtitle_stopped">Leállítva</string>
+    <string name="tile_wireless_adb_label">Vezeték nélküli hibakeresés</string>
+    <!-- Shizako: 补充翻译 -->
+    <string name="setup_welcome_title">Üdvözöljük</string>
+    <string name="setup_welcome_subtitle">Néhány gyors beállítással a Shizako használatra kész.</string>
+    <string name="setup_disclaimer_title">Jogi nyilatkozat</string>
+    <string name="setup_disclaimer_text"><![CDATA[A Shizako «úgy, ahogy van» kerül biztosításra, bármilyen garancia nélkül.<p>A Shizako úgy működik, hogy egy kiemelt jogosultságú szolgáltatást futtat az eszközén. A fejlesztő nem vállal felelősséget az eszközön keletkezett károkért vagy adatvesztésért, amelyek az alkalmazás használatából vagy más alkalmazások Shizako-hoz való hozzáférésének megadásából eredhetnek.<p>Használja saját felelősségére.]]></string>
+    <string name="setup_disclaimer_agree">Elolvastam és elfogadom a fentiakat</string>
+    <string name="setup_language_title">Nyelv kiválasztása</string>
+    <string name="setup_language_subtitle">Ezt később a Beállításokban módosíthatja.</string>
+    <string name="setup_mode_subtitle">Válassza ki, hogyan nézzen ki a Shizako. Később a Beállításokban módosíthatja.</string>
+    <string name="setup_mode_follow_system">Rendszer követése</string>
+    <string name="setup_mode_light">Világos</string>
+    <string name="setup_mode_dark">Sötét</string>
+    <string name="setup_start_method_title">Aktiválási módszer</string>
+    <string name="setup_start_method_subtitle">Válassza ki, hogyan kívánja elindítani a Shizako-t. A kezdőlap ezt a módszert jeleníti meg először.</string>
+    <string name="setup_start_method_wadb">Vezeték nélküli hibakeresés</string>
+    <string name="setup_start_method_wadb_summary">Android 11 vagy újabb, számítógép nem szükséges</string>
+    <string name="setup_start_method_root">Root</string>
+    <string name="setup_start_method_root_summary">Rootolt eszközökhöz, indítás egy koppintással</string>
+    <string name="setup_start_method_adb">Kapcsolódás számítógéphez</string>
+    <string name="setup_start_method_adb_summary">adb használata USB-n keresztül, minden újraindítás után megismételendő</string>
+    <string name="setup_back">Vissza</string>
+    <string name="setup_next">Tovább</string>
+    <string name="setup_get_started">Kezdés</string>
+    <string name="setup_skip">Kihagyás</string>
+</resources>

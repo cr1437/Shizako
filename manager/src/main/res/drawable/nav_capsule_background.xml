@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 亚克力悬浮导航的胶囊外形：透明填充（玻璃感由 BlurView 的模糊 + 罩层提供），
+     细描边让胶囊边缘在浅色内容上清晰可辨。
+     圆角矩形同时提供 View outline，配合 clipToOutline 把模糊裁成胶囊形。 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@android:color/transparent" />
+    <stroke
+        android:width="1dp"
+        android:color="?colorOutlineVariant" />
+    <corners android:radius="@dimen/ksu_nav_corner_radius" />
+</shape>

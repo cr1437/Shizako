@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Frosted app bar powered by BlurView (real-time blur of the scrolling
+     content behind the bar, hardware accelerated on API 31+). The overlay
+     scrim keeps toolbar text readable while the blurred content shows
+     through. The AppBarLayout itself must stay backgroundless: the M3 style
+     would otherwise draw an opaque surface tint on top of the blur.
+
+     Note: fitsSystemWindows is intentionally NOT set here. It would turn the
+     status bar inset into the AppBarLayout's own padding, pushing the
+     BlurView below the status bar and leaving an unfrosted strip at the top.
+     The status bar inset is applied to the BlurView as padding instead (see
+     AppBarActivity), whose blur and scrim draw over the padded area too. -->
+<com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/toolbar_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@null"
+    android:elevation="0dp"
+    app:liftOnScroll="false"
+    tools:viewBindingIgnore="true">
+
+    <moe.shizuku.blurview.BlurView
+        android:id="@+id/blur_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="0dp"
+        app:blurOverlayColor="@color/appbar_frost_scrim">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@null"
+            android:elevation="0dp"
+            android:theme="@style/ThemeOverlay.MaterialComponents.ActionBar"
+            app:layout_collapseMode="pin"
+            tools:title="Title" />
+
+    </moe.shizuku.blurview.BlurView>
+
+</com.google.android.material.appbar.AppBarLayout>

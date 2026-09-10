@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_black_night_theme">Nigra nokta etoso</string>
+    <string name="settings_user_interface">Aspekto</string>
+    <string name="settings_language">Lingvo</string>
+    <string name="settings_title">Agordoj</string>
+    <string name="home_learn_more_title">Lerni Shizako</string>
+    <plurals name="home_app_management_authorized_apps_count">
+        <item quantity="one">Rajtigis %d aplikaĵon</item>
+        <item quantity="other">Rajtigis %d aplikaĵojn</item>
+    </plurals>
+    <string name="home_root_button_start">Komenci</string>
+    <string name="development_settings">Programistaj opcioj</string>
+    <string name="home_adb_dialog_view_command_button_send">Sendi</string>
+    <string name="home_adb_dialog_view_command_copy_button">Kopii</string>
+    <string name="home_adb_button_view_command">Vidi komandon</string>
+    <string name="home_adb_button_view_help">Legi helpon</string>
+    <string name="home_adb_title">Konektu al komputilo por komenci</string>
+    <string name="home_status_service_version">Versio %2$s, %1$s</string>
+    <string name="home_status_service_not_running">%1$s ne estas funkcianta</string>
+    <string name="home_status_service_is_running">%1$s estas funkcianta</string>
+    <string name="translation_contributors">JakubFabijan</string>
+    <!-- Shizako: 补充翻译 -->
+    <string name="home_status_service_version_update">Versio %2$s, %1$s&lt;br&gt;Restartigu por ĝisdatigi al versio %3$s</string>
+    <string name="home_adb_description">Por aparatoj sen root, vi bezonas uzi adb por startigi Shizako (postulas komputilan konekton). Ĉi tiu procezo devas esti ripetata ĉiufoje kiam la aparato restartiĝas. &lt;b&gt;&lt;a href=\"%1$s\"&gt;Legu la helpon&lt;/a&gt;&lt;/b&gt;.</string>
+    <string name="home_adb_dialog_view_command_message">&lt;font face=\"monospace\"&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* Estas iuj aliaj konsideroj, bonvolu konfirmi, ke vi unue legis la helpon.</string>
+    <string name="home_wireless_adb_title">Startigi per sendrata sencimigado</string>
+    <string name="home_wireless_adb_description">Sur Android 11 aŭ pli nova, vi povas ebligi sendratan sencimigadon kaj startigi Shizako rekte de via aparato, sen konekto al komputilo.&lt;p&gt;Bonvolu unue rigardi la paŝon post paŝo gvidilon.</string>
+    <string name="home_wireless_adb_description_pre_11">Antaŭ Android 11, komputila konekto estas bezonata por ebligi sendratan sencimigadon.</string>
+    <string name="home_wireless_adb_view_guide_button">Gvidilo paŝo post paŝo</string>
+    <string name="dialog_adb_discovery">Serĉante sendratan sencimigan servon</string>
+    <string name="dialog_adb_discovery_message">Bonvolu ebligi „Sendratan sencimigadon“ en „Opcioj por programistoj“. „Sendrata sencimigado“ aŭtomate malvalidiĝas kiam la reto ŝanĝiĝas.
+
+Rimarku: ne malvalidigu „Opciojn por programistoj“ nek „USB-sencimigadon“, alie Shizako estos haltigita.</string>
+    <string name="dialog_adb_discovery_message_toggle_wireless_debugging">Se la serĉado daŭras tro longe, provu malvalidigi kaj reebligi „Sendratan sencimigadon“.</string>
+    <string name="dialog_adb_port">Pordo</string>
+    <string name="dialog_adb_invalid_port">Pordo estas entjero inter 1 kaj 65535.</string>
+    <string name="adb_pairing">Parigado</string>
+    <string name="dialog_adb_pairing_title">Parigi kun aparato</string>
+    <string name="dialog_adb_pairing_discovery">Serĉante parigan servon</string>
+    <string name="dialog_adb_pairing_paring_code">Pariga kodo</string>
+    <string name="paring_code_is_wrong">La pariga kodo estas malĝusta.</string>
+    <string name="cannot_connect_port">Ne povas konektiĝi al la sendrata sencimiga servo.</string>
+    <string name="dialog_wireless_adb_not_enabled">Sendrata sencimigado ne estas ebligita.
+Rimarku: antaŭ Android 11, por ebligi sendratan sencimigadon, komputila konekto estas deviga.</string>
+    <string name="dialog_adb_pairing_message">Bonvolu komenci parigadon per la jenaj paŝoj: „Opcioj por programistoj“ – „Sendrata sencimigado“ – „Parigi aparaton per pariga kodo“.
+
+Post kiam la pariga procezo komenciĝos, vi povos enigi la parigan kodon.</string>
+    <string name="adb_pairing_requires_multi_window">Bonvolu unue enigi dividitan ekranan (plurfenestran) reĝimon.</string>
+    <string name="adb_pairing_requires_multi_window_reason">La sistemo postulas, ke la pariga dialogo ĉiam estu videbla; dividita ekrano estas la nura maniero, ke ĉi tiu apo kaj sistema dialogo estu videblaj samtempe.</string>
+    <string name="adb_error_key_store">Ne povas generi ŝlosilon por sendrata sencimigado.
+Eble la KeyStore mekanismo de ĉi tiu aparato estas difekta.</string>
+    <string name="adb_pair_required">Bonvolu unue plenumi la parigan paŝon.</string>
+    <string name="notification_settings">Sciigaj opcioj</string>
+    <string name="adb_pairing_tutorial_title">Parigu Shizako kun via aparato</string>
+    <string name="adb_pairing_tutorial_content_notification">Sciigo de Shizako helpos vin fini la parigadon.</string>
+    <string name="adb_pairing_tutorial_content_steps">Enigu „Opcioj por programistoj“ – „Sendrata sencimigado“. Tuŝetu „Parigi aparaton per pariga kodo“; vi vidos ses-ciferan kodon.</string>
+    <string name="adb_pairing_tutorial_content_enter_pairing_code">Enigu la kodon en la sciigo por fini la parigadon.</string>
+    <string name="adb_pairing_tutorial_content_notification_blocked">La pariga procezo bezonas interagi kun sciigo de Shizako. Bonvolu permesi al Shizako afiŝi sciigojn.</string>
+    <string name="adb_pairing_tutorial_content_miui">Uzantoj de MIUI eble bezonas ŝanĝi sciigan stilon al „Android“ ĉe „Sciigoj“ – „Sciiga ombrelo“ en sistemaj agordoj.</string>
+    <string name="adb_pairing_tutorial_content_miui_2">Alie, vi eble ne povos enigi la parigan kodon de la sciigo.</string>
+    <string name="adb_pairing_tutorial_content_left_is_clickable">Rimarku: la maldekstra parto de la opcio „Sendrata sencimigado“ estas tuŝebla kaj malfermas novan paĝon. Nur ŝalti la ŝaltilon dekstre estas malĝusta.</string>
+    <string name="adb_pairing_tutorial_content_finish">Reiru al Shizako kaj startigu Shizako.</string>
+    <string name="adb_pairing_tutorial_content_network">Shizako bezonas aliron al loka reto. Ĝi estas regata per la reta permeso.</string>
+    <string name="adb_pairing_tutorial_content_network_limation_not_foreground">Kelkaj sistemoj (kiel MIUI) malpermesas al apoj aliri la reton kiam ili ne estas videblaj, eĉ se la apo uzas antaŭplanan servon laŭ la normo. Sur tiaj sistemoj, bonvolu malŝalti baterian optimumigon por Shizako.</string>
+    <string name="home_root_title">Startigo (por aparatoj kun root)</string>
+    <string name="home_root_description">Krome, Shizako povas esti startigita aŭtomate ĉe sistemstartigo. Se ne, bonvolu kontroli ĉu via sistemo aŭ tri-partiaj iloj limigis Shizako.&lt;br&gt;Vi povas rigardi %s.</string>
+    <string name="home_root_description_sui">Se vi uzas Magisk, vi povas provi %1$s. Por uzantoj kun root, ĝi fine anstataŭigos Shizako. Rimarko: ekzistantaj apoj bezonas iom ŝanĝiĝi por uzi %2$s.</string>
+    <string name="home_root_button_restart">Restartigi</string>
+    <string name="home_app_management_title">Administrado de apoj</string>
+    <string name="home_app_management_view_authorized_apps">Tuŝetu por administri rajtigitajn apojn</string>
+    <string name="home_app_management_empty">Apoj kiuj petis aŭ deklaris Shizako aperos ĉi tie.</string>
+    <string name="home_learn_more_description">Lernu kiel evolui kun Shizako</string>
+    <string name="home_adb_is_limited_title">Vi bezonas fari plian paŝon</string>
+    <string name="home_adb_is_limited_description">Via aparatproduktanto limigis adb-permesojn kaj apoj uzantaj Shizako ne funkcios ĝuste.
+
+Kutime, ĉi tiu limigo povas esti nuligita per ĝustigi kelkajn opciojn en „Opcioj por programistoj“. Bonvolu legi la helpon por detaloj.
+
+Vi eble bezonos restartigi Shizako por ke la operacio efektiviĝu.</string>
+    <string name="app_management_dialog_adb_is_limited_title">La permeso de adb estas limigita</string>
+    <string name="app_management_dialog_adb_is_limited_message">Tre eblas, ke via aparatproduktanto limigas la permeson de adb.&lt;p&gt;Eble estas solvo por via sistemo en &lt;b&gt;&lt;a href=\"%1$s\"&gt;ĉi tiu dokumento&lt;/a&gt;&lt;/b&gt;.</string>
+    <string name="app_management_item_summary_requires_root">* postulas ke Shizako funkciu kun root</string>
+    <string name="home_terminal_title">Uzado de Shizako en terminalaj apoj</string>
+    <string name="home_terminal_description">Lanĉu komandojn per Shizako en terminalaj apoj kiujn vi ŝatas</string>
+    <string name="home_activation_title">Unu-klaka aktivigo</string>
+    <string name="home_activation_summary">Aktivigu Brevent, Stopapp kaj pli sen komputilo</string>
+    <string name="home_activation_summary_not_running">Startigu unue Shizako por uzi unu-klakan aktivigon</string>
+    <string name="terminal_tutorial_1">Unue, eksportu la dosierojn kien vi volas. Vi trovos du dosierojn: %1$s kaj %2$s.</string>
+    <string name="terminal_tutorial_1_description">Se ekzistas dosieroj kun la sama nomo en la elektita dosierujo, ili estos forigitaj.
+
+La eksporta funkcio uzas SAF (Storage Access Framework). Oni raportas, ke MIUI rompas la funkciojn de SAF. Se vi uzas MIUI, vi eble devos eltiri la dosieron el la apk de Shizako aŭ elŝuti ĝin de GitHub.</string>
+    <string name="terminal_export_files">Eksporti dosierojn</string>
+    <string name="terminal_tutorial_2">Poste, malfermu kaj redaktu %1$s per iu ajn tekstoredaktilo.</string>
+    <string name="terminal_tutorial_2_description">Ekzemple, se vi volas uzi Shizako en %1$s, vi anstataŭigu %2$s per %3$s (%4$s estas la pakaĵnomo de la apo %1$s).</string>
+    <string name="terminal_tutorial_3">Fine, movu la dosierojn al loko kie via terminala apo povas aliri; vi povos uzi %1$s por lanĉi komandojn per Shizako.</string>
+    <string name="terminal_tutorial_3_description">Konsiletoj: donu al %1$s rullan permeson kaj aldonu ĝin al %2$s, kaj vi povos uzi %1$s rekte.</string>
+    <string name="rish_description">Kun %1$s, en iu ajn terminala apo, vi povas konektiĝi kaj interagi kun la ŝelo lanĉita de Shizako. &lt;p&gt;tuŝetu por vidi la dokumentaron pri la detala uzo de %1$s.</string>
+    <string name="settings_black_night_theme_summary">Uzas tute nigran etoson kiam malluma reĝimo estas ebligita</string>
+    <string name="settings_startup">Startigo</string>
+    <string name="settings_translation_contributors">Tradukaj kontribuantoj</string>
+    <string name="settings_translation">Partoprenu en tradukado</string>
+    <string name="settings_debug">Sencimigado</string>
+    <string name="settings_crash_logs">Kraŝ-protokoloj</string>
+    <string name="settings_crash_logs_summary">Kraŝoj estas konservitaj ĉi tie kiam la apo neatendite eliras</string>
+    <string name="settings_crash_logs_empty">Neniuj kraŝ-protokoloj</string>
+    <string name="settings_crash_logs_count">%1$d kraŝ-protokolo(j)</string>
+    <string name="settings_crash_logs_share">Kunhavigi</string>
+    <string name="settings_crash_logs_delete">Forigi</string>
+    <string name="settings_crash_logs_delete_all">Forigi ĉiujn</string>
+    <string name="settings_crash_logs_deleted">Forigita</string>
+    <string name="activation_title">Unu-klaka aktivigo</string>
+    <string name="activation_subtitle">Lanĉu la ADB-komandojn kiuj antaŭe bezonis komputilon, rekte ĉi tie</string>
+    <string name="activation_service_running">Shizako funkcias, preta por aktivigi</string>
+    <string name="activation_service_running_brief">Shizako funkcias</string>
+    <string name="activation_service_not_running">Shizako ne funkcias; bonvolu startigi la servon de la hejmpaĝo unue</string>
+    <string name="activation_activate">Aktivigi</string>
+    <string name="activation_activated">Aktivigita</string>
+    <string name="activation_status_not_installed">%1$s · ne instalita</string>
+    <string name="activation_status_installed">%1$s · instalita</string>
+    <string name="activation_status_activated">%1$s · jam aktivigita</string>
+    <string name="activation_status_not_activated">%1$s · instalita, ne aktivigita</string>
+    <string name="activation_note_device_owner">Postulas, ke ĉiuj kontoj kaj duarangaj uzantoj (gasta reĝimo / aplika ĝemelo) estu forigitaj unue; vi povas realdoni ilin post aktivigo. Vendistaj ROM- apartaĵoj povas aperi.</string>
+    <string name="activation_note_brevent">La Brevent-servilo bezonas esti reaktivigita post ĉiu restartigo.</string>
+    <string name="activation_custom_title">Propra komando</string>
+    <string name="activation_custom_hint">Iu ajn ŝelkomando, ekz. dpm set-device-owner …</string>
+    <string name="activation_custom_empty">Komando estas malplena</string>
+    <string name="activation_run">Lanĉi</string>
+    <string name="activation_running">Lanĉante…</string>
+    <string name="activation_success">Aktivigita</string>
+    <string name="activation_failed">Malsukcesis, vidu la eligon sube</string>
+    <string name="activation_failed_with_code">Malsukcesis (elir-kodo %1$d), vidu la eligon sube</string>
+    <string name="activation_timeout">La komando ankoraŭ ruliĝas; ĉesigita atendo (normala por servil-similaj komandoj)</string>
+    <string name="activation_output">Eligo</string>
+    <string name="activation_output_empty">(ankoraŭ neniu eligo)</string>
+    <string name="activation_copy">Kopii</string>
+    <string name="activation_copied">Kopiita</string>
+    <string name="activation_back">Reen</string>
+    <string name="settings_translation_summary">Helpu nin traduki %s en vian lingvon</string>
+    <string name="settings_start_on_boot">Startigi ĉe sistemstartigo (root)</string>
+    <string name="settings_start_on_boot_summary">Por aparatoj kun root, Shizako povas startiĝi aŭtomate ĉe sistemstartigo</string>
+    <string name="settings_use_system_color">Uzi sistemetosan koloron</string>
+    <string name="action_about">Pri</string>
+    <string name="about_view_source_code">Vidu fontkodon ĉe %s</string>
+    <string name="about_author">Aŭtoro</string>
+    <string name="about_based_on">Bazita sur</string>
+    <string name="about_based_on_text">la malfermitkoda projekto %s</string>
+    <string name="about_license">Permesilo</string>
+    <string name="about_footer">Shizako — Farita kun ❤️</string>
+    <string name="action_stop">Haltigi Shizako</string>
+    <string name="dialog_stop_message">La servo de Shizako estos haltigita.</string>
+    <string name="notification_channel_service_status">Stato de servisstartigo</string>
+    <string name="notification_channel_status">Servostato</string>
+    <string name="notification_service_starting">La servo de Shizako startiĝas…</string>
+    <string name="notification_service_start_failed">Startigo de la servo de Shizako malsukcesis.</string>
+    <string name="notification_service_start_no_root">Peto de root-permeso malsukcesis.</string>
+    <string name="notification_working">Laborante…</string>
+    <string name="notification_channel_adb_pairing">Parigado de sendrata sencimigado</string>
+    <string name="notification_adb_pairing_input_paring_code">Enigu parigan kodon</string>
+    <string name="notification_adb_pairing_searching_for_service_title">Serĉante parigan servon</string>
+    <string name="notification_adb_pairing_service_found_title">Pariga servo trovita</string>
+    <string name="notification_adb_pairing_stop_searching">Ĉesigi serĉadon</string>
+    <string name="notification_adb_pairing_working_title">Parigado okazas</string>
+    <string name="notification_adb_pairing_succeed_title">Parigado sukcesis</string>
+    <string name="notification_adb_pairing_succeed_text">Vi povas startigi la servon de Shizako nun.</string>
+    <string name="notification_adb_pairing_failed_title">Parigado malsukcesis</string>
+    <string name="notification_adb_pairing_retry">Reprovi</string>
+    <string name="tile_service_label">Servo de Shizako</string>
+    <string name="tile_service_subtitle_running">Funkcias</string>
+    <string name="tile_service_subtitle_stopped">Haltigita</string>
+    <string name="tile_wireless_adb_label">Sendrata sencimigado</string>
+    <string name="permission_label">aliri Shizako</string>
+    <string name="permission_description">Permesu al la apo uzi Shizako.</string>
+    <string name="permission_warning_template">Ĉu permesi al &lt;b&gt;%1$s&lt;/b&gt; %2$s?</string>
+    <string name="grant_dialog_button_allow_always">Ĉiam permesi</string>
+    <string name="grant_dialog_button_deny">Rifuzi</string>
+    <string name="starter">Startigilo</string>
+    <string name="start_with_root_failed">Ne povas startigi la servon ĉar root-permeso ne estas donita aŭ ĉi tiu aparato ne havas root.</string>
+    <string name="dialog_cannot_open_browser_title">Ne povas startigi retumilon</string>
+    <string name="toast_copied_to_clipboard">%s
+estas kopiita al la tondujo.</string>
+    <string name="toast_copied_to_clipboard_with_text">&lt;b&gt;%s&lt;/b&gt; estas kopiita al la tondujo.</string>
+    <string name="dialog_legacy_not_support_title">%1$s ne subtenas modernan Shizako</string>
+    <string name="dialog_legacy_not_support_message">Malnova Shizako estas malrekomendita ekde marto 2019. Krome, malnova Shizako ne funkcias sur pli novaj Android-sistemoj.&lt;p&gt;Bonvolu peti al la programisto de &lt;b&gt;%1$s&lt;/b&gt; ĝisdatigi ĝin.</string>
+    <string name="dialog_requesting_legacy_title">%1$s petas malnovan Shizako</string>
+    <string name="dialog_requesting_legacy_message">&lt;b&gt;%1$s&lt;/b&gt; havas subtenon por moderna Shizako, sed petas malnovan Shizako. Tio povas esti ĉar Shizako ne funkcias; bonvolu kontroli en la apo Shizako.&lt;p&gt;Malnova Shizako estas malrekomendita ekde marto 2019.</string>
+    <string name="dialog_requesting_legacy_button_open_shizuku">Malfermi Shizako</string>
+    <!-- Shizako: 补充翻译 -->
+    <string name="setup_welcome_title">Bonvenon</string>
+    <string name="setup_welcome_subtitle">Per kelkaj rapidaj agordoj, Shizako pretas por uzo.</string>
+    <string name="setup_disclaimer_title">Malgarantio</string>
+    <string name="setup_disclaimer_text"><![CDATA[Shizako estas provizata «tia, kia ĝi estas», sen ia garantio.<p>Shizako funkcias per rulado de privilegiita servo sur via aparato. La ellaboranto ne respondecas pri ajna damaĝo aŭ datum-perdo, kiu povas rezulti de uzado de ĉi tiu apo aŭ doni al apoj aliron al Shizako.<p>Uzu ĝin je via propra risko.]]></string>
+    <string name="setup_disclaimer_agree">Mi legis kaj konsentas kun la supre</string>
+    <string name="setup_language_title">Elektu lingvon</string>
+    <string name="setup_language_subtitle">Vi povos ŝanĝi ĝin poste en Agordoj.</string>
+    <string name="setup_mode_subtitle">Elektu, kiel Shizako aspektos. Vi povos ŝanĝi ĝin poste en Agordoj.</string>
+    <string name="setup_mode_follow_system">Sekvi la sistemon</string>
+    <string name="setup_mode_light">Hela</string>
+    <string name="setup_mode_dark">Malhela</string>
+    <string name="setup_start_method_title">Aktiviga maniero</string>
+    <string name="setup_start_method_subtitle">Elektu kiel vi planas startigi Shizako. La ĉefpaĝo montros tiun manieron unue.</string>
+    <string name="setup_start_method_wadb">Sendrata sencimigo</string>
+    <string name="setup_start_method_wadb_summary">Sur Android 11 aŭ pli nova, komputilo ne bezonata</string>
+    <string name="setup_start_method_root">Root</string>
+    <string name="setup_start_method_root_summary">Por radikigitaj aparatoj, ekigi per unu tuŝo</string>
+    <string name="setup_start_method_adb">Konekti al komputilo</string>
+    <string name="setup_start_method_adb_summary">Uzu adb per USB, ripetu post ĉiu restartigo</string>
+    <string name="setup_back">Reen</string>
+    <string name="setup_next">Sekva</string>
+    <string name="setup_get_started">Komenci</string>
+    <string name="setup_skip">Preterpasi</string>
+</resources>

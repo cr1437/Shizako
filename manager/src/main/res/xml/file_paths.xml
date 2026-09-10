@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <cache-path
+        name="updates"
+        path="updates/" />
+    <external-files-path
+        name="downloads"
+        path="Download/" />
+    <external-path
+        name="public_download"
+        path="Download/" />
+</paths>

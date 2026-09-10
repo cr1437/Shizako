@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Small status dot for the service banner of the one-click activation
+     page. The color is tinted at runtime (green = running, red = stopped). -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <solid android:color="#9E9E9E" />
+    <size
+        android:width="10dp"
+        android:height="10dp" />
+</shape>

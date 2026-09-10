@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <bitmap android:gravity="fill" android:src="@drawable/bg_wallpaper" android:tileMode="disabled" />
+    </item>
+    <item>
+        <color android:color="#A6000000" />
+    </item>
+</layer-list>

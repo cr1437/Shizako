@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="homeCardStyle" format="reference" />
+    <attr name="appColorPrimary" format="reference" />
+    <!-- KernelSU 统一卡片样式引用：M3E/Miuix 主题分别注入不同卡片样式，布局用 style="?ksuCardStyle" -->
+    <attr name="ksuCardStyle" format="reference" />
+    <!-- 分组容器背景：Miuix 分组列表用更亮表面，M3E 用 surfaceContainer -->
+    <attr name="ksuSectionBackground" format="reference|color" />
+</resources>

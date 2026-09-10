@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- KernelSU 风格主界面：单 Activity + NavHost + 亚克力悬浮底部导航。
+     内容区全高延伸（滚动内容从导航胶囊下方穿过），BlurTarget 是被模糊的
+     快照根；导航胶囊后声明、绘制在其上方，由 BlurView 实时模糊底层内容。
+     各 Tab 列表底部预留 ksu_content_bottom_padding，保证末项不被胶囊遮挡。 -->
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:edgeToEdge="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <moe.shizuku.blurview.BlurTarget
+            android:id="@+id/blur_target"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/nav_host_fragment"
+                android:name="androidx.navigation.fragment.NavHostFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?android:colorBackground"
+                app:defaultNavHost="true"
+                app:navGraph="@navigation/main_nav" />
+        </moe.shizuku.blurview.BlurTarget>
+
+        <include
+            android:id="@+id/nav_capsule"
+            layout="@layout/view_floating_nav"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

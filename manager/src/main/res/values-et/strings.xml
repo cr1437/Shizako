@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home_adb_dialog_view_command_button_send">Saada</string>
+    <string name="home_adb_dialog_view_command_copy_button">Kopeeri</string>
+    <string name="home_status_service_version">Versioon %2$s, %1$s</string>
+    <!-- Shizako: 补充翻译 -->
+    <string name="translation_contributors" />
+    <string name="home_status_service_is_running">%1$s töötab</string>
+    <string name="home_status_service_not_running">%1$s ei tööta</string>
+    <string name="home_status_service_version_update">Versioon %2$s, %1$s&lt;br&gt;Uuendamiseks versioonile %3$s käivitage uuesti</string>
+    <string name="home_adb_title">Alusta arvutiga ühendamisega</string>
+    <string name="home_adb_description">Juurkateta seadmete puhul peate Shizako käivitamiseks kasutama adb-d (nõuab arvutiga ühendust). Seda protsessi tuleb iga seadme taaskäivitamise korral korrata. &lt;b&gt;&lt;a href=\"%1$s\"&gt;Loe abi&lt;/a&gt;&lt;/b&gt;.</string>
+    <string name="home_adb_button_view_help">Loe abi</string>
+    <string name="home_adb_button_view_command">Vaata käsku</string>
+    <string name="home_adb_dialog_view_command_message">&lt;font face=\"monospace\"&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* On veel muid möödapääsmatuid asjaolusid, palun veenduge, et lugesite esmalt abi.</string>
+    <string name="home_wireless_adb_title">Käivita traadita silumise kaudu</string>
+    <string name="home_wireless_adb_description">Androidil 11 ja uuemal saate lubada traadita silumise ja käivitada Shizako otse seadmest, ilma arvutiga ühendamata.&lt;p&gt;Vaadake kõigepealt samm-sammulist juhendit.</string>
+    <string name="home_wireless_adb_description_pre_11">Enne Androidi 11 on traadita silumise lubamiseks vajalik arvutiga ühendamine.</string>
+    <string name="home_wireless_adb_view_guide_button">Samm-sammuline juhend</string>
+    <string name="dialog_adb_discovery">Traadita silumisteenuse otsimine</string>
+    <string name="dialog_adb_discovery_message">Palun lubage „Traadita silumine“ jaotises „Arendaja valikud“. „Traadita silumine“ lülitatakse võrgu muutumisel automaatselt välja.
+
+Märkus: ärge keelake „Arendaja valikuid“ ega „USB-silumist“, vastasel juhul peatatakse Shizako.</string>
+    <string name="dialog_adb_discovery_message_toggle_wireless_debugging">Kui otsimine kestab liiga kaua, proovige „Traadita silumine“ välja ja uuesti sisse lülitada.</string>
+    <string name="dialog_adb_port">Port</string>
+    <string name="dialog_adb_invalid_port">Port on täisarv vahemikus 1 kuni 65535.</string>
+    <string name="adb_pairing">Sidumine</string>
+    <string name="dialog_adb_pairing_title">Seo seadmega</string>
+    <string name="dialog_adb_pairing_discovery">Sidumisteenuse otsimine</string>
+    <string name="dialog_adb_pairing_paring_code">Sidumiskood</string>
+    <string name="paring_code_is_wrong">Sidumiskood on vale.</string>
+    <string name="cannot_connect_port">Ei saa ühendust traadita silumisteenusega.</string>
+    <string name="dialog_wireless_adb_not_enabled">Traadita silumine pole lubatud.
+Märkus: enne Androidi 11 on traadita silumise lubamiseks arvutiga ühendamine hädavajalik.</string>
+    <string name="dialog_adb_pairing_message">Alustage sidumist järgmiselt: „Arendaja valikud“ – „Traadita silumine“ – „Seo seade sidumiskoodiga“.
+
+Kui sidumisprotsess on alanud, saate sisestada sidumiskoodi.</string>
+    <string name="adb_pairing_requires_multi_window">Sisestage esmalt poolitatud ekraani (mitme akna) režiim.</string>
+    <string name="adb_pairing_requires_multi_window_reason">Süsteem nõuab, et sidumisdialoog oleks alati nähtav; poolitatud ekraan on ainus viis, kuidas see rakendus ja süsteemidialoog saavad olla korraga nähtavad.</string>
+    <string name="adb_error_key_store">Traadita silumise võtme genereerimine ebaõnnestus.
+Põhjuseks võib olla selle seadme katkine KeyStore\'i mehhanism.</string>
+    <string name="adb_pair_required">Palun läbige kõigepealt sidumise samm.</string>
+    <string name="development_settings">Arendaja valikud</string>
+    <string name="notification_settings">Teavituste valikud</string>
+    <string name="adb_pairing_tutorial_title">Sõlmige Shizako ja seadme vahel side</string>
+    <string name="adb_pairing_tutorial_content_notification">Shizako teavitus aitab teil sidumise lõpule viia.</string>
+    <string name="adb_pairing_tutorial_content_steps">Avage „Arendaja valikud“ – „Traadita silumine“. Puudutage „Seo seade sidumiskoodiga“; näete kuuekohalist koodi.</string>
+    <string name="adb_pairing_tutorial_content_enter_pairing_code">Sisestage kood teavitusest, et sidumine lõpule viia.</string>
+    <string name="adb_pairing_tutorial_content_notification_blocked">Sidumisprotsess nõuab Shizako teavitusega suhtlemist. Palun lubage Shizakol teavitusi kuvada.</string>
+    <string name="adb_pairing_tutorial_content_miui">MIUI kasutajad võivad olla sunnitud muutma teavituste laadiks „Android“ jaotises „Teavitused“ – „Teavituste rippmenüü“ süsteemiseadetes.</string>
+    <string name="adb_pairing_tutorial_content_miui_2">Vastasel juhul ei pruugi teil õnnestuda sidumiskoodi teavitusest sisestada.</string>
+    <string name="adb_pairing_tutorial_content_left_is_clickable">Pange tähele: valiku „Traadita silumine“ vasakpoolne osa on klõpsatav ja avab uue lehe. Ainult paremal asuva lüliti sisselülitamine pole õige.</string>
+    <string name="adb_pairing_tutorial_content_finish">Minge tagasi Shizakosse ja käivitage Shizako.</string>
+    <string name="adb_pairing_tutorial_content_network">Shizako vajab juurdepääsu kohtvõrgule. Seda juhib võrguluba.</string>
+    <string name="adb_pairing_tutorial_content_network_limation_not_foreground">Mõned süsteemid (nt MIUI) keelavad rakendustel võrgule juurdepääsu, kui need pole nähtaval, isegi kui rakendus kasutab vastavalt standardile esiplaani teenust. Sellistes süsteemides keelake Shizako puhul aku optimeerimine.</string>
+    <string name="home_root_title">Käivitamine (juurkasutusega seadmetele)</string>
+    <string name="home_root_description">Lisaks saab Shizako käivitada automaatselt süsteemi käivitamisel. Kui mitte, kontrollige, kas teie süsteem või kolmandate osapoolte tööriistad on Shizako piiranud.&lt;br&gt;Võite vaadata %s.</string>
+    <string name="home_root_description_sui">Kui kasutate Magiski, võite proovida %1$s. Juurkasutajate jaoks asendab see aja jooksul Shizako. Märkus: olemasolevad rakendused peavad %2$s kasutamiseks pisut muutuma.</string>
+    <string name="home_root_button_start">Käivita</string>
+    <string name="home_root_button_restart">Taaskäivita</string>
+    <string name="home_app_management_title">Rakenduste haldus</string>
+    <string name="home_app_management_view_authorized_apps">Puudutage autoriseeritud rakenduste haldamiseks</string>
+    <string name="home_app_management_empty">Siin kuvatakse rakendused, mis on Shizakot taodelnud või deklareerinud.</string>
+    <string name="home_learn_more_title">Tutvuge Shizakoga</string>
+    <string name="home_learn_more_description">Vaadake, kuidas Shizakoga arendada</string>
+    <string name="home_adb_is_limited_title">Peate veel ühe sammu astuma</string>
+    <string name="home_adb_is_limited_description">Teie seadme tootja on adb õigused piiranud ja Shizakot kasutavad rakendused ei tööta korralikult.
+
+Tavaliselt saab selle piirangu eemaldada, muutes mõningaid valikuid jaotises „Arendaja valikud“. Üksikasjade jaoks lugege abi.
+
+Muudatuse jõustumiseks võib olla vaja Shizako taaskäivitada.</string>
+    <string name="app_management_dialog_adb_is_limited_title">adb õigus on piiratud</string>
+    <string name="app_management_dialog_adb_is_limited_message">On väga tõenäoline, et teie seadme tootja piirab adb õigust.&lt;p&gt;Võimalik lahendus teie süsteemile võib olla &lt;b&gt;&lt;a href=\"%1$s\"&gt;selles dokumendis&lt;/a&gt;&lt;/b&gt;.</string>
+    <string name="app_management_item_summary_requires_root">* nõuab, et Shizako töötaks juurkasutajana</string>
+    <string name="home_terminal_title">Shizako kasutamine terminalirakendustes</string>
+    <string name="home_terminal_description">Käivitage käsud Shizako kaudu oma lemmikterminalirakendustes</string>
+    <string name="home_activation_title">Ühe klõpsuga aktiveerimine</string>
+    <string name="home_activation_summary">Aktiveerige Brevent, Stopapp ja palju muud ilma arvutita</string>
+    <string name="home_activation_summary_not_running">Ühe klõpsuga aktiveerimise kasutamiseks käivitage kõigepealt Shizako</string>
+    <string name="terminal_tutorial_1">Esmalt eksportige failid kohta, kuhu soovite. Leiate kaks faili: %1$s ja %2$s.</string>
+    <string name="terminal_tutorial_1_description">Kui valitud kaustas on sama nimega faile, need kustutatakse.
+
+Eksportimisfunktsioon kasutab SAF-i (Storage Access Framework). On teatatud, et MIUI rikub SAF-i funktsioone. Kui kasutate MIUI-d, peate võib-olla faili Shizako apk-st välja võtma või GitHubist alla laadima.</string>
+    <string name="terminal_export_files">Ekspordi failid</string>
+    <string name="terminal_tutorial_2">Seejärel avage ja redigeerige %1$s mis tahes tekstiredaktoris.</string>
+    <string name="terminal_tutorial_2_description">Näiteks kui soovite kasutada Shizakot rakenduses %1$s, peaksite asendama %2$s järgmiselt: %3$s (%4$s on rakenduse %1$s paketi nimi).</string>
+    <string name="terminal_tutorial_3">Lõpuks liigutage failid kohta, kuhu teie terminalirakendus pääseb juurde; saate kasutada %1$s, et käske Shizako kaudu käivitada.</string>
+    <string name="terminal_tutorial_3_description">Nõuanded: andke %1$s-le täitmisõigus ja lisage see %2$s-i, siis saate %1$s otse kasutada.</string>
+    <string name="rish_description">%1$s abil saate mis tahes terminalirakenduses ühenduse luua ja suhelda Shizako käivitatud kestaga. &lt;p&gt;Puudutage, et vaadata %1$s üksikasjalikku kasutamist käsitlevat dokumenti.</string>
+    <string name="settings_title">Seaded</string>
+    <string name="settings_language">Keel</string>
+    <string name="settings_user_interface">Välimus</string>
+    <string name="settings_black_night_theme">Must ööteema</string>
+    <string name="settings_black_night_theme_summary">Kasutab täiesti musta teemat, kui tumerežiim on lubatud</string>
+    <string name="settings_startup">Käivitamine</string>
+    <string name="settings_translation_contributors">Tõlkijad</string>
+    <string name="settings_translation">Osale tõlkimises</string>
+    <string name="settings_debug">Silumine</string>
+    <string name="settings_crash_logs">Krahhide logid</string>
+    <string name="settings_crash_logs_summary">Krahid salvestatakse siia, kui rakendus ootamatult sulgub</string>
+    <string name="settings_crash_logs_empty">Krahhide logisid pole</string>
+    <string name="settings_crash_logs_count">Krahhide logisid: %1$d</string>
+    <string name="settings_crash_logs_share">Jaga</string>
+    <string name="settings_crash_logs_delete">Kustuta</string>
+    <string name="settings_crash_logs_delete_all">Kustuta kõik</string>
+    <string name="settings_crash_logs_deleted">Kustutatud</string>
+    <string name="activation_title">Ühe klõpsuga aktiveerimine</string>
+    <string name="activation_subtitle">Käivitage ADB käsud, mis varem nõudsid arvutit, otse siin</string>
+    <string name="activation_service_running">Shizako töötab, aktiveerimiseks valmis</string>
+    <string name="activation_service_running_brief">Shizako töötab</string>
+    <string name="activation_service_not_running">Shizako ei tööta; käivitage teenus kõigepealt avalehelt</string>
+    <string name="activation_activate">Aktiveeri</string>
+    <string name="activation_activated">Aktiveeritud</string>
+    <string name="activation_status_not_installed">%1$s · pole paigaldatud</string>
+    <string name="activation_status_installed">%1$s · paigaldatud</string>
+    <string name="activation_status_activated">%1$s · juba aktiveeritud</string>
+    <string name="activation_status_not_activated">%1$s · paigaldatud, pole aktiveeritud</string>
+    <string name="activation_note_device_owner">Nõuab, et kõik kontod ja teisased kasutajad (külalisrežiim / rakenduse kloon) eemaldataks enne; pärast aktiveerimist saate need tagasi lisada. Võimalikud on tootja ROM-i eripärad.</string>
+    <string name="activation_note_brevent">Breventi server tuleb pärast iga taaskäivitust uuesti aktiveerida.</string>
+    <string name="activation_custom_title">Kohandatud käsk</string>
+    <string name="activation_custom_hint">Mis tahes kestakäsk, nt dpm set-device-owner …</string>
+    <string name="activation_custom_empty">Käsk on tühi</string>
+    <string name="activation_run">Käivita</string>
+    <string name="activation_running">Töötab…</string>
+    <string name="activation_success">Aktiveeritud</string>
+    <string name="activation_failed">Nurjus, vaadake allpool väljundit</string>
+    <string name="activation_failed_with_code">Nurjus (väljumiskood %1$d), vaadake allpool väljundit</string>
+    <string name="activation_timeout">Käsk töötab endiselt; ootamine lõpetati (serveritaoliste käskude puhul normaalne)</string>
+    <string name="activation_output">Väljund</string>
+    <string name="activation_output_empty">(väljundit veel pole)</string>
+    <string name="activation_copy">Kopeeri</string>
+    <string name="activation_copied">Kopeeritud</string>
+    <string name="activation_back">Tagasi</string>
+    <string name="settings_translation_summary">Aidake meil %s oma keelde tõlkida</string>
+    <string name="settings_start_on_boot">Käivita süsteemi käivitumisel (juurkasutaja)</string>
+    <string name="settings_start_on_boot_summary">Juurkasutusega seadmetes saab Shizako süsteemi käivitumisel automaatselt käivituda</string>
+    <string name="settings_use_system_color">Kasuta süsteemi teema värvi</string>
+    <string name="action_about">Teave</string>
+    <string name="about_view_source_code">Lähtekood asub aadressil %s</string>
+    <string name="about_author">Autor</string>
+    <string name="about_based_on">Põhineb</string>
+    <string name="about_based_on_text">avaldatud lähtekoodiga projektil %s</string>
+    <string name="about_license">Litsents</string>
+    <string name="about_footer">Shizako — Loodud ❤️-ga</string>
+    <string name="action_stop">Peata Shizako</string>
+    <string name="dialog_stop_message">Shizako teenus peatatakse.</string>
+    <string name="notification_channel_service_status">Teenuse käivitamise olek</string>
+    <string name="notification_channel_status">Teenuse olek</string>
+    <string name="notification_service_starting">Shizako teenus käivitub…</string>
+    <string name="notification_service_start_failed">Shizako teenuse käivitamine nurjus.</string>
+    <string name="notification_service_start_no_root">Juurkasutaja loa taotlemine nurjus.</string>
+    <string name="notification_working">Töötlen…</string>
+    <string name="notification_channel_adb_pairing">Traadita silumise sidumine</string>
+    <string name="notification_adb_pairing_input_paring_code">Sisestage sidumiskood</string>
+    <string name="notification_adb_pairing_searching_for_service_title">Sidumisteenuse otsimine</string>
+    <string name="notification_adb_pairing_service_found_title">Sidumisteenus leitud</string>
+    <string name="notification_adb_pairing_stop_searching">Lõpeta otsimine</string>
+    <string name="notification_adb_pairing_working_title">Sidumine käib</string>
+    <string name="notification_adb_pairing_succeed_title">Sidumine õnnestus</string>
+    <string name="notification_adb_pairing_succeed_text">Nüüd saate Shizako teenuse käivitada.</string>
+    <string name="notification_adb_pairing_failed_title">Sidumine nurjus</string>
+    <string name="notification_adb_pairing_retry">Proovi uuesti</string>
+    <string name="tile_service_label">Shizako teenus</string>
+    <string name="tile_service_subtitle_running">Töötab</string>
+    <string name="tile_service_subtitle_stopped">Peatatud</string>
+    <string name="tile_wireless_adb_label">Traadita silumine</string>
+    <string name="permission_label">kasutada Shizakot</string>
+    <string name="permission_description">Lubage rakendusel Shizakot kasutada.</string>
+    <string name="permission_warning_template">Kas lubate rakendusel &lt;b&gt;%1$s&lt;/b&gt; %2$s?</string>
+    <string name="grant_dialog_button_allow_always">Luba alati</string>
+    <string name="grant_dialog_button_deny">Keeldu</string>
+    <string name="starter">Käivitaja</string>
+    <string name="start_with_root_failed">Teenust ei saa käivitada, sest juurkasutaja luba pole antud või see seade ei ole juurkasutusega.</string>
+    <string name="dialog_cannot_open_browser_title">Brauserit ei saa käivitada</string>
+    <string name="toast_copied_to_clipboard">%s
+kopeeriti lõikelauale.</string>
+    <string name="toast_copied_to_clipboard_with_text">&lt;b&gt;%s&lt;/b&gt; kopeeriti lõikelauale.</string>
+    <string name="dialog_legacy_not_support_title">%1$s ei toeta moodsat Shizakot</string>
+    <string name="dialog_legacy_not_support_message">Pärand-Shizako on aegunud alates 2019. aasta märtsist. Lisaks ei tööta pärand-Shizako uuematel Androidi süsteemidel.&lt;p&gt;Paluge rakenduse &lt;b&gt;%1$s&lt;/b&gt; arendajal seda uuendada.</string>
+    <string name="dialog_requesting_legacy_title">%1$s taotleb pärand-Shizakot</string>
+    <string name="dialog_requesting_legacy_message">&lt;b&gt;%1$s&lt;/b&gt; toetab moodsat Shizakot, kuid taotleb pärand-Shizakot. Põhjuseks võib olla see, et Shizako ei tööta; kontrollige seda Shizako rakenduses.&lt;p&gt;Pärand-Shizako on aegunud alates 2019. aasta märtsist.</string>
+    <string name="dialog_requesting_legacy_button_open_shizuku">Ava Shizako</string>
+    <plurals name="home_app_management_authorized_apps_count">
+        <item quantity="one">%d autoriseeritud rakendus</item>
+        <item quantity="other">%d autoriseeritud rakendust</item>
+    </plurals>
+    <!-- Shizako: 补充翻译 -->
+    <string name="setup_welcome_title">Tere tulemast</string>
+    <string name="setup_welcome_subtitle">Mõne kiire seadistusega on Shizako kasutamiseks valmis.</string>
+    <string name="setup_disclaimer_title">Vastutusest keeldumine</string>
+    <string name="setup_disclaimer_text"><![CDATA[Shizako pakutakse «nii nagu on», ilma igasuguse garantiita.<p>Shizako töötab, käitades sinu seadmes privilegeeritud teenust. Arendaja ei vastuta seadme kahjustuste ega andmete kadumise eest, mis võivad tuleneda selle rakenduse kasutamisest või rakendustele Shizako juurdepääsu andmisest.<p>Kasuta omal vastutusel.]]></string>
+    <string name="setup_disclaimer_agree">Olen ülaltoodule läbi lugenud ja nõustun</string>
+    <string name="setup_language_title">Vali keel</string>
+    <string name="setup_language_subtitle">Saad seda hiljem seadetes muuta.</string>
+    <string name="setup_mode_subtitle">Vali, kuidas Shizako välja näeb. Saad seda hiljem seadetes muuta.</string>
+    <string name="setup_mode_follow_system">Järgi süsteemi</string>
+    <string name="setup_mode_light">Hele</string>
+    <string name="setup_mode_dark">Tume</string>
+    <string name="setup_start_method_title">Aktiveerimisviis</string>
+    <string name="setup_start_method_subtitle">Vali, kuidas plaanid Shizako käivitada. Avaleht näitab seda viisi esimesena.</string>
+    <string name="setup_start_method_wadb">Traadita silumine</string>
+    <string name="setup_start_method_wadb_summary">Android 11 või uuem, arvutit pole vaja</string>
+    <string name="setup_start_method_root">Root</string>
+    <string name="setup_start_method_root_summary">Rohitud seadmetele, käivitus ühe puutega</string>
+    <string name="setup_start_method_adb">Ühenda arvutiga</string>
+    <string name="setup_start_method_adb_summary">Kasuta adb üle USB, korda pärast iga taaskäivitust</string>
+    <string name="setup_back">Tagasi</string>
+    <string name="setup_next">Edasi</string>
+    <string name="setup_get_started">Alusta</string>
+    <string name="setup_skip">Jäta vahele</string>
+</resources>

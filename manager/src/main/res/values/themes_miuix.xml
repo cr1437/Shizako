@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ============================================================
+         Miuix 风格主题 Overlay（KernelSU 备选观感）
+         叠加在「主题色板 / 动态取色」之上，只改"形状 / 背景 / 卡片样式"，
+         颜色仍由 20 色板或系统取色决定。逼近小米 HyperOS 的
+         大圆角分组列表观感（风格近似，非像素级复刻）。
+         由 AppActivity 在 ui_style=miuix 时 applyStyle 注入。
+         ============================================================ -->
+    <style name="ThemeOverlay.Miuix" parent="">
+        <!-- 形状系统：小米风中等圆角（卡片/组件） -->
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Ksu.Miuix.Medium</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.Ksu.Miuix.Large</item>
+        <!-- 卡片样式：Miuix 分组卡片 -->
+        <item name="ksuCardStyle">@style/Widget.Ksu.Card.Miuix</item>
+        <!-- 分组容器背景：更亮的表面色，营造分组卡片感 -->
+        <item name="ksuSectionBackground">?colorSurface</item>
+    </style>
+</resources>

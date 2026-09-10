@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>    <!-- Shizako: 补充翻译 -->
+    <!-- Shizako: 补充翻译 -->
+    <string name="translation_contributors" />
+    <!-- Shizako: 补充翻译 -->
+    <string name="home_status_service_is_running">%1$s on käynnissä</string>
+    <string name="home_status_service_not_running">%1$s ei ole käynnissä</string>
+    <string name="home_status_service_version">Versio %2$s, %1$s</string>
+    <string name="home_status_service_version_update">Versio %2$s, %1$s&lt;br&gt;Käynnistä uudelleen päivittääksesi versioon %3$s</string>
+    <string name="home_adb_title">Aloita yhdistämällä tietokoneeseen</string>
+    <string name="home_adb_description">Juurtumattomilla laitteilla Shizakon käynnistämiseen tarvitaan adb (vaatii tietokoneyhteyden). Tämä toimenpide on tehtävä uudelleen aina, kun laite käynnistetään uudelleen. Lue &lt;b&gt;&lt;a href=\"%1$s\"&gt;ohje&lt;/a&gt;&lt;/b&gt;.</string>
+    <string name="home_adb_button_view_help">Lue ohje</string>
+    <string name="home_adb_button_view_command">Näytä komento</string>
+    <string name="home_adb_dialog_view_command_message">&lt;font face=\"monospace\"&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* Huomioi myös muut seikat; varmista, että olet lukenut ohjeen ensin.</string>
+    <string name="home_adb_dialog_view_command_copy_button">Kopioi</string>
+    <string name="home_adb_dialog_view_command_button_send">Lähetä</string>
+    <string name="home_wireless_adb_title">Käynnistä langattoman vianetsinnän kautta</string>
+    <string name="home_wireless_adb_description">Android 11:ssä tai uudemmassa voit ottaa langattoman vianetsinnän käyttöön ja käynnistää Shizakon suoraan laitteeltasi ilman tietokonetta.&lt;p&gt;Katso ensin vaiheittainen opas.</string>
+    <string name="home_wireless_adb_description_pre_11">Ennen Android 11:tä langattoman vianetsinnän käyttöönottaminen vaatii tietokoneyhteyden.</string>
+    <string name="home_wireless_adb_view_guide_button">Vaiheittainen opas</string>
+    <string name="dialog_adb_discovery">Etsitään langattoman vianetsinnän palvelua</string>
+    <string name="dialog_adb_discovery_message">Ota “Langaton vianetsintä” käyttöön “Kehittäjän asetuksissa”. “Langaton vianetsintä” poistetaan käytöstä automaattisesti, kun verkko vaihtuu.
+
+Huomaa: älä poista “Kehittäjän asetuksia” tai “USB-vianetsintää” käytöstä, muuten Shizako pysähtyy.</string>
+    <string name="dialog_adb_discovery_message_toggle_wireless_debugging">Jos haku jatkuu, yritä ottaa “Langaton vianetsintä” pois ja takaisin käyttöön.</string>
+    <string name="dialog_adb_port">Portti</string>
+    <string name="dialog_adb_invalid_port">Portti on kokonaisluku väliltä 1–65535.</string>
+    <string name="adb_pairing">Laiteparin muodostaminen</string>
+    <string name="dialog_adb_pairing_title">Muodosta laitepari</string>
+    <string name="dialog_adb_pairing_discovery">Etsitään laiteparipalvelua</string>
+    <string name="dialog_adb_pairing_paring_code">Laiteparikoodi</string>
+    <string name="paring_code_is_wrong">Laiteparikoodi on väärin.</string>
+    <string name="cannot_connect_port">Langattoman vianetsinnän palveluun ei saada yhteyttä.</string>
+    <string name="dialog_wireless_adb_not_enabled">Langaton vianetsintä ei ole käytössä.
+Huomaa: ennen Android 11:tä langattoman vianetsinnän käyttöönottaminen vaatii tietokoneyhteyden.</string>
+    <string name="dialog_adb_pairing_message">Aloita laiteparin muodostaminen näin: “Kehittäjän asetukset” - “Langaton vianetsintä” - “Muodosta laitepari laiteparikoodilla”.
+
+Kun laiteparin muodostaminen on alkanut, voit syöttää laiteparikoodin.</string>
+    <string name="adb_pairing_requires_multi_window">Siirry ensin jaettuun näyttöön (moni-ikkunatilaan).</string>
+    <string name="adb_pairing_requires_multi_window_reason">Järjestelmä vaatii, että laiteparin muodostamisen valintaikkuna on aina näkyvissä; jaettu näyttö on ainoa tapa pitää tämä sovellus ja järjestelmän valintaikkuna näkyvissä samanaikaisesti.</string>
+    <string name="adb_error_key_store">Langattoman vianetsinnän avainta ei voida luoda.
+Tämä voi johtua siitä, että laitteen KeyStore-mekanismi on viallinen.</string>
+    <string name="adb_pair_required">Suorita ensin laiteparin muodostamisen vaihe.</string>
+    <string name="development_settings">Kehittäjän asetukset</string>
+    <string name="notification_settings">Ilmoitusasetukset</string>
+    <string name="adb_pairing_tutorial_title">Muodosta laitepari Shizakon kanssa</string>
+    <string name="adb_pairing_tutorial_content_notification">Shizakon ilmoitus auttaa sinua viimeistelemään laiteparin muodostamisen.</string>
+    <string name="adb_pairing_tutorial_content_steps">Avaa “Kehittäjän asetukset” - “Langaton vianetsintä”. Napauta “Muodosta laitepari laiteparikoodilla”; näet kuusinumeroisen koodin.</string>
+    <string name="adb_pairing_tutorial_content_enter_pairing_code">Syötä koodi ilmoitukseen viimeistelläksesi laiteparin muodostamisen.</string>
+    <string name="adb_pairing_tutorial_content_notification_blocked">Laiteparin muodostaminen edellyttää, että käytät Shizakon ilmoitusta. Salli Shizakon näyttää ilmoituksia.</string>
+    <string name="adb_pairing_tutorial_content_miui">MIUI-käyttäjien voi olla tarpeen vaihtaa ilmoitustyyliksi “Android” kohdasta “Ilmoitus” - “Ilmoitusvarjo” järjestelmäasetuksissa.</string>
+    <string name="adb_pairing_tutorial_content_miui_2">Muuten et ehkä voi syöttää laiteparikoodia ilmoituksesta.</string>
+    <string name="adb_pairing_tutorial_content_left_is_clickable">Huomaa: “Langaton vianetsintä” -valinnan vasen osa on napautettava; se avaa uuden sivun. Pelkän oikeanpuoleisen kytkimen päälle kytkeminen ei riitä.</string>
+    <string name="adb_pairing_tutorial_content_finish">Palaa Shizakoon ja käynnistä Shizako.</string>
+    <string name="adb_pairing_tutorial_content_network">Shizako tarvitsee pääsyn paikalliseen verkkoon. Sitä hallitaan verkko-oikeudella.</string>
+    <string name="adb_pairing_tutorial_content_network_limation_not_foreground">Jotkin järjestelmät (kuten MIUI) estävät sovelluksia käyttämästä verkkoa, kun ne eivät ole näkyvissä, vaikka sovellus käyttäisi etualan palvelua standardin mukaisesti. Poista tällaisissa järjestelmissä Shizakon akun optimointi käytöstä.</string>
+    <string name="home_root_title">Käynnistä (juurretuille laitteille)</string>
+    <string name="home_root_description">Lisäksi Shizako voidaan käynnistää automaattisesti käynnistyksen yhteydessä. Jos näin ei tapahdu, tarkista, onko järjestelmäsi tai kolmannen osapuolen työkalut rajoittaneet Shizakoa.&lt;br&gt;Voit katsoa ohjeet: %s.</string>
+    <string name="home_root_description_sui">Jos käytät Magiskia, voit kokeilla %1$s. Root-käyttäjille se korvaa Shizakon lopulta. Huomaa: nykyisten sovellusten on muututtava vähän, jotta ne voivat käyttää %2$s.</string>
+    <string name="home_root_button_start">Käynnistä</string>
+    <string name="home_root_button_restart">Käynnistä uudelleen</string>
+    <string name="home_app_management_title">Sovellusten hallinta</string>
+    <string name="home_app_management_view_authorized_apps">Napauta hallitaksesi valtuutettuja sovelluksia</string>
+    <string name="home_app_management_empty">Tähän ilmestyvät sovellukset, jotka ovat pyytäneet tai ilmoittaneet käyttävänsä Shizakoa.</string>
+    <string name="home_learn_more_title">Opi käyttämään Shizakoa</string>
+    <string name="home_learn_more_description">Opi kehittämään Shizakon avulla</string>
+    <string name="home_adb_is_limited_title">Sinun on suoritettava vielä yksi vaihe</string>
+    <string name="home_adb_is_limited_description">Laitteesi valmistaja on rajoittanut adb-oikeuksia, eivätkä Shizakoa käyttävät sovellukset toimi oikein.
+
+Yleensä rajoituksen voi poistaa muuttamalla joitakin “Kehittäjän asetusten” valintoja. Lue ohjeesta yksityiskohdat.
+
+Voi olla, että Shizako on käynnistettävä uudelleen, jotta muutos astuu voimaan.</string>
+    <string name="app_management_dialog_adb_is_limited_title">adb:n oikeudet on rajoitettu</string>
+    <string name="app_management_dialog_adb_is_limited_message">On hyvin todennäköistä, että laitteesi valmistaja rajoittaa adb:n oikeuksia.&lt;p&gt;&lt;b&gt;&lt;a href=\"%1$s\"&gt;Tästä asiakirjasta&lt;/a&gt;&lt;/b&gt; voi löytyä ratkaisu järjestelmällesi.</string>
+    <string name="app_management_item_summary_requires_root">* edellyttää, että Shizako toimii root-oikeuksilla</string>
+    <string name="home_terminal_title">Shizakon käyttö päätesovelluksissa</string>
+    <string name="home_terminal_description">Suorita komentoja Shizakon kautta haluamissasi päätesovelluksissa</string>
+    <string name="home_activation_title">Yhden napautuksen aktivointi</string>
+    <string name="home_activation_summary">Aktivoi Brevent, Stopapp ja paljon muuta ilman tietokonetta</string>
+    <string name="home_activation_summary_not_running">Käynnistä ensin Shizako käyttääksesi yhden napautuksen aktivointia</string>
+    <string name="terminal_tutorial_1">Vie ensin tiedostot minne haluat. Löydät kaksi tiedostoa: %1$s ja %2$s.</string>
+    <string name="terminal_tutorial_1_description">Jos valitussa kansiossa on samannimisiä tiedostoja, ne poistetaan.
+
+Vientitoiminto käyttää SAF-kehystä (Storage Access Framework). On raportoitu, että MIUI rikkoo SAF:n toiminnot. Jos käytät MIUI:tä, sinun on ehkä poimittava tiedosto Shizakon apk:sta tai ladattava se GitHubista.</string>
+    <string name="terminal_export_files">Vie tiedostot</string>
+    <string name="terminal_tutorial_2">Avaa sitten %1$s missä tahansa tekstieditorissa ja muokkaa sitä.</string>
+    <string name="terminal_tutorial_2_description">Jos haluat esimerkiksi käyttää Shizakoa sovelluksessa %1$s, korvaa %2$s tekstillä %3$s (%4$s on sovelluksen %1$s paketin nimi).</string>
+    <string name="terminal_tutorial_3">Siirrä lopuksi tiedostot paikkaan, johon päätesovelluksesi pääsee käsiksi; sitten voit käyttää %1$s-komentoa komentojen suorittamiseen Shizakon kautta.</string>
+    <string name="terminal_tutorial_3_description">Vinkkejä: anna %1$s-suoritusoikeus ja lisää se polkuun %2$s, niin voit käyttää %1$s suoraan.</string>
+    <string name="rish_description">%1$s:n avulla voit missä tahansa päätesovelluksessa yhdistää Shizakon ajamaan komentotulkkiin ja olla vuorovaikutuksessa sen kanssa. &lt;p&gt;Napauta nähdäksesi %1$s:n yksityiskohtaisen käyttöohjeen.</string>
+    <string name="settings_title">Asetukset</string>
+    <string name="settings_language">Kieli</string>
+    <string name="settings_user_interface">Ulkoasu</string>
+    <string name="settings_black_night_theme">Musta yöteema</string>
+    <string name="settings_black_night_theme_summary">Käytä puhtaan mustaa teemaa, kun tumma tila on käytössä</string>
+    <string name="settings_startup">Käynnistys</string>
+    <string name="settings_translation_contributors">Kääntäjät</string>
+    <string name="settings_translation">Osallistu kääntämiseen</string>
+    <string name="settings_debug">Vianetsintä</string>
+    <string name="settings_crash_logs">Kaatumislokit</string>
+    <string name="settings_crash_logs_summary">Kaatumiset tallennetaan tänne, kun sovellus sulkeutuu odottamattomasti</string>
+    <string name="settings_crash_logs_empty">Ei kaatumislokeja</string>
+    <string name="settings_crash_logs_count">%1$d kaatumisloki(a)</string>
+    <string name="settings_crash_logs_share">Jaa</string>
+    <string name="settings_crash_logs_delete">Poista</string>
+    <string name="settings_crash_logs_delete_all">Poista kaikki</string>
+    <string name="settings_crash_logs_deleted">Poistettu</string>
+    <string name="activation_title">Yhden napautuksen aktivointi</string>
+    <string name="activation_subtitle">Suorita täältä ADB-komennot, jotka aiemmin vaativat tietokoneen</string>
+    <string name="activation_service_running">Shizako on käynnissä, valmis aktivoimaan</string>
+    <string name="activation_service_running_brief">Shizako on käynnissä</string>
+    <string name="activation_service_not_running">Shizako ei ole käynnissä; käynnistä palvelu ensin etusivulta</string>
+    <string name="activation_activate">Aktivoi</string>
+    <string name="activation_activated">Aktivoitu</string>
+    <string name="activation_status_not_installed">%1$s · ei asennettu</string>
+    <string name="activation_status_installed">%1$s · asennettu</string>
+    <string name="activation_status_activated">%1$s · jo aktivoitu</string>
+    <string name="activation_status_not_activated">%1$s · asennettu, ei aktivoitu</string>
+    <string name="activation_note_device_owner">Edellyttää, että kaikki tilit ja toissijaiset käyttäjät (vierastila / sovelluskaksoiskappale) poistetaan ensin; voit lisätä ne takaisin aktivoinnin jälkeen. Valmistajan ROM-ominaisuudet voivat vaikuttaa.</string>
+    <string name="activation_note_brevent">Brevent-palvelin on aktivoitava uudelleen jokaisen uudelleenkäynnistyksen jälkeen.</string>
+    <string name="activation_custom_title">Mukautettu komento</string>
+    <string name="activation_custom_hint">Mikä tahansa komentorivikäsky, esim. dpm set-device-owner …</string>
+    <string name="activation_custom_empty">Komento on tyhjä</string>
+    <string name="activation_run">Suorita</string>
+    <string name="activation_running">Suoritetaan…</string>
+    <string name="activation_success">Aktivoitu</string>
+    <string name="activation_failed">Epäonnistui, katso alla oleva tuloste</string>
+    <string name="activation_failed_with_code">Epäonnistui (poistumiskoodi %1$d), katso alla oleva tuloste</string>
+    <string name="activation_timeout">Komento on yhä käynnissä; lopetettiin odottaminen (normaalia palvelintyyppisille komennoille)</string>
+    <string name="activation_output">Tuloste</string>
+    <string name="activation_output_empty">(ei vielä tulostetta)</string>
+    <string name="activation_copy">Kopioi</string>
+    <string name="activation_copied">Kopioitu</string>
+    <string name="activation_back">Takaisin</string>
+    <string name="settings_translation_summary">Auta meitä kääntämään %s kielellesi</string>
+    <string name="settings_start_on_boot">Käynnistys laitteen käynnistyessä (root)</string>
+    <string name="settings_start_on_boot_summary">Juurretuilla laitteilla Shizako voi käynnistyä automaattisesti laitteen käynnistyessä</string>
+    <string name="settings_use_system_color">Käytä järjestelmän teemaväriä</string>
+    <string name="action_about">Tietoja</string>
+    <string name="about_view_source_code">Katso lähdekoodi: %s</string>
+    <string name="about_author">Tekijä</string>
+    <string name="about_based_on">Perustuu</string>
+    <string name="about_based_on_text">avoimen lähdekoodin projektiin %s</string>
+    <string name="about_license">Lisenssi</string>
+    <string name="about_footer">Shizako — tehty ❤️:llä</string>
+    <string name="action_stop">Pysäytä Shizako</string>
+    <string name="dialog_stop_message">Shizakon palvelu pysäytetään.</string>
+    <string name="notification_channel_service_status">Palvelun käynnistystila</string>
+    <string name="notification_channel_status">Palvelun tila</string>
+    <string name="notification_service_starting">Shizakon palvelu käynnistyy…</string>
+    <string name="notification_service_start_failed">Shizakon palvelun käynnistys epäonnistui.</string>
+    <string name="notification_service_start_no_root">Root-oikeuden pyytäminen epäonnistui.</string>
+    <string name="notification_working">Työstetään…</string>
+    <string name="notification_channel_adb_pairing">Langattoman vianetsinnän laiteparin muodostus</string>
+    <string name="notification_adb_pairing_input_paring_code">Syötä laiteparikoodi</string>
+    <string name="notification_adb_pairing_searching_for_service_title">Etsitään laiteparipalvelua</string>
+    <string name="notification_adb_pairing_service_found_title">Laiteparipalvelu löytyi</string>
+    <string name="notification_adb_pairing_stop_searching">Lopeta haku</string>
+    <string name="notification_adb_pairing_working_title">Laiteparia muodostetaan</string>
+    <string name="notification_adb_pairing_succeed_title">Laitepari muodostettu</string>
+    <string name="notification_adb_pairing_succeed_text">Voit nyt käynnistää Shizakon palvelun.</string>
+    <string name="notification_adb_pairing_failed_title">Laiteparin muodostaminen epäonnistui</string>
+    <string name="notification_adb_pairing_retry">Yritä uudelleen</string>
+    <string name="tile_service_label">Shizakon palvelu</string>
+    <string name="tile_service_subtitle_running">Käynnissä</string>
+    <string name="tile_service_subtitle_stopped">Pysäytetty</string>
+    <string name="tile_wireless_adb_label">Langaton vianetsintä</string>
+    <string name="permission_label">käyttää Shizakoa</string>
+    <string name="permission_description">Salli sovelluksen käyttää Shizakoa.</string>
+    <string name="permission_warning_template">Sallitaanko &lt;b&gt;%1$s&lt;/b&gt;:n %2$s?</string>
+    <string name="grant_dialog_button_allow_always">Salli aina</string>
+    <string name="grant_dialog_button_deny">Estä</string>
+    <string name="starter">Käynnistin</string>
+    <string name="start_with_root_failed">Palvelua ei voi käynnistää, koska root-oikeutta ei ole myönnetty tai tätä laitetta ei ole juurrettu.</string>
+    <string name="dialog_cannot_open_browser_title">Selainta ei voi käynnistää</string>
+    <string name="toast_copied_to_clipboard">%s
+on kopioitu leikepöydälle.</string>
+    <string name="toast_copied_to_clipboard_with_text">&lt;b&gt;%s&lt;/b&gt; on kopioitu leikepöydälle.</string>
+    <string name="dialog_legacy_not_support_title">%1$s ei tue modernia Shizakoa</string>
+    <string name="dialog_legacy_not_support_message">Vanha Shizako on ollut vanhentunut maaliskuusta 2019 lähtien. Lisäksi vanha Shizako ei toimi uudemmissa Android-järjestelmissä.&lt;p&gt;Pyydä &lt;b&gt;%1$s&lt;/b&gt;:n kehittäjää päivittämään sovellus.</string>
+    <string name="dialog_requesting_legacy_title">%1$s pyytää vanhaa Shizakoa</string>
+    <string name="dialog_requesting_legacy_message">&lt;b&gt;%1$s&lt;/b&gt; tukee modernia Shizakoa, mutta pyytää vanhaa Shizakoa. Syynä voi olla se, ettei Shizako ole käynnissä; tarkista asia Shizako-sovelluksesta.&lt;p&gt;Vanha Shizako on ollut vanhentunut maaliskuusta 2019 lähtien.</string>
+    <string name="dialog_requesting_legacy_button_open_shizuku">Avaa Shizako</string>
+    <plurals name="home_app_management_authorized_apps_count">
+        <item quantity="one">%d sovellus valtuutettu</item>
+        <item quantity="other">%d sovellusta valtuutettu</item>
+    </plurals>
+    <!-- Shizako: 补充翻译 -->
+    <string name="setup_welcome_title">Tervetuloa</string>
+    <string name="setup_welcome_subtitle">Muutamalla nopealla asetuksella Shizako on valmiina käytettäväksi.</string>
+    <string name="setup_disclaimer_title">Vastuuvapauslauseke</string>
+    <string name="setup_disclaimer_text"><![CDATA[Shizako toimitetaan «sellaisenaan» ilman minkäänlaista takuuta.<p>Shizako toimii suorittamalla etuoikeutetun palvelun laitteellasi. Kehittäjä ei ole vastuussa laitteelle tai tiedoille aiheutuvista vahingoista, jotka voivat johtua tämän sovelluksen käytöstä tai sovellusten pääsyn myöntämisestä Shizukoon.<p>Käytä omalla vastuullasi.]]></string>
+    <string name="setup_disclaimer_agree">Olen lukenut ja hyväksyn yllä olevan</string>
+    <string name="setup_language_title">Valitse kieli</string>
+    <string name="setup_language_subtitle">Voit vaihtaa sen myöhemmin asetuksista.</string>
+    <string name="setup_mode_subtitle">Valitse, miltä Shizako näyttää. Voit vaihtaa sitä myöhemmin asetuksista.</string>
+    <string name="setup_mode_follow_system">Seuraa järjestelmää</string>
+    <string name="setup_mode_light">Vaalea</string>
+    <string name="setup_mode_dark">Tumma</string>
+    <string name="setup_start_method_title">Aktivointitapa</string>
+    <string name="setup_start_method_subtitle">Valitse, miten aiot käynnistää Shizako-n. Kotisivu näyttää kyseisen tavan ensimmäisenä.</string>
+    <string name="setup_start_method_wadb">Langaton vianetsintä</string>
+    <string name="setup_start_method_wadb_summary">Android 11 tai uudempi, tietokonetta ei tarvita</string>
+    <string name="setup_start_method_root">Root</string>
+    <string name="setup_start_method_root_summary">Rootatuille laitteille, käynnistys yhdellä napautuksella</string>
+    <string name="setup_start_method_adb">Yhdistä tietokoneeseen</string>
+    <string name="setup_start_method_adb_summary">Käytä adb:tä USB:n kautta, toista jokaisen uudelleenkäynnistyksen jälkeen</string>
+    <string name="setup_back">Takaisin</string>
+    <string name="setup_next">Seuraava</string>
+    <string name="setup_get_started">Aloita</string>
+    <string name="setup_skip">Ohita</string>
+</resources>

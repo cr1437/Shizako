@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 底栏图标着色:选中 = 主题色(?colorPrimary,与滑动 pill 同色系,在薄纱上对比清晰),
+     未选中 = colorOnSurfaceVariant。显式指定,不依赖 M3 指示器开关联动的默认 selector,
+     保证 itemActiveIndicatorEnabled=false 时各主题色板下对比度都正确。 -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="true" android:color="?colorPrimary" />
+    <item android:color="?colorOnSurfaceVariant" />
+</selector>

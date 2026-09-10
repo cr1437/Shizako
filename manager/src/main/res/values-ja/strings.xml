@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home_status_service_version">Version %2$s, %1$s</string>
+    <string name="toast_copied_to_clipboard">%s
+\nはクリップボードにコピーされました。</string>
+    <string name="toast_copied_to_clipboard_with_text">&lt;b&gt;%s&lt;/b&gt; はクリップボードにコピーされました。</string>
+    <string name="dialog_requesting_legacy_button_open_shizuku">Shizakoを開く</string>
+    <string name="home_status_service_is_running">%1$s は実行中</string>
+    <string name="home_adb_dialog_view_command_copy_button">コピー</string>
+    <string name="home_adb_title">コンピュータに接続して開始する</string>
+    <string name="grant_dialog_button_deny">許可しない</string>
+    <string name="grant_dialog_button_allow_always">常に許可</string>
+    <string name="permission_warning_template">&lt;b&gt;%1$s&lt;/b&gt; に「%2$s」を許可しますか？</string>
+    <plurals name="home_app_management_authorized_apps_count">
+        <item quantity="other">承認された %d 個のアプリケーション</item>
+    </plurals>
+    <string name="dialog_requesting_legacy_title">%1$s は古いバージョンのShizakoを要求しています</string>
+    <string name="dialog_requesting_legacy_message">&lt;b>%1$s&lt;/b>は最新のShizakoをサポートしていますが、古いバージョンのShizakoを要求しています。これは、Shizakoが実行されていない可能性があります。Shizakoアプリで確認してください。&lt;p>古いバージョンのShizakoは2019年3月から非推奨となっています。</string>
+    <string name="terminal_tutorial_3_description">ヒント: %1$s に実行権限を与え、それを %2$s に追加すると、%1$s を直接使用できるようになります。</string>
+    <string name="terminal_tutorial_3">最後に、ファイルをターミナルアプリがアクセスできる場所に移動させると、%1$sを使ってShizakoでコマンドを実行できるようになります。</string>
+    <string name="terminal_tutorial_2_description">例えば、%1$sでShizakoを使いたい場合は、%2$sを%3$sに置き換えてください（%4$sは%1$sのパッケージ名です）。</string>
+    <string name="terminal_tutorial_2">その後、任意のテキストエディタで%1$sを開いて編集します。</string>
+    <string name="terminal_export_files">ファイルのエクスポート</string>
+    <string name="terminal_tutorial_1_description">"選択したフォルダー内に同名のファイルがある場合は、そのファイルは削除されます。 
+ 
+エクスポート機能には、SAF（Storage Access Framework）が使用されています。MIUIではSAFの機能が壊れることが報告されています。MIUIをお使いの方は、Shizakoのapkからファイルを抽出するか、GitHubからダウンロードする必要があるかもしれません。"</string>
+    <string name="terminal_tutorial_1">まず、ファイルを任意の場所にエクスポートします。%1$sと%2$sの2つのファイルがあります。</string>
+    <string name="home_terminal_title">ターミナルアプリで「Shizako」を利用する</string>
+    <string name="home_terminal_description">Shizakoを介して、好きなターミナルアプリでコマンドを実行する</string>
+    <string name="home_app_management_title">アプリケーション管理</string>
+    <string name="home_app_management_view_authorized_apps">タップで許可されたアプリを管理</string>
+    <string name="home_learn_more_title">Shizakoについて学ぶ</string>
+    <string name="home_root_button_start">開始</string>
+    <string name="home_root_button_restart">再起動</string>
+    <string name="home_root_description">また、起動時にShizakoを自動的に起動することもできます。もし、起動しない場合は、システムやサードパーティのツールがShizakoを制限していないか確認してください。&lt;br>一部古い情報ですが%sを参考にしてください。</string>
+    <string name="adb_pair_required">まずはペアリングの手順を行ってください。</string>
+    <string name="development_settings">開発者向けオプション</string>
+    <string name="home_root_title">開始(Root化された端末の場合のみ)</string>
+    <string name="adb_pairing_requires_multi_window_reason">システムではペアリングダイアログが常に表示されている必要があり、このアプリとシステムダイアログを同時に表示させるには、分割画面を使用するしかありません。</string>
+    <string name="adb_error_key_store">ワイヤレスデバッグ用のキーを生成できません。
+\nこれは、お使いのデバイスのキーストアの仕組みが壊れているためと思われます。</string>
+    <string name="adb_pairing_requires_multi_window">最初に分割画面（マルチウィンドウ）モードに入ってください。</string>
+    <string name="dialog_wireless_adb_not_enabled">ワイヤレスデバッグが有効になっていません。
+\nなお、Android 11以前のバージョンでは、ワイヤレスデバッグを有効化するためには、コンピューターの接続が必要です。</string>
+    <string name="dialog_adb_pairing_message">以下の手順でペアリングを開始してください。「開発者向けオプション」＞「ワイヤレスデバッグ」＞「ペア設定コードによるデバイスのペアの設定」を選択します。
+\n
+\nペアリング処理が開始されると、ペアリングコードの入力が可能になります。</string>
+    <string name="dialog_adb_pairing_discovery">ペアリングサービスの検索</string>
+    <string name="dialog_adb_pairing_paring_code">ペアリングコード</string>
+    <string name="paring_code_is_wrong">ペアリングコードが間違っています。</string>
+    <string name="cannot_connect_port">ワイヤレスデバッグサービスに接続することができません。</string>
+    <string name="dialog_adb_port">ポート</string>
+    <string name="dialog_adb_invalid_port">ポートは1から65535までの整数です。</string>
+    <string name="adb_pairing">ペアリング</string>
+    <string name="dialog_adb_pairing_title">デバイスとのペアリング</string>
+    <string name="dialog_adb_discovery">ワイヤレスデバッグサービスの検索</string>
+    <string name="home_adb_dialog_view_command_button_send">送信</string>
+    <string name="home_wireless_adb_title">ワイヤレスデバッグで開始</string>
+    <string name="home_adb_dialog_view_command_message">&lt;font face=monospace&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* 他にもいくつか注意点がありますので、まずはヘルプを読んで確認してください。</string>
+    <string name="home_adb_button_view_help">ヘルプ</string>
+    <string name="home_adb_button_view_command">コマンドを表示する</string>
+    <string name="home_adb_description">root権限を持たないデバイスの場合、adbを使ってShizakoを起動する必要があります（コンピュータへの接続が必要）。この作業は、端末を再起動するたびに繰り返す必要があります。詳しくは&lt;b>&lt;a href=\"%1$s\">ヘルプをお読みください&lt;/a>&lt;/b>。</string>
+    <string name="home_root_description_sui">Magiskをお使いの方は、%1$sをお試しください。rootユーザにとっては、最終的にShizakoを置き換えることになるでしょう。なお、%2$sを使用するには、既存のアプリケーションを少し変更する必要があります。</string>
+    <string name="dialog_adb_discovery_message">"「開発者向けオプション」で「ワイヤレスデバッグ」を有効にしてください。ネットワークが変更されると、「ワイヤレスデバッグ」は自動的に無効になります。 
+ 
+注意:「開発者向けオプション」や「USBデバッグ」を無効にしないでください。無効にすると、Shizakoが停止してしまいます。"</string>
+    <string name="dialog_legacy_not_support_title">%1$s は最新の Shizako をサポートしていません</string>
+    <string name="dialog_legacy_not_support_message">古いバージョンのShizakoは2019年3月より非推奨となりました。また、古いバージョンのShizakoは新しいAndroidシステムでは動作しません。&lt;p>&lt;b>%1$s&lt;/b>の開発者にアップデートを依頼してください。</string>
+    <string name="home_status_service_not_running">%1$s は停止中</string>
+    <string name="home_status_service_version_update">バージョン %2$s, %1$s&lt;br&gt;バージョン %3$s にアップデートするには、再度起動してください</string>
+    <string name="translation_contributors">IMES-mitutti</string>
+    <string name="home_learn_more_description">Shizakoを使った開発方法、Shizakoを使ったアプリの入手方法について学ぶことができます</string>
+    <string name="app_management_dialog_adb_is_limited_title">adbの権限が制限されています</string>
+    <string name="app_management_dialog_adb_is_limited_message">端末の製造元がadbの権限を制限している可能性が高いです。&lt;p&gt; &lt;b&gt;&lt;a href=\"%1$s\"&gt;このドキュメント&lt;/a&gt;&lt;/b&gt;の中に、あなたのシステムに合った解決策があるかもしれません。</string>
+    <string name="app_management_item_summary_requires_root">* root権限でShizakoを実行する必要があります</string>
+    <string name="about_view_source_code">%sでソースコードを見る</string>
+    <string name="action_stop">Shizakoを停止する</string>
+    <string name="settings_title">設定</string>
+    <string name="settings_language">言語</string>
+    <string name="settings_black_night_theme">Black night テーマ</string>
+    <string name="settings_user_interface">外観</string>
+    <string name="settings_black_night_theme_summary">ナイトモードが有効な場合、黒色のテーマを使用します</string>
+    <string name="settings_startup">スタートアップ</string>
+    <string name="settings_translation_contributors">翻訳協力者</string>
+    <string name="settings_translation">翻訳作業に参加</string>
+    <string name="settings_translation_summary">%sをあなたの言語に翻訳するのを手伝ってください</string>
+    <string name="settings_start_on_boot">起動時にスタート（要root)</string>
+    <string name="settings_start_on_boot_summary">root化された端末では、起動時に自動的にShizakoを起動できます</string>
+    <string name="action_about">このアプリについて</string>
+    <string name="dialog_stop_message">Shizakoのサービスを停止します。</string>
+    <string name="notification_channel_service_status">サービス開始状況</string>
+    <string name="notification_service_starting">Shizakoを開始しています…</string>
+    <string name="notification_service_start_failed">Shizakoを開始することができませんでした。</string>
+    <string name="notification_service_start_no_root">root権限の要求に失敗しました。</string>
+    <string name="notification_working">実行中…</string>
+    <string name="permission_description">アプリでShizakoの使用を許可します。</string>
+    <string name="start_with_root_failed">root権限が付与されていないか、端末がroot化されていないため、サービスを開始できません。</string>
+    <string name="permission_label">Shizakoにアクセスする</string>
+    <string name="starter">起動</string>
+    <string name="dialog_cannot_open_browser_title">ブラウザが起動することができません</string>
+    <string name="rish_description">%1$sを使えば、任意のターミナルアプリで、Shizakoが実行するシェルに接続し、対話することができます。&lt;p>詳しい使い方については、%1$sをタップするとドキュメントが表示されます。</string>
+    <string name="home_wireless_adb_description">Android 11以上ではワイヤレスデバッグを有効にして、コンピュータに接続することなくデバイスから直接Shizakoを起動できます。&lt;p>詳しくはガイドをご覧ください。</string>
+    <string name="notification_settings">通知オプション</string>
+    <string name="home_wireless_adb_description_pre_11">Android 11以前では、ワイヤレスデバッグを有効にするためにパソコンとの接続が必要です。</string>
+    <string name="home_wireless_adb_view_guide_button">ガイド</string>
+    <string name="notification_adb_pairing_working_title">ペアリング中</string>
+    <string name="notification_adb_pairing_succeed_title">ペアリングしました</string>
+    <string name="adb_pairing_tutorial_content_steps">「開発者向けオプション」&gt;「ワイヤレスデバック」を選択し、「ペア設定コードによるデバイスのペア設定」をタップすると、6桁のコードが表示されます。</string>
+    <string name="adb_pairing_tutorial_content_notification">Shizakoからの通知でペアリングが完了します。</string>
+    <string name="adb_pairing_tutorial_content_enter_pairing_code">通知にコードを入力してペアリングします。</string>
+    <string name="adb_pairing_tutorial_content_miui">MIUIユーザーはシステムの設定から「通知」→「通知のシェード」から通知スタイルを「Android」に変更する必要がある場合があります。</string>
+    <string name="notification_channel_adb_pairing">ワイヤレスデバックペアリング</string>
+    <string name="notification_adb_pairing_input_paring_code">ペアリングコードを入力</string>
+    <string name="notification_adb_pairing_searching_for_service_title">ペアリングサービスを探しています</string>
+    <string name="notification_adb_pairing_stop_searching">探すことを停止しています</string>
+    <string name="notification_adb_pairing_succeed_text">Shizakoサービスをスタートさせられます。</string>
+    <string name="notification_adb_pairing_failed_title">ペアリングに失敗しました</string>
+    <string name="notification_adb_pairing_retry">再試行</string>
+    <string name="adb_pairing_tutorial_title">お使いのデバイスとShizakoをペアリングする</string>
+    <string name="adb_pairing_tutorial_content_notification_blocked">ペアリング手順はShizakoからの通知を操作する必要があります。Shizakoからの通知を許可してください。</string>
+    <string name="adb_pairing_tutorial_content_finish">Shizakoに戻り、スタートします。</string>
+    <string name="notification_adb_pairing_service_found_title">ペアリングサービスを見つけました</string>
+    <string name="settings_use_system_color">システムテーマカラー</string>
+    <string name="home_adb_is_limited_title">もう一段階行う必要がある</string>
+    <string name="home_app_management_empty">Shizakoを権限をリクエストしたアプリはここに表示されます。</string>
+    <string name="adb_pairing_tutorial_content_network_limation_not_foreground">一部のシステム（MIUIなど）では、アプリが標準でフォアグラウンドサービスを使用していても、アプリが表示されていないときはネットワークにアクセスすることを許可しないようになっています。そのようなシステムでは、Shizakoのバッテリー最適化機能を無効にしてください。</string>
+    <string name="adb_pairing_tutorial_content_network">Shizakoはローカルネットワークにアクセスする必要があります。ネットワーク権限で管理されています。</string>
+    <string name="adb_pairing_tutorial_content_left_is_clickable">なお、「ワイヤレスデバッグ」オプションの左側はクリック可能で、タップすると新しいページが表示されます。右側のスイッチだけをオンにするのは誤りです。</string>
+    <string name="adb_pairing_tutorial_content_miui_2">場合によっては、通知からペアリングコードを入力できないことがあります。</string>
+    <string name="home_adb_is_limited_description">"お使いの端末製造元は adb 権限を制限しており､ Shizako を使用するアプリは正しく動作しません。 
+ 
+通常､ この制限は「開発者向けオプション」のいくつかの項目を調整することで解除できます。これを行う方法の詳細については､ ヘルプをお読みください。 
+ 
+操作を有効にするために､ Shizakoを再起動する必要がある場合があります。"</string>
+    <string name="dialog_adb_discovery_message_toggle_wireless_debugging">検索され続ける場合は、「ワイヤレスデバッグ」の無効化と有効化をしてみてください。</string>
+    <!-- Shizako: 补充翻译 -->
+    <string name="home_activation_title">ワンタップ有効化</string>
+    <string name="home_activation_summary">パソコンなしで、Brevent や Stopapp などを有効化</string>
+    <string name="home_activation_summary_not_running">ワンタップ有効化を使うには、先に Shizako を起動してください</string>
+    <string name="settings_debug">デバッグ</string>
+    <string name="settings_crash_logs">クラッシュログ</string>
+    <string name="settings_crash_logs_summary">アプリが予期せず終了した際、クラッシュログはここに保存されます</string>
+    <string name="settings_crash_logs_empty">クラッシュログはありません</string>
+    <string name="settings_crash_logs_count">クラッシュログ %1$d 件</string>
+    <string name="settings_crash_logs_share">共有</string>
+    <string name="settings_crash_logs_delete">削除</string>
+    <string name="settings_crash_logs_delete_all">すべて削除</string>
+    <string name="settings_crash_logs_deleted">削除しました</string>
+    <string name="activation_title">ワンタップ有効化</string>
+    <string name="activation_subtitle">パソコンが必要だった ADB コマンドを、この画面から直接実行できます</string>
+    <string name="activation_service_running">Shizako は実行中です。有効化できます</string>
+    <string name="activation_service_running_brief">Shizako 実行中</string>
+    <string name="activation_service_not_running">Shizako が実行されていません。先にホーム画面からサービスを起動してください</string>
+    <string name="activation_activate">有効化</string>
+    <string name="activation_activated">有効化済み</string>
+    <string name="activation_status_not_installed">%1$s · 未インストール</string>
+    <string name="activation_status_installed">%1$s · インストール済み</string>
+    <string name="activation_status_activated">%1$s · すでに有効</string>
+    <string name="activation_status_not_activated">%1$s · インストール済み、未設定</string>
+    <string name="activation_note_device_owner">まずすべてのアカウントとサブユーザー（ゲストモード・アプリの並行コピー）を削除する必要があります。有効化の後に再び追加できます。端末の ROM によっては制約がある場合があります。</string>
+    <string name="activation_note_brevent">Brevent のサーバーは、端末を再起動するたびに再度有効化する必要があります。</string>
+    <string name="activation_custom_title">カスタムコマンド</string>
+    <string name="activation_custom_hint">任意のシェルコマンド（例: dpm set-device-owner …）</string>
+    <string name="activation_custom_empty">コマンドが空です</string>
+    <string name="activation_run">実行</string>
+    <string name="activation_running">実行中…</string>
+    <string name="activation_success">有効化しました</string>
+    <string name="activation_failed">失敗しました。下の出力を確認してください</string>
+    <string name="activation_failed_with_code">失敗しました（終了コード %1$d）。下の出力を確認してください</string>
+    <string name="activation_timeout">コマンドはまだ実行中のため、待機を終了しました（サーバー型コマンドでは正常な動作です）</string>
+    <string name="activation_output">出力</string>
+    <string name="activation_output_empty">（出力はまだありません）</string>
+    <string name="activation_copy">コピー</string>
+    <string name="activation_copied">コピーしました</string>
+    <string name="activation_back">戻る</string>
+    <string name="about_author">作者</string>
+    <string name="about_based_on">ベース</string>
+    <string name="about_based_on_text">%s オープンソースプロジェクト</string>
+    <string name="about_license">ライセンス</string>
+    <string name="about_footer">Shizako — ❤️ を込めて作りました</string>
+    <string name="notification_channel_status">サービスの状態</string>
+    <string name="tile_service_label">Shizako サービス</string>
+    <string name="tile_service_subtitle_running">実行中</string>
+    <string name="tile_service_subtitle_stopped">停止</string>
+    <string name="tile_wireless_adb_label">ワイヤレスデバッグ</string>
+    <!-- Shizako: 补充翻译 -->
+    <string name="setup_welcome_title">ようこそ</string>
+    <string name="setup_welcome_subtitle">いくつかの簡単な設定で、Shizako を使い始められます。</string>
+    <string name="setup_disclaimer_title">免責事項</string>
+    <string name="setup_disclaimer_text"><![CDATA[Shizako は「現状有姿」で提供され、いかなる保証も伴いません。<p>Shizako はデバイス上で特権サービスを実行することで動作します。本アプリの使用や他アプリへの Shizako へのアクセス許可によって生じたいかなる損害やデータ損失についても、開発者は責任を負いません。<p>自己責任でご利用ください。]]></string>
+    <string name="setup_disclaimer_agree">上記を読み、同意しました</string>
+    <string name="setup_language_title">言語を選択</string>
+    <string name="setup_language_subtitle">後から設定で変更できます。</string>
+    <string name="setup_mode_subtitle">Shizako の見た目を選択してください。後から設定で変更できます。</string>
+    <string name="setup_mode_follow_system">システムに従う</string>
+    <string name="setup_mode_light">ライト</string>
+    <string name="setup_mode_dark">ダーク</string>
+    <string name="setup_start_method_title">有効化の方法</string>
+    <string name="setup_start_method_subtitle">Shizako をどの方法で開始するか選択してください。ホームページではその方法が最初に表示されます。</string>
+    <string name="setup_start_method_wadb">ワイヤレスデバッグ</string>
+    <string name="setup_start_method_wadb_summary">Android 11 以降ならパソコン不要</string>
+    <string name="setup_start_method_root">Root</string>
+    <string name="setup_start_method_root_summary">root 化した端末ならワンタップで起動</string>
+    <string name="setup_start_method_adb">パソコンに接続</string>
+    <string name="setup_start_method_adb_summary">USB 経由で adb を使用、再起動のたびに繰り返し</string>
+    <string name="setup_back">戻る</string>
+    <string name="setup_next">次へ</string>
+    <string name="setup_get_started">始める</string>
+    <string name="setup_skip">スキップ</string>
+</resources>

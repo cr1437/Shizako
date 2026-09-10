@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 选中 pill 薄纱填充:主题色 18% 透明,透出 BlurView 模糊形成亚克力感。
+     夜间变体在 color-night/(alpha 提到 0.26,补偿暗色主题的浓度)。 -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:alpha="0.18" android:color="?colorPrimary" />
+</selector>

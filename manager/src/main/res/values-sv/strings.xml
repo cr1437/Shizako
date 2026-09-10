@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>    <!-- Shizako: 补充翻译 -->
+    <!-- Shizako: 补充翻译 -->
+    <string name="translation_contributors" />
+    <!-- Shizako: 补充翻译 -->
+    <string name="home_status_service_is_running">%1$s körs</string>
+    <string name="home_status_service_not_running">%1$s körs inte</string>
+    <string name="home_status_service_version">Version %2$s, %1$s</string>
+    <string name="home_status_service_version_update">Version %2$s, %1$s&lt;br&gt;Starta igen för att uppdatera till version %3$s</string>
+    <string name="home_adb_title">Kom igång genom att ansluta till en dator</string>
+    <string name="home_adb_description">För enheter utan root behöver du använda adb för att starta Shizako (kräver datoranslutning). Denna process måste upprepas varje gång enheten startas om. Läs &lt;b&gt;&lt;a href=\"%1$s\"&gt;hjälpen&lt;/a&gt;&lt;/b&gt;.</string>
+    <string name="home_adb_button_view_help">Läs hjälpen</string>
+    <string name="home_adb_button_view_command">Visa kommando</string>
+    <string name="home_adb_dialog_view_command_message">&lt;font face=\"monospace\"&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* Det finns några andra saker att tänka på; bekräfta att du har läst hjälpen först.</string>
+    <string name="home_adb_dialog_view_command_copy_button">Kopiera</string>
+    <string name="home_adb_dialog_view_command_button_send">Skicka</string>
+    <string name="home_wireless_adb_title">Starta via trådlös felsökning</string>
+    <string name="home_wireless_adb_description">På Android 11 och senare kan du aktivera trådlös felsökning och starta Shizako direkt från din enhet, utan att ansluta till en dator.&lt;p&gt;Se den stegvisa guiden först.</string>
+    <string name="home_wireless_adb_description_pre_11">Före Android 11 krävs en datoranslutning för att aktivera trådlös felsökning.</string>
+    <string name="home_wireless_adb_view_guide_button">Stegvis guide</string>
+    <string name="dialog_adb_discovery">Söker efter trådlös felsökningstjänst</string>
+    <string name="dialog_adb_discovery_message">Aktivera “Trådlös felsökning” i “Utvecklaralternativ”. “Trådlös felsökning” inaktiveras automatiskt när nätverket ändras.
+
+Obs! Inaktivera inte “Utvecklaralternativ” eller “USB-felsökning”, annars stoppas Shizako.</string>
+    <string name="dialog_adb_discovery_message_toggle_wireless_debugging">Prova att inaktivera och aktivera “Trådlös felsökning” om den fortsätter söka.</string>
+    <string name="dialog_adb_port">Port</string>
+    <string name="dialog_adb_invalid_port">Porten är ett heltal mellan 1 och 65535.</string>
+    <string name="adb_pairing">Parkoppling</string>
+    <string name="dialog_adb_pairing_title">Parkoppla med enhet</string>
+    <string name="dialog_adb_pairing_discovery">Söker efter parkopplingstjänst</string>
+    <string name="dialog_adb_pairing_paring_code">Parkopplingskod</string>
+    <string name="paring_code_is_wrong">Parkopplingskoden är fel.</string>
+    <string name="cannot_connect_port">Det går inte att ansluta till den trådlösa felsökningstjänsten.</string>
+    <string name="dialog_wireless_adb_not_enabled">Trådlös felsökning är inte aktiverad.
+Obs! Före Android 11 krävs datoranslutning för att aktivera trådlös felsökning.</string>
+    <string name="dialog_adb_pairing_message">Starta parkopplingen med följande steg: “Utvecklaralternativ” - “Trådlös felsökning” - “Parkoppla enhet med parkopplingskod”.
+
+När parkopplingsprocessen har startat kan du ange parkopplingskoden.</string>
+    <string name="adb_pairing_requires_multi_window">Växla till delat skärmläge (flera fönster) först.</string>
+    <string name="adb_pairing_requires_multi_window_reason">Systemet kräver att parkopplingsdialogen alltid är synlig; delat skärmläge är det enda sättet att visa appen och systemdialogen samtidigt.</string>
+    <string name="adb_error_key_store">Det går inte att generera en nyckel för trådlös felsökning.
+Detta kan bero på att enhetens KeyStore-mekanism är trasig.</string>
+    <string name="adb_pair_required">Slutför parkopplingssteget först.</string>
+    <string name="development_settings">Utvecklaralternativ</string>
+    <string name="notification_settings">Aviseringsalternativ</string>
+    <string name="adb_pairing_tutorial_title">Parkoppla Shizako med din enhet</string>
+    <string name="adb_pairing_tutorial_content_notification">En avisering från Shizako hjälper dig att slutföra parkopplingen.</string>
+    <string name="adb_pairing_tutorial_content_steps">Öppna “Utvecklaralternativ” - “Trådlös felsökning”. Tryck på “Parkoppla enhet med parkopplingskod”; du ser en sexsiffrig kod.</string>
+    <string name="adb_pairing_tutorial_content_enter_pairing_code">Ange koden i aviseringen för att slutföra parkopplingen.</string>
+    <string name="adb_pairing_tutorial_content_notification_blocked">Parkopplingsprocessen kräver att du interagerar med en avisering från Shizako. Tillåt Shizako att visa aviseringar.</string>
+    <string name="adb_pairing_tutorial_content_miui">MIUI-användare kan behöva byta aviseringsstil till “Android” under “Avisering” - “Aviseringspanel” i systeminställningarna.</string>
+    <string name="adb_pairing_tutorial_content_miui_2">Annars kanske du inte kan ange parkopplingskoden från aviseringen.</string>
+    <string name="adb_pairing_tutorial_content_left_is_clickable">Obs! Den vänstra delen av alternativet “Trådlös felsökning” är klickbar; den öppnar en ny sida. Att bara slå på reglaget till höger är fel.</string>
+    <string name="adb_pairing_tutorial_content_finish">Gå tillbaka till Shizako och starta Shizako.</string>
+    <string name="adb_pairing_tutorial_content_network">Shizako behöver åtkomst till det lokala nätverket. Det styrs av nätverksbehörigheten.</string>
+    <string name="adb_pairing_tutorial_content_network_limation_not_foreground">Vissa system (som MIUI) tillåter inte appar att komma åt nätverket när de inte syns, även om appen använder förgrundstjänst som standard. Inaktivera batterioptimering för Shizako på sådana system.</string>
+    <string name="home_root_title">Starta (för rotade enheter)</string>
+    <string name="home_root_description">Dessutom kan Shizako startas automatiskt vid uppstart. Om inte, kontrollera om ditt system eller tredjepartsverktyg har begränsat Shizako.&lt;br&gt;Du kan se %s.</string>
+    <string name="home_root_description_sui">Om du använder Magisk kan du prova %1$s. För root-användare kommer det så småningom att ersätta Shizako. Obs! Befintliga appar behöver ändras lite för att använda %2$s.</string>
+    <string name="home_root_button_start">Starta</string>
+    <string name="home_root_button_restart">Starta om</string>
+    <string name="home_app_management_title">Apphantering</string>
+    <string name="home_app_management_view_authorized_apps">Tryck för att hantera godkända appar</string>
+    <string name="home_app_management_empty">Appar som har begärt eller deklarerat Shizako visas här.</string>
+    <string name="home_learn_more_title">Lär dig Shizako</string>
+    <string name="home_learn_more_description">Lär dig hur man utvecklar med Shizako</string>
+    <string name="home_adb_is_limited_title">Du behöver göra ett extra steg</string>
+    <string name="home_adb_is_limited_description">Din enhetstillverkare har begränsat adb-behörigheterna, och appar som använder Shizako fungerar inte korrekt.
+
+Vanligtvis kan denna begränsning hävas genom att justera vissa alternativ i “Utvecklaralternativ”. Läs hjälpen för detaljer.
+
+Du kan behöva starta om Shizako för att ändringen ska träda i kraft.</string>
+    <string name="app_management_dialog_adb_is_limited_title">adb-behörigheten är begränsad</string>
+    <string name="app_management_dialog_adb_is_limited_message">Det är mycket möjligt att din enhetstillverkare begränsar adb-behörigheten.&lt;p&gt;Det finns kanske en lösning för ditt system i &lt;b&gt;&lt;a href=\"%1$s\"&gt;detta dokument&lt;/a&gt;&lt;/b&gt;.</string>
+    <string name="app_management_item_summary_requires_root">* kräver att Shizako körs med root</string>
+    <string name="home_terminal_title">Använd Shizako i terminalappar</string>
+    <string name="home_terminal_description">Kör kommandon via Shizako i terminalappar du gillar</string>
+    <string name="home_activation_title">Aktivering med ett tryck</string>
+    <string name="home_activation_summary">Aktivera Brevent, Stopapp med mera utan dator</string>
+    <string name="home_activation_summary_not_running">Starta Shizako först för att använda aktivering med ett tryck</string>
+    <string name="terminal_tutorial_1">Exportera först filerna var du vill. Du hittar två filer: %1$s och %2$s.</string>
+    <string name="terminal_tutorial_1_description">Om det finns filer med samma namn i den valda mappen tas de bort.
+
+Exportfunktionen använder SAF (Storage Access Framework). Det har rapporterats att MIUI bryter SAF-funktionerna. Om du använder MIUI kan du behöva extrahera filen från Shizakos apk eller ladda ner den från GitHub.</string>
+    <string name="terminal_export_files">Exportera filer</string>
+    <string name="terminal_tutorial_2">Öppna och redigera sedan %1$s i valfri textredigerare.</string>
+    <string name="terminal_tutorial_2_description">Om du till exempel vill använda Shizako i %1$s ska du ersätta %2$s med %3$s (%4$s är paketnamnet på %1$s).</string>
+    <string name="terminal_tutorial_3">Flytta slutligen filerna till en plats som terminalappen kan nå; sedan kan du använda %1$s för att köra kommandon via Shizako.</string>
+    <string name="terminal_tutorial_3_description">Tips: ge %1$s körbehörighet och lägg till den i %2$s, då kan du använda %1$s direkt.</string>
+    <string name="rish_description">Med %1$s kan du i valfri terminalapp ansluta till och interagera med skalet som Shizako kör. &lt;p&gt;Tryck för att se dokumentet om den detaljerade användningen av %1$s.</string>
+    <string name="settings_title">Inställningar</string>
+    <string name="settings_language">Språk</string>
+    <string name="settings_user_interface">Utseende</string>
+    <string name="settings_black_night_theme">Svart natttema</string>
+    <string name="settings_black_night_theme_summary">Använd det helmörka temat när mörkt läge är aktiverat</string>
+    <string name="settings_startup">Uppstart</string>
+    <string name="settings_translation_contributors">Översättare</string>
+    <string name="settings_translation">Hjälp till att översätta</string>
+    <string name="settings_debug">Felsökning</string>
+    <string name="settings_crash_logs">Kraschloggar</string>
+    <string name="settings_crash_logs_summary">Krascher sparas här när appen oväntat avslutas</string>
+    <string name="settings_crash_logs_empty">Inga kraschloggar</string>
+    <string name="settings_crash_logs_count">%1$d kraschlogg(ar)</string>
+    <string name="settings_crash_logs_share">Dela</string>
+    <string name="settings_crash_logs_delete">Ta bort</string>
+    <string name="settings_crash_logs_delete_all">Ta bort alla</string>
+    <string name="settings_crash_logs_deleted">Borttaget</string>
+    <string name="activation_title">Aktivering med ett tryck</string>
+    <string name="activation_subtitle">Kör ADB-kommandona som tidigare krävde en dator, direkt härifrån</string>
+    <string name="activation_service_running">Shizako körs, redo att aktivera</string>
+    <string name="activation_service_running_brief">Shizako körs</string>
+    <string name="activation_service_not_running">Shizako körs inte; starta tjänsten från startsidan först</string>
+    <string name="activation_activate">Aktivera</string>
+    <string name="activation_activated">Aktiverad</string>
+    <string name="activation_status_not_installed">%1$s · inte installerad</string>
+    <string name="activation_status_installed">%1$s · installerad</string>
+    <string name="activation_status_activated">%1$s · redan aktiverad</string>
+    <string name="activation_status_not_activated">%1$s · installerad, inte aktiverad</string>
+    <string name="activation_note_device_owner">Kräver att alla konton och sekundära användare (gästläge / appklon) tas bort först; du kan lägga till dem igen efter aktiveringen. ROM-egenheter från tillverkaren kan gälla.</string>
+    <string name="activation_note_brevent">Brevent-servern behöver aktiveras igen efter varje omstart.</string>
+    <string name="activation_custom_title">Eget kommando</string>
+    <string name="activation_custom_hint">Valfritt shell-kommando, t.ex. dpm set-device-owner …</string>
+    <string name="activation_custom_empty">Kommandot är tomt</string>
+    <string name="activation_run">Kör</string>
+    <string name="activation_running">Kör…</string>
+    <string name="activation_success">Aktiverad</string>
+    <string name="activation_failed">Misslyckades, se utdata nedan</string>
+    <string name="activation_failed_with_code">Misslyckades (slutkod %1$d), se utdata nedan</string>
+    <string name="activation_timeout">Kommandot körs fortfarande; slutade vänta (normalt för serverliknande kommandon)</string>
+    <string name="activation_output">Utdata</string>
+    <string name="activation_output_empty">(ingen utdata ännu)</string>
+    <string name="activation_copy">Kopiera</string>
+    <string name="activation_copied">Kopierat</string>
+    <string name="activation_back">Tillbaka</string>
+    <string name="settings_translation_summary">Hjälp oss att översätta %s till ditt språk</string>
+    <string name="settings_start_on_boot">Starta vid uppstart (root)</string>
+    <string name="settings_start_on_boot_summary">På rotade enheter kan Shizako startas automatiskt vid uppstart</string>
+    <string name="settings_use_system_color">Använd systemets temafärg</string>
+    <string name="action_about">Om</string>
+    <string name="about_view_source_code">Se källkoden på %s</string>
+    <string name="about_author">Utvecklare</string>
+    <string name="about_based_on">Baserad på</string>
+    <string name="about_based_on_text">open source-projektet %s</string>
+    <string name="about_license">Licens</string>
+    <string name="about_footer">Shizako — skapat med ❤️</string>
+    <string name="action_stop">Stoppa Shizako</string>
+    <string name="dialog_stop_message">Shizako-tjänsten kommer att stoppas.</string>
+    <string name="notification_channel_service_status">Tjänstens startstatus</string>
+    <string name="notification_channel_status">Tjänstestatus</string>
+    <string name="notification_service_starting">Shizako-tjänsten startar…</string>
+    <string name="notification_service_start_failed">Det gick inte att starta Shizako-tjänsten.</string>
+    <string name="notification_service_start_no_root">Misslyckades med att begära root-behörighet.</string>
+    <string name="notification_working">Arbetar…</string>
+    <string name="notification_channel_adb_pairing">Parkoppling via trådlös felsökning</string>
+    <string name="notification_adb_pairing_input_paring_code">Ange parkopplingskod</string>
+    <string name="notification_adb_pairing_searching_for_service_title">Söker efter parkopplingstjänst</string>
+    <string name="notification_adb_pairing_service_found_title">Parkopplingstjänst hittades</string>
+    <string name="notification_adb_pairing_stop_searching">Sluta söka</string>
+    <string name="notification_adb_pairing_working_title">Parkoppling pågår</string>
+    <string name="notification_adb_pairing_succeed_title">Parkopplingen lyckades</string>
+    <string name="notification_adb_pairing_succeed_text">Du kan nu starta Shizako-tjänsten.</string>
+    <string name="notification_adb_pairing_failed_title">Parkopplingen misslyckades</string>
+    <string name="notification_adb_pairing_retry">Försök igen</string>
+    <string name="tile_service_label">Shizako-tjänst</string>
+    <string name="tile_service_subtitle_running">Körs</string>
+    <string name="tile_service_subtitle_stopped">Stoppad</string>
+    <string name="tile_wireless_adb_label">Trådlös felsökning</string>
+    <string name="permission_label">använda Shizako</string>
+    <string name="permission_description">Tillåt appen att använda Shizako.</string>
+    <string name="permission_warning_template">Tillåt &lt;b&gt;%1$s&lt;/b&gt; att %2$s?</string>
+    <string name="grant_dialog_button_allow_always">Tillåt alltid</string>
+    <string name="grant_dialog_button_deny">Neka</string>
+    <string name="starter">Startare</string>
+    <string name="start_with_root_failed">Det går inte att starta tjänsten eftersom root-behörighet inte har beviljats eller enheten inte är rotad.</string>
+    <string name="dialog_cannot_open_browser_title">Det går inte att starta webbläsaren</string>
+    <string name="toast_copied_to_clipboard">%s
+har kopierats till urklipp.</string>
+    <string name="toast_copied_to_clipboard_with_text">&lt;b&gt;%s&lt;/b&gt; har kopierats till urklipp.</string>
+    <string name="dialog_legacy_not_support_title">%1$s stöder inte modern Shizako</string>
+    <string name="dialog_legacy_not_support_message">Äldre Shizako har varit föråldrad sedan mars 2019. Dessutom fungerar äldre Shizako inte på nyare Android-system.&lt;p&gt;Be utvecklaren av &lt;b&gt;%1$s&lt;/b&gt; att uppdatera.</string>
+    <string name="dialog_requesting_legacy_title">%1$s begär äldre Shizako</string>
+    <string name="dialog_requesting_legacy_message">&lt;b&gt;%1$s&lt;/b&gt; har stöd för modern Shizako men begär äldre Shizako. Det kan bero på att Shizako inte körs; kontrollera i Shizako-appen.&lt;p&gt;Äldre Shizako har varit föråldrad sedan mars 2019.</string>
+    <string name="dialog_requesting_legacy_button_open_shizuku">Öppna Shizako</string>
+    <plurals name="home_app_management_authorized_apps_count">
+        <item quantity="one">%d app godkänd</item>
+        <item quantity="other">%d appar godkända</item>
+    </plurals>
+    <!-- Shizako: 补充翻译 -->
+    <string name="setup_welcome_title">Välkommen</string>
+    <string name="setup_welcome_subtitle">Med några snabba inställningar är Shizako redo att användas.</string>
+    <string name="setup_disclaimer_title">Ansvarsfriskrivning</string>
+    <string name="setup_disclaimer_text"><![CDATA[Shizako tillhandahålls «i befintligt skick», utan någon form av garanti.<p>Shizako fungerar genom att köra en privilegiumstjänst på din enhet. Utvecklaren ansvarar inte för skador på enheten eller dataförluster som kan uppstå vid användning av appen eller då appar får åtkomst till Shizuko.<p>Använd på egen risk.]]></string>
+    <string name="setup_disclaimer_agree">Jag har läst och godkänner ovanstående</string>
+    <string name="setup_language_title">Välj språk</string>
+    <string name="setup_language_subtitle">Du kan ändra detta senare i inställningarna.</string>
+    <string name="setup_mode_subtitle">Välj hur Shizako ska se ut. Du kan ändra detta senare i inställningarna.</string>
+    <string name="setup_mode_follow_system">Följ systemet</string>
+    <string name="setup_mode_light">Ljust</string>
+    <string name="setup_mode_dark">Mörkt</string>
+    <string name="setup_start_method_title">Aktiveringsmetod</string>
+    <string name="setup_start_method_subtitle">Välj hur du planerar att starta Shizako. Startsidan visar den metoden först.</string>
+    <string name="setup_start_method_wadb">Trådlös felsökning</string>
+    <string name="setup_start_method_wadb_summary">På Android 11 eller senare krävs ingen dator</string>
+    <string name="setup_start_method_root">Root</string>
+    <string name="setup_start_method_root_summary">För rotade enheter, starta med ett tryck</string>
+    <string name="setup_start_method_adb">Anslut till en dator</string>
+    <string name="setup_start_method_adb_summary">Använd adb via USB, upprepa efter varje omstart</string>
+    <string name="setup_back">Tillbaka</string>
+    <string name="setup_next">Nästa</string>
+    <string name="setup_get_started">Kom igång</string>
+    <string name="setup_skip">Hoppa över</string>
+</resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Dual-manager support: request BOTH permission names so this library works with
+         the official Shizuku (moe.shizuku.manager.permission.API_V23, defined by
+         moe.shizuku.privileged.api) and with Shizako (com.churan.shizako.permission.API_V23,
+         defined by com.churan.shizako). Each server only pushes its binder to apps that
+         request its own permission, and grants only the permission it defines. -->
+    <uses-permission android:name="moe.shizuku.manager.permission.API_V23" />
+    <uses-permission android:name="com.churan.shizako.permission.API_V23" />
+
+    <application tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+        <meta-data
+            android:name="moe.shizuku.client.V3_SUPPORT"
+            android:value="true" />
+    </application>
+
+</manifest>

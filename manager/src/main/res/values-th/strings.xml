@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dialog_requesting_legacy_title">%1$s กำลังขอร้อง Shizako รุ่นเก่า</string>
+    <string name="dialog_requesting_legacy_button_open_shizuku">เปิด Shizako</string>
+    <string name="dialog_requesting_legacy_message">&lt;b>%1$s&lt;/b> รองรับ Shizako รุ่นใหม่ แต่กำลังขอร้อง Shizako รุ่นเก่า นี่อาจเป็นเพราะ Shizako ไม่ทำงาน โปรดตรวจสอบในแอป Shizako &lt;p>Shizako รุ่นเก่าได้ถูกเลิกใช้ไปแล้วตั้งแต่เดือนมีนาคมปี 2019</string>
+    <string name="dialog_legacy_not_support_message">Shizako รุ่นเก่าได้ถูกเลิกใช้ไปแล้วตั้งแต่เดือนมีนาคม 2019 นอกจากนี้ Shizako รุ่นเก่ายังใช้งานไม่ได้กับระบบ Android ที่ใหม่กว่า &lt;p>โปรดติดต่อผู้พัฒนาของ &lt;b>%1$s&lt;/b> เพื่ออัปเดตเป็นเวอร์ชันใหม่</string>
+    <string name="dialog_legacy_not_support_title">%1$s ไม่รองรับ Shizako รุ่นใหม่</string>
+    <string name="toast_copied_to_clipboard">%s
+\nได้ถูกคัดลอกไปยังคลิปบอร์ด</string>
+    <string name="toast_copied_to_clipboard_with_text"><b>%s</b> ได้ถูกคัดลอกไปยังคลิปบอร์ด</string>
+    <string name="dialog_cannot_open_browser_title">ไม่สามารถเปิดบราวเซอร์</string>
+    <string name="start_with_root_failed">ไม่สามารถเริ่มบริการเนื่องจากไม่ได้รับการอนุญาตรูทหรืออุปกรณ์ไม่ได้ถูกรูท</string>
+    <string name="starter">ตัวเริ่ม</string>
+    <string name="grant_dialog_button_deny">ปฏิเสธ</string>
+    <string name="grant_dialog_button_allow_always">อนุญาตเสมอ</string>
+    <string name="permission_warning_template">อนุญาต <b>%1$s</b> ให้ %2$s ไหม\?</string>
+    <string name="permission_description">อนุญาตให้แอปใช้งาน Shizako</string>
+    <string name="permission_label">เข้าถึง Shizako</string>
+    <string name="notification_adb_pairing_retry">ลองใหม่</string>
+    <string name="notification_adb_pairing_failed_title">การจับคู่ล้มเหลว</string>
+    <string name="notification_adb_pairing_succeed_text">สามารถเริ่มบริการ Shizako ได้ทันที</string>
+    <string name="notification_adb_pairing_succeed_title">การจับคู่สำเร็จ</string>
+    <string name="notification_adb_pairing_working_title">กำลังจับคู่</string>
+    <string name="notification_adb_pairing_stop_searching">หยุดค้นหา</string>
+    <string name="notification_adb_pairing_service_found_title">พบบริการการจับคู่</string>
+    <string name="notification_adb_pairing_searching_for_service_title">กำลังค้นหาบริการการจับคู่</string>
+    <string name="notification_adb_pairing_input_paring_code">ป้อนรหัสการจับคู่</string>
+    <string name="notification_channel_adb_pairing">การจับคู่การแก้ไขข้อบกพร่องผ่าน Wi-Fi</string>
+    <string name="notification_working">กำลังทำงาน…</string>
+    <string name="notification_service_start_no_root">ล้มเหลวในการขอการอนุญาตรูท</string>
+    <string name="notification_service_start_failed">ล้มเหลวในการเริ่มบริการ Shizako</string>
+    <string name="notification_service_starting">บริการ Shizako กำลังเริ่มต้น…</string>
+    <string name="notification_channel_service_status">สถานะการเริ่มบริการ</string>
+    <string name="action_stop">หยุดทำงาน Shizako</string>
+    <string name="dialog_stop_message">บริการ Shizako จะถูกหยุดทำงาน</string>
+    <string name="about_view_source_code">ดูซอร์สโค้ดใน %s</string>
+    <string name="action_about">เกี่ยวกับ</string>
+    <string name="settings_use_system_color">ใช้สีของธีมระบบ</string>
+    <string name="settings_start_on_boot_summary">สำหรับอุปกรณ์ที่รูทแล้ว Shizako จะสามารถเริ่มได้โดยอัตโนมัติเมื่อเปิดเครื่อง</string>
+    <string name="settings_start_on_boot">เริ่มเมื่อเปิดเครื่อง (รูท)</string>
+    <string name="settings_translation_summary">ช่วยเราแปล %s เป็นภาษาของคุณ</string>
+    <string name="settings_translation">มีส่วนร่วมในการแปล</string>
+    <string name="settings_translation_contributors">ผู้มีส่วนร่วมในการแปลภาษา</string>
+    <string name="settings_startup">เมื่อเริ่มต้น</string>
+    <string name="settings_black_night_theme_summary">ใช้ธีมสีดำสนิทหากธีมมืดถูกเปิดอยู่</string>
+    <string name="settings_black_night_theme">ธีมมืดมิด</string>
+    <string name="settings_user_interface">ลักษณะ</string>
+    <string name="settings_language">ภาษา</string>
+    <string name="settings_title">การตั้งค่า</string>
+    <string name="rish_description">ด้วย %1$s ในแอปเทอร์มินอลใด ๆ คุณจะสามารถเชื่อมต่อและดำเนินการกับ shell ที่รันโดย Shizako &lt;p>รายละเอียดอื่น ๆ ในการใช้ %1$s แตะเพื่อดูเอกสาร</string>
+    <string name="terminal_tutorial_3_description">แนะนำนิดหน่อย: ให้การอนุญาตดำเนิดการแก่ %1$s และเพิ่มเข้าไปใน %2$s ก็จะสามารถใช้ %1$s ได้โดยตรง</string>
+    <string name="terminal_tutorial_3">สุดท้าย ย้ายไฟล์ไปสักที่ที่แอปเทอร์มินอลของคุณสามารถเข้าถึงได้ ทีนี้คุณก็จะสามารถใช้ %1$s เพื่อสั่งคำสั่งผ่าน Shizako</string>
+    <string name="terminal_tutorial_2_description">ยกตัวอย่างเช่น ถ้าคุณต้องการใช้ Shizako ใน %1$s คุณจะต้องแทนที่ %2$s ด้วย %3$s (%4$s คือชื่อแพ็กเกจของ %1$s)</string>
+    <string name="terminal_tutorial_2">จากนั้น ใช้ตัวแก้ไขไฟล์เปิดและแก้ไข %1$s</string>
+    <string name="terminal_export_files">ส่งออกไฟล์</string>
+    <string name="terminal_tutorial_1_description">"หากมีไฟล์ที่มีชื่อเดียวกันในโฟลเดอร์ที่เลือก ไฟล์เหล่านั้นจะถูกลบออก 
+ 
+ใช้ฟังก์ชันการส่งออก SAF (Storage Access Framework) มีรายงานว่า MIUI ทำลายฟังก์ชันของ SAF หากคุณใช้ MIUI คุณอาจจะต้องแตกไฟล์จาก apk ของ Shizako หรือดาวน์โหลดจาก GitHub"</string>
+    <string name="terminal_tutorial_1">ก่อนอื่น ส่งออกไฟล์ไปยังที่ใดก็ได้ จะมีอยู่สองไฟล์ %1$s และ %2$s</string>
+    <string name="home_terminal_description">สั่งคำสั่งผ่าน Shizako ในแอปเทอร์มินอลที่คุณเลือก</string>
+    <string name="home_terminal_title">ใช้ Shizako ในแอปเทอร์มินอล</string>
+    <string name="app_management_item_summary_requires_root">* จำเป็นต้องให้ Shizako ทำงานผ่านรูท</string>
+    <string name="app_management_dialog_adb_is_limited_message">เป็นไปได้สูงที่ผู้ผลิตอุปกรณ์ของคุณจะจำกัดการอนุญาตของ adb &lt;p&gt;อาจมีวิธีแก้ไขสำหรับอุปกรณ์ของคุณใน&lt;b&gt;&lt;a href=\"%1$s\"&gt;เอกสารนี้&lt;/a&gt;&lt;/b&gt;</string>
+    <string name="app_management_dialog_adb_is_limited_title">การอนุญาตของ adb นั้นจำกัด</string>
+    <string name="home_learn_more_description">เรียนรู้การพัฒนาเพื่อใช้ร่วมกันกับ Shizako</string>
+    <string name="home_learn_more_title">เรียนรู้ Shizako</string>
+    <string name="home_app_management_view_authorized_apps">แตะเพื่อจัดการแอปที่ได้รับอนุญาต</string>
+    <plurals name="home_app_management_authorized_apps_count">
+        <item quantity="other">อนุญาตแล้ว %d แอปพลิเคชัน</item>
+    </plurals>
+    <string name="home_app_management_title">การจัดการแอปพลิเคชัน</string>
+    <string name="home_root_button_restart">เริ่มใหม่</string>
+    <string name="home_root_button_start">เริ่ม</string>
+    <string name="home_root_description_sui">หากคุณกำลังใช้ Magisk สามารถลองใช้ %1$s สำหรับผู้ใช้งานรูท จะเป็นตัวที่ใช้แทนที่ Shizako แต่โปรดทราบว่า แอปพลิเคชันที่มีอยู่จำเป็นต้องเปลี่ยนเล็กน้อยให้ไปใช้ %2$s</string>
+    <string name="home_root_description">นอกจากนี้ Shizako ยังสามารถเริ่มอัตโนมัติเมื่ออุปกรณ์ถูกเปิด หากไม่ โปรดตรวจสอบอุปกรณ์หรือเครื่องมือภายนอกที่จำกัดการเข้าถึงของ Shizako&lt;br>หรือดูตาม %s</string>
+    <string name="home_root_title">เริ่ม (สำหรับอุปกรณ์ที่รูทแล้ว)</string>
+    <string name="adb_pairing_tutorial_content_network_limation_not_foreground">บางระบบ (เช่น MIUI) จะไม่อนุญาตให้แอปเข้าถึงเครือข่ายเมื่อไม่แสดง แม้แอปจะใช้บริการเบื้องหน้าตามปกติ โปรดเปิดใช้งานการเพิ่มประสิทธิภาพแบตเตอรี่ของ Shizako บนระบบที่เป็นเช่นนั้น</string>
+    <string name="adb_pairing_tutorial_content_network">Shizako จำเป็นต้องเข้าถึงเครือข่ายท้องถิ่น ซึ่งกำลังควบคุมอยู่โดยการอนุญาตเครือข่าย</string>
+    <string name="adb_pairing_tutorial_content_finish">กลับไปที่ Shizako เพื่อเริ่ม Shizako</string>
+    <string name="adb_pairing_tutorial_content_left_is_clickable">โปรดให้ทราบว่า ส่วนด้านซ้ายของตัวเลือก \"การแก้ไขข้อบกพร่องผ่าน Wi-Fi\" สามารถกดได้ เมื่อแตะแล้วจะเปิดหน้าใหม่ขึ้นมา การแค่เปิดสวิตช์ที่ด้านขวาอย่างเดียวนั้นไม่ถูกต้อง</string>
+    <string name="adb_pairing_tutorial_content_miui_2">ไม่เช่นนั้นจะไม่สามารถป้อนรหัสการจับคู่ลงในการแจ้งเตือน</string>
+    <string name="adb_pairing_tutorial_content_miui">ผู้ใช้ MIUI อาจจำเป็นต้องเปลี่ยนสไตล์การแจ้งเตือนเป็น \"Android\" ใน \"การแจ้งเตือน\" -\"เฉดการแจ้งเตือน\" ในการตั้งค่าของระบบ</string>
+    <string name="adb_pairing_tutorial_content_notification_blocked">กระบวนการจับคู่จำเป็นต้องมีการป้อนข้อมูลลงในการแจ้งเตือนของ Shizako โปรดอนุญาตให้ Shizako ส่งการแจ้งเตือน</string>
+    <string name="adb_pairing_tutorial_content_enter_pairing_code">ป้อนรหัสลงไปในการแจ้งเตือนเพื่อเสร็จสิ้นการจับคู่</string>
+    <string name="adb_pairing_tutorial_content_steps">เข้าไปยัง \"ตัวเลือกสำหรับนักพัฒนาแอป\" - \"การแก้ไขข้อบกพร่องผ่าน Wi-Fi\" แตะ \"จับคู่อุปกรณ์ผ่านรหัสการจับคู่\" ก็จะพบกับรหัสหกตัว</string>
+    <string name="adb_pairing_tutorial_content_notification">การแจ้งเตือนจาก Shizako จะช่วยให้เสร็จสิ้นกระบวนการจับคู่</string>
+    <string name="adb_pairing_tutorial_title">จับคู่ Shizako กับอุปกรณ์</string>
+    <string name="notification_settings">ตัวเลือกการแจ้งเตือน</string>
+    <string name="development_settings">ตัวเลือกสำหรับนักพัฒนาแอป</string>
+    <string name="adb_pair_required">โปรดทำขั้นตอนการจับคู่ก่อน</string>
+    <string name="adb_error_key_store">ไม่สามารถสร้างรหัสเพื่อเชื่อมต่อการแก้ไขข้อบกพร่องผ่าน Wi-Fi
+\nอาจเป็นเพราะกลไกการจัดเก็บรหัสของอุปกรณ์เสียหาย</string>
+    <string name="adb_pairing_requires_multi_window_reason">ระบบจำเป็นจะต้องให้มีหน้าต่างรหัสการจับคู่แสดงอยู่ตลอดเวลา ใช้โหมดแนกหน้าจอเป็นหนทางเดียวที่จะปล่อยแอปและหน้าต่างของระบบแสดงพร้อมกันในเวลาเดียวกัน</string>
+    <string name="adb_pairing_requires_multi_window">โปรดเข้าสู่โหมดแยกหน้าจอ (หลายหน้าต่าง) ก่อน</string>
+    <string name="paring_code_is_wrong">รหัสการจับคู่ไม่ถูกต้อง</string>
+    <string name="dialog_adb_pairing_paring_code">รหัสการจับคู่</string>
+    <string name="dialog_adb_pairing_message">โปรดเริ่มจับคู่ตามขั้นตอนนี้: \"ตัวเลือกสำหรับนักพัฒนาแอป\" - \"การแก้ไขข้อบกพร่องผ่าน Wi-Fi\" - \"จับคู่อุปกรณ์ด้วยรหัสการจับคู่\"
+\n
+\nหลังจากเริ่มกระบวนการจับคู่ จะสามารถป้อนรหัสการจับคู่</string>
+    <string name="home_wireless_adb_description_pre_11">หาก Android เป็นรุ่นที่เก่ากว่า 11 นั้นจำเป็นต้องเชื่อมต่อกับคอมพิวเตอร์เพื่อเปิดใช้งานการแก้ไขข้อบกพร่องผ่าน Wi-Fi</string>
+    <string name="dialog_wireless_adb_not_enabled">การแก้ไขข้อบกพร่องผ่าน Wi-Fi ไม่ถูกเปิดไว้
+\nหมายเหตุ หาก Android เป็นรุ่นที่เก่ากว่า 11 การจะเปิดการแก้ไขข้อบกพร่องผ่าน Wi-Fi จำเป็นต้องมีการเชื่อมต่อกับคอมพิวเตอร์</string>
+    <string name="cannot_connect_port">ไม่สามารถเชื่อมต่อกับบริการการแก้ไขข้อบกพร่องผ่าน Wi-Fi</string>
+    <string name="dialog_adb_pairing_discovery">กำลังค้นหาบริการจับคู่</string>
+    <string name="dialog_adb_pairing_title">จับคู่กับอุปกรณ์</string>
+    <string name="adb_pairing">จับคู่</string>
+    <string name="dialog_adb_invalid_port">พอร์ตคือเลขจำนวนเต็ม ค่าตั้งแต่ 1 ถึง 65535</string>
+    <string name="dialog_adb_port">พอร์ต</string>
+    <string name="dialog_adb_discovery_message">"โปรดเปิดใช้งาน \"การแก้ไขข้อบกพร่องผ่าน Wi-Fi\" ใน \"ตัวเลือกสำหรับนักพัฒนาแอป\" \"การแก้ไขข้อบกพร่องผ่าน Wi-Fi\" จะถูกปิดโดยอัตโนมัติเมื่อเปลี่ยนเครือข่าย 
+ 
+หมายเหตุ ห้ามปิดใช้งาน \"ตัวเลือกสำหรับนักพัฒนาแอป\" หรือ \"การแก้ไขข้อบกพร่อง USB\" ไม่เช่นนั้น Shizako จะหยุดการทำงาน"</string>
+    <string name="home_wireless_adb_description">ตั้งแต่ Android 11 ขึ้นไป สามารถเปิดใช้งานการแก้ไขข้อบกพร่องผ่าน Wi-Fi เพื่อเริ่ม Shizako ได้โดยตรงผ่านอุปกรณ์ โดยไม่ต้องเชื่อมต่อกับคอมพิวเตอร์ &lt;p>โปรดอ่านคำแนะนำทีละขั้นตอนก่อน</string>
+    <string name="home_wireless_adb_title">เริ่มผ่านการแก้ไขข้อบกพร่องผ่าน Wi-Fi</string>
+    <string name="dialog_adb_discovery">กำลังค้นหาบริการการแก้ไขข้อบกพร่อง</string>
+    <string name="home_wireless_adb_view_guide_button">คำแนะนำทีละขั้นตอน</string>
+    <string name="home_adb_dialog_view_command_button_send">ส่ง</string>
+    <string name="home_adb_dialog_view_command_copy_button">คัดลอก</string>
+    <string name="home_adb_dialog_view_command_message">&lt;font face=monospace&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* มีข้อควรพิจารณาอื่น ๆ โปรดอ่านความช่วยเหลือให้เข้าใจก่อน</string>
+    <string name="home_adb_button_view_command">ดูคำสั่ง</string>
+    <string name="home_adb_button_view_help">อ่านการช่วยเหลือ</string>
+    <string name="home_adb_title">เริ่มโดยเชื่อมต่อกับคอมพิวเตอร์</string>
+    <string name="home_status_service_is_running">%1$s กำลังทำงาน</string>
+    <string name="home_adb_description">สำหรับอุปกรณ์ที่ไม่ได้ติดตั้งรูท จะต้องใช้ adb เพื่อเริ่ม Shizako (จำเป็นต้องเชื่อมต่อกับคอมพิวเตอร์) กระบวนการนี้จะต้องทำทุกครั้งที่อุปกรณ์ปิดและเปิดใหม่ กรุณา&lt;b>&lt;a href=\"%1$s\">อ่านการช่วยเหลือ&lt;/a>&lt;/b></string>
+    <string name="home_status_service_version_update">เวอร์ชัน %2$s, %1$s&lt;br&gt;เริ่มใหม่อีกครั้งเพื่ออัปเดตเป็นเวอร์ชัน %3$s</string>
+    <string name="home_status_service_version">เวอร์ชัน %2$s ผ่าน %1$s</string>
+    <string name="home_status_service_not_running">%1$s ไม่ได้กำลังทำงาน</string>
+    <string name="translation_contributors">altinat</string>
+    <string name="home_adb_is_limited_description">"ผู้ผลิตอุปกรณ์ของคุณ จำกัดการอนุญาต adb ทำให้แอปที่ใช้ Shizako จะไม่ทำงานอย่างถูกต้อง 
+ 
+โดยปกติ ข้อจำกัดนี้สามารถจัดการได้โดยการปรับตัวเลือกใน \"ตัวเลือกสำหรับนักพัฒนาซอฟต์แวร์\" โปรดอ่าน การช่วยเหลือสำหรับรายละเอียดวิธีการแก้ไข 
+ 
+คุณอาจต้องรีสตาร์ท Shizako เพื่อให้การดำเนินการมีผล"</string>
+    <string name="home_adb_is_limited_title">คุณต้องทำขั้นตอนเพิ่มเติม</string>
+    <string name="home_app_management_empty">แอปที่ขอร้องหรือขอใช้ Shizako จะแสดงที่นี่</string>
+    <string name="dialog_adb_discovery_message_toggle_wireless_debugging">โปรดลองปิดและเปิดใช้งาน \"การแก้ไขข้อบกพร่องผ่าน Wi-Fi\" ใหม่ หากระบบยังคงค้นหาอยู่</string>
+    <!-- Shizako: 补充翻译 -->
+    <string name="home_activation_title">เปิดใช้งานแบบแตะครั้งเดียว</string>
+    <string name="home_activation_summary">เปิดใช้งาน Brevent, Stopapp และอื่นๆ โดยไม่ต้องใช้คอมพิวเตอร์</string>
+    <string name="home_activation_summary_not_running">เริ่ม Shizako ก่อนเพื่อใช้การเปิดใช้งานแบบแตะครั้งเดียว</string>
+    <string name="settings_debug">แก้ไขจุดบกพร่อง</string>
+    <string name="settings_crash_logs">บันทึกข้อผิดพลาด</string>
+    <string name="settings_crash_logs_summary">ข้อผิดพลาดจะถูกบันทึกไว้ที่นี่เมื่อแอปปิดตัวอย่างไม่คาดคิด</string>
+    <string name="settings_crash_logs_empty">ไม่มีบันทึกข้อผิดพลาด</string>
+    <string name="settings_crash_logs_count">บันทึกข้อผิดพลาด %1$d รายการ</string>
+    <string name="settings_crash_logs_share">แชร์</string>
+    <string name="settings_crash_logs_delete">ลบ</string>
+    <string name="settings_crash_logs_delete_all">ลบทั้งหมด</string>
+    <string name="settings_crash_logs_deleted">ลบแล้ว</string>
+    <string name="activation_title">เปิดใช้งานแบบแตะครั้งเดียว</string>
+    <string name="activation_subtitle">เรียกใช้คำสั่ง ADB ที่เคยต้องใช้คอมพิวเตอร์ ได้จากที่นี่โดยตรง</string>
+    <string name="activation_service_running">Shizako กำลังทำงาน พร้อมเปิดใช้งานแล้ว</string>
+    <string name="activation_service_running_brief">Shizako กำลังทำงาน</string>
+    <string name="activation_service_not_running">Shizako ไม่ได้ทำงาน โปรดเริ่มบริการจากหน้าแรกก่อน</string>
+    <string name="activation_activate">เปิดใช้งาน</string>
+    <string name="activation_activated">เปิดใช้งานแล้ว</string>
+    <string name="activation_status_not_installed">%1$s · ยังไม่ติดตั้ง</string>
+    <string name="activation_status_installed">%1$s · ติดตั้งแล้ว</string>
+    <string name="activation_status_activated">%1$s · เปิดใช้งานแล้ว</string>
+    <string name="activation_status_not_activated">%1$s · ติดตั้งแล้ว แต่ยังไม่เปิดใช้งาน</string>
+    <string name="activation_note_device_owner">ต้องลบบัญชีและผู้ใช้ทุติยภูมิ (โหมดผู้เยี่ยม / แอปคู่) ออกก่อน จึงจะทำได้ แล้วค่อยเพิ่มกลับหลังเปิดใช้งาน อาจมีข้อจำกัดตาม ROM ของผู้ผลิต</string>
+    <string name="activation_note_brevent">เซิร์ฟเวอร์ของ Brevent ต้องเปิดใช้งานใหม่ทุกครั้งหลังรีสตาร์ทเครื่อง</string>
+    <string name="activation_custom_title">คำสั่งกำหนดเอง</string>
+    <string name="activation_custom_hint">คำสั่งเชลล์ใดก็ได้ เช่น dpm set-device-owner …</string>
+    <string name="activation_custom_empty">คำสั่งว่าง</string>
+    <string name="activation_run">รัน</string>
+    <string name="activation_running">กำลังรัน…</string>
+    <string name="activation_success">เปิดใช้งานสำเร็จ</string>
+    <string name="activation_failed">ล้มเหลว ดูผลลัพธ์ด้านล่าง</string>
+    <string name="activation_failed_with_code">ล้มเหลว (โค้ด %1$d) ดูผลลัพธ์ด้านล่าง</string>
+    <string name="activation_timeout">คำสั่งยังคงทำงานอยู่ จึงหยุดรอแล้ว (ปกติสำหรับคำสั่งแบบเซิร์ฟเวอร์)</string>
+    <string name="activation_output">ผลลัพธ์</string>
+    <string name="activation_output_empty">(ยังไม่มีผลลัพธ์)</string>
+    <string name="activation_copy">คัดลอก</string>
+    <string name="activation_copied">คัดลอกแล้ว</string>
+    <string name="activation_back">กลับ</string>
+    <string name="about_author">ผู้พัฒนา</string>
+    <string name="about_based_on">พัฒนาต่อจาก</string>
+    <string name="about_based_on_text">โปรเจกต์โอเพนซอร์ส %s</string>
+    <string name="about_license">สัญญาอนุญาต</string>
+    <string name="about_footer">Shizako — สร้างด้วย ❤️</string>
+    <string name="notification_channel_status">สถานะบริการ</string>
+    <string name="tile_service_label">บริการ Shizako</string>
+    <string name="tile_service_subtitle_running">กำลังทำงาน</string>
+    <string name="tile_service_subtitle_stopped">หยุดทำงาน</string>
+    <string name="tile_wireless_adb_label">การแก้ไขจุดบกพร่องไร้สาย</string>
+    <!-- Shizako: 补充翻译 -->
+    <string name="setup_welcome_title">ยินดีต้อนรับ</string>
+    <string name="setup_welcome_subtitle">ตั้งค่าเพียงไม่กี่ขั้นตอน Shizako ก็พร้อมใช้งาน</string>
+    <string name="setup_disclaimer_title">ข้อปฏิเสธความรับผิดชอบ</string>
+    <string name="setup_disclaimer_text"><![CDATA[Shizako จัดให้ «ตามสภาพ» โดยไม่มีการรับประกันใดๆ ทั้งสิ้น<p>Shizako ทำงานโดยการรันเซอร์วิสที่มีสิทธิ์พิเศษบนอุปกรณ์ของคุณ นักพัฒนาไม่รับผิดชอบต่อความเสียหายใดๆ ของอุปกรณ์หรือการสูญหายของข้อมูลที่อาจเกิดจากการใช้แอปนี้หรือการให้สิทธิ์แอปอื่นเข้าถึง Shizako<p>ใช้งานโดยยอมรับความเสี่ยงเอง]]></string>
+    <string name="setup_disclaimer_agree">ฉันได้อ่านและยอมรับข้อความข้างต้น</string>
+    <string name="setup_language_title">เลือกภาษา</string>
+    <string name="setup_language_subtitle">คุณสามารถเปลี่ยนได้ภายหลังในการตั้งค่า</string>
+    <string name="setup_mode_subtitle">เลือกรูปแบบของ Shizako เปลี่ยนได้ภายหลังในการตั้งค่า</string>
+    <string name="setup_mode_follow_system">ตามระบบ</string>
+    <string name="setup_mode_light">สว่าง</string>
+    <string name="setup_mode_dark">มืด</string>
+    <string name="setup_start_method_title">วิธีการเปิดใช้งาน</string>
+    <string name="setup_start_method_subtitle">เลือกว่าคุณวางแผนจะเริ่ม Shizako ด้วยวิธีใด หน้าหลักจะแสดงวิธีนั้นเป็นอันดับแรก</string>
+    <string name="setup_start_method_wadb">การแก้ไขข้อบกพร่องไร้สาย</string>
+    <string name="setup_start_method_wadb_summary">บน Android 11 ขึ้นไป ไม่ต้องใช้คอมพิวเตอร์</string>
+    <string name="setup_start_method_root">Root</string>
+    <string name="setup_start_method_root_summary">สำหรับอุปกรณ์ที่รูทแล้ว เริ่มด้วยการแตะครั้งเดียว</string>
+    <string name="setup_start_method_adb">เชื่อมต่อกับคอมพิวเตอร์</string>
+    <string name="setup_start_method_adb_summary">ใช้ adb ผ่าน USB ต้องทำซ้ำหลังทุกครั้งที่รีสตาร์ท</string>
+    <string name="setup_back">ย้อนกลับ</string>
+    <string name="setup_next">ถัดไป</string>
+    <string name="setup_get_started">เริ่มต้นใช้งาน</string>
+    <string name="setup_skip">ข้าม</string>
+</resources>

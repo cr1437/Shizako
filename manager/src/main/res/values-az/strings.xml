@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="translation_contributors">By3lish</string>
+    <string name="home_adb_dialog_view_command_copy_button">Kopyala</string>
+    <string name="dialog_requesting_legacy_button_open_shizuku">Shizakonu aç</string>
+    <string name="dialog_requesting_legacy_message">&lt;b>%1$s&lt;/b> müasir Shizako dəstəyinə malikdir, lakin o, köhnə Şizuku tələb edir. Bu, Shizako işləmədiyinə görə ola bilər, lütfən, Shizako proqramında yoxlayın.&lt;p>Legacy Shizako 2019-cu ilin mart ayından etibarən köhnəlib</string>
+    <string name="dialog_requesting_legacy_title">%1$s köhnə Şizuku tələb edir</string>
+    <string name="dialog_legacy_not_support_message">Köhnə Shizako 2019-cu ilin mart ayından ləğv edilib. Həmçinin, köhnə Shizako daha yeni Android sistemlərində işləmir.&lt;p>Lütfən, &lt;b>%1$s&lt;/b> tərtibatçısından yeniləməsini xahiş edin.</string>
+    <string name="dialog_legacy_not_support_title">%1$s müasir Shizakonu dəstəkləmir</string>
+    <string name="toast_copied_to_clipboard_with_text"><b>%s</b> kopyalandı.</string>
+    <string name="toast_copied_to_clipboard">%s
+\nkopyalandı.</string>
+    <string name="dialog_cannot_open_browser_title">Brauzeri başlatmaq mümkün deyil</string>
+    <string name="start_with_root_failed">Root icazəsi verilmədiyi və ya bu cihaz rootlu olmadığı üçün xidməti başlatmaq mümkün deyil.</string>
+    <string name="starter">Başlanğıc</string>
+    <string name="grant_dialog_button_deny">Ləğv et</string>
+    <string name="grant_dialog_button_allow_always">Hər zaman icazə ver</string>
+    <string name="permission_warning_template"><b>%1$s</b> - ya %2$s üçün icazə verilsin\?</string>
+    <string name="permission_description">Proqramın Shizakodan istifadə etməsinə icazə verin</string>
+    <string name="permission_label">Shizakoya daxil olun</string>
+    <string name="notification_adb_pairing_retry">Yenidən cəhd edin</string>
+    <string name="notification_adb_pairing_failed_title">Qoşulma uğursuz oldu</string>
+    <string name="notification_adb_pairing_succeed_text">Siz indi Shizako xidmətini başlata bilərsiniz.</string>
+    <string name="notification_adb_pairing_succeed_title">Qoşulma uğurludur</string>
+    <string name="notification_adb_pairing_working_title">Axtarış davam edir</string>
+    <string name="notification_adb_pairing_stop_searching">Axtarışı dayandırın</string>
+    <string name="notification_adb_pairing_service_found_title">Qoşulma xidməti tapıldı</string>
+    <string name="notification_adb_pairing_searching_for_service_title">Qoşulma xidməti axtarılır</string>
+    <string name="notification_adb_pairing_input_paring_code">Cütləşmə kodunu daxil edin</string>
+    <string name="notification_channel_adb_pairing">Simsiz debaq qoşulur...</string>
+    <string name="notification_working">İşləyir…</string>
+    <string name="notification_service_start_no_root">Root icazəsini tələb etmək alınmadı.</string>
+    <string name="notification_service_start_failed">Shizako servisini başlatmaq mümkün olmadı</string>
+    <string name="notification_service_starting">Shizako servisi başladılır…</string>
+    <string name="notification_channel_service_status">Xidmətin başlama statusu</string>
+    <string name="dialog_stop_message">Shizako xidməti dayandırılacaq.</string>
+    <string name="action_stop">Shizikunu dayandır</string>
+    <string name="about_view_source_code">Qaynaq kodlarına buradan baxın %s</string>
+    <string name="action_about">Haqqında</string>
+    <string name="settings_use_system_color">Sistem teması rəngindən istifadə edin</string>
+    <string name="settings_start_on_boot_summary">Rootlu cihazlar üçün, Shizako boot zamanı avtomatik başlaya bilir</string>
+    <string name="settings_start_on_boot">Boot anında başlatın (Root lazımdır)</string>
+    <string name="settings_translation_summary">%s dilini öz dilinizə tərcümə etməkdə bizə kömək edin</string>
+    <string name="settings_translation">Tərcümədə iştirak et</string>
+    <string name="settings_translation_contributors">Tərcümədə iştirak edənlər</string>
+    <string name="settings_startup">başlamaq</string>
+    <string name="settings_black_night_theme_summary">Gecə rejimi aktivdirsə, saf qara temasından istifadə edin</string>
+    <string name="settings_black_night_theme">Qara gecə teması</string>
+    <string name="settings_user_interface">Görünüş</string>
+    <string name="settings_language">Dil</string>
+    <string name="settings_title">Parametrlər</string>
+    <string name="rish_description">%1$s ilə istənilən terminal proqramında siz Shizako tərəfindən hazırlanmış shell-lərə qoşula və onlarla əlaqə saxlaya bilərsiniz. &lt;p>Ətraflı istifadə %1$s haqqında sənədə baxmaq üçün toxunun.</string>
+    <string name="terminal_tutorial_3_description">Bəzi məsləhətlər: %1$s-a icra icazəsi verin və onu %2$s-a əlavə edin, siz birbaşa %1$s-dan istifadə edə biləcəksiniz.</string>
+    <string name="terminal_tutorial_3">Nəhayət, faylları terminal proqramınızın daxil ola biləcəyi yerə köçürün, Shizako vasitəsilə əmrləri yerinə yetirmək üçün %1$s-dan istifadə edə biləcəksiniz.</string>
+    <string name="terminal_tutorial_2_description">Məsələn, %1$s-da Shizako-dan istifadə etmək istəyirsinizsə, %2$s-ı %3$s ilə əvəz etməlisiniz (%4$s %1$s paketinin adıdır).</string>
+    <string name="terminal_tutorial_2">Sonra %1$s-ı açmaq və redaktə etmək üçün istənilən mətn redaktorundan istifadə edin.</string>
+    <string name="terminal_export_files">Faylları ixrac edin</string>
+    <string name="terminal_tutorial_1_description">"Seçilmiş qovluqda eyni adlı fayllar varsa, onlar silinəcək. 
+ 
+İxrac funksiyası SAF (Storage Access Framework) istifadə edir. MIUI-nin SAF funksiyalarını pozduğu bildirilir. MIUI istifadə edirsinizsə, faylı Shizako-nun apk-dan çıxarmalı və ya GitHub-dan yükləməli ola bilərsiniz."</string>
+    <string name="terminal_tutorial_1">Birincisi, faylları istədiyiniz yerə ixrac edin. Siz iki fayl tapacaqsınız, %1$s və %2$s.</string>
+    <string name="home_terminal_description">İstədiyiniz terminal proqramlarında Shizako vasitəsilə əmrləri işə salın</string>
+    <string name="home_terminal_title">Shizikunu terminal proqramlarında istifadə edin</string>
+    <string name="app_management_item_summary_requires_root">* Shizako rootla işləməsini tələb edir</string>
+    <string name="app_management_dialog_adb_is_limited_message">Çox güman ki, cihazınızın istehsalçısı adb icazəsini məhdudlaşdırır.&lt;p&gt;Sisteminiz üçün &lt;b&gt;&lt;a href=\"%1$s\"&gt;bu sənəddə&lt;/a&gt;&lt;/b&gt; həll yolu ola bilər.</string>
+    <string name="app_management_dialog_adb_is_limited_title">adb icazəsi məhduddur</string>
+    <string name="home_learn_more_description">Necə Shizako dəstəkli proqram hazırlaya biləcəyinizi öyrənin və ya Shizako dəstəkli proqramları əldə edin</string>
+    <string name="home_learn_more_title">Shizako haqqında</string>
+    <string name="home_app_management_view_authorized_apps">İcazə verilmiş proqramları idarə etmək üçün toxunun</string>
+    <plurals name="home_app_management_authorized_apps_count">
+        <item quantity="one">İcazə verilmiş %d proqram</item>
+        <item quantity="other">İcazə verilmiş %d proqramlar</item>
+    </plurals>
+    <string name="home_app_management_title">tətbiqin idarə edilməsi</string>
+    <string name="home_root_button_restart">Yenidən Başlat</string>
+    <string name="home_root_button_start">Başlat</string>
+    <string name="home_root_description_sui">Magisk istifadə edirsinizsə, %1$s istifadə edə bilərsiniz. Root istifadəçiləri üçün o, nəticədə Shizako əvəz edəcək. Qeyd edək ki, %2$s-dan istifadə etmək üçün mövcud proqramlar bir az dəyişməlidir.</string>
+    <string name="home_root_description">Bundan əlavə, Shizako yüklənərkən avtomatik olaraq işə salına bilər. Əks-təqdirdə , sisteminizin və ya üçüncü tərəf alətlərin Shizako-nu məhdudlaşdırıb-məhdudlaşdırdığını yoxlayın.&lt;br>Siz %s-ə müraciət edə bilərsiniz.</string>
+    <string name="home_root_title">Başlat (root edilmiş cihazlar üçün)</string>
+    <string name="adb_pairing_tutorial_content_network_limation_not_foreground">Bəzi sistemlər (məsələn, MIUI) proqramlar görünmədikdə şəbəkəyə daxil olmağa icazə vermir, hətta proqram standart olaraq ön plan xidmətindən istifadə edir. Zəhmət olmasa Shizako üçün batareyanın optimallaşdırılması xüsusiyyətlərini deaktiv edin</string>
+    <string name="adb_pairing_tutorial_content_network">Shizako lokal şəbəkəyə daxil olmalıdır. Şəbəkə icazəsi ilə idarə olunur.</string>
+    <string name="adb_pairing_tutorial_content_finish">Shizikuya geri dön və Shizikunu başlat</string>
+    <string name="adb_pairing_tutorial_content_left_is_clickable">Nəzərə alın ki, \"Simsiz debaq\" seçiminin sol hissəsi tıklana bilər, ona toxunmaq yeni səhifə açacaq. Yalnız sağdakı açara basmaq düzgün deyil.</string>
+    <string name="adb_pairing_tutorial_content_miui_2">Əks təqdirdə siz bildirişdə olan cütləşdirmə kodunu daxil edə bilməyəcəksiniz</string>
+    <string name="adb_pairing_tutorial_content_miui">MIUI istifadəçiləri sistem parametrlərində bildiriş tərzini \"Bildiriş\" - \"Bildiriş kölgəsi\"ndən \"Android\"ə keçirməli ola bilərlər</string>
+    <string name="adb_pairing_tutorial_content_notification_blocked">Cütləşmə prosesi Shizakodan gələn bildirişi görməyinizi tələb edir. Zəhmət olmasa, Shizako-ya bildirişlər göndərməyə icazə verin.</string>
+    <string name="adb_pairing_tutorial_content_enter_pairing_code">Cütləşdirməni tamamlamaq üçün bildirişdəki kodu daxil edin</string>
+    <string name="adb_pairing_tutorial_content_steps">\"Tərtibatçı seçimləri\" - \"Simsiz debaq\" daxil olun. \"Cihazı cütləşdirmə kodu ilə cütləşdir\" klikləyin, altı rəqəmli kod görəcəksiniz.</string>
+    <string name="adb_pairing_tutorial_content_notification">Shizakodan gələn bildiriş cütləşdirməni tamamlamağınız üçün sizə kömək edə bilər</string>
+    <string name="adb_pairing_tutorial_title">Shizako-nu cihazınızla cütləşdirin</string>
+    <string name="notification_settings">Bildiriş seçimləri</string>
+    <string name="development_settings">Tərtibatçı seçimləri</string>
+    <string name="adb_pair_required">Lütfən, əvvəlcə cütləşmə mərhələsini keçin.</string>
+    <string name="adb_error_key_store">Simsiz debaq üçün açar yaratmaq mümkün deyil.
+\nBunun səbəbi bu cihazın KeyStore mexanizminin xarab olması ola bilər.</string>
+    <string name="adb_pairing_requires_multi_window_reason">Sistem cütləşmə dialoqunun həmişə görünməsini tələb edir, bölünmüş ekran rejimindən istifadə bu proqram və sistem dialoqunun eyni vaxtda görünməsinə imkan verən yeganə yoldur.</string>
+    <string name="adb_pairing_requires_multi_window">Əvvəlcə bölünmüş ekran (çoxu pəncərə) rejiminə daxil olun.</string>
+    <string name="dialog_adb_pairing_message">Zəhmət olmasa, aşağıdakı addımlarla cütləşdirmə etməyə başlayın: \"Tərtibatçı Seçimləri\" - \"Simsiz debaq\" - \"Cütləşdirmə kodundan istifadə edərək cihazın cütləşdirilməsi\".
+\n
+\nCütləşdirmə prosesi başladıqdan sonra siz cütləşdirmə kodunu daxil edə biləcəksiniz</string>
+    <string name="dialog_wireless_adb_not_enabled">Simsiz debaq aktiv edilməyib.
+\nQeyd edək ki, Android 11-dən əvvəl simsiz debaqı aktivləşdirmək üçün kompüter bağlantısı mütləqdir.</string>
+    <string name="cannot_connect_port">Simsiz debaq cihazına qoşulmaq mümkün olmadı</string>
+    <string name="paring_code_is_wrong">Cütləşmə kodu yanlışdır</string>
+    <string name="dialog_adb_pairing_paring_code">Cütləşmə kodu</string>
+    <string name="dialog_adb_pairing_discovery">Cütləşdirmə servisi axtarılır</string>
+    <string name="dialog_adb_pairing_title">Cihaz ilə cütləşdir</string>
+    <string name="adb_pairing">Cütləşmə</string>
+    <string name="dialog_adb_invalid_port">Port 1 ilə 65535 arasında dəyişən tam ədəddir.</string>
+    <string name="dialog_adb_port">Port</string>
+    <string name="dialog_adb_discovery_message">"Lütfən, \"Tərtibatçı seçimləri\"ndə \"Simsiz Debaq\" funksiyasını aktivləşdirin. Şəbəkə dəyişdikdə \"Simsiz Debaq\" avtomatik olaraq söndürülür. 
+ 
+Qeyd edək ki, Tərtibatçı seçimlərini, USB Debaqı və ya Shizako-nu söndürməyin"</string>
+    <string name="dialog_adb_discovery">Simsiz debaq cihazı axtarılır</string>
+    <string name="home_wireless_adb_view_guide_button">Addım-Addım Təlimat</string>
+    <string name="home_wireless_adb_description_pre_11">Android 11 - dən aşağı android versiyalarında simsiz debaq üçün kompüterə bağlanmaq mütləqdir</string>
+    <string name="home_wireless_adb_description">Android 11 və ya daha yuxarı versiyalarda siz Simsiz debaqı aktivləşdirə və kompüterə qoşulmadan Shizako-nu birbaşa cihazınızdan başlada bilərsiniz.&lt;p>Lütfən, əvvəlcə addım-addım təlimata baxın.</string>
+    <string name="home_wireless_adb_title">Simsiz debaq ilə başladın</string>
+    <string name="home_adb_dialog_view_command_button_send">Göndər</string>
+    <string name="home_adb_dialog_view_command_message">&lt;font face=monospace&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* Bəzi başqa mülahizələr də var, lütfən, əvvəlcə yardımı oxuduğunuzu təsdiqləyin.</string>
+    <string name="home_adb_button_view_command">Əmirə baxın</string>
+    <string name="home_adb_button_view_help">Yardım</string>
+    <string name="home_adb_description">Root olmayan cihazlarda Shizako-nu işə salmaq üçün adb-dən istifadə etməlisiniz (kompüter bağlantısı tələb olunur). Cihaz hər dəfə yenidən işə salındıqda bu proses təkrarlanmalıdır. Lütfən, &lt;b>&lt;a href=\"%1$s\">yardımı oxuyun&lt;/a>&lt;/b>.</string>
+    <string name="home_adb_title">Kompüterə qoşularaq başlayın</string>
+    <string name="home_status_service_version_update">Versiya %2$s, %1$s &lt;br&gt; %3$s Versiyasına güncəlləmək üçün proqramı yenidən başladın</string>
+    <string name="home_status_service_version">Versiya %2$s, %1$s</string>
+    <string name="home_status_service_not_running">%1$s davam etmir</string>
+    <string name="home_status_service_is_running">%1$s davam edir</string>
+    <!-- Shizako: 补充翻译 -->
+    <string name="dialog_adb_discovery_message_toggle_wireless_debugging">Axtarış davam edirsə, "Simsiz sazlamanı" deaktiv edib yenidən aktivləşdirməyə çalışın.</string>
+    <string name="home_app_management_empty">Shizako istəyən və ya dəstəkləyən tətbiqlər burada göstərilir.</string>
+    <string name="home_adb_is_limited_title">Əlavə bir addım atmalısınız</string>
+    <string name="home_adb_is_limited_description">Cihazınızın istehsalçısı adb icazələrini məhdudladırıb və Shizako istifadə edən tətbiqlər düzgün işləməyəcək.
+
+Adətən, bu məhdudiyyət "Tərtibatçı seçimləri"ndə bəzi parametrləri dəyişməklə aradan qaldırıla bilər. Bunun necə ediləcəyini öyrənmək üçün köməyi oxuyun.
+
+Dəyişikliyin tətbiqi üçün Shizako-nu yenidən başlatmağınız lazım ola bilər.</string>
+    <string name="home_activation_title">Bir toxunuşla aktivləşdirmə</string>
+    <string name="home_activation_summary">Brevent, Stopapp və digərlərini kompütersiz aktivləşdirin</string>
+    <string name="home_activation_summary_not_running">Bir toxunuşla aktivləşdirmə üçün əvvəlcə Shizako-nu başladın</string>
+    <string name="settings_debug">Sazlama</string>
+    <string name="settings_crash_logs">Çökmə jurnalları</string>
+    <string name="settings_crash_logs_summary">Tətbiq gözlənilmədən bağlandıqda çökmələr burada saxlanılır</string>
+    <string name="settings_crash_logs_empty">Çökmə jurnalı yoxdur</string>
+    <string name="settings_crash_logs_count">%1$d çökmə jurnalı</string>
+    <string name="settings_crash_logs_share">Paylaş</string>
+    <string name="settings_crash_logs_delete">Sil</string>
+    <string name="settings_crash_logs_delete_all">Hamısını sil</string>
+    <string name="settings_crash_logs_deleted">Silindi</string>
+    <string name="activation_title">Bir toxunuşla aktivləşdirmə</string>
+    <string name="activation_subtitle">Əvvəllər kompüter tələb edən ADB əmrlərini birbaşa buradan icra edin</string>
+    <string name="activation_service_running">Shizako işləyir, aktivləşdirməyə hazırdır</string>
+    <string name="activation_service_running_brief">Shizako işləyir</string>
+    <string name="activation_service_not_running">Shizako işləmir; əvvəlcə əsas ekrandan xidməti başladın</string>
+    <string name="activation_activate">Aktivləşdir</string>
+    <string name="activation_activated">Aktivləşdirildi</string>
+    <string name="activation_status_not_installed">%1$s · quraşdırılmayıb</string>
+    <string name="activation_status_installed">%1$s · quraşdırılıb</string>
+    <string name="activation_status_activated">%1$s · artıq aktivdir</string>
+    <string name="activation_status_not_activated">%1$s · quraşdırılıb, aktiv deyil</string>
+    <string name="activation_note_device_owner">Əvvəlcə bütün hesabların və ikinci dərəcəli istifadəçilərin (qonaq rejimi / tətbiq əkizi) silinməsi lazımdır; aktivləşdirmədən sonra onları geri əlavə edə bilərsiniz. İstehsalçının ROM-undan asılı olaraq fərqlər ola bilər.</string>
+    <string name="activation_note_brevent">Brevent serveri hər yenidən başlatmadan sonra yenidən aktivləşdirilməlidir.</string>
+    <string name="activation_custom_title">Xüsusi əmr</string>
+    <string name="activation_custom_hint">İstənilən shell əmri, məs. dpm set-device-owner …</string>
+    <string name="activation_custom_empty">Əmr boşdur</string>
+    <string name="activation_run">İcra et</string>
+    <string name="activation_running">İcra olunur…</string>
+    <string name="activation_success">Aktivləşdirildi</string>
+    <string name="activation_failed">Alınmadı, aşağıdakı nəticəyə baxın</string>
+    <string name="activation_failed_with_code">Alınmadı (çıxış kodu %1$d), aşağıdakı nəticəyə baxın</string>
+    <string name="activation_timeout">Əmr hələ də icra olunur; gözləmə dayandırıldı (server tipli əmrlər üçün normaldır)</string>
+    <string name="activation_output">Nəticə</string>
+    <string name="activation_output_empty">(hələ nəticə yoxdur)</string>
+    <string name="activation_copy">Kopyala</string>
+    <string name="activation_copied">Kopyalandı</string>
+    <string name="activation_back">Geri</string>
+    <string name="about_author">Müəllif</string>
+    <string name="about_based_on">Əsasında</string>
+    <string name="about_based_on_text">%s açıq mənbəli layihəsi</string>
+    <string name="about_license">Lisenziya</string>
+    <string name="about_footer">Shizako — ❤️ ilə hazırlanıb</string>
+    <string name="notification_channel_status">Xidmətin vəziyyəti</string>
+    <string name="tile_service_label">Shizako xidməti</string>
+    <string name="tile_service_subtitle_running">İşləyir</string>
+    <string name="tile_service_subtitle_stopped">Dayandırılıb</string>
+    <string name="tile_wireless_adb_label">Simsiz sazlama</string>
+    <!-- Shizako: 补充翻译 -->
+    <string name="setup_welcome_title">Xoş gəlmisiniz</string>
+    <string name="setup_welcome_subtitle">Bir neçə sürətli parametrlə Shizako istifadəyə hazırdır.</string>
+    <string name="setup_disclaimer_title">Məsuliyyətdən imtina</string>
+    <string name="setup_disclaimer_text"><![CDATA[Shizako «olduğu kimi» təqdim olunur, heç bir zəmanət verilmir.<p>Shizako cihazınızda imtiyazlı xidmət işlədir. Bu tətbiqin istifadəsindən və ya tətbiqlərə Shizako girişinin verilməsindən yaranan zərər və ya məlumat itkisinə görə tərtibatçı məsuliyyət daşımır.<p>Öz riskinizlə istifadə edin.]]></string>
+    <string name="setup_disclaimer_agree">Yuxarıdakıları oxudum və razıyam</string>
+    <string name="setup_language_title">Dil seçin</string>
+    <string name="setup_language_subtitle">Bunu daha sonra Parametrlərdə dəyişə bilərsiniz.</string>
+    <string name="setup_mode_subtitle">Shizako-nun necə görünəcəyini seçin. Daha sonra Parametrlərdə dəyişə bilərsiniz.</string>
+    <string name="setup_mode_follow_system">Sistemi izlə</string>
+    <string name="setup_mode_light">Açıq</string>
+    <string name="setup_mode_dark">Tünd</string>
+    <string name="setup_start_method_title">Aktivləşdirmə üsulu</string>
+    <string name="setup_start_method_subtitle">Shizako-nu necə başladacağınızı seçin. Əsas səhifədə bu üsul birinci göstəriləcək.</string>
+    <string name="setup_start_method_wadb">Naqilsiz sazlama</string>
+    <string name="setup_start_method_wadb_summary">Android 11 və daha yeni, kompüter tələb olunmur</string>
+    <string name="setup_start_method_root">Root</string>
+    <string name="setup_start_method_root_summary">Root-lu cihazlar üçün, bir toxunuşla başladın</string>
+    <string name="setup_start_method_adb">Kompüterə qoşulun</string>
+    <string name="setup_start_method_adb_summary">USB üzərindən adb istifadə edin, hər yenidən başlatmadan sonra təkrarlayın</string>
+    <string name="setup_back">Geri</string>
+    <string name="setup_next">İrəli</string>
+    <string name="setup_get_started">Başla</string>
+    <string name="setup_skip">Ötür</string>
+</resources>

@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dialog_adb_port">Port</string>
+    <string name="dialog_adb_discovery_message">"Molimo Vas omogućite rad režima \"Bežično otklanjanje  grešaka\" u sekciji \"Opcije programera\". Režim  \"Bežično otklanjanje grešaka\" se automatski onemogućava pri svakoj promeni mrežne konekcije..
+
+
+
+Primetićete, onemogućavanjem sekcije \"Opcije programera\" ili režima \"USB otklanjanje grešaka\", proces rada aplikacije Shizako se prekida."</string>
+    <string name="dialog_adb_discovery">Traženje servisa Bežično otklanjanje grešaka</string>
+    <string name="home_wireless_adb_view_guide_button">Vodič Korak-po-korak</string>
+    <string name="home_wireless_adb_description_pre_11">"Pre Android verzije softvera 11, konekcija sa računarom bila je neophodna  u cilju omogućavanja rada režima Bežično otklanjanja grešaka."</string>
+    <string name="home_wireless_adb_description">"Za Android verziju softvera 11 i više, možete omogućavanjem rada režima Bežičnog otklanjanja grešaka pokrenuti Shizako aplikaciju direktno sa Vašeg  telefona, zaobilazeći konekciju sa računarom.&lt;p> Molimo Vas, najpre pogledajte vodič Korak-po-korak."</string>
+    <string name="home_wireless_adb_title">Pokreni preko Bežičnog otklanjanja grešaka</string>
+    <string name="home_adb_dialog_view_command_button_send">Pošalji</string>
+    <string name="home_adb_dialog_view_command_copy_button">Kopiraj</string>
+    <string name="home_adb_button_view_command">Pregled komande</string>
+    <string name="home_adb_button_view_help">Pročitajte pomoć</string>
+    <string name="home_adb_description">Za uređaje koji nisu root-ovani, potrebno je izvršiti adb komandu radi pokretanja Shizako aplikacije (zahteva konekciju sa računarom). Ovaj proces je neophodno svaki put ponoviti nakon restarta uređaja. Molim Vas &lt;b>&lt;a href=\"%1$s\">pročitajte pomoć&lt;/a>&lt;/b> .</string>
+    <string name="home_adb_title">Pokreni uz pomoć konekcije preko računara</string>
+    <string name="home_status_service_version_update">Verzija %2$s, %1$s&lt;br&gt;Počni ispočetka zbog ažuriranja na verziju%3$s</string>
+    <string name="home_status_service_version">Verzija %2$s, %1$s</string>
+    <string name="home_status_service_not_running">%1$s se ne izvršava</string>
+    <string name="home_status_service_is_running">%1$s se izvršava</string>
+    <string name="dialog_adb_pairing_title">Upari sa uređajem</string>
+    <string name="dialog_adb_pairing_discovery">Traženje uređaja za uparivanje</string>
+    <string name="dialog_adb_pairing_paring_code">Kód za uparivanje</string>
+    <string name="paring_code_is_wrong">Kód za uparivanje je pogrešan.</string>
+    <string name="cannot_connect_port">Nemoguće je povezivanje sa uslugom bežičnog otklanjanje grešaka.</string>
+    <string name="dialog_wireless_adb_not_enabled">Bežično otklanjanje grešaka nije omogućeno.
+\nPrimedba: Pre Android-a 11, omogućavanje bežičnog otklanjanja grešaka bilo je uslovljeno postojanjem konekcije sa računarom.</string>
+    <string name="dialog_adb_pairing_message">"Molim Vas, započnite proces uparivanja prateći sledeće korake: \"Razvojne opcije programera\" - \"Bežično otklanjanje grešaka\" - \"Uparivanje  uređaja pomoću kóda za uparivanje\".
+\n
+\nNakon uspešno izvršenog početka procesa uparivanja, moći ćete da unesete kód za uparivanje."</string>
+    <string name="adb_pairing_requires_multi_window">Molim Vas, najpre izaberite režim podeljenog ekrana, odnosno režim više prozora.</string>
+    <string name="adb_error_key_store">Neuspešno generisanje ključa za bežično otklanjanje grešaka.
+\nOvo je možda iz razloga što je mehanizam skladišta ključeva ovog uređaja neispravan.</string>
+    <string name="adb_pair_required">Molim Vas, najpre prođite kroz korake za uparivanje uređaja.</string>
+    <string name="development_settings">Razvojne opcije programera</string>
+    <string name="notification_settings">Opcije obaveštenja</string>
+    <string name="adb_pairing_tutorial_title">Uparite Shizako sa Vašim uređajem</string>
+    <string name="adb_pairing_tutorial_content_notification">Notifikacija iz Shizako aplikacije će Vam pomoći da dovršite uparivanje.</string>
+    <string name="adb_pairing_tutorial_content_steps">Otvorite sekciju \"Razvojne opcije programera\" - \"Bežično otklanjanje grešaka\". Dodirnite \"Uparivanje uređaja pomoću kóda za uparivanje\" i pojaviće Vam se 6-cifreni kód.</string>
+    <!-- Shizako: 补充翻译 -->
+    <string name="translation_contributors" />
+    <string name="home_adb_dialog_view_command_message">&lt;font face=\"monospace\"&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* Postoje i druge napomene, uverajte se da ste prvo pročitali pomoć.</string>
+    <string name="dialog_adb_discovery_message_toggle_wireless_debugging">Ako pretraga traje predugo, pokušajte da isključite i ponovo uključite „Bežično otklanjanje grešaka“.</string>
+    <string name="dialog_adb_invalid_port">Port je ceo broj u opsegu od 1 do 65535.</string>
+    <string name="adb_pairing">Uparivanje</string>
+    <string name="adb_pairing_requires_multi_window_reason">Sistem zahteva da dijalog uparivanja uvek bude vidljiv; podeljeni ekran je jedini način da ova aplikacija i sistemski dijalog budu vidljivi istovremeno.</string>
+    <string name="adb_pairing_tutorial_content_enter_pairing_code">Unesite kôd iz obaveštenja da biste dovršili uparivanje.</string>
+    <string name="adb_pairing_tutorial_content_notification_blocked">Postupak uparivanja zahteva interakciju sa obaveštenjem iz aplikacije Shizako. Dozvolite aplikaciji Shizako da objavljuje obaveštenja.</string>
+    <string name="adb_pairing_tutorial_content_miui">Korisnici MIUI-ja možda moraju da promene stil obaveštenja na „Android“ u odeljku „Obaveštenja“ – „Padajući meni obaveštenja“ u sistemskim podešavanjima.</string>
+    <string name="adb_pairing_tutorial_content_miui_2">U suprotnom, možda nećete moći da unesete kôd za uparivanje iz obaveštenja.</string>
+    <string name="adb_pairing_tutorial_content_left_is_clickable">Napomena: levi deo opcije „Bežično otklanjanje grešaka“ je klikabilan i otvara novu stranicu. Samo uključivanje prekidača na desnoj strani nije ispravno.</string>
+    <string name="adb_pairing_tutorial_content_finish">Vratite se u Shizako i pokrenite Shizako.</string>
+    <string name="adb_pairing_tutorial_content_network">Shizaku je potreban pristup lokalnoj mreži. Time upravlja dozvola za mrežu.</string>
+    <string name="adb_pairing_tutorial_content_network_limation_not_foreground">Neki sistemi (poput MIUI-ja) ne dozvoljavaju aplikacijama pristup mreži kada nisu vidljive, čak i ako aplikacija koristi uslugu u prvom planu po standardu. Na takvim sistemima isključite optimizaciju baterije za Shizako.</string>
+    <string name="home_root_title">Pokretanje (za uređaje sa root-om)</string>
+    <string name="home_root_description">Pored toga, Shizako se može pokretati automatski pri pokretanju sistema. Ako ne, proverite da li su vaš sistem ili alati trećih strana ograničili Shizako.&lt;br&gt;Možete pogledati %s.</string>
+    <string name="home_root_description_sui">Ako koristite Magisk, možete probati %1$s. Za korisnike sa root-om vremenom će zameniti Shizako. Napomena: postojeće aplikacije treba malo da se promene kako bi koristile %2$s.</string>
+    <string name="home_root_button_start">Pokreni</string>
+    <string name="home_root_button_restart">Ponovo pokreni</string>
+    <string name="home_app_management_title">Upravljanje aplikacijama</string>
+    <string name="home_app_management_view_authorized_apps">Dodirnite za upravljanje ovlašćenim aplikacijama</string>
+    <string name="home_app_management_empty">Ovde će se prikazati aplikacije koje su zatražile ili deklarisale Shizako.</string>
+    <string name="home_learn_more_title">Saznajte više o Shizako</string>
+    <string name="home_learn_more_description">Saznajte kako razvijati pomoću Shizako</string>
+    <string name="home_adb_is_limited_title">Morate preduzeti još jedan korak</string>
+    <string name="home_adb_is_limited_description">Proizvođač vašeg uređaja ograničio je dozvole adb-a i aplikacije koje koriste Shizako neće raditi ispravno.
+
+Obično se ovo ograničenje može ukloniti promenom nekih opcija u „Razvojnim opcijama programera“. Pročitajte pomoć za detalje.
+
+Možda ćete morati ponovo da pokrenete Shizako da bi promena stupila na snagu.</string>
+    <string name="app_management_dialog_adb_is_limited_title">Dozvola adb-a je ograničena</string>
+    <string name="app_management_dialog_adb_is_limited_message">Vrlo je moguće da proizvođač vašeg uređaja ograničava dozvolu adb-a.&lt;p&gt;Možda postoji rešenje za vaš sistem u &lt;b&gt;&lt;a href=\"%1$s\"&gt;ovom dokumentu&lt;/a&gt;&lt;/b&gt;.</string>
+    <string name="app_management_item_summary_requires_root">* zahteva da Shizako radi sa root-om</string>
+    <string name="home_terminal_title">Korišćenje Shizako u terminalskim aplikacijama</string>
+    <string name="home_terminal_description">Izvršavajte komande putem Shizako u terminalskim aplikacijama koje volite</string>
+    <string name="home_activation_title">Aktivacija jednim klikom</string>
+    <string name="home_activation_summary">Aktivirajte Brevent, Stopapp i više bez računara</string>
+    <string name="home_activation_summary_not_running">Prvo pokrenite Shizako da biste koristili aktivaciju jednim klikom</string>
+    <string name="terminal_tutorial_1">Prvo izvezite datoteke gde god želite. Pronaći ćete dve datoteke: %1$s i %2$s.</string>
+    <string name="terminal_tutorial_1_description">Ako u izabranoj fascici postoje datoteke sa istim imenom, biće izbrisane.
+
+Funkcija izvoza koristi SAF (Storage Access Framework). Prijavljuje se da MIUI kvari funkcije SAF-a. Ako koristite MIUI, možda ćete morati da izvučete datoteku iz apk-a Shizaka ili da je preuzmete sa GitHuba.</string>
+    <string name="terminal_export_files">Izvezi datoteke</string>
+    <string name="terminal_tutorial_2">Zatim otvorite i uredite %1$s u bilo kom uređivaču teksta.</string>
+    <string name="terminal_tutorial_2_description">Na primer, ako želite da koristite Shizako u %1$s, treba da zamenite %2$s sa %3$s (%4$s je naziv paketa aplikacije %1$s).</string>
+    <string name="terminal_tutorial_3">Na kraju premestite datoteke na mesto kojem vaša terminalska aplikacija može da pristupi; moći ćete da koristite %1$s za izvršavanje komandi putem Shizako.</string>
+    <string name="terminal_tutorial_3_description">Saveti: dodelite %1$s dozvolu za izvršavanje i dodajte ga u %2$s, pa ćete moći direktno da koristite %1$s.</string>
+    <string name="rish_description">Sa %1$s, u bilo kojoj terminalskoj aplikaciji, možete se povezati i komunicirati sa školjkom koju pokreće Shizako. &lt;p&gt;Dodirnite da biste videli dokumentaciju o detaljnoj upotrebi %1$s.</string>
+    <string name="settings_title">Podešavanja</string>
+    <string name="settings_language">Jezik</string>
+    <string name="settings_user_interface">Izgled</string>
+    <string name="settings_black_night_theme">Crna noćna tema</string>
+    <string name="settings_black_night_theme_summary">Koristi potpuno crnu temu kada je omogućen tamni režim</string>
+    <string name="settings_startup">Pokretanje</string>
+    <string name="settings_translation_contributors">Prevodioci</string>
+    <string name="settings_translation">Učestvujte u prevođenju</string>
+    <string name="settings_debug">Otklanjanje grešaka</string>
+    <string name="settings_crash_logs">Evidencije padova</string>
+    <string name="settings_crash_logs_summary">Padovi se čuvaju ovde kada se aplikacija neočekivano zatvori</string>
+    <string name="settings_crash_logs_empty">Nema evidencija padova</string>
+    <string name="settings_crash_logs_count">Evidencija padova: %1$d</string>
+    <string name="settings_crash_logs_share">Podeli</string>
+    <string name="settings_crash_logs_delete">Izbriši</string>
+    <string name="settings_crash_logs_delete_all">Izbriši sve</string>
+    <string name="settings_crash_logs_deleted">Izbrisano</string>
+    <string name="activation_title">Aktivacija jednim klikom</string>
+    <string name="activation_subtitle">Izvršite ADB komande koje su ranije zahtevale računar, odavde</string>
+    <string name="activation_service_running">Shizako radi, spreman za aktivaciju</string>
+    <string name="activation_service_running_brief">Shizako radi</string>
+    <string name="activation_service_not_running">Shizako ne radi; prvo pokrenite uslugu sa početne stranice</string>
+    <string name="activation_activate">Aktiviraj</string>
+    <string name="activation_activated">Aktivirano</string>
+    <string name="activation_status_not_installed">%1$s · nije instalirana</string>
+    <string name="activation_status_installed">%1$s · instalirana</string>
+    <string name="activation_status_activated">%1$s · već aktivirana</string>
+    <string name="activation_status_not_activated">%1$s · instalirana, nije aktivirana</string>
+    <string name="activation_note_device_owner">Zahteva da se prvo uklone svi nalozi i sekundarni korisnici (režim gosta / duplikat aplikacije); nakon aktivacije možete ih dodati nazad. Moguće su posebnosti ROM-a proizvođača.</string>
+    <string name="activation_note_brevent">Server Brevent treba ponovo aktivirati nakon svakog ponovnog pokretanja.</string>
+    <string name="activation_custom_title">Prilagođena komanda</string>
+    <string name="activation_custom_hint">Bilo koja komanda školjke, npr. dpm set-device-owner …</string>
+    <string name="activation_custom_empty">Komanda je prazna</string>
+    <string name="activation_run">Pokreni</string>
+    <string name="activation_running">Izvršava se…</string>
+    <string name="activation_success">Aktivirano</string>
+    <string name="activation_failed">Neuspešno, pogledajte izlaz ispod</string>
+    <string name="activation_failed_with_code">Neuspešno (izlazni kôd %1$d), pogledajte izlaz ispod</string>
+    <string name="activation_timeout">Komanda se još izvršava; prekinuto je čekanje (normalno za komande slične serveru)</string>
+    <string name="activation_output">Izlaz</string>
+    <string name="activation_output_empty">(još nema izlaza)</string>
+    <string name="activation_copy">Kopiraj</string>
+    <string name="activation_copied">Kopirano</string>
+    <string name="activation_back">Назад</string>
+    <string name="settings_translation_summary">Pomozite nam da prevedemo %s na vaš jezik</string>
+    <string name="settings_start_on_boot">Pokreni pri pokretanju sistema (root)</string>
+    <string name="settings_start_on_boot_summary">Na uređajima sa root-om Shizako se može automatski pokrenuti pri pokretanju sistema</string>
+    <string name="settings_use_system_color">Koristi boju sistemske teme</string>
+    <string name="action_about">O aplikaciji</string>
+    <string name="about_view_source_code">Pogledajte izvorni kôd na %s</string>
+    <string name="about_author">Autor</string>
+    <string name="about_based_on">Zasnovano na</string>
+    <string name="about_based_on_text">projektu otvorenog koda %s</string>
+    <string name="about_license">Licenca</string>
+    <string name="about_footer">Shizako — Napravljeno sa ❤️</string>
+    <string name="action_stop">Zaustavi Shizako</string>
+    <string name="dialog_stop_message">Usluga Shizako će biti zaustavljena.</string>
+    <string name="notification_channel_service_status">Status pokretanja usluge</string>
+    <string name="notification_channel_status">Status usluge</string>
+    <string name="notification_service_starting">Usluga Shizako se pokreće…</string>
+    <string name="notification_service_start_failed">Pokretanje usluge Shizako nije uspelo.</string>
+    <string name="notification_service_start_no_root">Zahtevanje root dozvole nije uspelo.</string>
+    <string name="notification_working">Obrada…</string>
+    <string name="notification_channel_adb_pairing">Uparivanje bežičnog otklanjanja grešaka</string>
+    <string name="notification_adb_pairing_input_paring_code">Unesite kôd za uparivanje</string>
+    <string name="notification_adb_pairing_searching_for_service_title">Pretraga usluge uparivanja</string>
+    <string name="notification_adb_pairing_service_found_title">Usluga uparivanja pronađena</string>
+    <string name="notification_adb_pairing_stop_searching">Zaustavi pretragu</string>
+    <string name="notification_adb_pairing_working_title">Uparivanje je u toku</string>
+    <string name="notification_adb_pairing_succeed_title">Uparivanje uspešno</string>
+    <string name="notification_adb_pairing_succeed_text">Sada možete pokrenuti uslugu Shizako.</string>
+    <string name="notification_adb_pairing_failed_title">Uparivanje nije uspelo</string>
+    <string name="notification_adb_pairing_retry">Pokušaj ponovo</string>
+    <string name="tile_service_label">Usluga Shizako</string>
+    <string name="tile_service_subtitle_running">Radi</string>
+    <string name="tile_service_subtitle_stopped">Zaustavljena</string>
+    <string name="tile_wireless_adb_label">Bežično otklanjanje grešaka</string>
+    <string name="permission_label">koristi Shizako</string>
+    <string name="permission_description">Dozvolite aplikaciji da koristi Shizako.</string>
+    <string name="permission_warning_template">Dozvoliti aplikaciji &lt;b&gt;%1$s&lt;/b&gt; da %2$s?</string>
+    <string name="grant_dialog_button_allow_always">Uvek dozvoli</string>
+    <string name="grant_dialog_button_deny">Odbij</string>
+    <string name="starter">Pokretač</string>
+    <string name="start_with_root_failed">Nije moguće pokrenuti uslugu jer root dozvola nije odobrena ili ovaj uređaj nema root.</string>
+    <string name="dialog_cannot_open_browser_title">Nije moguće pokrenuti pregledač</string>
+    <string name="toast_copied_to_clipboard">%s
+je kopirano u ostavu.</string>
+    <string name="toast_copied_to_clipboard_with_text">&lt;b&gt;%s&lt;/b&gt; je kopirano u ostavu.</string>
+    <string name="dialog_legacy_not_support_title">%1$s ne podržava moderni Shizako</string>
+    <string name="dialog_legacy_not_support_message">Zastareli Shizako je napušten od marta 2019. Takođe, zastareli Shizako ne radi na novijim Android sistemima.&lt;p&gt;Zamolite programera aplikacije &lt;b&gt;%1$s&lt;/b&gt; da je ažurira.</string>
+    <string name="dialog_requesting_legacy_title">%1$s zahteva zastareli Shizako</string>
+    <string name="dialog_requesting_legacy_message">&lt;b&gt;%1$s&lt;/b&gt; podržava moderni Shizako, ali zahteva zastareli Shizako. To može biti zato što Shizako ne radi; proverite u aplikaciji Shizako.&lt;p&gt;Zastareli Shizako je napušten od marta 2019.</string>
+    <string name="dialog_requesting_legacy_button_open_shizuku">Otvori Shizako</string>
+    <plurals name="home_app_management_authorized_apps_count">
+        <item quantity="one">Ovlašćena %d aplikacija</item>
+        <item quantity="few">Ovlašćene %d aplikacije</item>
+        <item quantity="other">Ovlašćenih %d aplikacija</item>
+    </plurals>
+    <!-- Shizako: 补充翻译 -->
+    <string name="setup_welcome_title">Добродошли</string>
+    <string name="setup_welcome_subtitle">Неколико брзих подешавања и Shizako је спреман за употребу.</string>
+    <string name="setup_disclaimer_title">Одрицање одговорности</string>
+    <string name="setup_disclaimer_text"><![CDATA[Shizako се обезбеђује «какав јесте», без икакве гаранције.<p>Shizako ради извршавањем привилегованог сервиса на вашем уређају. Програмер није одговоран за било какву штету или губитак података који могу настати употребом ове апликације или давањем приступа Shizaku.<p>Користите на сопствени ризик.]]></string>
+    <string name="setup_disclaimer_agree">Прочитао сам и прихватам горе наведено</string>
+    <string name="setup_language_title">Изаберите језик</string>
+    <string name="setup_language_subtitle">Касније га можете променити у подешавањима.</string>
+    <string name="setup_mode_subtitle">Изаберите како ће Shizako изгледати. Касније можете променити у подешавањима.</string>
+    <string name="setup_mode_follow_system">Према систему</string>
+    <string name="setup_mode_light">Светла</string>
+    <string name="setup_mode_dark">Тамна</string>
+    <string name="setup_start_method_title">Начин активације</string>
+    <string name="setup_start_method_subtitle">Изаберите како планирате да покренете Shizako. Почетна страница ће тај начин приказати првим.</string>
+    <string name="setup_start_method_wadb">Бежично отклањање грешака</string>
+    <string name="setup_start_method_wadb_summary">На Android 11 или новијем, без рачунара</string>
+    <string name="setup_start_method_root">Root</string>
+    <string name="setup_start_method_root_summary">За рутоване уређаје, покретање једним додиром</string>
+    <string name="setup_start_method_adb">Повезивање са рачунаром</string>
+    <string name="setup_start_method_adb_summary">Користите adb преко USB-а, поновите након сваког рестартовања</string>
+    <string name="setup_back">Назад</string>
+    <string name="setup_next">Даље</string>
+    <string name="setup_get_started">Започни</string>
+    <string name="setup_skip">Прескочи</string>
+</resources>

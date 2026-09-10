@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home_status_service_version">Versi %2$s, %1$s</string>
+    <string name="home_status_service_not_running">%1$s tidak berjalan</string>
+    <string name="adb_pairing_requires_multi_window_reason">Sistem memerlukan dialog berpasangan sentiasa kelihatan, menggunakan mod skrin pisah ialah satu-satunya cara untuk membolehkan apl dan dialog sistem ini kelihatan serentak.</string>
+    <string name="home_adb_dialog_view_command_button_send">Hantar</string>
+    <string name="home_adb_dialog_view_command_copy_button">Salin</string>
+    <!-- Shizako: 补充翻译 -->
+    <string name="translation_contributors" />
+    <string name="setup_welcome_title">Selamat datang</string>
+    <string name="setup_welcome_subtitle">Dengan beberapa tetapan pantas, Shizako sedia untuk digunakan.</string>
+    <string name="setup_disclaimer_title">Penafian</string>
+    <string name="setup_disclaimer_text"><![CDATA[Shizako disediakan «sebagaimana adanya», tanpa sebarang waranti.<p>Shizako berfungsi dengan menjalankan perkhidmatan berkeistimewaan pada peranti anda. Pembangun tidak bertanggung jawab atas sebarang kerosakan peranti atau kehilangan data yang mungkin berpunca daripada penggunaan aplikasi ini atau pemberian capaian aplikasi kepada Shizako.<p>Gunakan atas risiko anda sendiri.]]></string>
+    <string name="setup_disclaimer_agree">Saya telah membaca dan bersetuju dengan yang tersebut di atas</string>
+    <string name="setup_language_title">Pilih bahasa</string>
+    <string name="setup_language_subtitle">Anda boleh mengubahnya kemudian dalam Tetapan.</string>
+    <string name="setup_mode_subtitle">Pilih rupa bentuk Shizako. Anda boleh mengubahnya kemudian dalam Tetapan.</string>
+    <string name="setup_mode_follow_system">Ikut sistem</string>
+    <string name="setup_mode_light">Cerah</string>
+    <string name="setup_mode_dark">Gelap</string>
+    <string name="setup_start_method_title">Kaedah pengaktifan</string>
+    <string name="setup_start_method_subtitle">Pilih cara anda merancang untuk memulakan Shizako. Halaman utama akan memaparkan kaedah itu dahulu.</string>
+    <string name="setup_start_method_wadb">Penyahpepijatan tanpa wayar</string>
+    <string name="setup_start_method_wadb_summary">Pada Android 11 dan ke atas, tanpa komputer</string>
+    <string name="setup_start_method_root">Root</string>
+    <string name="setup_start_method_root_summary">Untuk peranti yang di-root, mula dengan satu ketukan</string>
+    <string name="setup_start_method_adb">Sambung ke komputer</string>
+    <string name="setup_start_method_adb_summary">Guna adb melalui USB, ulangi selepas setiap but semula</string>
+    <string name="setup_back">Kembali</string>
+    <string name="setup_next">Seterusnya</string>
+    <string name="setup_get_started">Mula</string>
+    <string name="setup_skip">Langkau</string>
+<string name="activation_back">Kembali</string>
+</resources>

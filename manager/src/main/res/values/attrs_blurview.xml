@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Attrs for the bundled BlurView library (eightbitlab.com.blurview),
+     source: https://github.com/Dimezis/BlurView (Apache-2.0) -->
+<resources>
+    <declare-styleable name="BlurView">
+        <attr name="blurOverlayColor" format="color" />
+    </declare-styleable>
+</resources>

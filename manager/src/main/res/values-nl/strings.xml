@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Shizako: 补充翻译 -->
+    <!-- Shizako: 补充翻译 -->
+    <string name="translation_contributors" />
+    <!-- Shizako: 补充翻译 -->
+    <string name="home_status_service_is_running">%1$s draait</string>
+    <string name="home_status_service_not_running">%1$s draait niet</string>
+    <string name="home_status_service_version">Versie %2$s, %1$s</string>
+    <string name="home_status_service_version_update">Versie %2$s, %1$s&lt;br&gt;Start opnieuw om te updaten naar versie %3$s</string>
+    <string name="home_adb_title">Begin door te verbinden met een computer</string>
+    <string name="home_adb_description">Voor apparaten zonder root moet u adb gebruiken om Shizako te starten (computerverbinding vereist). Dit proces moet worden herhaald telkens wanneer het apparaat opnieuw wordt opgestart. Lees a.u.b. &lt;b&gt;&lt;a href=\"%1$s\"&gt;de hulp&lt;/a&gt;&lt;/b&gt;.</string>
+    <string name="home_adb_button_view_help">Hulp lezen</string>
+    <string name="home_adb_button_view_command">Commando bekijken</string>
+    <string name="home_adb_dialog_view_command_message">&lt;font face=\"monospace\"&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* Er zijn nog andere aandachtspunten, bevestig dat u eerst de hulp heeft gelezen.</string>
+    <string name="home_adb_dialog_view_command_copy_button">Kopiëren</string>
+    <string name="home_adb_dialog_view_command_button_send">Versturen</string>
+    <string name="home_wireless_adb_title">Start via draadloze foutopsporing</string>
+    <string name="home_wireless_adb_description">Op Android 11 en hoger kunt u draadloze foutopsporing inschakelen en Shizako rechtstreeks vanaf uw apparaat starten, zonder verbinding met een computer.&lt;p&gt;Bekijk eerst de stapsgewijze handleiding.</string>
+    <string name="home_wireless_adb_description_pre_11">Vóór Android 11 is een verbinding met een computer nodig om draadloze foutopsporing in te schakelen.</string>
+    <string name="home_wireless_adb_view_guide_button">Stapsgewijze handleiding</string>
+    <string name="dialog_adb_discovery">Zoeken naar draadloze foutopsporingsservice</string>
+    <string name="dialog_adb_discovery_message">Schakel “Draadloze foutopsporing” in bij “Ontwikkelaarsopties”. “Draadloze foutopsporing” wordt automatisch uitgeschakeld wanneer het netwerk verandert.
+
+Let op: schakel “Ontwikkelaarsopties” of “USB-foutopsporing” niet uit, anders wordt Shizako gestopt.</string>
+    <string name="dialog_adb_discovery_message_toggle_wireless_debugging">Probeer “Draadloze foutopsporing” uit en weer in te schakelen als het blijft zoeken.</string>
+    <string name="dialog_adb_port">Poort</string>
+    <string name="dialog_adb_invalid_port">Poort is een geheel getal van 1 tot en met 65535.</string>
+    <string name="adb_pairing">Koppelen</string>
+    <string name="dialog_adb_pairing_title">Koppel met apparaat</string>
+    <string name="dialog_adb_pairing_discovery">Zoeken naar koppelingsservice</string>
+    <string name="dialog_adb_pairing_paring_code">Koppelingscode</string>
+    <string name="paring_code_is_wrong">Koppelingscode is onjuist.</string>
+    <string name="cannot_connect_port">Kan geen verbinding maken met de draadloze foutopsporingsservice.</string>
+    <string name="dialog_wireless_adb_not_enabled">Draadloze foutopsporing is niet ingeschakeld.
+Let op: vóór Android 11 is een computerverbinding vereist om draadloze foutopsporing in te schakelen.</string>
+    <string name="dialog_adb_pairing_message">Start de koppeling via de volgende stappen: “Ontwikkelaarsopties” - “Draadloze foutopsporing” - “Apparaat koppelen met koppelingscode”.
+
+Nadat het koppelingsproces is gestart, kunt u de koppelingscode invoeren.</string>
+    <string name="adb_pairing_requires_multi_window">Ga eerst naar de gesplitste schermmodus (multi-window).</string>
+    <string name="adb_pairing_requires_multi_window_reason">Het systeem vereist dat het koppelingsdialoogvenster altijd zichtbaar is; de gesplitste schermmodus is de enige manier om deze app en het systeemdialoogvenster tegelijk zichtbaar te maken.</string>
+    <string name="adb_error_key_store">Kan geen sleutel genereren voor draadloze foutopsporing.
+Dit kan komen doordat het KeyStore-mechanisme van dit apparaat defect is.</string>
+    <string name="adb_pair_required">Voer eerst de koppelingsstap uit.</string>
+    <string name="development_settings">Ontwikkelaarsopties</string>
+    <string name="notification_settings">Meldingsopties</string>
+    <string name="adb_pairing_tutorial_title">Koppel Shizako met uw apparaat</string>
+    <string name="adb_pairing_tutorial_content_notification">Een melding van Shizako helpt u het koppelen af te ronden.</string>
+    <string name="adb_pairing_tutorial_content_steps">Ga naar “Ontwikkelaarsopties” - “Draadloze foutopsporing”. Tik op “Apparaat koppelen met koppelingscode”; u ziet dan een code van zes cijfers.</string>
+    <string name="adb_pairing_tutorial_content_enter_pairing_code">Voer de code in de melding in om het koppelen af te ronden.</string>
+    <string name="adb_pairing_tutorial_content_notification_blocked">Tijdens het koppelingsproces moet u met een melding van Shizako werken. Sta Shizako toe meldingen te versturen.</string>
+    <string name="adb_pairing_tutorial_content_miui">MIUI-gebruikers moeten mogelijk de meldingsstijl wijzigen van “Melding” - “Meldingscherm” naar “Android” in de systeeminstellingen.</string>
+    <string name="adb_pairing_tutorial_content_miui_2">Anders kunt u mogelijk geen koppelingscode invoeren via de melding.</string>
+    <string name="adb_pairing_tutorial_content_left_is_clickable">Let op: het linkerdeel van de optie “Draadloze foutopsporing” is aanklikbaar; er wordt dan een nieuwe pagina geopend. Alleen de schakelaar aan de rechterkant aanzetten is onjuist.</string>
+    <string name="adb_pairing_tutorial_content_finish">Ga terug naar Shizako en start Shizako.</string>
+    <string name="adb_pairing_tutorial_content_network">Shizako heeft toegang tot het lokale netwerk nodig. Dit wordt geregeld via de netwerktoestemming.</string>
+    <string name="adb_pairing_tutorial_content_network_limation_not_foreground">Sommige systemen (zoals MIUI) verbieden apps toegang tot het netwerk wanneer ze niet zichtbaar zijn, zelfs als de app volgens de standaard een voorgrondservice gebruikt. Schakel op zulke systemen de batterijoptimalisatie voor Shizako uit.</string>
+    <string name="home_root_title">Start (voor gerootte apparaten)</string>
+    <string name="home_root_description">Bovendien kan Shizako automatisch worden gestart bij het opstarten. Zo niet, controleer dan of uw systeem of tools van derden Shizako beperken.&lt;br&gt;U kunt %s raadplegen.</string>
+    <string name="home_root_description_sui">Als u Magisk gebruikt, kunt u %1$s proberen. Voor root-gebruikers zal dit uiteindelijk Shizako vervangen. Let op: bestaande applicaties moeten een beetje worden aangepast om %2$s te gebruiken.</string>
+    <string name="home_root_button_start">Starten</string>
+    <string name="home_root_button_restart">Herstarten</string>
+    <string name="home_app_management_title">Appbeheer</string>
+    <string name="home_app_management_view_authorized_apps">Tik om geautoriseerde apps te beheren</string>
+    <string name="home_app_management_empty">Apps die Shizako hebben aangevraagd of aangegeven worden hier weergegeven.</string>
+    <string name="home_learn_more_title">Meer over Shizako</string>
+    <string name="home_learn_more_description">Leer hoe u met Shizako kunt ontwikkelen</string>
+    <string name="home_adb_is_limited_title">U moet nog een extra stap uitvoeren</string>
+    <string name="home_adb_is_limited_description">Uw apparaatfabrikant heeft de adb-rechten beperkt en apps die Shizako gebruiken werken daardoor niet goed.
+
+Meestal kan deze beperking worden opgeheven door enkele opties in “Ontwikkelaarsopties” aan te passen. Lees de hulp voor details over hoe u dit doet.
+
+Mogelijk moet u Shizako herstarten om de wijziging door te voeren.</string>
+    <string name="app_management_dialog_adb_is_limited_title">De rechten van adb zijn beperkt</string>
+    <string name="app_management_dialog_adb_is_limited_message">Het is zeer goed mogelijk dat uw apparaatfabrikant de rechten van adb beperkt.&lt;p&gt;Er staat mogelijk een oplossing voor uw systeem in &lt;b&gt;&lt;a href=\"%1$s\"&gt;dit document&lt;/a&gt;&lt;/b&gt;.</string>
+    <string name="app_management_item_summary_requires_root">* vereist dat Shizako met root draait</string>
+    <string name="home_terminal_title">Shizako gebruiken in terminal-apps</string>
+    <string name="home_terminal_description">Voer commando\'s uit via Shizako in terminal-apps naar keuze</string>
+    <string name="home_activation_title">Activering met één tik</string>
+    <string name="home_activation_summary">Activeer Brevent, Stopapp en meer zonder computer</string>
+    <string name="home_activation_summary_not_running">Start eerst Shizako om activering met één tik te gebruiken</string>
+    <string name="terminal_tutorial_1">Exporteer eerst de bestanden naar een locatie naar keuze. U vindt twee bestanden: %1$s en %2$s.</string>
+    <string name="terminal_tutorial_1_description">Als er bestanden met dezelfde naam in de gekozen map staan, worden deze verwijderd.
+
+De exportfunctie gebruikt SAF (Storage Access Framework). Er is gemeld dat MIUI de functies van SAF breekt. Als u MIUI gebruikt, moet u het bestand mogelijk uit de apk van Shizako halen of van GitHub downloaden.</string>
+    <string name="terminal_export_files">Bestanden exporteren</string>
+    <string name="terminal_tutorial_2">Open en bewerk vervolgens %1$s met een willekeurige teksteditor.</string>
+    <string name="terminal_tutorial_2_description">Als u Shizako bijvoorbeeld in %1$s wilt gebruiken, vervang dan %2$s door %3$s (%4$s is de pakketnaam van %1$s).</string>
+    <string name="terminal_tutorial_3">Verplaats de bestanden ten slotte naar een locatie die uw terminal-app kan bereiken; daarmee kunt u %1$s gebruiken om commando\'s via Shizako uit te voeren.</string>
+    <string name="terminal_tutorial_3_description">Tips: geef %1$s uitvoerrechten en voeg het toe aan %2$s, dan kunt u %1$s rechtstreeks gebruiken.</string>
+    <string name="rish_description">Met %1$s kunt u in elke terminal-app verbinding maken met en werken in de shell die door Shizako wordt gedraaid. &lt;p&gt;Tik om het document over het gedetailleerde gebruik van %1$s te bekijken.</string>
+    <string name="settings_title">Instellingen</string>
+    <string name="settings_language">Taal</string>
+    <string name="settings_user_interface">Uiterlijk</string>
+    <string name="settings_black_night_theme">Zwart nachtthema</string>
+    <string name="settings_black_night_theme_summary">Gebruik het puur zwarte thema wanneer de donkermodus is ingeschakeld</string>
+    <string name="settings_startup">Opstarten</string>
+    <string name="settings_translation_contributors">Vertalers</string>
+    <string name="settings_translation">Help met vertalen</string>
+    <string name="settings_debug">Foutopsporing</string>
+    <string name="settings_crash_logs">Crashlogboeken</string>
+    <string name="settings_crash_logs_summary">Crashes worden hier opgeslagen wanneer de app onverwacht afsluit</string>
+    <string name="settings_crash_logs_empty">Geen crashlogboeken</string>
+    <string name="settings_crash_logs_count">%1$d crashlogboek(en)</string>
+    <string name="settings_crash_logs_share">Delen</string>
+    <string name="settings_crash_logs_delete">Verwijderen</string>
+    <string name="settings_crash_logs_delete_all">Alles verwijderen</string>
+    <string name="settings_crash_logs_deleted">Verwijderd</string>
+    <string name="activation_title">Activering met één tik</string>
+    <string name="activation_subtitle">Voer de ADB-commando\'s die vroeger een computer vereisten, vanaf hier uit</string>
+    <string name="activation_service_running">Shizako draait, klaar om te activeren</string>
+    <string name="activation_service_running_brief">Shizako draait</string>
+    <string name="activation_service_not_running">Shizako draait niet; start eerst de service vanaf de startpagina</string>
+    <string name="activation_activate">Activeren</string>
+    <string name="activation_activated">Geactiveerd</string>
+    <string name="activation_status_not_installed">%1$s · niet geïnstalleerd</string>
+    <string name="activation_status_installed">%1$s · geïnstalleerd</string>
+    <string name="activation_status_activated">%1$s · al geactiveerd</string>
+    <string name="activation_status_not_activated">%1$s · geïnstalleerd, niet geactiveerd</string>
+    <string name="activation_note_device_owner">Vereist dat alle accounts en secundaire gebruikers (gastmodus / app-kloon) vooraf worden verwijderd; na activering kunt u ze terugzetten. Eigenaardigheden van leveranciers-ROMs kunnen van toepassing zijn.</string>
+    <string name="activation_note_brevent">De Brevent-server moet na elke herstart opnieuw worden geactiveerd.</string>
+    <string name="activation_custom_title">Aangepast commando</string>
+    <string name="activation_custom_hint">Elk shell-commando, bijv. dpm set-device-owner …</string>
+    <string name="activation_custom_empty">Commando is leeg</string>
+    <string name="activation_run">Uitvoeren</string>
+    <string name="activation_running">Uitvoeren…</string>
+    <string name="activation_success">Geactiveerd</string>
+    <string name="activation_failed">Mislukt, zie uitvoer hieronder</string>
+    <string name="activation_failed_with_code">Mislukt (afsluitcode %1$d), zie uitvoer hieronder</string>
+    <string name="activation_timeout">Het commando draait nog; wachten gestopt (normaal voor serverachtige commando\'s)</string>
+    <string name="activation_output">Uitvoer</string>
+    <string name="activation_output_empty">(nog geen uitvoer)</string>
+    <string name="activation_copy">Kopiëren</string>
+    <string name="activation_copied">Gekopieerd</string>
+    <string name="activation_back">Terug</string>
+    <string name="settings_translation_summary">Help ons %s in uw taal te vertalen</string>
+    <string name="settings_start_on_boot">Starten bij opstarten (root)</string>
+    <string name="settings_start_on_boot_summary">Op gerootte apparaten kan Shizako automatisch starten bij het opstarten</string>
+    <string name="settings_use_system_color">Systeemthema gebruiken</string>
+    <string name="action_about">Over</string>
+    <string name="about_view_source_code">Broncode bekijken op %s</string>
+    <string name="about_author">Auteur</string>
+    <string name="about_based_on">Gebaseerd op</string>
+    <string name="about_based_on_text">het opensourceproject %s</string>
+    <string name="about_license">Licentie</string>
+    <string name="about_footer">Shizako — gemaakt met ❤️</string>
+    <string name="action_stop">Shizako stoppen</string>
+    <string name="dialog_stop_message">De Shizako-service wordt gestopt.</string>
+    <string name="notification_channel_service_status">Startstatus van de service</string>
+    <string name="notification_channel_status">Servicestatus</string>
+    <string name="notification_service_starting">De Shizako-service wordt gestart…</string>
+    <string name="notification_service_start_failed">Starten van de Shizako-service is mislukt.</string>
+    <string name="notification_service_start_no_root">Aanvragen van root-toestemming mislukt.</string>
+    <string name="notification_working">Bezig…</string>
+    <string name="notification_channel_adb_pairing">Koppeling via draadloze foutopsporing</string>
+    <string name="notification_adb_pairing_input_paring_code">Koppelingscode invoeren</string>
+    <string name="notification_adb_pairing_searching_for_service_title">Zoeken naar koppelingsservice</string>
+    <string name="notification_adb_pairing_service_found_title">Koppelingsservice gevonden</string>
+    <string name="notification_adb_pairing_stop_searching">Zoeken stoppen</string>
+    <string name="notification_adb_pairing_working_title">Koppelen is bezig</string>
+    <string name="notification_adb_pairing_succeed_title">Koppelen geslaagd</string>
+    <string name="notification_adb_pairing_succeed_text">U kunt de Shizako-service nu starten.</string>
+    <string name="notification_adb_pairing_failed_title">Koppelen mislukt</string>
+    <string name="notification_adb_pairing_retry">Opnieuw proberen</string>
+    <string name="tile_service_label">Shizako-service</string>
+    <string name="tile_service_subtitle_running">Draait</string>
+    <string name="tile_service_subtitle_stopped">Gestopt</string>
+    <string name="tile_wireless_adb_label">Draadloze foutopsporing</string>
+    <string name="permission_label">Shizako gebruiken</string>
+    <string name="permission_description">De app toestaan Shizako te gebruiken.</string>
+    <string name="permission_warning_template">&lt;b&gt;%1$s&lt;/b&gt; toestaan om %2$s?</string>
+    <string name="grant_dialog_button_allow_always">Altijd toestaan</string>
+    <string name="grant_dialog_button_deny">Weigeren</string>
+    <string name="starter">Starter</string>
+    <string name="start_with_root_failed">Kan de service niet starten omdat root-toestemming niet is verleend of dit apparaat niet geroot is.</string>
+    <string name="dialog_cannot_open_browser_title">Kan browser niet starten</string>
+    <string name="toast_copied_to_clipboard">%s
+is gekopieerd naar het klembord.</string>
+    <string name="toast_copied_to_clipboard_with_text">&lt;b&gt;%s&lt;/b&gt; is gekopieerd naar het klembord.</string>
+    <string name="dialog_legacy_not_support_title">%1$s ondersteunt de moderne Shizako niet</string>
+    <string name="dialog_legacy_not_support_message">De verouderde Shizako is sinds maart 2019 vervallen. Bovendien werkt de verouderde Shizako niet op nieuwere Android-systemen.&lt;p&gt;Vraag de ontwikkelaar van &lt;b&gt;%1$s&lt;/b&gt; om een update.</string>
+    <string name="dialog_requesting_legacy_title">%1$s vraagt om de verouderde Shizako</string>
+    <string name="dialog_requesting_legacy_message">&lt;b&gt;%1$s&lt;/b&gt; ondersteunt de moderne Shizako, maar vraagt om de verouderde Shizako. Dit kan komen doordat Shizako niet draait; controleer dit in de Shizako-app.&lt;p&gt;De verouderde Shizako is sinds maart 2019 vervallen.</string>
+    <string name="dialog_requesting_legacy_button_open_shizuku">Shizako openen</string>
+    <plurals name="home_app_management_authorized_apps_count">
+        <item quantity="one">%d app geautoriseerd</item>
+        <item quantity="other">%d apps geautoriseerd</item>
+    </plurals>
+    <!-- Shizako: 补充翻译 -->
+    <string name="setup_welcome_title">Welkom</string>
+    <string name="setup_welcome_subtitle">Met een paar snelle instellingen is Shizako klaar voor gebruik.</string>
+    <string name="setup_disclaimer_title">Vrijwaring</string>
+    <string name="setup_disclaimer_text"><![CDATA[Shizako wordt geleverd «zoals het is», zonder enige garantie.<p>Shizako werkt door een bevoorrechte dienst op je apparaat uit te voeren. De ontwikkelaar is niet aansprakelijk voor schade aan je apparaat of gegevensverlies dat kan voortvloeien uit het gebruik van deze app of het verlenen van toegang tot Shizako.<p>Gebruik op eigen risico.]]></string>
+    <string name="setup_disclaimer_agree">Ik heb het bovenstaande gelezen en ga ermee akkoord</string>
+    <string name="setup_language_title">Kies taal</string>
+    <string name="setup_language_subtitle">Je kunt dit later wijzigen in de instellingen.</string>
+    <string name="setup_mode_subtitle">Kies hoe Shizako eruitziet. Je kunt dit later wijzigen in de instellingen.</string>
+    <string name="setup_mode_follow_system">Systeem volgen</string>
+    <string name="setup_mode_light">Licht</string>
+    <string name="setup_mode_dark">Donker</string>
+    <string name="setup_start_method_title">Activeringsmethode</string>
+    <string name="setup_start_method_subtitle">Kies hoe je Shizako wilt starten. De startpagina toont die methode eerst.</string>
+    <string name="setup_start_method_wadb">Draadloze foutopsporing</string>
+    <string name="setup_start_method_wadb_summary">Op Android 11 en nieuwer, geen computer nodig</string>
+    <string name="setup_start_method_root">Root</string>
+    <string name="setup_start_method_root_summary">Voor gerootte apparaten, starten met één tik</string>
+    <string name="setup_start_method_adb">Verbinden met een computer</string>
+    <string name="setup_start_method_adb_summary">Gebruik adb via USB, herhaal na elke herstart</string>
+    <string name="setup_back">Terug</string>
+    <string name="setup_next">Volgende</string>
+    <string name="setup_get_started">Aan de slag</string>
+    <string name="setup_skip">Overslaan</string>
+</resources>

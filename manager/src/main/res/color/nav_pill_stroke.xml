@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 选中 pill 同色描边:主题色 32% 透明。夜间变体在 color-night/(0.42)。 -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:alpha="0.32" android:color="?colorPrimary" />
+</selector>

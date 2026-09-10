@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 重要：此文件并非"零引用"！androidx.preference 库的 preference_list_fragment.xml
+     会 include @layout/preference_recyclerview，应用层可用同名布局覆盖库实现。
+     SettingsFragment.onCreateRecyclerView 依赖它返回 BorderRecyclerView，
+     删除此文件会导致 ClassCastException 崩溃。
+     注意：不要加 app:fitsSystemWindowsInsets——RikkaX WindowInsetsHelper 会在
+     每次 insets 分发时用"初始 padding + inset"重写 padding，覆盖代码里为
+     亚克力悬浮导航设置的底部避让 padding。 -->
+<rikka.widget.borderview.BorderRecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@android:id/list"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:fadeScrollbars="true"
+    android:scrollbarStyle="outsideOverlay"
+    android:scrollbars="vertical"
+    app:borderBottomVisibility="never"
+    app:borderTopDrawable="@null"
+    app:borderTopVisibility="whenTop"
+    tools:ignore="UnusedResources"
+    tools:viewBindingIgnore="true" />
