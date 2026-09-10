@@ -35,8 +35,9 @@
         android:background="@drawable/nav_active_pill_background"
         android:visibility="invisible" />
 
-    <!-- itemActiveIndicatorEnabled=false：关闭 M3 每项各自的静态指示器，
-         避免与共享滑动 pill 叠加成双重高亮 -->
+    <!-- itemActiveIndicatorStyle=@null：关闭 M3 每项各自的静态指示器，
+         避免与共享滑动 pill 叠加成双重高亮。
+         （注意：Material 无 itemActiveIndicatorEnabled 布尔属性，用置空样式实现。） -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav"
         android:layout_width="match_parent"
@@ -44,7 +45,7 @@
         android:minHeight="@dimen/ksu_nav_height"
         android:background="@android:color/transparent"
         app:elevation="0dp"
-        app:itemActiveIndicatorEnabled="false"
+        app:itemActiveIndicatorStyle="@null"
         app:itemIconTint="@color/nav_icon_tint"
         app:labelVisibilityMode="unlabeled"
         app:menu="@menu/navigation_menu" />

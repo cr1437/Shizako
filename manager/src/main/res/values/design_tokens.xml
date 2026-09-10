@@ -30,6 +30,8 @@
     <dimen name="ksu_nav_pill_corner_radius">16dp</dimen>
     <!-- pill 顶缘高光厚度（填充层顶部让位距离） -->
     <dimen name="ksu_nav_pill_highlight_inset">1dp</dimen>
+    <!-- pill 同色细描边宽度 -->
+    <dimen name="ksu_nav_pill_stroke_width">1dp</dimen>
 
     <!-- 内容底部预留：导航高(48) + 底部间距(16) + 手势条(至 32) + 悬浮余量，
          厚手势条机型上也能完整露出列表末行，不被亚克力导航遮挡 -->

@@ -250,12 +250,13 @@ class MainActivity : AppActivity() {
         }
     }
 
-    /** 属性弹簧回 1（中弹性 + 中低刚度，回弹明显但不拖沓） */
+    /** 属性弹簧回 1（中弹性 0.5 + 低刚度 200，与 KernelSU-Next 底栏滑动参数一致）。
+        注意：SpringForce 只有 HIGH/MEDIUM/LOW/VERY_LOW，没有 STIFFNESS_MEDIUM_LOW。 */
     private fun springBack(view: View, property: FloatPropertyCompat<View>): SpringAnimation =
         SpringAnimation(view, property).apply {
             spring = SpringForce(1f).apply {
                 dampingRatio = SpringForce.DAMPING_RATIO_MEDIUM_BOUNCY
-                stiffness = SpringForce.STIFFNESS_MEDIUM_LOW
+                stiffness = SpringForce.STIFFNESS_LOW
             }
             start()
         }
