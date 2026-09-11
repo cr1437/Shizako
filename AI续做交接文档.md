@@ -1,202 +1,151 @@
-# Shizako · KernelSU 风格 UI 重构 — AI 续做交接文档
+# Shizako-KernelSU-UI 续做交接文档
 
-> **写给下一个接手的 AI 模型**：本文档 = 项目现状 + 设计系统架构 + 血泪陷阱清单 + 待办任务 + 可直接粘贴的提示词。
-> 读完后你应能无缝继续，不需要重新探索整个仓库。
-> 截至 2026-09-10，第二轮 UI 重构已完成并**通过全部静态校验**（207 个 XML 语法 + 资源引用闭环），
-> 但**尚未经过真实编译**（沙箱无 Android SDK）——你的第一优先任务是协助完成本地编译验证。
+> 写给下一位接手的大模型 / 开发者。读完本文即可直接开工，无需重新摸索项目结构。
+> 日期：2026-09-11 ｜ 代码基线：git commit `83a60d9`
 
 ---
 
-# 第一部分：项目关键事实（不要推翻）
+## 一、项目是什么
 
-| 事实 | 值 |
+- **Shizako**（包名 `com.churan.shizako`）= Shizuku Manager 的深度定制 fork，UI 全面向 KernelSU / MIUIX 风格重构。
+- 单 Activity 架构：`MainActivity` + Jetpack Navigation，4 个顶层 Tab（应用管理 / 首页 / 日志 / 设置，首页为默认）。
+- 底栏是亚克力悬浮胶囊：BlurView 实时模糊 + 磨砂罩层，内部是 Material `BottomNavigationView`。
+- 激活页 `fragment_activation.xml` 已重构为一站式页面（含 TCP 5555 端口激活）。
+- 主题支持 M3E / MIUIX 双风格，通过主题属性（如 `?ksuCardStyle`、`?ksuSectionBackground`）切换。
+
+## 二、当前代码状态（已完成，勿重复做）
+
+git 历史（由旧到新）：
+
+| commit | 内容 |
 |---|---|
-| 仓库 | Shizako（fork 自 Shizuku 13.x），manager 模块路径 `manager/` |
-| 包名 / applicationId | `moe.shizuku.manager` / `com.churan.shizako` |
-| UI 技术栈 | **View/XML（非 Compose）**、Material 1.12.0、RikkaX 全家桶、Kotlin、ViewBinding（已开启） |
-| minSdk / targetSdk | 24 / 36（JDK 17+、NDK 29.0.13113456） |
-| 主题生成 | Gradle 插件 `dev.rikka.tools.materialthemebuilder` 构建期生成 `Theme.Material3.*.Shizuku` + 20 个色板 ThemeOverlay，种子色 **#FF9CA8（Sakura 粉）** |
-| 导航架构 | 单 Activity（`MainActivity`）+ Jetpack Navigation，4 顶层 Tab + 5 个次级页 destination（见 `res/navigation/main_nav.xml`） |
-| 设计参照 | KernelSU 官方 manager（`tiann/KernelSU` 的 Home.kt）+ KernelSU-Next 玻璃底栏 |
-| 编译命令 | `./gradlew :manager:assembleDebug`（仓库已配阿里云 Maven 镜像） |
+| `49353af` | init（原始项目 + 早期 UI 重构） |
+| `12feac4` | 修复 aapt/kotlin 编译错误，激活页/主页重构 |
+| `83a60d9` | 底栏改 Figma 胶囊设计、去掉加号、滑块动画去弹簧 |
 
-**重要背景**：本项目 UI 经过两轮重构。第一轮把独立 Activity 群改为单 Activity + Tab 架构、LSPosed 风格转 KernelSU 风格；第二轮（本轮）修复第一轮半成品问题（崩溃、实心底栏、自创网格卡、双倍间距）。两轮的全部细节记录在 `KernelSU-UI重构说明.md`。
+`83a60d9` 这次提交做的事：
 
----
+1. **底栏右侧「+」按钮已彻底移除**（布局里本就不存在，用户旧 APK 是丢失修订版构建的；新包已验证无 `nav_fab` 残留）。
+2. **选中指示器 = 全圆角玻璃胶囊**：包裹选中 tab，宽度运行时对齐选中项，切换 Tab 时水平滑动。
+3. **动画已去弹簧**：`SpringAnimation` 已全部删除，改为 `ValueAnimator`（280ms，`PathInterpolator(0.2, 0, 0, 1)` 减速曲线），首次出现 160ms 淡入。`springBack()`、`bounceNavIcon()` 等死代码已清理。
+4. tab 显示为 24dp 图标 + 10sp 文字标签（`labelVisibilityMode="labeled"`）。
 
-# 第二部分：设计系统架构（改了要守规矩）
+### 关键文件地图
 
-## 2.1 设计 Token（唯一事实来源）
+| 文件 | 作用 |
+|---|---|
+| `manager/src/main/java/moe/shizuku/manager/MainActivity.kt` | 底栏一切逻辑：BlurView 接线、insets 避让、Tab 显隐、徽标、`setupNavPill()` 胶囊滑动动画 |
+| `manager/src/main/res/layout/view_floating_nav.xml` | 底栏布局：BlurView ⊃ 胶囊 View(`@+id/nav_active_pill`) + BottomNavigationView(`@+id/nav`) |
+| `manager/src/main/res/drawable/nav_active_pill_background.xml` | 胶囊外形：全圆角 + `nav_pill_fill` 薄纱填充 + 1dp `nav_pill_stroke` 描边 |
+| `manager/src/main/res/drawable/nav_capsule_background.xml` | 底栏整体外形：透明底 + 细描边，圆角 `@dimen/ksu_nav_corner_radius`(100dp) |
+| `manager/src/main/res/values/design_tokens.xml` | 所有尺寸 token 的唯一事实来源（见下） |
+| `manager/src/main/res/color/nav_icon_tint.xml` | 图标/标签着色 selector：选中 `?colorPrimary`，未选中 `?colorOnSurfaceVariant` |
+| `manager/src/main/res/color/nav_pill_fill.xml` + `color-night/` | 胶囊填充：主题色 18%（夜间 26%） |
+| `manager/src/main/res/menu/navigation_menu.xml` | 4 个 tab 的 id/图标/标题 |
+| `manager/src/main/res/values/styles.xml` | `TextAppearance.Ksu.NavLabel`（10sp 标签样式） |
 
-`res/values/design_tokens.xml` —— 所有页面/卡片/导航尺寸**必须**引用这里，禁止硬编码：
+### 底栏尺寸 token（design_tokens.xml 当前值）
 
-| Token | 值 | 用途 |
-|---|---|---|
-| `ksu_page_margin` | 16dp | 页面左右边距 |
-| `ksu_card_spacing` | 12dp | 卡片垂直间距 |
-| `ksu_card_padding` | 16dp | 卡片常规内边距 |
-| `ksu_card_padding_large` | 24dp | 大卡内边距（KernelSU 状态卡/信息卡参照值） |
-| `ksu_info_row_spacing` | 24dp | 信息卡行距 |
-| `ksu_nav_margin_horizontal/bottom` | 16dp | 悬浮导航边距 |
-| `ksu_nav_corner_radius` | 32dp | 导航胶囊圆角 |
-| `ksu_nav_height` | 48dp | 纯图标导航栏高度（无文字标签，第三轮新增） |
-| `ksu_nav_pill_width/height/corner_radius` | 56/32/16dp | 选中项滑动 pill 尺寸（第三轮新增） |
-| `ksu_content_bottom_padding` | 104dp | 列表底部避让亚克力导航（第三轮：112→88→104，厚手势条机型防遮挡） |
-
-## 2.2 双风格切换（M3E / Miuix）
-
-- 入口：设置 → 用户界面 → 界面风格。`ThemeHelper.KEY_UI_STYLE` 存储，`AppActivity.onApplyUserThemeResource()` 在色板后叠加 `ThemeOverlay.Miuix`（`res/values/themes_miuix.xml`）。
-- **实现核心**：圆角不硬编码——主题注入 `shapeAppearanceMediumComponent`（M3E 28dp / Miuix 20dp），卡片样式走语义属性 `?ksuCardStyle`（M3E → `Widget.Ksu.Card` / Miuix → `Widget.Ksu.Card.Miuix`，见 `themes.xml` 与 `themes_miuix.xml`）。**新卡片一律用 `style="?ksuCardStyle"`，不要写死圆角和底色。**
-- `Widget.Ksu.Card` **故意不设 contentPadding**（见陷阱 T4）。
-
-## 2.3 亚克力悬浮导航（本轮核心，勿回退）
-
-```
-activity_main.xml
-└─ CoordinatorLayout (root)
-   └─ ConstraintLayout
-      ├─ BlurTarget (blur_target)          ← 模糊快照根，全高
-      │  └─ FragmentContainerView (NavHost, match_parent 全高)
-      └─ include view_floating_nav (nav_capsule)  ← 后声明，浮于内容上
-         └─ BlurView (nav_blur)            ← 实时模糊 + 罩层
-            └─ BottomNavigationView (nav, 透明背景)
+```xml
+<dimen name="ksu_nav_margin_horizontal">16dp</dimen>
+<dimen name="ksu_nav_margin_bottom">16dp</dimen>
+<dimen name="ksu_nav_corner_radius">100dp</dimen>      <!-- 全圆胶囊 -->
+<dimen name="ksu_nav_height">59dp</dimen>              <!-- 底栏总高 -->
+<dimen name="ksu_nav_inner_padding">6dp</dimen>        <!-- BlurView 左右内边距 -->
+<dimen name="ksu_nav_tab_capsule_height">47dp</dimen>  <!-- 选中胶囊高 = 59-2×6 -->
+<dimen name="ksu_nav_tab_icon_size">24dp</dimen>
+<dimen name="ksu_nav_pill_stroke_width">1dp</dimen>
+<dimen name="ksu_content_bottom_padding">115dp</dimen> <!-- 列表底部避让 -->
 ```
 
-- `BlurView`/`BlurTarget` 是项目内置的 Dimezis/BlurView（`java/moe/shizuku/blurview/`，Apache-2.0），与 `AppBarActivity` 磨砂顶栏同一套。API 31+ 硬件渲染 / 29-30 OpenGL / 24-28 RenderScript 自动降级。
-- 接线在 `MainActivity.setupAcrylicNav()`：`setupWith(blurTarget) + setFrameClearDrawable(window.decorView.background) + setBlurRadius(20dp)`。
-- 罩层色 `nav_frost_scrim`（`values/colors.xml` #B3FFFFFF / `values-night` #B3171B21）；胶囊外形 `drawable/nav_capsule_background.xml`（透明填充 + `?colorOutlineVariant` 细描边 + 圆角，`clipToOutline` 裁切模糊）。
-- `MainActivity.applyNavCapsuleVisibility()`：次级页（activation/adb_pairing/terminal/starter/dhizuku）自动隐藏底栏（KernelSU 行为），顶层 4 Tab 显示。
-- 四个 Tab 列表底部 padding = `ksu_content_bottom_padding`（代码设置：`HomeFragment`/`AppsFragment`/`LogsFragment`/`SettingsFragment`），配合 insets（见 2.4）保证末项不被胶囊遮挡。
+### 胶囊滑动动画核心逻辑（MainActivity.setupNavPill）
 
-## 2.4 RikkaX insets 系统（容易踩坑，先读懂再改）
-
-`res/values/integer.xml` 的整数是 **android.view.Gravity 位掩码**（RikkaX insets 库复用 Gravity 常量）：
-
-| 整数 | 值 | 含义 |
-|---|---|---|
-| `internal_fragment_insets` | `0x00800007` | start\|end（含 RELATIVE_LAYOUT_DIRECTION 位） |
-| `internal_fragment_top_insets` | `0x30` | Gravity.TOP |
-| `internal_fragment_bottom_insets` | `0x50` | Gravity.BOTTOM（本轮从 0 改为此值：内容区让开手势/三键导航条） |
-
-布局中 `app:fitsSystemWindowsInsets="@integer/xxx"` = 把对应 inset 加为该 view 的 padding；`app:consumeSystemWindowsInsets` = 消费不再下传。
-
-## 2.5 首页结构（KernelSU 原版布局，勿自创）
-
-`HomeAdapter` 卡片顺序：`状态大卡(ServerStatusViewHolder)` → `信息卡(InfoCardViewHolder)` → 功能卡（应用管理/终端/激活/启动方式，条件添加）→ LearnMore。
-
-- **状态卡** `home_server_status.xml`：tonal 容器，运行中 `secondaryContainer` / 未运行 `errorContainer`，由 `ServerStatusViewHolder.applyContainerColors()` 用 `MaterialColors.getColor()` 动态切换（含图标/文字 on* 前景色）。
-- **信息卡** `home_info_card.xml`：单卡纵向 label(bodyLarge)/value(bodyMedium) 行 + 右下角复制按钮（KernelSU `InfoCard` 同款，`InfoCardViewHolder.copyAll()`）。
-- **功能卡**：容器 `home_item_container.xml`（`?ksuCardStyle`）+ 内容 `home_*_item.xml`（`?homeCardStyle` 内边距 + CardIcon 圆形图标 chip）。
+- 胶囊与 `nav` 同为 BlurView 直接子视图，目标位置 = `nav.left + itemView.left`，宽度 = `itemView.width`。
+- 切 Tab：`pillAnimator`（ValueAnimator）从当前 `translationX` 滑到目标，连点 cancel 续滑。
+- 首次定位 / 旋转 / 日志 Tab 显隐：`snapToSelection()` 无动画对齐。
+- 常量：`PILL_SLIDE_DURATION = 280L`、`PILL_FADE_IN_DURATION = 160L`、`PILL_INTERPOLATOR = PathInterpolator(0.2, 0, 0, 1)`。
 
 ---
 
-# 第三部分：血泪陷阱清单（改动前必读！！）
+## 三、待办需求（用户最新反馈，未实现）
 
-> 每一个都是真实炸过的雷。违反任意一条都可能造成崩溃或视觉回退。
+用户在真机上看了 `83a60d9` 的包后反馈：
 
-- **T1 `preference_recyclerview.xml` 不是"零引用"！** androidx.preference 库的 `preference_list_fragment.xml` 会 `include @layout/preference_recyclerview`，应用层同名文件是**覆盖库实现的挂点**。删除它 → 设置页 `ClassCastException: RecyclerView cannot be cast to BorderRecyclerView`（真实崩溃日志见仓库外 `Shizako-crash-20260910-173407.txt`）。**同理：删除任何看似无用的布局前，先想它会不会是库的覆盖点**（同名覆盖是 Android 资源合并机制，grep 不到引用）。
-- **T2 `NavigationBarView` 是抽象类**，没有 `(Context, AttributeSet)` 两参构造器，XML 里写它会 `NoSuchMethodException` 启动即崩。必须用具体子类 `BottomNavigationView`（代码里向上转型不受影响）。
-- **T3 RikkaX WindowInsetsHelper 会重写 padding**：挂了 `app:fitsSystemWindowsInsets` 的 view，每次 insets 分发都会 `setPadding(初始padding + inset)`，**覆盖你在代码里 later 设置的 padding**。要运行时改 padding 必须用 `rikka.insets.setInitialPadding()` 系列；或者像 `preference_recyclerview.xml` 那样干脆不挂该 attr。
-- **T4 `Widget.Ksu.Card` 不要加 contentPadding**：各布局内容已有自己的内边距（Token 控制），样式里再加会叠加成双倍间距（32dp，第一轮"看着奇怪"的根因之一）。
-- **T5 `@color/home_card_background_color` 来自 RikkaX 库**（项目 res 里 grep 不到定义是正常的），旧 Shizuku 视觉残留，已全部替换为 `?colorSurfaceContainer`，**不要再引入**。
-- **T6 drawable XML 里引用主题属性**（如 `?colorOutlineVariant`）要求 API 21+，本项目 minSdk 24 安全，但别给更低版本的项目照搬。
-- **T7 `window.decorView.background` 即主题的 `windowBackground`**（`@drawable/window_bg`），BlurView 的 `setFrameClearDrawable` 依赖它保证磨砂层不透出黑底，改主题背景时注意。
-- **T8 字符串改动要同步 `values/`（英文默认）和 `values-zh-rCN/`**，其他 60+ 语言目录不用管（缺失自动回退英文）。新字符串只加这两个文件。
-- **T9 ViewBinding 类名跟随布局文件名**：重命名/新建布局后，引用它的 Kotlin 代码里的 Binding 类名要同步（本轮 `HomeInfoGridBinding` → `HomeInfoCardBinding`）。改完全局 grep 旧类名确认零引用。
+### 需求 1：底栏只显示图标，不要文字标签
 
----
+改动点（都在 `view_floating_nav.xml` 和 `design_tokens.xml`）：
 
-# 第四部分：本轮（第二轮）改动清单
+1. `BottomNavigationView` 上：`app:labelVisibilityMode="labeled"` → `"unlabeled"`。
+2. 可删掉 `app:itemTextAppearanceActive` / `app:itemTextAppearanceInactive` / `app:itemTextColor` 三行及 `styles.xml` 里的 `TextAppearance.Ksu.NavLabel`（删引用即可，样式留着也不报错）。
+3. 高度收拢回纯图标尺寸：`ksu_nav_height` 59dp → **48dp**，`ksu_nav_tab_capsule_height` 47dp → **36dp**（48-2×6），`ksu_content_bottom_padding` 115dp → **104dp**。
+4. 胶囊宽度逻辑不用改（仍取 itemView 宽度，等分恒宽）。
 
-**新增**：`res/layout/preference_recyclerview.xml`（恢复，T1）、`res/layout/home_info_card.xml`、`res/drawable/nav_capsule_background.xml`、`home/InfoCardViewHolder.kt`、本文档。
+### 需求 2：用户仍感觉有弹簧动画，要求"平滑过渡"
 
-**删除**：`res/layout/home_info_grid.xml`、`res/layout/home_info_item.xml`、`home/InfoGridViewHolder.kt`（自创 2 列网格，KernelSU 无此布局）。
+代码里确实已无任何 SpringAnimation，但用户仍有弹性观感，按以下顺序排查：
 
-**修改**：
-- 亚克力导航：`view_floating_nav.xml`（BlurView 化）、`activity_main.xml`（BlurTarget + 内容全高）、`MainActivity.kt`（`setupAcrylicNav()` + `applyNavCapsuleVisibility()`）
-- 首页 KernelSU 化：`home_server_status.xml`（tonal）、`ServerStatusViewHolder.kt`（`applyContainerColors()`）、`HomeAdapter.kt`（换 InfoCardViewHolder）
-- Token/资源：`design_tokens.xml`（重构）、`colors.xml` ×2（nav_frost_scrim）、`dimens.xml`（删 home_primary_elevation）、`integer.xml`（bottom insets）、`styles.xml`（Widget.Ksu.Card 去 contentPadding）、`strings.xml` ×2（信息卡标签 + 复制文案，删 home_info_title）
-- 底部避让：`HomeFragment.kt`、`AppsFragment.kt`、`LogsFragment.kt`、`SettingsFragment.kt`（各加 `updatePadding(bottom = ksu_content_bottom_padding)` + import）
-- 残留清理：`home_item_container.xml`（?ksuCardStyle）、`about_dialog.xml` / `fragment_activation.xml` / `item_activation_target.xml`（旧色 → ?colorSurfaceContainer）
+1. **先换更朴素的曲线和更短时长**：`PILL_INTERPOLATOR` 改为 `PathInterpolator(0.4f, 0f, 0.2f, 1f)`（M3 标准曲线，起停都更柔和）或直接 `LinearInterpolator`；`PILL_SLIDE_DURATION` 降到 200~240ms 试手感。
+2. **检查 fragment 转场动画**：`res/anim/fragment_enter.xml` / `fragment_exit.xml` / `*_pop.xml`，若插值器带 overshoot/cycle 类效果一并换掉。
+3. **Material 自身的 item 选中动画**：`BottomNavigationView` 切换 item 时图标 tint 有默认渐变动效，属正常反馈，一般不用动；如用户指的就是它，可在 selector 层面或 `itemRippleColor` 上收敛。
+4. **BlurView 帧率**：低端机上模糊刷新慢会显得"黏"，属硬件表现，不是动画问题。
+5. 铁律：**不要重新引入 `androidx.dynamicanimation` 的 SpringAnimation**。
 
 ---
 
-# 第五部分：待办任务（按优先级）
+## 四、构建指南（沙箱从零起步）
 
-## P0 本地编译验证（必须最先做）
-沙箱无 Android SDK，全部改动只做过静态校验。在真机/本机执行：
-```bash
-cd Shizako-KernelSU-UI
-./gradlew :manager:assembleDebug
-# 产物：manager/build/outputs/apk/debug/shizako-v<version>-debug.apk
-```
-可能的报错与对策见 `KernelSU-UI重构说明.md` 第三节。修复后跑一遍真机验收清单（同文档第四节）。
-
-## P1 悬浮导航选中态弹簧动画 —— ✅ 已完成（第三轮）
-已实现 KernelSU-Next 同款果冻弹簧 pill：共享滑动 pill（`nav_active_pill`）+ `itemActiveIndicatorEnabled=false` 关闭 M3 静态指示器；`MainActivity.setupNavPill()` 用 `androidx.dynamicanimation`（material 传递依赖）驱动弹簧滑动（0.5/200）、挤压回弹与图标弹跳；由 OnDestinationChanged 驱动，`menu/removeItem/getOrCreateBadge` 逻辑未触碰。细节见《KernelSU-UI重构说明.md》第三轮段落。
-
-## P2 授权弹窗（GrantPermissions）按钮圆角统一
-`styles.xml` 的 `GrantPermissionsButtons.*` 仍是旧直角分段样式（`grant_permissions_buttons_top/bottom` drawable），可改为跟随主题 `shapeAppearanceMediumComponent`。
-
-## P3 Miuix 首页专属分组布局
-当前 Miuix 靠 `?ksuCardStyle` 逼近小米分组卡片观感。如需更强的小米分组列表（组间无间距、组内分割线、大圆角组容器），可在 `ThemeOverlay.Miuix` 下加分组专用样式 + 首页条件布局。
-
-## P4 低性能设备 BlurView 降级检查
-`BlurView` 在 API 24-28 走 RenderScript（已弃用但可用）。如遇低端机卡顿，可调大 `setupWith` 的 scaleFactor（降采样）或提供"关闭模糊"设置项（改回 `colorSurfaceContainerHigh` 实心胶囊即可，`view_floating_nav.xml` 一处改动）。
-
-## P5 真机回归点
-- 深色模式下亚克力导航罩层观感（`nav_frost_scrim` 暗色值可按需微调透明度）
-- 三键导航机型：胶囊应浮于按键条上方、列表末项不被遮挡
-- M3E/Miuix 切换后状态卡/信息卡圆角跟随变化
-- 设置页打开不再崩溃（T1 修复点）、设置列表底部避让正常
-
----
-
-# 第六部分：可直接粘贴给下一个模型的提示词
-
-````text
-你是 Android 开发助手，接手 Shizako（fork 自 Shizuku）manager 模块的 UI 重构续做。
-
-【第一步·必读】先完整阅读仓库根目录的《AI续做交接文档.md》和《KernelSU-UI重构说明.md》，
-特别是"血泪陷阱清单"（T1-T9），然后告诉我你的理解，不要直接动手。
-
-【关键事实】
-- View/XML 技术栈（非 Compose），Material 1.12.0，RikkaX 库，Kotlin + ViewBinding，minSdk 24
-- 单 Activity（MainActivity）+ Navigation，4 Tab + 5 次级页（res/navigation/main_nav.xml）
-- 设计 Token 集中在 res/values/design_tokens.xml；新卡片用 style="?ksuCardStyle"，禁止硬编码圆角/卡片色
-- 亚克力悬浮导航用项目内置 moe.shizuku.blurview.BlurView，接线在 MainActivity.setupAcrylicNav()
-- 沙箱/你的环境如果没有 Android SDK 就不能编译，只能静态校验（XML 语法 + 资源引用闭环 + ViewBinding 一致性），编译验证由我在本地做
-- 字符串改动只同步 values/ 和 values-zh-rCN/ 两个文件
-
-【本轮任务】（按交接文档第五部分的优先级执行，当前做 P__）
-（在此描述你要它做的具体任务）
-
-【约束】
-- 不要推翻已完成的两轮重构架构；新增代码风格与现有一致（中文注释、Token 引用）
-- 每改一个文件，说明改动理由；改完做静态校验并列出校验结果
-- 不确定是不是库的覆盖点（布局/dimen/样式）时，先问我再删
-````
-
----
-
-# 附：静态校验速查脚本
+沙箱每次会话会清空非 `/workspace` 目录，JDK/SDK/Gradle 都要重装。全程约 10~15 分钟。
 
 ```bash
-cd manager/src/main
+# 0. 解压源码（zip 在 /workspace）
+mkdir -p /data/user/work/shizako && cd /data/user/work/shizako
+unzip -oq /workspace/Shizako-KernelSU-UI-v2.12-nav.zip
 
-# 1. 全部 XML 语法校验
-python3 -c "
-import xml.etree.ElementTree as ET, glob
-errs = []
-for f in glob.glob('res/**/*.xml', recursive=True):
-    try: ET.parse(f)
-    except Exception as e: errs.append(f'{f}: {e}')
-print(f'{len(errs)} errors'); [print(e) for e in errs]
-"
+# 1. JDK 21（必须 21，项目 sourceCompatibility = VERSION_21；17 不行）
+cd /tmp && curl -sL -o jdk21.tar.gz \
+  "https://api.adoptium.net/v3/binary/latest/21/ga/linux/x64/jdk/hotspot/normal/eclipse" \
+  && tar xzf jdk21.tar.gz   # 得到 jdk-21.x 目录
 
-# 2. 残留扫描（按需替换关键词）
-grep -rn "home_card_background_color\|home_info_grid\|home_info_item\|InfoGridViewHolder\|home_info_title" res/ java/
+# 2. Android SDK（cmdline-tools 从 dl.google.com 可直连）
+#    需要：platform-tools、platforms;android-36、build-tools;36.0.0、
+#          ndk;29.0.14206865（root build.gradle 写死 ndkVersion）、cmake;3.31.6
+#    装到 /opt/android-sdk（local.properties 里 sdk.dir 已指向它）
 
-# 3. 删除某文件前：确认不是库覆盖点 + 全局零引用
-grep -rn "文件名（不含扩展名）" res/ java/ ../../
+# 3. Gradle 8.14：wrapper 下载在沙箱里会 SSL 失败，
+#    直接 curl 下载 https://mirrors.cloud.tencent.com/gradle/gradle-8.14-bin.zip
+#    解压到 /opt/gradle-8.14，用 /opt/gradle-8.14/bin/gradle 代替 ./gradlew
+
+# 4. ★ 关键坑：沙箱出口走 HTTP 代理 127.0.0.1:18080，
+#    curl 读环境变量没问题，但 Java/Gradle 不读！必须写：
+cat > /root/.gradle/gradle.properties <<'EOF'
+systemProp.http.proxyHost=127.0.0.1
+systemProp.http.proxyPort=18080
+systemProp.https.proxyHost=127.0.0.1
+systemProp.https.proxyPort=18080
+systemProp.http.nonProxyHosts=localhost|127.0.0.1
+systemProp.https.nonProxyHosts=localhost|127.0.0.1
+EOF
+#    不配的话 Gradle 会卡在 "Evaluating project ':aidl'" 无限挂起（缓存不增长就是这个问题）
+
+# 5. 构建（首次下载依赖约 1.1GB，含 NDK 原生编译，约 4~5 分钟）
+export JAVA_HOME=/tmp/jdk-21.x && export PATH=$JAVA_HOME/bin:$PATH
+export ANDROID_HOME=/opt/android-sdk
+cd /data/user/work/shizako/Shizako-KernelSU-UI
+/opt/gradle-8.14/bin/gradle :manager:assembleDebug --console=plain
+
+# 产物：manager/build/outputs/apk/debug/shizako-vzako2.12-debug.apk
 ```
+
+### 构建相关注意事项
+
+- `versionCode` 由 `git rev-list --count HEAD` 生成（当前 = 3），`versionName = zako2.12`。改代码后记得 `git commit`，versionCode 才会涨。
+- **签名**：无 `signing.properties`，走 debug 自动签名。每个新沙箱的 debug 密钥都不同 → 用户安装新包前**必须先卸载旧版**（签名冲突），应用数据会重置。
+- 原生代码（`manager/src/main/jni`）用 CMake 编 4 个 ABI，NDK 版本不对会直接配置失败。
+- 验证 APK 无某资源：`unzip -p app.apk resources.arsc | strings | grep nav_fab`。
+
+## 五、用户偏好（设计语言）
+
+- 一切动画：平滑、朴素、无回弹，拒绝弹簧/橡皮筋效果。
+- 底栏设计基准是 Figma 稿「Home - Bottom」（玻璃胶囊 + 滑动选中指示器）。
+- 中文沟通；界面文案以 `values-zh-rCN/strings.xml` 为准，改文案要同步 `values/`（英文）和 `values-zh-rTW/`。
+- 尺寸一律引用 `design_tokens.xml`，禁止硬编码。
