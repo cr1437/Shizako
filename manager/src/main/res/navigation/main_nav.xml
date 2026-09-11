@@ -23,7 +23,7 @@
     <!-- 次级页（单入口：全部由 MainActivity 承载，带返回键） -->
     <fragment
         android:id="@+id/activation_fragment"
-        android:name="moe.shizuku.manager.activation.OneClickActivationFragment"
+        android:name="moe.shizuku.manager.activation.ActivationFragment"
         android:label="activation" />
     <fragment
         android:id="@+id/adb_pairing_fragment"

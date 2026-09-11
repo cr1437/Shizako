@@ -1,39 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 一站式激活卡片（替代旧的 Brevent/小黑屋/冰箱/Island 激活页）。
+     首页直接列出 4 种激活方式，每种一行（图标 + 名称 + 描述 + 状态/按钮），
+     点行进入对应流程或就地激活，无需再进入子页面。
+     行布局在 item_activation_method.xml 中定义。 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     style="?homeCardStyle"
-    android:gravity="center_vertical"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
-    <ImageView
-        android:id="@android:id/icon"
-        style="@style/CardIcon"
-        android:duplicateParentState="true"
-        android:importantForAccessibility="no"
-        android:src="@drawable/ic_bolt_24dp" />
-
-    <LinearLayout
+    <!-- 卡片标题 -->
+    <TextView
+        style="@style/CardTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/home_icon_padding"
-        android:duplicateParentState="true"
-        android:orientation="vertical">
+        android:text="@string/home_activation_hub_title" />
 
-        <TextView
-            android:id="@android:id/text1"
-            style="@style/CardTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:duplicateParentState="true"
-            android:text="@string/home_activation_title" />
+    <TextView
+        android:id="@+id/activation_hub_desc"
+        style="@style/CardSummary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/home_activation_hub_desc" />
 
-        <TextView
-            android:id="@android:id/text2"
-            style="@style/CardSummary"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:duplicateParentState="true"
-            android:text="@string/home_activation_summary" />
+    <!-- 4 种激活方式，运行时由 ViewHolder 填充 -->
+            <LinearLayout
+                android:id="@+id/methods_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="vertical" />
 
-    </LinearLayout>
+            <!-- 进入详细的一站式激活页（分步教程 + 悬浮窗配对） -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/activation_details_button"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="4dp"
+                android:text="@string/activation_hub_details"
+                app:icon="@drawable/ic_outline_open_in_new_24"
+                app:iconGravity="end"
+                app:iconSize="16dp" />
 
-</LinearLayout>
+        </LinearLayout>

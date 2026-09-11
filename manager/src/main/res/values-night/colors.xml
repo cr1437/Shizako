@@ -8,9 +8,6 @@
     <!-- 亚克力悬浮导航磨砂罩层（夜间）：暗色半透明，保证图标文字可读 -->
     <color name="nav_frost_scrim">#B3171B21</color>
 
-    <!-- 选中 pill 顶缘镜面高光（夜间）：白色 25%，暗色下收敛 -->
-    <color name="nav_pill_specular">#40FFFFFF</color>
-
     <!-- One-click activation, dark variants: lighter tones for dark surfaces. -->
     <color name="activation_status_active">#81C784</color>
     <color name="activation_status_inactive">#E57373</color>

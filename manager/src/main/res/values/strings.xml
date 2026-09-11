@@ -19,17 +19,10 @@
     <string name="home_adb_dialog_view_command_copy_button">Copy</string>
     <string name="home_adb_dialog_view_command_button_send">Send</string>
 
-    <!-- Home - Dhizuku (Device Owner) -->
-    <string name="home_dhizuku_title">Activate via Device Owner</string>
-    <string name="home_dhizuku_description">Make Shizako the Device Owner of your device and she keeps her privileges without root and without keeping wireless debugging on. Run the command once from a computer, then Dhizuku-API apps (like Hail or FreezeYou) can borrow her power directly.</string>
-    <string name="home_dhizuku_description_active">Device Owner mode is active — authorized apps can now use Shizako\'s Device Owner privileges. You can revoke them anytime.</string>
+    <!-- Home - Dhizuku (Device Owner), used by the activation hub card -->
     <string name="home_dhizuku_button_view_command">View command</string>
-    <string name="home_dhizuku_button_manage">Authorized apps</string>
-    <string name="home_dhizuku_button_activate">One-tap activate</string>
-    <string name="home_dhizuku_button_activating">Activating…</string>
     <string name="home_dhizuku_activate_success">Device Owner mode activated</string>
     <string name="home_dhizuku_activate_failed">Activation failed: %1$s</string>
-    <string name="home_dhizuku_description_ready">Shizuku mode is running, so Device Owner mode can be activated right here — no computer needed.</string>
     <string name="home_dhizuku_dialog_view_command_message"><![CDATA[<font face="monospace">%1$s</font><br><br>* Run it once from a computer with USB debugging enabled. No account may exist on the device, otherwise the command fails.]]></string>
 
     <!-- Dhizuku -->
@@ -207,40 +200,85 @@ The export function uses SAF (Storage Access Framework). It's reported that MIUI
     <string name="setup_finish_title">Everything is ready</string>
     <string name="setup_finish_summary">Start method: %1$s\nService: %2$s</string>
 
-    <!-- One-click activation -->
-    <string name="activation_title">One-click activation</string>
-    <string name="activation_subtitle">Run the ADB commands that used to require a computer, right from here</string>
-    <string name="activation_service_running">Shizako is running, ready to activate</string>
-    <string name="activation_service_running_brief">Shizako is running</string>
-    <string name="activation_service_not_running">Shizako is not running, please start the service from the home page first</string>
-    <string name="activation_activate">Activate</string>
-    <string name="activation_download">Download</string>
-    <string name="activation_downloading">Downloading…</string>
-    <string name="activation_download_failed">Download failed, please try again</string>
-    <string name="activation_error_multiple_users">The device still has multiple users (guest mode / app twin). Remove them in Settings first, then inject again.</string>
-    <string name="activation_error_multiple_accounts">The device still has accounts. Remove them in Settings first, then inject again (you can add them back afterwards).</string>
-    <string name="activation_activated">Activated</string>
-    <string name="activation_status_not_installed">%1$s · not installed</string>
-    <string name="activation_status_installed">%1$s · installed</string>
-    <string name="activation_status_activated">%1$s · already activated</string>
-    <string name="activation_status_not_activated">%1$s · installed, not activated</string>
-    <string name="activation_status_checking" translatable="false">%1$s</string>
-    <string name="activation_note_device_owner">Requires all accounts and secondary users (guest mode / app twin) to be removed first; you can add them back after activation. Note: Island creates its own work-profile user — it counts as a secondary user, so Device Owner and Island cannot coexist on one device. Vendor ROM quirks may apply.</string>
-    <string name="activation_note_brevent">The Brevent server needs to be activated again after every reboot.</string>
-    <string name="activation_custom_title">Custom command</string>
-    <string name="activation_custom_hint">Any shell command, e.g. dpm set-device-owner …</string>
-    <string name="activation_custom_empty">Command is empty</string>
-    <string name="activation_run">Run</string>
-    <string name="activation_running">Running…</string>
-    <string name="activation_success">Activated</string>
-    <string name="activation_failed">Failed, see output below</string>
-    <string name="activation_failed_with_code">Failed (exit code %1$d), see output below</string>
-    <string name="activation_timeout">The command is still running; stopped waiting (normal for server-like commands)</string>
-    <string name="activation_output">Output</string>
-    <string name="activation_output_empty">(no output yet)</string>
-    <string name="activation_copy">Copy</string>
-    <string name="activation_copied">Copied</string>
-    <string name="activation_back">Back</string>
+    <!-- Home: one-stop activation hub -->
+    <string name="home_activation_hub_title">Activation</string>
+    <string name="home_activation_hub_desc">Pick a way to start Shizako, or activate Device Owner (Dhizuku) mode.</string>
+    <string name="activation_hub_desc_running">Shizako is running. Device Owner mode can be activated in one tap.</string>
+    <string name="activation_hub_desc_not_running">Shizako is not running. Pick one of the ways below to start her.</string>
+    <string name="activation_method_dhizuku">Dhizuku (Device Owner)</string>
+    <string name="activation_method_dhizuku_desc">Make Shizako the Device Owner; authorized apps can then use her privileges without root or wireless debugging.</string>
+    <string name="activation_method_root">Root</string>
+    <string name="activation_method_root_desc">Start directly on rooted devices.</string>
+    <string name="activation_method_wireless_adb">Wireless debugging</string>
+    <string name="activation_method_wireless_adb_desc">On Android 11 or above, start right on the device via Wireless debugging, no computer needed.</string>
+    <string name="activation_method_adb">Computer ADB</string>
+    <string name="activation_method_adb_desc">Run the start command from a computer with USB debugging enabled.</string>
+    <string name="activation_method_status_active">Activated</string>
+    <string name="activation_method_action_activate">Activate</string>
+    <string name="activation_method_action_view_command">View command</string>
+    <string name="activation_method_action_start">Start</string>
+    <string name="activation_hub_details">Detailed guide</string>
+
+    <!-- One-stop activation detail page -->
+    <string name="activation_page_title">Activation</string>
+    <string name="activation_section_status">Current status</string>
+    <string name="activation_status_service">Shizako service</string>
+    <string name="activation_status_dhizuku">Device Owner (Dhizuku)</string>
+    <string name="activation_status_not_running">Not running</string>
+    <string name="activation_status_running_root">Running (root)</string>
+    <string name="activation_status_running_adb">Running (adb)</string>
+    <string name="activation_status_activated">Activated</string>
+    <string name="activation_status_not_activated">Not activated</string>
+    <string name="activation_tag_easiest">Easiest</string>
+    <string name="activation_tag_android11">Android 11+</string>
+    <string name="activation_tag_computer">Computer needed</string>
+    <string name="activation_tag_persistent">Survives reboot</string>
+    <string name="activation_root_desc_detail">If your device is already rooted, this is the easiest way: grant superuser access and start directly.</string>
+    <string name="activation_root_steps">1. Tap Start below\n2. Grant superuser access in the popup\n3. Wait until the service is running</string>
+    <string name="activation_wadb_desc_detail">On Android 11 and above you can start Shizako on the device itself via Wireless debugging — no computer needed. Everything happens in a floating window on top of the system settings, no app switching.</string>
+    <string name="activation_wadb_steps">1. Tap \"Floating window pairing\" below and grant the overlay permission\n2. In the opened Developer options, enable \"Wireless debugging\"\n3. Tap \"Pair device with pairing code\" to show the 6-digit code\n4. Enter the code in the floating window — pairing, connecting and starting are automatic</string>
+    <string name="activation_wadb_action_float_pair">Floating window pairing</string>
+    <string name="activation_wadb_action_open_settings">Open Developer options</string>
+    <string name="activation_adb_desc_detail">If you have a computer at hand, run the start command once with USB debugging enabled.</string>
+    <string name="activation_adb_steps">1. Enable USB debugging in Developer options and connect the computer\n2. Copy the command below and run it in a terminal (adb)\n3. The service starts immediately; no root needed</string>
+    <string name="activation_adb_action_copy">Copy command</string>
+    <string name="activation_adb_action_send">Send to…</string>
+    <string name="activation_dhizuku_desc_detail">Make Shizako the Device Owner. Authorized apps can then use her privileges at any time — no root, and no need to keep wireless debugging on. Activation survives reboots.</string>
+    <string name="activation_dhizuku_steps">With the service running: tap Activate below and it is done in one tap.\nWithout the service: view the command and run it once from a computer.</string>
+    <string name="activation_dhizuku_warning">Note: all accounts on the device must be removed before activation, otherwise the command fails. Some features (e.g. Find Device) may be affected afterwards.</string>
+    <string name="activation_dhizuku_activating">Activating…</string>
+    <string name="activation_section_faq">FAQ</string>
+    <string name="activation_faq_reboot_q">Do I need to activate again after a reboot?</string>
+    <string name="activation_faq_reboot_a">Root: yes, start again after each boot (or enable \"Start on boot\" in settings). Wireless debugging / computer ADB: yes, the service stops on reboot. Dhizuku: no, Device Owner persists across reboots.</string>
+    <string name="activation_faq_which_q">Which method should I pick?</string>
+    <string name="activation_faq_which_a">Root if the device is rooted; Wireless debugging for Android 11+ without a computer; computer ADB if you have a PC; Dhizuku if you want a one-time setup that survives reboots.</string>
+    <string name="activation_faq_fail_q">Pairing or starting failed?</string>
+    <string name="activation_faq_fail_a">Check that Wireless debugging is still enabled (some ROMs turn it off when the screen locks), that the pairing code and port are the latest ones shown, and that the device stays on the network. On MIUI, also enable \"USB debugging (Security settings)\".</string>
+
+    <!-- Wireless debugging floating pair window (replaces notification input) -->
+    <string name="floating_pair_title">Wireless debugging pairing</string>
+    <string name="floating_pair_hint_code">6-digit pairing code</string>
+    <string name="floating_pair_hint_port">Port</string>
+    <string name="floating_pair_action_pair">Pair &amp; start</string>
+    <string name="floating_pair_action_start">Start</string>
+    <string name="floating_pair_hint_steps">Open \"Wireless debugging\" → \"Pair device with pairing code\", then enter the code here. Drag the title bar to move this window.</string>
+    <string name="floating_pair_status_discovering">Searching for the pairing service…</string>
+    <string name="floating_pair_status_ready">Pairing service found — enter the 6-digit code</string>
+    <string name="floating_pair_status_pairing">Pairing…</string>
+    <string name="floating_pair_status_paired">Paired. Looking for the connection port…</string>
+    <string name="floating_pair_status_starting">Starting Shizako…</string>
+    <string name="floating_pair_status_success">Done! Shizako is running.</string>
+    <string name="floating_pair_status_timeout">Still searching… Make sure the pairing dialog is open.</string>
+    <string name="floating_pair_status_failed">Failed: %1$s</string>
+    <string name="floating_pair_status_failed_unknown">Failed, please try again</string>
+    <string name="floating_pair_error_code">Enter the 6-digit pairing code</string>
+    <string name="floating_pair_error_port">Enter a valid port (1–65535)</string>
+    <string name="floating_pair_no_overlay_permission">Overlay permission is not granted, the floating window cannot be shown</string>
+    <string name="floating_pair_toast_started">Floating window shown. Enable Wireless debugging in the opened settings page</string>
+    <string name="floating_pair_overlay_dialog_title">Overlay permission needed</string>
+    <string name="floating_pair_overlay_dialog_message">The pairing code is entered in a floating window on top of the system settings, so you don\'t have to switch back and forth. Please grant \"Display over other apps\" first.</string>
+    <string name="floating_pair_overlay_dialog_grant">Grant</string>
+    <string name="close">Close</string>
 
     <string name="settings_translation_summary">Help us translate %s into your language</string>
     <string name="settings_start_on_boot">Start on boot (root)</string>

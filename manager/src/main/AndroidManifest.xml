@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <!-- 无线调试悬浮窗配对：悬浮于系统设置之上直接输入配对码 -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
     <uses-permission
@@ -165,6 +167,12 @@
             android:enabled="true"
             android:exported="false"
             android:foregroundServiceType="shortService" />
+
+        <!-- 无线调试悬浮窗配对：普通 Service + 可见悬浮窗即保持前台重要性，无需通知 -->
+        <service
+            android:name=".pairing.FloatingPairService"
+            android:enabled="true"
+            android:exported="false" />
 
         <service
             android:name=".tile.ServiceTile"

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- KernelSU 风格亚克力悬浮底部导航（纯图标紧凑版）：
+<!-- 亚克力悬浮底部导航（Figma「Home - Bottom」设计稿，无右侧加号）：
      BlurView 实时模糊其下方的滚动内容（参考 KernelSU-Next 的 haze 玻璃底栏），
      叠加半透明磨砂罩层 nav_frost_scrim，圆角胶囊轮廓由 nav_capsule_background
      提供（clipToOutline 把模糊裁成胶囊形）。内部 BottomNavigationView 背景透明，
      完整复用 menu / 选中态 / 徽标 / removeItem 逻辑。
-     导航栏为纯图标模式：labelVisibilityMode=unlabeled 去掉文字说明，仅保留图标
-     （无障碍朗读仍使用 menu 中的 title）；高度收拢为 ksu_nav_height(48dp)，
-     并同步覆盖 Material3 默认的 minHeight(80dp)，否则固定高度不生效。
+     每个 tab = 24dp 图标 + 10sp 标签上下排布（labelVisibilityMode=labeled），
+     选中 tab 背后垫一个全圆角玻璃滑动胶囊（nav_active_pill，47dp 高），
+     切换 Tab 时沿水平方向平滑滑过去（MainActivity.setupNavPill 驱动，无弹簧）。
      模糊源（BlurTarget）与 setupWith 在 MainActivity 中接线；
      底部避让手势条由 MainActivity.applyNavCapsuleInsets 动态加 margin。
      注意：必须用具体的 BottomNavigationView——抽象父类 NavigationBarView 没有
@@ -22,21 +22,24 @@
     android:background="@drawable/nav_capsule_background"
     android:clipToOutline="true"
     android:elevation="4dp"
+    android:paddingStart="@dimen/ksu_nav_inner_padding"
+    android:paddingEnd="@dimen/ksu_nav_inner_padding"
     app:blurOverlayColor="@color/nav_frost_scrim">
 
-    <!-- 选中项共享滑动 pill（KernelSU-Next 果冻指示器）：声明在 BottomNavigationView
-         之前（FrameLayout z 序靠后），垫在图标下方；初始 invisible，由
-         MainActivity.setupNavPill() 完成首次定位后显示，避免在 x=0 处闪现。 -->
+    <!-- 选中 tab 滑动胶囊：声明在 BottomNavigationView 之前（FrameLayout z 序
+         靠后），垫在图标+标签下方；初始 invisible 且宽度 0，由
+         MainActivity.setupNavPill() 完成首次定位（宽度对齐选中 tab）后显示。
+         center_vertical 让它在 59dp 底栏里上下各留 6dp（Figma 47dp 胶囊）。 -->
     <View
         android:id="@+id/nav_active_pill"
-        android:layout_width="@dimen/ksu_nav_pill_width"
-        android:layout_height="@dimen/ksu_nav_pill_height"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/ksu_nav_tab_capsule_height"
         android:layout_gravity="start|center_vertical"
         android:background="@drawable/nav_active_pill_background"
         android:visibility="invisible" />
 
     <!-- itemActiveIndicatorStyle=@null：关闭 M3 每项各自的静态指示器，
-         避免与共享滑动 pill 叠加成双重高亮。
+         避免与共享滑动胶囊叠加成双重高亮。
          （注意：Material 无 itemActiveIndicatorEnabled 布尔属性，用置空样式实现。） -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav"
@@ -46,7 +49,11 @@
         android:background="@android:color/transparent"
         app:elevation="0dp"
         app:itemActiveIndicatorStyle="@null"
+        app:itemIconSize="@dimen/ksu_nav_tab_icon_size"
         app:itemIconTint="@color/nav_icon_tint"
-        app:labelVisibilityMode="unlabeled"
+        app:itemTextAppearanceActive="@style/TextAppearance.Ksu.NavLabel"
+        app:itemTextAppearanceInactive="@style/TextAppearance.Ksu.NavLabel"
+        app:itemTextColor="@color/nav_icon_tint"
+        app:labelVisibilityMode="labeled"
         app:menu="@menu/navigation_menu" />
 </moe.shizuku.blurview.BlurView>

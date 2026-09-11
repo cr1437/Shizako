@@ -17,23 +17,24 @@
     <!-- 信息卡行间距（KernelSU InfoCard 参照值） -->
     <dimen name="ksu_info_row_spacing">24dp</dimen>
 
-    <!-- 亚克力悬浮底部导航 -->
+    <!-- 亚克力悬浮底部导航（Figma「Home - Bottom」设计稿） -->
     <dimen name="ksu_nav_margin_horizontal">16dp</dimen>
     <dimen name="ksu_nav_margin_bottom">16dp</dimen>
-    <dimen name="ksu_nav_corner_radius">32dp</dimen>
-    <!-- 纯图标（无文字标签）导航栏高度：24dp 图标 + 上下各 12dp，比带标签的默认高度更小巧 -->
-    <dimen name="ksu_nav_height">48dp</dimen>
-    <!-- 选中项滑动 pill（KernelSU-Next 果冻指示器）：M3 指示器 64x32 的紧凑化适配 -->
-    <dimen name="ksu_nav_pill_width">56dp</dimen>
-    <dimen name="ksu_nav_pill_height">32dp</dimen>
-    <!-- pill 圆角 = 高度一半，呈全圆角胶囊 -->
-    <dimen name="ksu_nav_pill_corner_radius">16dp</dimen>
-    <!-- pill 顶缘高光厚度（填充层顶部让位距离） -->
-    <dimen name="ksu_nav_pill_highlight_inset">1dp</dimen>
-    <!-- pill 同色细描边宽度 -->
+    <!-- 底栏圆角：100dp 超出半高即全圆胶囊（Figma cornerRadius=100） -->
+    <dimen name="ksu_nav_corner_radius">100dp</dimen>
+    <!-- 底栏高度（Figma 59dp）：24dp 图标 + 10sp 标签 + 内边距 -->
+    <dimen name="ksu_nav_height">59dp</dimen>
+    <!-- 底栏内边距：选中胶囊与 tab 内容都相对它排布（Figma 6dp） -->
+    <dimen name="ksu_nav_inner_padding">6dp</dimen>
+    <!-- 选中胶囊高度（Figma 47dp = 59 - 2×6）：包裹选中 tab 的图标+标签，
+         宽度运行时对齐选中 tab（等分恒宽），切换 Tab 时水平滑过去 -->
+    <dimen name="ksu_nav_tab_capsule_height">47dp</dimen>
+    <!-- tab 图标尺寸（Figma 24dp） -->
+    <dimen name="ksu_nav_tab_icon_size">24dp</dimen>
+    <!-- 选中胶囊同色细描边宽度 -->
     <dimen name="ksu_nav_pill_stroke_width">1dp</dimen>
 
-    <!-- 内容底部预留：导航高(48) + 底部间距(16) + 手势条(至 32) + 悬浮余量，
+    <!-- 内容底部预留：导航高(59) + 底部间距(16) + 手势条(至 32) + 悬浮余量，
          厚手势条机型上也能完整露出列表末行，不被亚克力导航遮挡 -->
-    <dimen name="ksu_content_bottom_padding">104dp</dimen>
+    <dimen name="ksu_content_bottom_padding">115dp</dimen>
 </resources>

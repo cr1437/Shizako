@@ -1,19 +1,17 @@
 package moe.shizuku.manager
 
+import android.animation.ValueAnimator
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.PathInterpolator
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
-import androidx.dynamicanimation.animation.DynamicAnimation
-import androidx.dynamicanimation.animation.FloatPropertyCompat
-import androidx.dynamicanimation.animation.SpringAnimation
-import androidx.dynamicanimation.animation.SpringForce
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
@@ -55,23 +53,27 @@ class MainActivity : AppActivity() {
                 .putExtra(EXTRA_DESTINATION_ARGS, args)
                 .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
 
-        /** 顶层 Tab：底栏可见集合，同时是滑动 pill 的动画目标集合 */
+        /** 顶层 Tab：底栏可见集合，同时是滑动胶囊的动画目标集合 */
         private val TOP_LEVEL_TABS = setOf(
             R.id.home_fragment, R.id.apps_fragment,
             R.id.logs_fragment, R.id.settings_fragment
         )
+
+        /** 胶囊滑动时长（ms）：M3 推荐的中等时长，肉眼可辨又不拖沓 */
+        private const val PILL_SLIDE_DURATION = 280L
+
+        /** 胶囊首次出现淡入时长（ms） */
+        private const val PILL_FADE_IN_DURATION = 160L
+
+        /** M3 强调减速曲线（先快后慢、到位即停、无回弹），替代原弹簧动画 */
+        private val PILL_INTERPOLATOR = PathInterpolator(0.2f, 0f, 0f, 1f)
     }
 
     private var binding: ActivityMainBinding? = null
     private val appsModel by appsViewModel()
 
-    // 滑动 pill 弹簧动画实例（重建前先 cancel，避免快速连点时叠加打架）
-    private var pillSpringX: SpringAnimation? = null
-    private var pillSquashX: SpringAnimation? = null
-    private var pillSquashY: SpringAnimation? = null
-    private var iconBounceX: SpringAnimation? = null
-    private var iconBounceY: SpringAnimation? = null
-    private var lastBouncedIcon: View? = null
+    // 滑动胶囊位移动画实例（重建前先 cancel，快速连点时从当前位置继续滑，轨迹连续）
+    private var pillAnimator: ValueAnimator? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -173,7 +175,7 @@ class MainActivity : AppActivity() {
         val binding = binding ?: return
         // 关键：Material BottomNavigationView 的 applyWindowInsets() 会把系统手势条
         // inset 叠加为内部 padding（底 + 左右），用于传统贴底导航避让。悬浮胶囊已由
-        // applyNavCapsuleInsets 用外层 margin 避让；若不覆盖，48dp 固定高度会被 inset
+        // applyNavCapsuleInsets 用外层 margin 避让；若不覆盖，固定高度会被 inset
         // padding 吃掉，图标被竖直裁成一条（厚手势条机型必现）。这里替换为空实现，
         // insets 原样返回继续分发。
         ViewCompat.setOnApplyWindowInsetsListener(binding.navCapsule.nav) { _, insets -> insets }
@@ -195,84 +197,61 @@ class MainActivity : AppActivity() {
     }
 
     /**
-     * KernelSU-Next 同款「果冻弹簧」选中指示器：
-     * 共享 pill（nav_active_pill）在选中项之间弹簧滑动，替代 M3 每项各自的静态
-     * 指示器（布局中已关闭 itemActiveIndicator）。弹簧参数对齐 KernelSU-Next：
-     * 滑动 = 中弹性(0.5) + 低刚度(200)；切换瞬间 pill 横向拉伸(1.3/0.75)再回弹，
-     * 模拟果冻质感；选中图标附加一次 1.25→1 缩放弹跳（对应 KSU-Next 拖 pill 的 1.1 放大）。
+     * 选中胶囊（Figma「Home - Bottom」：全圆角玻璃胶囊包裹选中 tab 的图标+标签）：
+     * 共享胶囊宽度对齐选中 tab（等分恒宽），切换 Tab 时沿水平方向平滑滑过去，
+     * 替代 M3 每项各自的静态指示器（布局中已关闭 itemActiveIndicator）。
      * 由 OnDestinationChanged 驱动，不触碰 NavigationUI 设置的 ItemSelectedListener，
      * menu / 徽标 / 日志 Tab 显隐逻辑完全不受影响。
+     * 动画用 ValueAnimator + M3 强调减速曲线：匀速率滑动、到位即停，无弹簧回弹。
      */
     private fun setupNavPill(navController: NavController) {
         val binding = binding ?: return
         val nav = binding.navCapsule.nav
         val pill = binding.navCapsule.navActivePill
 
-        // pill 目标 x：选中 itemView 的水平中心（itemView 相对 nav，nav 与 BlurView 左对齐）
-        fun targetX(itemId: Int): Float? {
+        // 胶囊目标 x：胶囊与 nav 同为 BlurView 直接子视图（布局原点一致），
+        // translationX 直接取 nav.left + itemView.left；宽度对齐选中 tab（等分恒宽）。
+        // 目标 tab 不在栏内（例如隐藏日志后通过 intent 进入）时返回 null。
+        fun capsuleTarget(itemId: Int): Float? {
             val itemView = nav.findViewById<View>(itemId) ?: return null
-            if (itemView.width == 0 || pill.width == 0) return null
-            return itemView.left + itemView.width / 2f - pill.width / 2f
+            if (itemView.width == 0) return null
+            if (pill.layoutParams.width != itemView.width) {
+                pill.updateLayoutParams { width = itemView.width }
+            }
+            return nav.left + itemView.left.toFloat()
         }
 
+        // 无动画对齐：首次定位，及旋转屏幕 / 日志 Tab 显隐（removeItem）等布局变化时
         fun snapToSelection() {
-            val target = targetX(nav.selectedItemId) ?: return
-            pillSpringX?.cancel()
+            val target = capsuleTarget(nav.selectedItemId) ?: return
+            pillAnimator?.cancel()
             pill.translationX = target
-            if (!pill.isVisible) pill.isVisible = true
+            if (!pill.isVisible) {
+                // 首次出现淡入，避免硬切
+                pill.alpha = 0f
+                pill.isVisible = true
+                pill.animate().alpha(1f).setDuration(PILL_FADE_IN_DURATION).start()
+            }
         }
 
-        // 首次定位；之后旋转屏幕 / 日志 Tab 显隐（removeItem）等布局变化时无动画对齐
         nav.doOnPreDraw { snapToSelection() }
         nav.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ -> snapToSelection() }
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id !in TOP_LEVEL_TABS) return@addOnDestinationChangedListener
-            val target = targetX(destination.id) ?: return@addOnDestinationChangedListener
+            val target = capsuleTarget(destination.id) ?: return@addOnDestinationChangedListener
 
             pill.isVisible = true
-            // 弹簧滑动（KernelSU-Next：MediumBouncy + StiffnessLow）
-            pillSpringX?.cancel()
-            pillSpringX = SpringAnimation(pill, DynamicAnimation.TRANSLATION_X).apply {
-                spring = SpringForce(target).apply {
-                    dampingRatio = SpringForce.DAMPING_RATIO_MEDIUM_BOUNCY
-                    stiffness = SpringForce.STIFFNESS_LOW
-                }
+            // 滑块切换：从当前位置匀速率滑向目标 tab（不跳动、不瞬移、无回弹）。
+            // 连点时 cancel 后从当前位置重新起滑，轨迹始终连续。
+            pillAnimator?.cancel()
+            pillAnimator = ValueAnimator.ofFloat(pill.translationX, target).apply {
+                duration = PILL_SLIDE_DURATION
+                interpolator = PILL_INTERPOLATOR
+                addUpdateListener { pill.translationX = it.animatedValue as Float }
                 start()
             }
-            // 果冻挤压回弹
-            pillSquashX?.cancel(); pillSquashY?.cancel()
-            pill.scaleX = 1.3f; pill.scaleY = 0.75f
-            pillSquashX = springBack(pill, DynamicAnimation.SCALE_X)
-            pillSquashY = springBack(pill, DynamicAnimation.SCALE_Y)
-            // 选中图标弹跳
-            bounceNavIcon(nav, destination.id)
         }
-    }
-
-    /** 属性弹簧回 1（中弹性 0.5 + 低刚度 200，与 KernelSU-Next 底栏滑动参数一致）。
-        注意：SpringForce 只有 HIGH/MEDIUM/LOW/VERY_LOW，没有 STIFFNESS_MEDIUM_LOW。 */
-    private fun springBack(view: View, property: FloatPropertyCompat<View>): SpringAnimation =
-        SpringAnimation(view, property).apply {
-            spring = SpringForce(1f).apply {
-                dampingRatio = SpringForce.DAMPING_RATIO_MEDIUM_BOUNCY
-                stiffness = SpringForce.STIFFNESS_LOW
-            }
-            start()
-        }
-
-    /** 选中项图标 1.25→1 缩放弹跳；上一个图标的动画先取消并复位，避免连点残留放大态 */
-    private fun bounceNavIcon(nav: NavigationBarView, itemId: Int) {
-        iconBounceX?.cancel(); iconBounceY?.cancel()
-        lastBouncedIcon?.let { it.scaleX = 1f; it.scaleY = 1f }
-        val itemView = nav.findViewById<View>(itemId) ?: return
-        val icon = itemView.findViewById<View>(
-            com.google.android.material.R.id.navigation_bar_item_icon_view
-        ) ?: return
-        icon.scaleX = 1.25f; icon.scaleY = 1.25f
-        iconBounceX = springBack(icon, DynamicAnimation.SCALE_X)
-        iconBounceY = springBack(icon, DynamicAnimation.SCALE_Y)
-        lastBouncedIcon = icon
     }
 
     /** 自定义功能：设置里可隐藏「日志」Tab（切换后设置页会 recreate 本 Activity 生效） */
@@ -312,11 +291,9 @@ class MainActivity : AppActivity() {
     }
 
     override fun onDestroy() {
-        // 释放进行中的弹簧动画，避免泄漏已销毁的视图引用
-        pillSpringX?.cancel()
-        pillSquashX?.cancel(); pillSquashY?.cancel()
-        iconBounceX?.cancel(); iconBounceY?.cancel()
-        lastBouncedIcon = null
+        // 释放进行中的位移动画，避免泄漏已销毁的视图引用
+        pillAnimator?.cancel()
+        pillAnimator = null
         super.onDestroy()
         binding = null
     }

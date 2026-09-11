@@ -17,17 +17,10 @@
     <string name="home_adb_button_view_command">查看指令</string>
     <string name="home_adb_dialog_view_command_message"><![CDATA[<font face="monospace">%1$s</font><br><br>* 还有一些其他注意事项，请确认你已阅读帮助。]]></string>
 
-    <!-- Dhizuku（Device Owner） -->
-    <string name="home_dhizuku_title">让她当上设备所有者</string>
-    <string name="home_dhizuku_description">一条命令把 Shizako酱 扶上「设备所有者」的宝座，之后不用 Root、不用守着无线调试，她的特权一直都在。支持 Dhizuku 的应用（比如 Hail、冰箱）可以直接借用她的力量。</string>
-    <string name="home_dhizuku_description_active">设备所有者模式已生效～ 授权过的应用可以借用 Shizako酱 的特权啦，不想借了随时可以收回。</string>
+    <!-- Dhizuku（Device Owner），一站式激活卡片在用 -->
     <string name="home_dhizuku_button_view_command">查看指令</string>
-    <string name="home_dhizuku_button_manage">已授权的应用</string>
-    <string name="home_dhizuku_button_activate">一键激活</string>
-    <string name="home_dhizuku_button_activating">激活中…</string>
     <string name="home_dhizuku_activate_success">设备所有者模式激活成功啦～</string>
     <string name="home_dhizuku_activate_failed">激活失败：%1$s</string>
-    <string name="home_dhizuku_description_ready">Shizuku 模式正在运行，主人点一下就能让 Shizako酱 当上设备所有者，不用电脑～</string>
     <string name="home_dhizuku_dialog_view_command_message"><![CDATA[<font face="monospace">%1$s</font><br><br>* 用电脑执行一次即可（需开启 USB 调试）。设备上不能存在任何账户，否则命令会失败。]]></string>
     <string name="dhizuku_device_owner_label">Shizako（设备所有者）</string>
     <string name="dhizuku_device_owner_desc">Dhizuku 模式需要：让 Shizako酱 把设备所有者特权分享给已授权的应用。</string>
@@ -94,40 +87,85 @@
     <string name="settings_crash_logs_delete_all">全部删除</string>
     <string name="settings_crash_logs_deleted">已删除</string>
 
-    <!-- One-click activation -->
-    <string name="activation_title">一键注入</string>
-    <string name="activation_subtitle">让 Shizako酱替主人执行那些原本需要电脑的指令</string>
-    <string name="activation_service_running">Shizako 已运行，可以注入</string>
-    <string name="activation_service_running_brief">Shizako 已运行</string>
-    <string name="activation_service_not_running">Shizako 未运行，请先回到主页启动服务</string>
-    <string name="activation_activate">注入</string>
-    <string name="activation_download">下载</string>
-    <string name="activation_downloading">下载中，稍等哦～</string>
-    <string name="activation_download_failed">下载失败了，主人再试一次吧</string>
-    <string name="activation_error_multiple_users">设备上还有多用户（访客模式/应用双开），先去设置里移除再注入哦</string>
-    <string name="activation_error_multiple_accounts">设备上还有账户，先去设置里移除再注入（注入后可以加回来）</string>
-    <string name="activation_activated">已注入</string>
-    <string name="activation_status_not_installed">%1$s · 未安装</string>
-    <string name="activation_status_installed">%1$s · 已安装</string>
-    <string name="activation_status_activated">%1$s · 已注入</string>
-    <string name="activation_status_not_activated">%1$s · 已安装，未注入</string>
-    <string name="activation_status_checking">%1$s</string>
-    <string name="activation_note_device_owner">需要先移除设备上的全部账号与多用户（访客模式/应用双开）。注意：炼妖壶（Island）会创建「壶中界」工作空间，它也算多用户——想注入设备所有者就得先删掉它，两者只能留一个。注入后可以恢复其他账号。部分厂商系统可能有兼容性限制。</string>
-    <string name="activation_note_brevent">黑域每次重启后都要重新注入哦，主人别忘了~</string>
-    <string name="activation_custom_title">自己动手</string>
-    <string name="activation_custom_hint">想对Shizako酱做什么都可以哦，输入命令吧…</string>
-    <string name="activation_custom_empty">主人还没输入命令呢~</string>
-    <string name="activation_run">开始调教</string>
-    <string name="activation_running">Shizako酱正在努力中…</string>
-    <string name="activation_success">注入成功，主人真厉害</string>
-    <string name="activation_failed">呜呜…注入失败了，看看下面哪里出错了</string>
-    <string name="activation_failed_with_code">呜呜…注入失败（码 %1$d），Shizako酱也不知道为什么</string>
-    <string name="activation_timeout">还在跑呢，不等了（服务型的不用等哦）</string>
-    <string name="activation_output">反馈</string>
-    <string name="activation_output_empty">（还没有反馈呢，主人先注入吧~）</string>
-    <string name="activation_copy">复制</string>
-    <string name="activation_copied">已复制</string>
-    <string name="activation_back">返回</string>
+    <!-- 首页：一站式激活 -->
+    <string name="home_activation_hub_title">一站式激活</string>
+    <string name="home_activation_hub_desc">挑一种方式唤醒 Shizako酱，或者让她直接当上设备所有者（Dhizuku）。</string>
+    <string name="activation_hub_desc_running">Shizako酱 正在待命，点一下就能激活设备所有者模式。</string>
+    <string name="activation_hub_desc_not_running">Shizako酱 还没醒呢，从下面挑一种方式叫醒她吧～</string>
+    <string name="activation_method_dhizuku">Dhizuku（设备所有者）</string>
+    <string name="activation_method_dhizuku_desc">让 Shizako酱 当上设备所有者，授权应用不用 Root、不用守着无线调试也能借用她的特权。</string>
+    <string name="activation_method_root">Root</string>
+    <string name="activation_method_root_desc">设备已有 Root 权限时，直接启动。</string>
+    <string name="activation_method_wireless_adb">无线调试</string>
+    <string name="activation_method_wireless_adb_desc">Android 11 及以上可以在本机通过无线调试启动，不用电脑。</string>
+    <string name="activation_method_adb">电脑 ADB</string>
+    <string name="activation_method_adb_desc">在电脑上执行一次启动命令（需开启 USB 调试）。</string>
+    <string name="activation_method_status_active">已激活</string>
+    <string name="activation_method_action_activate">激活</string>
+    <string name="activation_method_action_view_command">查看指令</string>
+    <string name="activation_method_action_start">启动</string>
+    <string name="activation_hub_details">详细指南</string>
+
+    <!-- 一站式激活详细页 -->
+    <string name="activation_page_title">一站式激活</string>
+    <string name="activation_section_status">当前状态</string>
+    <string name="activation_status_service">Shizako 服务</string>
+    <string name="activation_status_dhizuku">设备所有者（Dhizuku）</string>
+    <string name="activation_status_not_running">未运行</string>
+    <string name="activation_status_running_root">运行中（root）</string>
+    <string name="activation_status_running_adb">运行中（adb）</string>
+    <string name="activation_status_activated">已激活</string>
+    <string name="activation_status_not_activated">未激活</string>
+    <string name="activation_tag_easiest">最省事</string>
+    <string name="activation_tag_android11">Android 11+</string>
+    <string name="activation_tag_computer">需要电脑</string>
+    <string name="activation_tag_persistent">重启不失效</string>
+    <string name="activation_root_desc_detail">设备已经有 Root 权限的话，这是最省事的方式：授予超级用户权限后直接启动。</string>
+    <string name="activation_root_steps">1. 点下方「启动」\n2. 在弹窗中授予超级用户权限\n3. 等待服务运行即可</string>
+    <string name="activation_wadb_desc_detail">Android 11 及以上可以完全不靠电脑，在本机通过「无线调试」启动 Shizako酱。整个流程都在悬浮于系统设置之上的悬浮窗里完成，不用来回切换应用。</string>
+    <string name="activation_wadb_steps">1. 点下方「悬浮窗配对」，并授予「显示在其他应用上层」权限\n2. 在打开的开发者选项里开启「无线调试」\n3. 点「使用配对码配对设备」，屏幕上会显示 6 位配对码\n4. 在悬浮窗里输入配对码，剩下的配对、连接、启动全部自动完成</string>
+    <string name="activation_wadb_action_float_pair">悬浮窗配对</string>
+    <string name="activation_wadb_action_open_settings">打开开发者选项</string>
+    <string name="activation_adb_desc_detail">手边有电脑的话，开启 USB 调试后执行一次启动命令即可。</string>
+    <string name="activation_adb_steps">1. 在开发者选项中开启 USB 调试并连接电脑\n2. 复制下面的命令，在电脑终端（adb）里执行\n3. 服务立即启动，无需 Root</string>
+    <string name="activation_adb_action_copy">复制命令</string>
+    <string name="activation_adb_action_send">发送到…</string>
+    <string name="activation_dhizuku_desc_detail">让 Shizako酱 成为设备所有者。之后授权的应用随时可以借用她的特权——不用 Root，也不用一直开着无线调试，重启手机也不会失效。</string>
+    <string name="activation_dhizuku_steps">服务运行中：点下方「激活」，一键搞定。\n服务未运行：点「查看指令」，在电脑上执行一次即可。</string>
+    <string name="activation_dhizuku_warning">注意：激活前需要移除设备上的所有账号，否则命令会失败；激活后「查找设备」等部分功能可能受影响。</string>
+    <string name="activation_dhizuku_activating">激活中…</string>
+    <string name="activation_section_faq">常见问题</string>
+    <string name="activation_faq_reboot_q">重启手机后需要重新激活吗？</string>
+    <string name="activation_faq_reboot_a">Root：需要，每次开机后重新启动（或在设置里开启「开机启动」）。无线调试 / 电脑 ADB：需要，重启后服务会停止。Dhizuku：不需要，设备所有者身份重启后依然有效。</string>
+    <string name="activation_faq_which_q">我该选哪种方式？</string>
+    <string name="activation_faq_which_a">有 Root 就用 Root；Android 11+ 且没电脑就用无线调试；手边有电脑就用电脑 ADB；想一劳永逸、重启不失效就用 Dhizuku。</string>
+    <string name="activation_faq_fail_q">配对或启动失败怎么办？</string>
+    <string name="activation_faq_fail_a">确认「无线调试」还开着（部分系统锁屏后会自动关闭）；确认输入的是当前界面上最新显示的配对码和端口；MIUI 还需要额外开启「USB 调试（安全设置）」。</string>
+
+    <!-- 无线调试悬浮配对窗（替代通知栏输入） -->
+    <string name="floating_pair_title">无线调试配对</string>
+    <string name="floating_pair_hint_code">6 位配对码</string>
+    <string name="floating_pair_hint_port">端口</string>
+    <string name="floating_pair_action_pair">配对并启动</string>
+    <string name="floating_pair_action_start">启动</string>
+    <string name="floating_pair_hint_steps">在系统设置里打开「无线调试」→「使用配对码配对设备」，把显示的配对码填到这里。按住标题栏可以拖动本窗口。</string>
+    <string name="floating_pair_status_discovering">正在搜索配对服务…</string>
+    <string name="floating_pair_status_ready">已找到配对服务，请输入 6 位配对码</string>
+    <string name="floating_pair_status_pairing">正在配对…</string>
+    <string name="floating_pair_status_paired">配对成功，正在查找连接端口…</string>
+    <string name="floating_pair_status_starting">正在启动 Shizako酱…</string>
+    <string name="floating_pair_status_success">完成！Shizako酱 已经跑起来了～</string>
+    <string name="floating_pair_status_timeout">还在搜索…请确认配对码对话框已打开</string>
+    <string name="floating_pair_status_failed">失败：%1$s</string>
+    <string name="floating_pair_status_failed_unknown">失败了，请重试</string>
+    <string name="floating_pair_error_code">请输入 6 位配对码</string>
+    <string name="floating_pair_error_port">请输入正确的端口（1–65535）</string>
+    <string name="floating_pair_no_overlay_permission">还没有「显示在其他应用上层」权限，无法显示悬浮窗</string>
+    <string name="floating_pair_toast_started">悬浮窗已显示，请在打开的设置页里开启「无线调试」</string>
+    <string name="floating_pair_overlay_dialog_title">需要悬浮窗权限</string>
+    <string name="floating_pair_overlay_dialog_message">配对码会直接输入在悬浮于系统设置之上的悬浮窗里，不用来回切换应用。请先授予「显示在其他应用上层」权限。</string>
+    <string name="floating_pair_overlay_dialog_grant">去授权</string>
+    <string name="close">关闭</string>
 
     <!-- Quick settings tiles -->
     <string name="tile_service_label">Shizako酱服务</string>

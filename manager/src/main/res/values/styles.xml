@@ -144,4 +144,9 @@
         <item name="cardBackgroundColor">?ksuSectionBackground</item>
     </style>
 
+    <!-- 底栏 tab 标签（Figma「Home - Bottom」设计稿：10sp） -->
+    <style name="TextAppearance.Ksu.NavLabel" parent="TextAppearance.Material3.LabelSmall">
+        <item name="android:textSize">10sp</item>
+    </style>
+
 </resources>

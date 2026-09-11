@@ -1,54 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- One-click activation page. The content scrolls under the frosted app bar
-     (added by AppBarActivity), so the scroll view is padded by the action
-     bar size instead of being constrained below it. -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- 一站式激活详细页：状态总览 + 四种激活方式（每种含详细步骤与操作）+ 常见问题。
+     由 ActivationFragment 驱动，替代旧的通知栏配对/分散入口。 -->
+<rikka.widget.borderview.BorderNestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scrollView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:scrollbars="vertical"
+    app:borderBottomVisibility="never"
+    app:borderTopDrawable="@null"
+    app:borderTopVisibility="whenTop">
 
-    <rikka.widget.borderview.BorderNestedScrollView
-        android:id="@+id/scroll"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:clipChildren="false"
         android:clipToPadding="false"
-                android:scrollbarStyle="insideOverlay"
-        android:scrollbars="vertical"
-        app:borderBottomVisibility="never"
-        app:borderTopDrawable="@null"
-        app:borderTopVisibility="whenTop"
-        app:fitsSystemWindowsInsets="bottom">
+        android:orientation="vertical"
+        android:paddingStart="?android:listPreferredItemPaddingStart"
+        android:paddingTop="?actionBarSize"
+        android:paddingEnd="?android:listPreferredItemPaddingEnd"
+        android:paddingBottom="16dp"
+        app:fitsSystemWindowsInsets="bottom|top">
 
-        <LinearLayout
+        <!-- ══════════ 当前状态 ══════════ -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/FilledCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingStart="@dimen/rd_activity_horizontal_margin"
-            android:paddingEnd="@dimen/rd_activity_horizontal_margin"
-            android:paddingBottom="32dp">
+            android:layout_marginTop="8dp">
 
-            <!-- Page intro -->
-            <TextView
-                android:id="@+id/page_subtitle"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/activation_subtitle"
-                android:textAppearance="?textAppearanceBodyMedium"
-                android:textColor="?android:textColorSecondary" />
+                android:orientation="vertical"
+                android:padding="16dp">
 
-            <!-- Service status banner: green dot while the Shizaku
-                 service runs, red when it is stopped. Updated live via
-                 the binder listeners. -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/status_card"
-                style="?attr/materialCardViewFilledStyle"
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/activation_section_status"
+                    android:textAppearance="?textAppearanceTitleMedium" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/activation_status_service"
+                        android:textAppearance="?textAppearanceBodyMedium"
+                        android:textColor="?colorOnSurfaceVariant" />
+
+                    <TextView
+                        android:id="@+id/status_service_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?textAppearanceBodyMedium"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/activation_status_dhizuku"
+                        android:textAppearance="?textAppearanceBodyMedium"
+                        android:textColor="?colorOnSurfaceVariant" />
+
+                    <TextView
+                        android:id="@+id/status_dhizuku_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?textAppearanceBodyMedium"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- ══════════ 方式一 · Root ══════════ -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/method_root"
+            style="@style/FilledCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                app:cardBackgroundColor="?colorSurfaceContainer"
-                app:cardElevation="0dp"
-                app:contentPadding="16dp">
+                android:orientation="vertical"
+                android:padding="16dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -56,141 +108,400 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <View
-                        android:id="@+id/status_dot"
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        android:background="@drawable/shape_status_dot"
-                        android:importantForAccessibility="no" />
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:importantForAccessibility="no"
+                        android:padding="4dp"
+                        android:src="@drawable/ic_root_24dp"
+                        app:tint="?colorPrimary" />
 
                     <TextView
-                        android:id="@+id/status_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="12dp"
                         android:layout_weight="1"
-                        android:text="@string/activation_service_not_running"
-                        android:textAppearance="?textAppearanceBodyMedium" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- Indeterminate progress bar shown while a command is
-                 executing on the server. -->
-            <com.google.android.material.progressindicator.LinearProgressIndicator
-                android:id="@+id/running_indicator"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:indeterminate="true"
-                android:visibility="gone"
-                app:trackCornerRadius="3dp" />
-
-            <!-- Target cards -->
-            <LinearLayout
-                android:id="@+id/targets_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" />
-
-            <!-- Custom command section -->
-            <com.google.android.material.card.MaterialCardView
-                style="?attr/materialCardViewFilledStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                app:cardBackgroundColor="?colorSurfaceContainer"
-                app:cardElevation="0dp"
-                app:contentPadding="16dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/activation_custom_title"
+                        android:text="@string/activation_method_root"
                         android:textAppearance="?textAppearanceTitleMedium" />
 
-                    <EditText
-                        android:id="@+id/custom_command"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:background="@null"
-                        android:fontFamily="monospace"
-                        android:hint="@string/activation_custom_hint"
-                        android:imeOptions="actionDone"
-                        android:importantForAutofill="no"
-                        android:inputType="textMultiLine|textNoSuggestions"
-                        android:minLines="2"
-                        android:padding="12dp"
-                        android:textSize="12sp" />
-
-                    <Button
-                        android:id="@+id/custom_run"
-                        style="?materialButtonOutlinedStyle"
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/activation_run" />
+                        android:background="@drawable/activation_tag_background"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="2dp"
+                        android:text="@string/activation_tag_easiest"
+                        android:textAppearance="?textAppearanceLabelSmall"
+                        android:textColor="?colorOnSecondaryContainer" />
                 </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
 
-            <!-- Output section -->
-            <com.google.android.material.card.MaterialCardView
-                style="?attr/materialCardViewFilledStyle"
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/activation_root_desc_detail"
+                    android:textAppearance="?textAppearanceBodyMedium" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/activation_root_steps"
+                    android:textAppearance="?textAppearanceBodyMedium"
+                    android:textColor="?colorOnSurfaceVariant" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/root_start_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/activation_method_action_start" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- ══════════ 方式二 · 无线调试 ══════════ -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/method_wadb"
+            style="@style/FilledCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                app:cardBackgroundColor="?colorSurfaceContainer"
-                app:cardElevation="0dp"
-                app:contentPadding="16dp">
+                android:orientation="vertical"
+                android:padding="16dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/activation_output"
-                            android:textAppearance="?textAppearanceTitleMedium" />
-
-                        <Button
-                            android:id="@+id/output_copy"
-                            style="?borderlessButtonStyle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:minWidth="0dp"
-                            android:text="@string/activation_copy"
-                            android:textSize="13sp" />
-                    </LinearLayout>
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:importantForAccessibility="no"
+                        android:padding="4dp"
+                        android:src="@drawable/ic_wireless_adb_24dp"
+                        app:tint="?colorPrimary" />
 
                     <TextView
-                        android:id="@+id/output_view"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:fontFamily="monospace"
-                        android:lineSpacingExtra="2dp"
-                        android:minHeight="48dp"
-                        android:text="@string/activation_output_empty"
-                        android:textAppearance="?textAppearanceBodySmall"
-                        android:textIsSelectable="true" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:text="@string/activation_method_wireless_adb"
+                        android:textAppearance="?textAppearanceTitleMedium" />
 
-        </LinearLayout>
-    </rikka.widget.borderview.BorderNestedScrollView>
-</FrameLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/activation_tag_background"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="2dp"
+                        android:text="@string/activation_tag_android11"
+                        android:textAppearance="?textAppearanceLabelSmall"
+                        android:textColor="?colorOnSecondaryContainer" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/activation_wadb_desc_detail"
+                    android:textAppearance="?textAppearanceBodyMedium" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/activation_wadb_steps"
+                    android:textAppearance="?textAppearanceBodyMedium"
+                    android:textColor="?colorOnSurfaceVariant" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/wadb_pair_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/activation_wadb_action_float_pair" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/wadb_settings_button"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/activation_wadb_action_open_settings" />
+
+                <TextView
+                    android:id="@+id/wadb_miui_note"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/adb_pairing_tutorial_content_miui"
+                    android:textAppearance="?textAppearanceBodySmall"
+                    android:textColor="?colorError"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- ══════════ 方式三 · 电脑 ADB ══════════ -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/method_adb"
+            style="@style/FilledCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:importantForAccessibility="no"
+                        android:padding="4dp"
+                        android:src="@drawable/ic_adb_24dp"
+                        app:tint="?colorPrimary" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:text="@string/activation_method_adb"
+                        android:textAppearance="?textAppearanceTitleMedium" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/activation_tag_background"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="2dp"
+                        android:text="@string/activation_tag_computer"
+                        android:textAppearance="?textAppearanceLabelSmall"
+                        android:textColor="?colorOnSecondaryContainer" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/activation_adb_desc_detail"
+                    android:textAppearance="?textAppearanceBodyMedium" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/activation_adb_steps"
+                    android:textAppearance="?textAppearanceBodyMedium"
+                    android:textColor="?colorOnSurfaceVariant" />
+
+                <TextView
+                    android:id="@+id/adb_command"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/activation_command_background"
+                    android:fontFamily="monospace"
+                    android:padding="12dp"
+                    android:textAppearance="?textAppearanceBodySmall"
+                    android:textIsSelectable="true" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/adb_copy_button"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/activation_adb_action_copy" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/adb_send_button"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:text="@string/activation_adb_action_send" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- ══════════ 方式四 · Dhizuku（设备所有者） ══════════ -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/method_dhizuku"
+            style="@style/FilledCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:importantForAccessibility="no"
+                        android:padding="4dp"
+                        android:src="@drawable/ic_dhizuku_24dp"
+                        app:tint="?colorPrimary" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:text="@string/activation_method_dhizuku"
+                        android:textAppearance="?textAppearanceTitleMedium" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/activation_tag_background"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="2dp"
+                        android:text="@string/activation_tag_persistent"
+                        android:textAppearance="?textAppearanceLabelSmall"
+                        android:textColor="?colorOnSecondaryContainer" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/activation_dhizuku_desc_detail"
+                    android:textAppearance="?textAppearanceBodyMedium" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/activation_dhizuku_steps"
+                    android:textAppearance="?textAppearanceBodyMedium"
+                    android:textColor="?colorOnSurfaceVariant" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/activation_dhizuku_warning"
+                    android:textAppearance="?textAppearanceBodySmall"
+                    android:textColor="?colorError" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/dhizuku_activate_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/activation_method_action_activate" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/dhizuku_command_button"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/activation_method_action_view_command" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- ══════════ 常见问题 ══════════ -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/FilledCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/activation_section_faq"
+                    android:textAppearance="?textAppearanceTitleMedium" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/activation_faq_reboot_q"
+                    android:textAppearance="?textAppearanceBodyMedium"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/activation_faq_reboot_a"
+                    android:textAppearance="?textAppearanceBodyMedium"
+                    android:textColor="?colorOnSurfaceVariant" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/activation_faq_which_q"
+                    android:textAppearance="?textAppearanceBodyMedium"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/activation_faq_which_a"
+                    android:textAppearance="?textAppearanceBodyMedium"
+                    android:textColor="?colorOnSurfaceVariant" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/activation_faq_fail_q"
+                    android:textAppearance="?textAppearanceBodyMedium"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/activation_faq_fail_a"
+                    android:textAppearance="?textAppearanceBodyMedium"
+                    android:textColor="?colorOnSurfaceVariant" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+</rikka.widget.borderview.BorderNestedScrollView>

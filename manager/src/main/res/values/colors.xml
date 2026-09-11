@@ -17,11 +17,6 @@
          夜间变体在 values-night/colors.xml。 -->
     <color name="nav_frost_scrim">#B3FFFFFF</color>
 
-    <!-- 选中 pill 顶缘镜面高光：白色 45%，玻璃上缘的反光；
-         该层垫在薄纱填充之下，45% 保证混合后不发白、顶缘仍可见。
-         夜间变体在 values-night/colors.xml（降为 25% 避免过亮）。 -->
-    <color name="nav_pill_specular">#73FFFFFF</color>
-
     <!-- One-click activation: service banner dot and output result lines.
          Night variants live in values-night/colors.xml. -->
     <color name="activation_status_active">#2E7D32</color>
