@@ -38,7 +38,7 @@
                 android:layout_marginTop="24dp"
                 android:text="@string/setup_welcome_title"
                 android:textAppearance="?textAppearanceHeadlineMedium"
-                android:textColor="?android:textColorPrimary" />
+                android:textColor="?attr/colorOnSurface" />
 
             <TextView
                 android:id="@+id/welcome_subtitle"
@@ -48,7 +48,7 @@
                 android:gravity="center"
                 android:text="@string/setup_welcome_subtitle"
                 android:textAppearance="?textAppearanceBodyMedium"
-                android:textColor="?android:textColorSecondary" />
+                android:textColor="?attr/colorOnSurfaceVariant" />
         </LinearLayout>
 
         <!-- Step 2: disclaimer. The Next button stays disabled until the
@@ -76,7 +76,7 @@
                     android:layout_marginTop="32dp"
                     android:text="@string/setup_disclaimer_title"
                     android:textAppearance="?textAppearanceHeadlineSmall"
-                    android:textColor="?android:textColorPrimary" />
+                    android:textColor="?attr/colorOnSurface" />
 
                 <TextView
                     android:id="@+id/disclaimer_text"
@@ -86,7 +86,7 @@
                     android:lineSpacingExtra="4dp"
                     android:text="@string/setup_disclaimer_text"
                     android:textAppearance="?textAppearanceBodyMedium"
-                    android:textColor="?android:textColorSecondary" />
+                    android:textColor="?attr/colorOnSurfaceVariant" />
 
                 <com.google.android.material.checkbox.MaterialCheckBox
                     android:id="@+id/disclaimer_agree"
@@ -114,7 +114,7 @@
             android:layout_marginTop="32dp"
             android:text="@string/setup_language_title"
             android:textAppearance="?textAppearanceHeadlineSmall"
-            android:textColor="?android:textColorPrimary" />
+            android:textColor="?attr/colorOnSurface" />
 
         <TextView
             android:layout_width="match_parent"
@@ -122,7 +122,7 @@
             android:layout_marginTop="4dp"
             android:text="@string/setup_language_subtitle"
             android:textAppearance="?textAppearanceBodyMedium"
-            android:textColor="?android:textColorSecondary" />
+            android:textColor="?attr/colorOnSurfaceVariant" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/language_list"
@@ -159,7 +159,7 @@
                     android:layout_marginTop="32dp"
                     android:text="@string/settings_user_interface"
                     android:textAppearance="?textAppearanceHeadlineSmall"
-                    android:textColor="?android:textColorPrimary" />
+                    android:textColor="?attr/colorOnSurface" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -167,7 +167,7 @@
                 android:layout_marginTop="4dp"
                 android:text="@string/setup_mode_subtitle"
                 android:textAppearance="?textAppearanceBodyMedium"
-                android:textColor="?android:textColorSecondary" />
+                android:textColor="?attr/colorOnSurfaceVariant" />
 
             <RadioGroup
                 android:id="@+id/night_mode_group"
@@ -288,7 +288,7 @@
                     android:layout_marginTop="32dp"
                     android:text="@string/setup_start_method_title"
                     android:textAppearance="?textAppearanceHeadlineSmall"
-                    android:textColor="?android:textColorPrimary" />
+                    android:textColor="?attr/colorOnSurface" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -296,7 +296,7 @@
                     android:layout_marginTop="4dp"
                     android:text="@string/setup_start_method_subtitle"
                     android:textAppearance="?textAppearanceBodyMedium"
-                    android:textColor="?android:textColorSecondary" />
+                    android:textColor="?attr/colorOnSurfaceVariant" />
 
                 <RadioGroup
                     android:id="@+id/start_method_group"
@@ -449,7 +449,7 @@
                     android:layout_marginTop="32dp"
                     android:text="@string/setup_activate_title"
                     android:textAppearance="?textAppearanceHeadlineSmall"
-                    android:textColor="?android:textColorPrimary" />
+                    android:textColor="?attr/colorOnSurface" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -457,7 +457,7 @@
                     android:layout_marginTop="4dp"
                     android:text="@string/setup_activate_subtitle"
                     android:textAppearance="?textAppearanceBodyMedium"
-                    android:textColor="?android:textColorSecondary" />
+                    android:textColor="?attr/colorOnSurfaceVariant" />
 
                 <!-- Live service status card -->
                 <com.google.android.material.card.MaterialCardView
@@ -488,7 +488,7 @@
                             android:layout_weight="1"
                             android:text="@string/setup_activate_not_running"
                             android:textAppearance="?textAppearanceBodyMedium"
-                            android:textColor="?android:textColorPrimary" />
+                            android:textColor="?attr/colorOnSurface" />
 
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
@@ -503,7 +503,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/activate_command_button"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    style="?attr/materialButtonOutlinedStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -512,7 +512,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/activate_dhizuku_button"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    style="?attr/materialButtonOutlinedStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -526,7 +526,7 @@
                     android:layout_marginTop="12dp"
                     android:text="@string/setup_activate_hint"
                     android:textAppearance="?textAppearanceBodySmall"
-                    android:textColor="?android:textColorSecondary" />
+                    android:textColor="?attr/colorOnSurfaceVariant" />
 
             </LinearLayout>
         </ScrollView>
@@ -553,7 +553,7 @@
                 android:layout_marginTop="24dp"
                 android:text="@string/setup_finish_title"
                 android:textAppearance="?textAppearanceHeadlineMedium"
-                android:textColor="?android:textColorPrimary" />
+                android:textColor="?attr/colorOnSurface" />
 
             <TextView
                 android:id="@+id/finish_summary"
@@ -563,7 +563,7 @@
                 android:gravity="center"
                 android:text="@string/setup_finish_summary"
                 android:textAppearance="?textAppearanceBodyMedium"
-                android:textColor="?android:textColorSecondary" />
+                android:textColor="?attr/colorOnSurfaceVariant" />
 
         </LinearLayout>
     </FrameLayout>
@@ -578,7 +578,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/skip_button"
-            style="@style/Widget.Material3.Button.TextButton"
+            style="?attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/setup_skip" />
@@ -590,7 +590,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/back_button"
-            style="@style/Widget.Material3.Button.OutlinedButton"
+            style="?attr/materialButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/setup_back"

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 玻璃风格窗口底：矩形 + 28dp 圆角。
+     圆角轮廓同时决定 Android 12 窗口背景模糊（Window#setBackgroundBlurRadius）的模糊区域，
+     配 @color/glass_dialog_surface（亮/暗两套）；alpha 由 GlassWindow 在运行时按
+     系统模糊开关在 170（有模糊，半透明看到模糊）与 255（无模糊，不透明保证可读）之间切换。 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <corners android:radius="28dp" />
+    <solid android:color="@color/glass_dialog_surface" />
+</shape>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ADB Modules 界面的中文文案（ModulesScreen.kt 专用）。
+  单独一个文件，避免和并行改动的 strings.xml 冲突；键统一 adb_modules_ 前缀。
+-->
+<resources>
+
+    <string name="adb_modules_title">ADB 模块</string>
+    <string name="adb_modules_summary">模块就是一个装进应用私有目录的 ZIP。里面的脚本通过 Shizuku 以 shell（或 root）身份执行。</string>
+    <string name="adb_modules_count">已安装 %1$d 个</string>
+    <string name="adb_modules_install_zip">安装模块 ZIP</string>
+    <string name="adb_modules_installing">正在安装…</string>
+    <string name="adb_modules_trust_hint">长按卡片可把模块标为「完全信任」：之后它绕过访问模式策略。</string>
+
+    <string name="adb_modules_version">版本 %1$s</string>
+    <string name="adb_modules_author">作者 %1$s</string>
+    <string name="adb_modules_unknown">-</string>
+
+    <string name="adb_modules_tag_trusted">已信任</string>
+    <string name="adb_modules_tag_disabled">已停用</string>
+
+    <string name="adb_modules_action">动作</string>
+    <string name="adb_modules_service">服务</string>
+    <string name="adb_modules_webui">WebUI</string>
+    <string name="adb_modules_delete">删除</string>
+    <string name="adb_modules_running">运行中…</string>
+    <string name="adb_modules_reason_line">%1$s：%2$s</string>
+    <string name="adb_modules_reason_disabled">模块已停用</string>
+    <string name="adb_modules_reason_no_action">模块里没有 action.sh</string>
+    <string name="adb_modules_reason_action_policy">被访问模式策略拦住</string>
+    <string name="adb_modules_reason_no_service">模块里没有 service.sh</string>
+    <string name="adb_modules_reason_service_policy">service.sh 被访问模式策略拦住</string>
+    <string name="adb_modules_reason_background">后台动作没有开启</string>
+    <string name="adb_modules_reason_no_webui">模块里没有 webui/index.html</string>
+    <string name="adb_modules_reason_webui_policy">安全模式下不允许打开 WebUI</string>
+
+    <string name="adb_modules_empty_title">还没有安装模块</string>
+    <string name="adb_modules_empty_summary">任何「根目录带 module.prop」的 ZIP 就是一个模块。选一个装进来，它会被解到 files/adb_modules。</string>
+    <string name="adb_modules_howto_title">怎么做一个模块</string>
+    <string name="adb_modules_step_1_title">module.prop</string>
+    <string name="adb_modules_step_1_body">放在 ZIP 根目录的元数据：id、name、version、versionCode、author、description。可选键：banner、webui、action、usesShellBridge。</string>
+    <string name="adb_modules_step_1_hint">id 必须以字母开头，长度 2～64，只允许 A-Z a-z 0-9 . _ -</string>
+    <string name="adb_modules_step_2_title">action.sh / service.sh</string>
+    <string name="adb_modules_step_2_body">action.sh 是点「动作」按钮时跑的。service.sh 在模块启用、且服务与后台两个策略都放行时才跑。</string>
+    <string name="adb_modules_step_2_hint">两个脚本都以 shell 或 root 身份执行，MODDIR 指向模块自己的目录。</string>
+    <string name="adb_modules_step_3_title">webui/index.html</string>
+    <string name="adb_modules_step_3_body">把 index.html 放进 webui/，「WebUI」按钮就会用本地 WebView 打开它。</string>
+    <string name="adb_modules_layout_title">ZIP 目录结构</string>
+    <string name="adb_modules_layout_body">my-module/\n  module.prop\n  action.sh\n  service.sh\n  webui/index.html\n  banner.png</string>
+    <string name="adb_modules_env_title">环境变量</string>
+    <string name="adb_modules_env_body">MODDIR=files/adb_modules/my-module\nMODPATH=$MODDIR\nSHIZUKU_MODULE_ID=my-module\nSHIZUKU_MODULE_MODE=safe\nSHIZUKU_MODULE_TRUSTED=0\nSHIZUKU_MODULE_BACKGROUND=0\nARCH=arm64-v8a</string>
+    <string name="adb_modules_hard_limits">硬限制：每个 ZIP 最多 2048 个条目、解压后 200 MB，脚本上限 256 KB、最长跑 120 秒，输出只保留最后 64 KB。</string>
+
+    <string name="adb_modules_panel_action">%1$s · action.sh</string>
+    <string name="adb_modules_panel_service">%1$s · service.sh</string>
+    <string name="adb_modules_exit_code">退出码 %1$d</string>
+    <string name="adb_modules_no_output">（没有输出）</string>
+    <string name="adb_modules_close">关闭</string>
+    <string name="adb_modules_dismiss">知道了</string>
+
+    <string name="adb_modules_tag_version_code">版本码 %1$d</string>
+
+    <string name="adb_modules_toggle_failed">无法切换模块状态：%1$s</string>
+    <string name="adb_modules_install_success">已安装 %1$s</string>
+    <string name="adb_modules_install_failed">安装失败：%1$s</string>
+    <string name="adb_modules_action_failed">动作执行失败：%1$s</string>
+    <string name="adb_modules_service_failed">服务执行失败：%1$s</string>
+
+    <string name="adb_modules_trust_on">%1$s 已标记为完全信任。</string>
+    <string name="adb_modules_trust_off">%1$s 已取消信任。</string>
+
+    <string name="adb_modules_delete_title">删除模块</string>
+    <string name="adb_modules_delete_message">删除 %1$s（%2$s）及其目录里的全部内容？此操作无法撤销。</string>
+    <string name="adb_modules_delete_confirm">删除</string>
+    <string name="adb_modules_delete_done">已删除 %1$s</string>
+    <string name="adb_modules_delete_failed">删除失败：%1$s</string>
+    <string name="adb_modules_cancel">取消</string>
+
+    <string name="adb_modules_confirm_action_title">要运行 action.sh 吗？</string>
+    <string name="adb_modules_confirm_action_body">脚本会以 shell 或 root 身份执行。继续前先看一遍内容。</string>
+    <string name="adb_modules_confirm_run">运行</string>
+
+</resources>

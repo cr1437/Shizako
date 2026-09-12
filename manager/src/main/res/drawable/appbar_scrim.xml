@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 顶部渐变遮罩：从顶部一点暗色渐隐到透明。
+     作用：标题栏/状态栏透明之后，标题文字（白色）压在任何壁纸上都能看清。
+     深浅色各一套值（见 values/values-night 的 appbar_scrim_top）。 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <gradient
+        android:angle="270"
+        android:endColor="@android:color/transparent"
+        android:startColor="@color/appbar_scrim_top"
+        android:type="linear" />
+</shape>

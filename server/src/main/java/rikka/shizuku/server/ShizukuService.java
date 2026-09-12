@@ -191,6 +191,8 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
     }
 
     private static final String AUDIT_LOG_PATH = "/data/local/tmp/shizako-api.log";
+    /** 哨兵文件：存在 = manager 里把「记录 API 调用日志」关掉了，直接不写日志 */
+    private static final String AUDIT_LOG_OFF_PATH = "/data/local/tmp/shizako-api.log.off";
     private static final long AUDIT_LOG_MAX_BYTES = 512L * 1024L;
 
     /** 限流去重：同 uid+func 的调用 1 秒内只记一次，防止高频 API 刷爆日志 */
@@ -201,9 +203,15 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
      * 每次特权 API 调用审计：时间,uid,pid,func,allowed。
      * 写 /data/local/tmp/shizako-api.log（server 为 shell/root uid 可写），
      * 超过 512KB 轮转。manager 的「API 调用日志」页面经 server 读取展示。
+     *
+     * 开关：manager 设置里关掉「记录 API 调用日志」时会创建 {@link #AUDIT_LOG_OFF_PATH}，
+     * server 与 manager 是两个进程/身份，用哨兵文件通信最省事（无需 IPC）。
      */
     private void auditCall(String func, int uid, int pid, boolean allowed) {
         try {
+            if (new java.io.File(AUDIT_LOG_OFF_PATH).exists()) {
+                return; // 用户在设置里关掉了日志
+            }
             long now = System.currentTimeMillis();
             String key = uid + ":" + func;
             if (key.equals(lastAuditKey) && now - lastAuditTime < 1000L) {

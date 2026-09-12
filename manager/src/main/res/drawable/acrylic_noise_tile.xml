@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 亚克力噪点纹理：64×64 的图平铺，白/黑微点 alpha≈0.03。
+     Compose 侧在 drawBehind 里画点，View 侧（CardView）用它当 foreground。 -->
+<bitmap xmlns:android="http://schemas.android.com/apk/res/android"
+    android:src="@drawable/acrylic_noise"
+    android:tileMode="repeat" />

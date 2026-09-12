@@ -31,14 +31,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:textAppearance="?textAppearanceBodySmall"
-        android:textColor="?android:textColorSecondary" />
+        android:textColor="?attr/colorOnSurfaceVariant" />
 
     <com.google.android.material.card.MaterialCardView
         style="?attr/materialCardViewFilledStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        app:cardBackgroundColor="?colorSurfaceContainer"
         app:cardElevation="0dp"
         app:contentPadding="16dp">
 
@@ -59,7 +58,7 @@
                 android:layout_marginTop="4dp"
                 android:text="@string/about_author_name"
                 android:textAppearance="?textAppearanceBodyMedium"
-                android:textColor="?android:textColorSecondary" />
+                android:textColor="?attr/colorOnSurfaceVariant" />
 
             <View
                 android:layout_width="match_parent"
@@ -80,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:textAppearance="?textAppearanceBodyMedium"
-                android:textColor="?android:textColorSecondary" />
+                android:textColor="?attr/colorOnSurfaceVariant" />
 
             <View
                 android:layout_width="match_parent"
@@ -101,7 +100,7 @@
                 android:layout_marginTop="4dp"
                 android:text="@string/about_license_text"
                 android:textAppearance="?textAppearanceBodyMedium"
-                android:textColor="?android:textColorSecondary" />
+                android:textColor="?attr/colorOnSurfaceVariant" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
@@ -112,6 +111,6 @@
         android:gravity="center"
         android:text="@string/about_footer"
         android:textAppearance="?textAppearanceBodySmall"
-        android:textColor="?android:textColorSecondary" />
+        android:textColor="?attr/colorOnSurfaceVariant" />
 
 </LinearLayout>

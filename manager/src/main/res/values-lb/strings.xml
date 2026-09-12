@@ -73,9 +73,6 @@ Dir musst wuel Shizako nei starten, fir datt et wirksam gëtt.</string>
     <string name="app_management_item_summary_requires_root">* erfuerdert datt Shizako mat Root leeft</string>
     <string name="home_terminal_title">Shizako an Terminal-Appen benotzen</string>
     <string name="home_terminal_description">Féiert Uerden iwwer Shizako an Är léifsten Terminal-Appen aus</string>
-    <string name="home_activation_title">Aktivéierung mat engem Klick</string>
-    <string name="home_activation_summary">Aktivéiert Brevent, Stopapp a méi ouni Computer</string>
-    <string name="home_activation_summary_not_running">Startt fir d\'éischt Shizako, fir d\'Aktivéierung mat engem Klick ze benotzen</string>
     <string name="terminal_tutorial_1">Exportéiert fir d\'éischt d\'Dateien wou Dir wëllt. Dir fannt zwou Dateien: %1$s an %2$s.</string>
     <string name="terminal_tutorial_1_description">Wann et Dateie mat dem selwechten Numm am ausgewielten Dossier gëtt, ginn se geläscht.
 
@@ -115,7 +112,6 @@ D\'Export-Funktioun benotzt SAF (Storage Access Framework). Et gëtt gemellt, da
     <string name="activation_status_activated">%1$s · scho aktivéiert</string>
     <string name="activation_status_not_activated">%1$s · installéiert, net aktivéiert</string>
     <string name="activation_note_device_owner">Erfuerdert datt virdrun all Konten a sekundär Benotzer (Gäschtmodus / App-Klon) geläscht ginn; no der Aktivéierung kënnt Dir se erëm bäifügen. Et kënnen Hiersteller-ROM-Eegentéinlechkeeten ginn.</string>
-    <string name="activation_note_brevent">De Brevent-Server muss nom all Neistart erëm aktivéiert ginn.</string>
     <string name="activation_custom_title">Personaliséierten Uerdnung</string>
     <string name="activation_custom_hint">Belibeg Shell-Uerdung, z.B. dpm set-device-owner …</string>
     <string name="activation_custom_empty">D\'Uerdnung ass eidel</string>

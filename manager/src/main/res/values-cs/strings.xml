@@ -135,9 +135,6 @@ Funkce exportu používá SAF (Storage Access Framework - \"Rámcový přístup 
     <string name="adb_pairing_tutorial_content_left_is_clickable">Prosím pamatujte, levá strana možnosti \"Bezdrátové ladění\" se dá rozkliknout, což otevře novou stranu. Pouhé přepnutí přepínače napravo je nesprávné.</string>
     <!-- Shizako: 补充翻译 -->
     <string name="home_app_management_empty">Zde se zobrazí aplikace, které požádaly o Shizako nebo ho podporují.</string>
-    <string name="home_activation_title">Aktivace jedním klepnutím</string>
-    <string name="home_activation_summary">Aktivujte Brevent, Stopapp a další bez počítače</string>
-    <string name="home_activation_summary_not_running">Nejprve spusťte Shizako, abyste mohli použít aktivaci jedním klepnutím</string>
     <string name="terminal_tutorial_3_description">Tipy: udělte %1$s oprávnění ke spuštění a přidejte ho do %2$s, pak %1$s budete moci používat přímo.</string>
     <string name="rish_description">S %1$s se v jakékoli terminálové aplikaci můžete připojit k shellu spuštěného Shizakem a pracovat s ním. &lt;p&gt;Podrobnosti o použití %1$s zobrazíte klepnutím na dokumentaci.</string>
     <string name="settings_debug">Ladění</string>
@@ -161,7 +158,6 @@ Funkce exportu používá SAF (Storage Access Framework - \"Rámcový přístup 
     <string name="activation_status_activated">%1$s · již aktivováno</string>
     <string name="activation_status_not_activated">%1$s · nainstalováno, není aktivováno</string>
     <string name="activation_note_device_owner">Nejprve je nutné odebrat všechny účty a sekundární uživatele (režim hosta / klonování aplikací); po aktivaci je můžete znovu přidat. Chování se může lišit podle ROM výrobce.</string>
-    <string name="activation_note_brevent">Server Brevent je potřeba po každém restartu znovu aktivovat.</string>
     <string name="activation_custom_title">Vlastní příkaz</string>
     <string name="activation_custom_hint">Libovolný shellový příkaz, např. dpm set-device-owner …</string>
     <string name="activation_custom_empty">Příkaz je prázdný</string>

@@ -77,7 +77,25 @@ object UpdateChecker {
 
     // ── Public API ────────────────────────────────────────────────────
 
-    fun checkForUpdate(context: Context, onResult: (ReleaseInfo?) -> Unit) {
+    /**
+     * 检查更新。
+     *
+     * **没网就直接返回**，不卡超时、不报错：
+     * - [silent] = true（后台自动检查）：连提示都不弹，等下次定时再试；
+     * - [silent] = false（用户手动点「检查更新」）：弹一句"没有网络连接"，说清楚原因。
+     */
+    fun checkForUpdate(
+        context: Context,
+        silent: Boolean = false,
+        onResult: (ReleaseInfo?) -> Unit,
+    ) {
+        if (!moe.shizuku.manager.utils.NetworkUtils.isOnline(context)) {
+            if (!silent) {
+                Toast.makeText(context, R.string.update_no_network, Toast.LENGTH_SHORT).show()
+            }
+            onResult(null)
+            return
+        }
         scope.launch {
             try {
                 val info = fetchLatestRelease()
@@ -91,11 +109,16 @@ object UpdateChecker {
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(
-                        context,
-                        context.getString(R.string.update_check_failed, e.message ?: "network error"),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    if (!silent) {
+                        Toast.makeText(
+                            context,
+                            context.getString(
+                                R.string.update_check_failed,
+                                e.message ?: "network error",
+                            ),
+                            Toast.LENGTH_SHORT,
+                        ).show()
+                    }
                     onResult(null)
                 }
             }
@@ -103,7 +126,8 @@ object UpdateChecker {
     }
 
     fun checkAndNotify(context: Context) {
-        checkForUpdate(context) { info ->
+        // 后台自动检查：没网/失败都静默，别在通知栏和屏幕上留噪音
+        checkForUpdate(context, silent = true) { info ->
             if (info != null) showUpdateNotification(context, info)
         }
     }
@@ -114,6 +138,13 @@ object UpdateChecker {
 
     fun downloadAndInstall(context: Context, info: ReleaseInfo, listener: DownloadListener?) {
         if (downloadJob?.isActive == true) return
+
+        // 没网就别开下载：直接告诉用户，别让他对着 0% 的进度条等超时
+        if (!moe.shizuku.manager.utils.NetworkUtils.isOnline(context)) {
+            Toast.makeText(context, R.string.update_no_network, Toast.LENGTH_SHORT).show()
+            listener?.onFailed(context.getString(R.string.update_no_network))
+            return
+        }
 
         ensureChannels(context)
 
@@ -161,6 +192,13 @@ object UpdateChecker {
         listener: DownloadListener? = null
     ) {
         if (downloadJob?.isActive == true) return
+
+        // 离线：直接失败，不要开一个永远 0% 的下载
+        if (!moe.shizuku.manager.utils.NetworkUtils.isOnline(context)) {
+            listener?.onFailed(context.getString(R.string.update_no_network))
+            return
+        }
+
         ensureChannels(context)
 
         downloadJob = scope.launch {
@@ -466,6 +504,16 @@ object UpdateChecker {
         } catch (e: Exception) {
             Toast.makeText(context, context.getString(R.string.update_install_failed, e.message), Toast.LENGTH_LONG).show()
         }
+    }
+
+    /**
+     * 拉起系统安装器（FileProvider URI，和「更新 Shizako」走同一条路）。
+     *
+     * 给「推荐应用」下载页复用：那边用 [downloadFromUrl] 下完 APK 后调这里安装，
+     * 观感和更新自己完全一致。
+     */
+    fun installApk(context: Context, apkFile: File) {
+        installNow(context, apkFile)
     }
 
     // ── Notifications (official setProgress pattern) ──────────────────

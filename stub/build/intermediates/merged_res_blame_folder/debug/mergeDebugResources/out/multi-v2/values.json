@@ -1,0 +1,26 @@
+{
+    "logs": [
+        {
+            "outputFile": "moe.shizuku.privileged.api.stub-mergeDebugResources-2:/values/values.xml",
+            "map": [
+                {
+                    "source": "E:\\DeepSeek Work\\Shizako-KernelSU-UI\\stub\\src\\main\\res\\values\\strings.xml",
+                    "from": {
+                        "startLines": "3,7,5,4,6",
+                        "startColumns": "4,4,4,4,4",
+                        "startOffsets": "107,365,225,157,303",
+                        "endColumns": "49,88,77,67,61",
+                        "endOffsets": "152,449,298,220,360"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6",
+                        "startColumns": "4,4,4,4,4",
+                        "startOffsets": "55,105,194,272,340",
+                        "endColumns": "49,88,77,67,61",
+                        "endOffsets": "100,189,267,335,397"
+                    }
+                }
+            ]
+        }
+    ]
+}

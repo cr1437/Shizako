@@ -131,9 +131,6 @@ Vous devrez sûrement redémarrer Shizako pour que l'opération prenne effet."</
     <string name="home_app_management_empty">"Les applications qui ont demandé ou déclaré l'accès à Shizako apparaîtront ici."</string>
     <string name="dialog_adb_discovery_message_toggle_wireless_debugging">Merci d\'essayer de désactiver et de réactiver le \"Débogage sans-fil\" si ça continue à chercher.</string>
     <!-- Shizako: 补充翻译 -->
-    <string name="home_activation_title">Activation en un geste</string>
-    <string name="home_activation_summary">Activez Brevent, Stopapp et plus, sans ordinateur</string>
-    <string name="home_activation_summary_not_running">Démarrez d\'abord Shizako pour utiliser l\'activation en un geste</string>
     <string name="settings_debug">Débogage</string>
     <string name="settings_crash_logs">Journaux de plantage</string>
     <string name="settings_crash_logs_summary">Les plantages sont enregistrés ici lorsque l\'application se ferme de manière inattendue</string>
@@ -155,7 +152,6 @@ Vous devrez sûrement redémarrer Shizako pour que l'opération prenne effet."</
     <string name="activation_status_activated">%1$s · déjà activé</string>
     <string name="activation_status_not_activated">%1$s · installé, non activé</string>
     <string name="activation_note_device_owner">Nécessite au préalable la suppression de tous les comptes et utilisateurs secondaires (mode invité / application jumelle) ; vous pourrez les rajouter après l\'activation. Des particularités selon la ROM du fabricant peuvent s\'appliquer.</string>
-    <string name="activation_note_brevent">Le serveur Brevent doit être réactivé après chaque redémarrage.</string>
     <string name="activation_custom_title">Commande personnalisée</string>
     <string name="activation_custom_hint">N\'importe quelle commande shell, ex. dpm set-device-owner …</string>
     <string name="activation_custom_empty">La commande est vide</string>

@@ -135,9 +135,6 @@ Nota, no deshabilite las \"Opciones de Desarrollador\" o \"Depuración USB\", de
     <string name="dialog_adb_invalid_port">Puerto es un número del 1 al 65535.</string>
     <string name="dialog_adb_port">Puerto</string>
     <!-- Shizako: 补充翻译 -->
-    <string name="home_activation_title">Activación con un toque</string>
-    <string name="home_activation_summary">Activa Brevent, Stopapp y más sin ordenador</string>
-    <string name="home_activation_summary_not_running">Inicia primero Shizako para usar la activación con un toque</string>
     <string name="settings_debug">Depuración</string>
     <string name="settings_crash_logs">Registros de errores</string>
     <string name="settings_crash_logs_summary">Los errores se guardan aquí cuando la aplicación se cierra inesperadamente</string>
@@ -159,7 +156,6 @@ Nota, no deshabilite las \"Opciones de Desarrollador\" o \"Depuración USB\", de
     <string name="activation_status_activated">%1$s · ya activado</string>
     <string name="activation_status_not_activated">%1$s · instalado, no activado</string>
     <string name="activation_note_device_owner">Requiere eliminar primero todas las cuentas y usuarios secundarios (modo invitado / app gemela); podrás volver a añadirlos tras la activación. Puede haber particularidades según la ROM del fabricante.</string>
-    <string name="activation_note_brevent">El servidor de Brevent debe reactivarse después de cada reinicio.</string>
     <string name="activation_custom_title">Comando personalizado</string>
     <string name="activation_custom_hint">Cualquier comando de shell, p. ej. dpm set-device-owner …</string>
     <string name="activation_custom_empty">El comando está vacío</string>

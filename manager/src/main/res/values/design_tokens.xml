@@ -22,19 +22,39 @@
     <dimen name="ksu_nav_margin_bottom">16dp</dimen>
     <!-- 底栏圆角：100dp 超出半高即全圆胶囊（Figma cornerRadius=100） -->
     <dimen name="ksu_nav_corner_radius">100dp</dimen>
-    <!-- 底栏高度（Figma 59dp）：24dp 图标 + 10sp 标签 + 内边距 -->
-    <dimen name="ksu_nav_height">59dp</dimen>
+    <!-- 底栏高度：24dp 图标 + 上下内边距（纯图标模式，无文字标签）
+         Compose 侧 LiquidGlassNavBar 的 barHeight 直接读这个 dimen，
+         XML（BlurView/ComposeView 宿主）与 Compose 严格同高。 -->
+    <dimen name="ksu_nav_height">52dp</dimen>
+
+    <!-- MD3 标准底栏高度：图标 + 文字标签，Material 3 规范为 80dp。
+         之前沿用 52dp 导致图标和标签挤在半高里，看着像坏掉。 -->
+    <dimen name="ksu_nav_height_md3">80dp</dimen>
     <!-- 底栏内边距：选中胶囊与 tab 内容都相对它排布（Figma 6dp） -->
     <dimen name="ksu_nav_inner_padding">6dp</dimen>
-    <!-- 选中胶囊高度（Figma 47dp = 59 - 2×6）：包裹选中 tab 的图标+标签，
+
+    <!-- 泛光溢出区：滑块光晕允许透出玻璃栏的余量。
+         光晕经 Modifier.blur(11dp) 扩散，视觉半径能到 ~2×11dp，
+         所以余量给到 20dp —— 光晕在溢出区里自然淡出，不会被 ComposeView 的边界硬切一刀。
+         宿主 FrameLayout 高度保持 76dp（胶囊位置不变），
+         真正加高的是里面的 ComposeView（ksu_nav_compose_height_glass），
+         居中溢出到宿主之外（clipChildren=false）。 -->
+    <dimen name="ksu_nav_glow_overflow">20dp</dimen>
+    <!-- ComposeView 在玻璃风格下的高度 = 52 + 2×20（居中后胶囊位置与原来一致） -->
+    <dimen name="ksu_nav_compose_height_glass">92dp</dimen>
+    <!-- 宿主容器总高 = 52 + 2×12（光晕两侧各 20dp 由溢出区提供） -->
+    <dimen name="ksu_nav_height_outer">76dp</dimen>
+    <!-- 宿主外边距 = 原 16dp 底距 - 12dp 溢出 -->
+    <dimen name="ksu_nav_outer_margin">4dp</dimen>
+    <!-- 选中胶囊高度（36dp = 48 - 2×6）：包裹选中 tab 的图标，
          宽度运行时对齐选中 tab（等分恒宽），切换 Tab 时水平滑过去 -->
-    <dimen name="ksu_nav_tab_capsule_height">47dp</dimen>
+    <dimen name="ksu_nav_tab_capsule_height">36dp</dimen>
     <!-- tab 图标尺寸（Figma 24dp） -->
     <dimen name="ksu_nav_tab_icon_size">24dp</dimen>
     <!-- 选中胶囊同色细描边宽度 -->
     <dimen name="ksu_nav_pill_stroke_width">1dp</dimen>
 
-    <!-- 内容底部预留：导航高(59) + 底部间距(16) + 手势条(至 32) + 悬浮余量，
+    <!-- 内容底部预留：导航高(48) + 底部间距(16) + 手势条(至 32) + 悬浮余量，
          厚手势条机型上也能完整露出列表末行，不被亚克力导航遮挡 -->
-    <dimen name="ksu_content_bottom_padding">115dp</dimen>
+    <dimen name="ksu_content_bottom_padding">104dp</dimen>
 </resources>

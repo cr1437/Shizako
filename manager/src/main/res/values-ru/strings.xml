@@ -137,9 +137,6 @@
 Возможно Вам понадобится перезапустить Shizako для применения изменений."</string>
     <string name="home_adb_is_limited_title">Нужен дополнительный шаг</string>
     <!-- Shizako: 补充翻译 -->
-    <string name="home_activation_title">Активация в один клик</string>
-    <string name="home_activation_summary">Активируйте Brevent, Stopapp и другие без компьютера</string>
-    <string name="home_activation_summary_not_running">Сначала запустите Shizako, чтобы использовать активацию в один клик</string>
     <string name="settings_debug">Отладка</string>
     <string name="settings_crash_logs">Журналы сбоев</string>
     <string name="settings_crash_logs_summary">Сюда сохраняются журналы сбоев при неожиданном завершении приложения</string>
@@ -161,7 +158,6 @@
     <string name="activation_status_activated">%1$s · уже активировано</string>
     <string name="activation_status_not_activated">%1$s · установлено, не активировано</string>
     <string name="activation_note_device_owner">Сначала нужно удалить все аккаунты и вторых пользователей (гостевой режим / клонирование приложений). После активации их можно добавить обратно. Возможны особенности прошивок производителей.</string>
-    <string name="activation_note_brevent">Сервер Brevent требует повторной активации после каждой перезагрузки.</string>
     <string name="activation_custom_title">Своя команда</string>
     <string name="activation_custom_hint">Любая команда оболочки, например dpm set-device-owner …</string>
     <string name="activation_custom_empty">Команда пуста</string>

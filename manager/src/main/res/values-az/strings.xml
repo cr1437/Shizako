@@ -135,9 +135,6 @@ Qeyd edək ki, Tərtibatçı seçimlərini, USB Debaqı və ya Shizako-nu sönd�
 Adətən, bu məhdudiyyət "Tərtibatçı seçimləri"ndə bəzi parametrləri dəyişməklə aradan qaldırıla bilər. Bunun necə ediləcəyini öyrənmək üçün köməyi oxuyun.
 
 Dəyişikliyin tətbiqi üçün Shizako-nu yenidən başlatmağınız lazım ola bilər.</string>
-    <string name="home_activation_title">Bir toxunuşla aktivləşdirmə</string>
-    <string name="home_activation_summary">Brevent, Stopapp və digərlərini kompütersiz aktivləşdirin</string>
-    <string name="home_activation_summary_not_running">Bir toxunuşla aktivləşdirmə üçün əvvəlcə Shizako-nu başladın</string>
     <string name="settings_debug">Sazlama</string>
     <string name="settings_crash_logs">Çökmə jurnalları</string>
     <string name="settings_crash_logs_summary">Tətbiq gözlənilmədən bağlandıqda çökmələr burada saxlanılır</string>
@@ -159,7 +156,6 @@ Dəyişikliyin tətbiqi üçün Shizako-nu yenidən başlatmağınız lazım ola
     <string name="activation_status_activated">%1$s · artıq aktivdir</string>
     <string name="activation_status_not_activated">%1$s · quraşdırılıb, aktiv deyil</string>
     <string name="activation_note_device_owner">Əvvəlcə bütün hesabların və ikinci dərəcəli istifadəçilərin (qonaq rejimi / tətbiq əkizi) silinməsi lazımdır; aktivləşdirmədən sonra onları geri əlavə edə bilərsiniz. İstehsalçının ROM-undan asılı olaraq fərqlər ola bilər.</string>
-    <string name="activation_note_brevent">Brevent serveri hər yenidən başlatmadan sonra yenidən aktivləşdirilməlidir.</string>
     <string name="activation_custom_title">Xüsusi əmr</string>
     <string name="activation_custom_hint">İstənilən shell əmri, məs. dpm set-device-owner …</string>
     <string name="activation_custom_empty">Əmr boşdur</string>

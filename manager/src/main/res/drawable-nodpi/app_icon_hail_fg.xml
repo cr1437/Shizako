@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 雹（Hail）的图标：原 APK 里是自适应图标的矢量（无 PNG），
+     这里按 aapt2 dump xmltree 的原始 pathData / 颜色还原成矢量资源，
+     foreground = 白色笔画 + 主题色三角（color_hail #81D4FA），background = 深灰底。 -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <path
+        android:fillColor="#FF81D4FA"
+        android:pathData="M45,38.4L63,38.4L54,54Z" />
+
+    <path
+        android:pathData="M45,38.4L63,69.6"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="4.5"
+        android:strokeLineCap="round" />
+
+    <path
+        android:pathData="M63,38.4L45,69.6"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="4.5"
+        android:strokeLineCap="round" />
+
+    <path
+        android:pathData="M45,38.4L63,38.4"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="4.5"
+        android:strokeLineCap="round" />
+
+    <path
+        android:pathData="M72,54L63,69.6"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="4.5"
+        android:strokeLineCap="round" />
+
+    <path
+        android:pathData="M63,69.6L45,69.6"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="4.5"
+        android:strokeLineCap="round" />
+
+    <path
+        android:pathData="M45,69.6L36,54"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="4.5"
+        android:strokeLineCap="round" />
+</vector>

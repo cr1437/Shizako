@@ -29,6 +29,12 @@
     <string name="dhizuku_manage_title">Dhizuku 授权的应用</string>
     <string name="dhizuku_manage_empty">还没有授权任何应用。\n支持 Dhizuku 的应用会在第一次使用时来敲门申请。</string>
     <string name="dhizuku_revoke_title">收回特权</string>
+    <string name="dhizuku_revoke_action">收回特权</string>
+    <string name="dhizuku_refresh">刷新列表</string>
+    <string name="dhizuku_what_title">这是什么</string>
+    <string name="dhizuku_what_body">Dhizuku 模式下，Shizako酱 是设备所有者，可以把这份特权分给别的应用。这里列的就是借到特权的应用 —— 不想给了就点「收回特权」，下次它要用来敲门重新申请。</string>
+    <string name="apps_tab_shizako">Shizako 应用</string>
+    <string name="apps_tab_dhizuku">Dhizuku 应用</string>
     <string name="dhizuku_revoke_message">不再让 %1$s 借用设备所有者特权吗？</string>
     <string name="dhizuku_revoke_confirm">收回</string>
     <string name="dhizuku_permission_warning_template"><![CDATA[要让<b>%1$s</b>%2$s借用 Shizako酱 的设备所有者特权吗？]]></string>
@@ -46,7 +52,7 @@
     <string name="action_about">关于</string>
     <string name="about_view_source_code"><![CDATA[在 %s 查看源码]]></string>
     <string name="about_author">作者</string>
-    <string name="about_author_name">初然</string>
+    <string name="about_author_name" translatable="false">cr1437</string>
     <string name="about_based_on">基于</string>
     <string name="about_based_on_text"><![CDATA[%s 开源项目二次开发]]></string>
     <string name="about_license">开源协议</string>
@@ -91,7 +97,7 @@
     <string name="home_activation_hub_title">一站式激活</string>
     <string name="home_activation_hub_desc">挑一种方式唤醒 Shizako酱，或者让她直接当上设备所有者（Dhizuku）。</string>
     <string name="activation_hub_desc_running">Shizako酱 正在待命，点一下就能激活设备所有者模式。</string>
-    <string name="activation_hub_desc_not_running">Shizako酱 还没醒呢，从下面挑一种方式叫醒她吧～</string>
+        <string name="activation_hub_desc_not_running">Shizako酱 还没醒呢，点下方按钮挑一种方式叫醒她吧～</string>
     <string name="activation_method_dhizuku">Dhizuku（设备所有者）</string>
     <string name="activation_method_dhizuku_desc">让 Shizako酱 当上设备所有者，授权应用不用 Root、不用守着无线调试也能借用她的特权。</string>
     <string name="activation_method_root">Root</string>
@@ -105,6 +111,7 @@
     <string name="activation_method_action_view_command">查看指令</string>
     <string name="activation_method_action_start">启动</string>
     <string name="activation_hub_details">详细指南</string>
+    <string name="activation_hub_action_open">开始激活</string>
 
     <!-- 一站式激活详细页 -->
     <string name="activation_page_title">一站式激活</string>
@@ -122,9 +129,20 @@
     <string name="activation_tag_persistent">重启不失效</string>
     <string name="activation_root_desc_detail">设备已经有 Root 权限的话，这是最省事的方式：授予超级用户权限后直接启动。</string>
     <string name="activation_root_steps">1. 点下方「启动」\n2. 在弹窗中授予超级用户权限\n3. 等待服务运行即可</string>
-    <string name="activation_wadb_desc_detail">Android 11 及以上可以完全不靠电脑，在本机通过「无线调试」启动 Shizako酱。整个流程都在悬浮于系统设置之上的悬浮窗里完成，不用来回切换应用。</string>
-    <string name="activation_wadb_steps">1. 点下方「悬浮窗配对」，并授予「显示在其他应用上层」权限\n2. 在打开的开发者选项里开启「无线调试」\n3. 点「使用配对码配对设备」，屏幕上会显示 6 位配对码\n4. 在悬浮窗里输入配对码，剩下的配对、连接、启动全部自动完成</string>
-    <string name="activation_wadb_action_float_pair">悬浮窗配对</string>
+    <string name="activation_wadb_desc_detail">Android 11 及以上可以完全不靠电脑，在本机通过「无线调试」启动 Shizako酱。配对码在通知栏里输入，不用来回切换应用。</string>
+    <string name="activation_wadb_steps">1. 点下方「开始配对」，按提示允许通知\n2. 在打开的开发者选项里开启「无线调试」\n3. 点「使用配对码配对设备」，屏幕上会显示 6 位配对码\n4. 下拉通知栏，在通知里输入配对码；配对、连接、启动全自动完成</string>
+    <string name="activation_wadb_action_pair">开始配对</string>
+    <string name="activation_wadb_action_start_paired">用已配对直接启动</string>
+    <!-- 快速启动（已经配对过，不用再配对） -->
+    <string name="activation_quick_start_title">已经配对过啦，直接启动</string>
+    <string name="activation_quick_start_desc">配对信息 Shizako酱 记住了。重启手机以后不用再配对，点一下就能把服务拉起来。</string>
+    <string name="activation_quick_start_action_start">一键启动服务</string>
+    <string name="activation_quick_start_action_repair">重新配对</string>
+    <string name="activation_quick_start_action_forget">忘记配对信息</string>
+    <string name="activation_quick_start_forget_confirm">清掉以后要重新配对才能启动，确定吗？</string>
+    <string name="activation_quick_start_hint_secure_settings">提示：没给「修改安全设置」权限时，启动前请确认「无线调试」还开着。</string>
+    <string name="activation_toast_starting">正在启动 Shizako 服务…</string>
+    <string name="activation_toast_pairing_forgotten">配对信息已经清掉啦</string>
     <string name="activation_wadb_action_open_settings">打开开发者选项</string>
     <string name="activation_adb_desc_detail">手边有电脑的话，开启 USB 调试后执行一次启动命令即可。</string>
     <string name="activation_adb_steps">1. 在开发者选项中开启 USB 调试并连接电脑\n2. 复制下面的命令，在电脑终端（adb）里执行\n3. 服务立即启动，无需 Root</string>
@@ -143,29 +161,6 @@
     <string name="activation_faq_fail_a">确认「无线调试」还开着（部分系统锁屏后会自动关闭）；确认输入的是当前界面上最新显示的配对码和端口；MIUI 还需要额外开启「USB 调试（安全设置）」。</string>
 
     <!-- 无线调试悬浮配对窗（替代通知栏输入） -->
-    <string name="floating_pair_title">无线调试配对</string>
-    <string name="floating_pair_hint_code">6 位配对码</string>
-    <string name="floating_pair_hint_port">端口</string>
-    <string name="floating_pair_action_pair">配对并启动</string>
-    <string name="floating_pair_action_start">启动</string>
-    <string name="floating_pair_hint_steps">在系统设置里打开「无线调试」→「使用配对码配对设备」，把显示的配对码填到这里。按住标题栏可以拖动本窗口。</string>
-    <string name="floating_pair_status_discovering">正在搜索配对服务…</string>
-    <string name="floating_pair_status_ready">已找到配对服务，请输入 6 位配对码</string>
-    <string name="floating_pair_status_pairing">正在配对…</string>
-    <string name="floating_pair_status_paired">配对成功，正在查找连接端口…</string>
-    <string name="floating_pair_status_starting">正在启动 Shizako酱…</string>
-    <string name="floating_pair_status_success">完成！Shizako酱 已经跑起来了～</string>
-    <string name="floating_pair_status_timeout">还在搜索…请确认配对码对话框已打开</string>
-    <string name="floating_pair_status_failed">失败：%1$s</string>
-    <string name="floating_pair_status_failed_unknown">失败了，请重试</string>
-    <string name="floating_pair_error_code">请输入 6 位配对码</string>
-    <string name="floating_pair_error_port">请输入正确的端口（1–65535）</string>
-    <string name="floating_pair_no_overlay_permission">还没有「显示在其他应用上层」权限，无法显示悬浮窗</string>
-    <string name="floating_pair_toast_started">悬浮窗已显示，请在打开的设置页里开启「无线调试」</string>
-    <string name="floating_pair_overlay_dialog_title">需要悬浮窗权限</string>
-    <string name="floating_pair_overlay_dialog_message">配对码会直接输入在悬浮于系统设置之上的悬浮窗里，不用来回切换应用。请先授予「显示在其他应用上层」权限。</string>
-    <string name="floating_pair_overlay_dialog_grant">去授权</string>
-    <string name="close">关闭</string>
 
     <!-- Quick settings tiles -->
     <string name="tile_service_label">Shizako酱服务</string>
@@ -285,9 +280,6 @@
     <string name="home_terminal_title">在终端应用中调教 Shizako酱</string>
     <string name="home_terminal_description">在终端里调教我吧，人家真的很想要❤️</string>
 
-    <string name="home_activation_title">一键注入</string>
-    <string name="home_activation_summary">不用电脑，Shizako酱帮你调教它们❤️</string>
-    <string name="home_activation_summary_not_running">先让Shizako酱醒过来才能帮你注入哦~</string>
     <string name="terminal_tutorial_1">首先，将文件导出到任何您想要的位置。您将找到两个文件，%1$s 和 %2$s。</string>
     <string name="terminal_tutorial_1_description">"若选择的文件夹中已有同名文件，它们会被删除。
 
@@ -312,6 +304,9 @@
     <string name="notification_adb_pairing_succeed_text">Shizako酱连接到主人的手机啦</string>
     <string name="notification_adb_pairing_failed_title">配对失败</string>
     <string name="notification_adb_pairing_retry">重试</string>
+    <string name="notification_adb_pairing_enter_activation">进入激活</string>
+    <string name="notification_adb_pairing_starting_service">正在启动 Shizako 服务…</string>
+    <string name="notification_adb_pairing_service_started">服务已经跑起来啦，开始调教吧～</string>
     <string name="adb_pairing_tutorial_content_notification_blocked">配对过程需要主人与 Shizako 的通知交互。请允许 Shizako酱 给主人发消息。</string>
     <string name="notification_settings">通知设置</string>
     <string name="adb_pairing_tutorial_content_miui">MIUI 用户可能需要在系统设置中从"通知管理"-"通知显示设置"将通知样式切换为"原生样式"。</string>
@@ -324,6 +319,52 @@
     <string name="adb_pairing_tutorial_content_network_limation_not_foreground">某些系统（例如 MIUI）不允许应用在不可见时访问网络，即使应用已按标准使用前台服务。请在此类系统上为 Shizako 禁用电池优化功能。</string>
     <string name="settings_use_system_color">使用系统主题颜色</string>
     <string name="home_app_management_empty">要调教我的应用都在这里，我听主人的❤️</string>
+    <!-- 未激活时：应用列表页只提示激活 -->
+    <string name="apps_need_activation_title">Shizako酱 还没醒过来</string>
+    <string name="apps_need_activation_body">服务没在跑，现在看不到应用列表。先去激活页把 Shizako酱 叫醒吧～</string>
+    <string name="apps_need_activation_action">去激活</string>
+
+    <!-- 推荐应用（下载页） -->
+    <string name="toolbox_title">工具箱</string>
+    <string name="toolbox_note">搞机工具都收在这一页，点哪条进哪页。</string>
+    <string name="toolbox_note_secondary">只是入口收拢，功能一个都没删：模块、控制台、无障碍、实验室、激活、推荐应用……底栏入口可以在「设置 → 底部栏」里增删排序。</string>
+    <string name="toolbox_group_modules">模块与扩展</string>
+    <string name="toolbox_group_console">控制台与终端</string>
+    <string name="toolbox_group_automation">无障碍与实验</string>
+    <string name="toolbox_group_device">设备与激活</string>
+    <string name="toolbox_group_more">其他入口</string>
+    <string name="toolbox_summary_comput_settings">选模型 / 填 API key / 管理宏</string>
+    <string name="toolbox_summary_terminal">在喜欢的终端应用里调用 Shizako酱</string>
+    <string name="toolbox_summary_activation">Root / 无线调试 / 电脑 ADB / Dhizuku</string>
+    <string name="toolbox_summary_dhizuku">设备所有者模式的指令与状态</string>
+    <string name="dhizuku_in_apps_tab">Dhizuku 授权管理在「被调教的小可爱们」的第二页</string>
+    <string name="toolbox_summary_apps">看看哪些应用在被我调教</string>
+    <string name="toolbox_summary_settings">外观、背景、底部栏、系统开关</string>
+    <string name="download_page_title">推荐应用</string>
+    <string name="download_note">这些应用靠 Shizako酱 拿特权（冻结、静默安装、权限管理等）。</string>
+    <string name="download_note_secondary">点「下载」用的是 Shizako酱 自己的下载器（和更新 Shizako 同一套：进度弹窗 + 通知栏进度），下完直接拉起系统安装器。安装包来自镜像仓库 cr1437/apk-mirror。</string>
+    <string name="download_installed">已安装</string>
+    <string name="download_not_installed">未安装</string>
+    <string name="download_action_download">下载</string>
+    <string name="download_action_open">打开</string>
+    <string name="download_open_failed">这个应用没有可启动的界面</string>
+    <string name="download_how_title">怎么用</string>
+    <string name="download_how_body">装上、打开，等它来要权限的时候在 Shizako酱 这边点同意就行（申请会出现在 Shizako酱 自己的授权列表里）。本页不做任何注入，也不会替你授权。</string>
+    <string name="settings_recommended_apps">推荐应用</string>
+    <string name="settings_group_apps">应用</string>
+    <string name="settings_recommended_apps_summary">支持 Shizako酱 的常用应用，点进去用浏览器下载</string>
+    <string name="download_app_brevent">黑阈（Brevent）</string>
+    <string name="download_app_brevent_desc">不用 Root 就能阻止后台应用偷偷跑。</string>
+    <string name="download_app_stopapp">小黑屋（Stopapp）</string>
+    <string name="download_app_stopapp_desc">一键停用应用，支持静默安装 / 卸载。</string>
+    <string name="download_app_icebox">冰箱（IceBox）</string>
+    <string name="download_app_icebox_desc">把不常用的应用冻起来，要用的时候再解冻。</string>
+    <string name="download_app_island">岛（Island）</string>
+    <string name="download_app_island_desc">隔离出一块工作空间，管理里面的应用。</string>
+    <string name="download_app_scene">Scene v9.3.8</string>
+    <string name="download_app_scene_desc">搞机工具箱：性能调度、温控、日志、电源管理。</string>
+    <string name="download_app_hail">雹（Hail）v1.11.0</string>
+    <string name="download_app_hail_desc">冻结 / 解冻应用，比冰箱更轻的小工具。</string>
     <string name="home_adb_is_limited_title">您需要进行额外的步骤</string>
     <string name="home_adb_is_limited_description">"主人的设备制造商限制了 adb 的权限，想要调教 Shizako酱 的应用无法正常工作。
 
@@ -390,9 +431,9 @@
     <string name="theme_color_sakura">樱花粉</string>
 
     <string name="settings_ui_style">界面风格</string>
-    <string name="settings_ui_style_summary">在 Material 3 Expressive 与 Miuix（小米风）之间切换</string>
-    <string name="ui_style_m3e">Material 3 Expressive</string>
-    <string name="ui_style_miuix">Miuix（小米风）</string>
+    <string name="settings_ui_style_summary">在标准 Material 3 与玻璃材质之间切换</string>
+<string name="ui_style_md3">Material 3</string>
+<string name="ui_style_glass">玻璃材质</string>
 
     <string name="home_info_android">Android</string>
     <string name="home_info_abi">ABI</string>
@@ -406,4 +447,156 @@
     <string name="home_info_apps_count">%1$d 个</string>
     <string name="home_info_copy">复制</string>
     <string name="home_info_copied">已复制到剪贴板</string>
+
+    <string name="hint_section_steps">操作步骤</string>
+    <string name="hint_section_notes">注意事项</string>
+    <string name="hint_step_open_wireless_title">打开「无线调试」</string>
+    <string name="hint_step_copy_code_title">记下 6 位配对码</string>
+    <string name="hint_step_done_title">在通知里输入配对码</string>
+        <string name="hint_note_notification_title">通知</string>
+    <string name="hint_note_network_title">本地网络权限</string>
+    <string name="hint_note_miui_title">MIUI / HyperOS</string>
+
+    <string name="home_logs_entry_summary">查看已授权应用的 API 调用记录</string>
+    <string name="home_settings_entry_summary">外观、授权应用与其他设置</string>
+    <string name="activation_tag_terminal">终端</string>
+    <string name="activation_terminal_steps_ready">服务正在运行，点下方按钮进入终端使用教程。</string>
+    <string name="activation_terminal_steps_not_running">先把服务启动起来，之后就能在终端应用里调教 Shizako酱了。</string>
+    <string name="activation_terminal_action_open">打开终端教程</string>
+    <string name="terminal_env_root">服务以 root 身份运行 —— 可以一键部署。</string>
+    <string name="terminal_env_adb">服务以 adb 身份运行 —— 将部署到 /data/local/tmp。</string>
+    <string name="terminal_env_no_service">先启动服务，然后才能部署 rish。</string>
+    <string name="terminal_deploy_action">一键部署 rish</string>
+    <string name="terminal_deploy_running">正在部署…</string>
+    <string name="terminal_deploy_success">已部署到 %1$s</string>
+    <string name="terminal_deploy_hint_termux">打开 Termux，输入 %1$s 即可</string>
+    <string name="terminal_deploy_hint_path">在任意终端里执行 %1$s</string>
+    <string name="terminal_deploy_failed">部署失败：%1$s</string>
+    <string name="terminal_open_docs">rish 文档</string>
+    <string name="terminal_section_manual">手动方式</string>
+    <string name="terminal_step_export_title">导出这两个文件</string>
+    <string name="terminal_step_edit_title">填上你的终端应用包名</string>
+    <string name="terminal_step_place_title">放到终端能访问的目录</string>
+    <string name="terminal_note_dex_title">Android 14+ 要求 dex 只读</string>
+    <string name="terminal_note_dex_body">app_process 拒绝加载可写的 dex，所以 rish_shizuku.dex 必须 chmod 400 —— 一键部署会自动处理（放共享存储里做不到）。</string>
+    <string name="terminal_note_env_title">环境变量</string>
+    <string name="terminal_note_env_body">设 RISH_PRESERVE_ENV=1 可把终端的环境变量（PATH、LD_PRELOAD）带给远端 shell；root 默认 1，adb 默认 0。</string>
+    <string name="terminal_note_app_title">终端应用</string>
+    <string name="terminal_note_app_termux">检测到 Termux —— rish 会装进它的 PATH。</string>
+    <string name="terminal_note_app_none">没检测到 Termux。仍可部署到 /data/local/tmp/rish，或装个 Termux 让 rish 进 PATH。</string>
+    <!-- ══════════ 设置页（二级菜单 + 隐藏调试项 + 日志开关）══════════ -->
+    <string name="settings_about">关于</string>
+    <string name="settings_back">返回</string>
+    <string name="settings_api_log_enabled">记录 API 调用日志</string>
+    <string name="settings_api_log_enabled_summary">把应用调用的特权 API 写进日志文件；关掉就不再记录</string>
+    <string name="settings_api_log_clear">清空日志</string>
+    <string name="settings_api_log_cleared">日志已清空</string>
+    <string name="settings_api_log_open">打开日志页</string>
+    <string name="settings_tap_version_hint">连点版本号 5 次显示翻车记录</string>
+    <string name="settings_debug_unlocked">调试项已解锁</string>
+    <string name="settings_version">版本</string>
+    <!-- 一站式激活：已激活后收起激活方式 -->
+    <string name="activation_methods_collapsed">Shizako酱 已经在跑了，激活方式先收起来啦～</string>
+    <string name="activation_methods_show">查看激活方式</string>
+    <string name="activation_methods_hide">收起激活方式</string>
+
+    <!-- 自定义背景图片 + 模糊/亮暗 -->
+    <string name="settings_bg_title">自定义背景</string>
+    <string name="settings_bg_pick">选择背景图片</string>
+    <string name="settings_bg_pick_summary">用自己的图片当整个 App 的背景</string>
+    <string name="settings_bg_set">已使用自定义图片</string>
+    <string name="settings_bg_none">默认纯色背景</string>
+    <string name="settings_bg_blur">模糊</string>
+    <string name="settings_bg_dim">亮暗</string>
+    <string name="settings_bg_clear">移除图片</string>
+    <string name="settings_bg_failed">这张图片读不出来</string>
+
+    <!-- 设置页问候语（按时间变化） -->
+    <string name="settings_greeting_morning">主人，早上好</string>
+    <string name="settings_greeting_noon">主人，中午好</string>
+    <string name="settings_greeting_evening">主人，下午好</string>
+    <string name="settings_greeting_night">主人，晚上好</string>
+    <string name="settings_background">背景</string>
+    <string name="settings_bg_crop">裁切图片</string>
+    <string name="settings_bg_crop_summary">双指缩放、拖动取景，然后应用</string>
+    <string name="settings_bg_crop_apply">应用</string>
+    <string name="settings_bg_crop_reset">还原</string>
+    <string name="settings_bg_crop_cancel">取消</string>
+    <string name="settings_bg_crop_hint">双指缩放 · 拖动移动</string>
+    <string name="settings_bg_crop_locked">已锁定原图比例 · %1$s</string>
+    <string name="settings_bg_crop_failed">这张图裁切失败了</string>
+
+    <!-- 底栏入口自定义 -->
+    <string name="settings_nav_bar">底部栏</string>
+    <string name="settings_nav_bar_summary">自定义入口和排序</string>
+    <string name="settings_nav_reset">恢复默认</string>
+    <string name="settings_nav_move_up">上移</string>
+    <string name="settings_nav_move_down">下移</string>
+    <string name="settings_nav_drag_to_sort">拖动排序</string>
+
+    <!-- 玻璃材质（照搬 Salt Player / Salt UI 的三档材质） -->
+    <string name="settings_glass_material">材质</string>
+    <string name="settings_glass_material_summary">毛玻璃 / 亚克力 / 云母，参数照搬椒盐音乐</string>
+    <string name="settings_glass_blur">材质模糊</string>
+    <string name="glass_material_glass">毛玻璃</string>
+    <string name="glass_material_acrylic">亚克力</string>
+    <string name="glass_material_mica">云母</string>
+    <string name="glass_material_none">关闭（半透明）</string>
+    <string name="settings_live_blur">实时磨砂（顶栏 / 底栏）</string>
+    <string name="settings_live_blur_summary">顶栏底栏实时模糊下方滚动内容。默认关闭：它每帧要把整屏重录一遍再模糊，滚动会掉帧，而且模糊比内容慢一帧（卡片边缘拖影）。</string>
+    <string name="update_no_network">没有网络连接 —— 其它功能离线照样能用</string>
+
+    <string name="modules_title">ADB 模块</string>
+
+    <!-- ADB Modules 策略 -->
+    <string name="settings_module_policy">模块策略</string>
+    <string name="settings_module_policy_summary">访问模式、后台动作、WebUI 桥</string>
+    <string name="module_access_mode">访问模式</string>
+    <string name="module_mode_safe">安全</string>
+    <string name="module_mode_custom">自定义</string>
+    <string name="module_mode_full">完全访问</string>
+    <string name="module_service">运行 service.sh</string>
+    <string name="module_background">后台动作</string>
+    <string name="module_webui_bridge">WebUI 命令桥</string>
+    <string name="module_webui_bridge_summary">允许模块的 WebUI 页面调用 window.Shizuku</string>
+    <string name="module_webview_internet">WebUI 联网</string>
+    <string name="module_webui_download">WebUI 下载</string>
+    <string name="module_recommand">执行前确认</string>
+    <string name="module_recommand_summary">Action / WebUI 执行 shell 前弹确认框</string>
+    <string name="module_ai_checker">Gemini 命令检查</string>
+    <string name="module_ai_checker_summary">执行前用 Gemini 解释这条命令</string>
+    <string name="module_only_in_custom">只在「自定义」模式下生效</string>
+    <string name="module_trust_hint">长按模块卡片可以信任该模块 —— 受信任的模块绕过上面所有策略门（硬性安全限制照常生效）。</string>
+    <string name="module_trusted_list">已信任：%1$s</string>
+    <string name="accessibility_manager">无障碍管理器</string>
+    <string name="settings_open_modules_summary">安装与管理 ADB 模块 ZIP</string>
+    <string name="settings_open_comput_summary">shell 控制台：宏命令 + AI 解释</string>
+    <string name="settings_open_accessibility_summary">让无障碍服务常驻不被杀</string>
+    <string name="settings_lab">实验室功能</string>
+    <string name="settings_lab_summary">实验开关（Shizuku Connectors、备份恢复）</string>    <string name="backup_done">设置已备份</string>
+    <string name="backup_failed">备份失败</string>
+    <string name="restore_done">设置已恢复 —— 重启应用后生效</string>
+    <string name="restore_failed">恢复失败</string>    <string name="settings_auto_disable_usb_debugging">开机自动关闭 USB 调试</string>
+    <string name="settings_auto_disable_usb_debugging_summary">重启后自动把 USB 调试关掉，避免 ADB 这个口子一直开着</string>    <string name="catalog_search">搜索</string>
+    <string name="catalog_searching">搜索中…</string>
+    <string name="catalog_search_hint">关键词，例如 adb / 模块名（留空 = 浏览话题下的仓库）</string>
+    <string name="catalog_results">找到 %1$d 个模块</string>
+    <string name="catalog_install">安装</string>
+    <string name="catalog_installing">安装中…</string>
+    <string name="catalog_installed">%1$s 已安装</string>
+    <string name="catalog_empty">没找到 —— 换个关键词试试</string>
+    <string name="catalog_tip">只列出仓库里带有合法 module.prop 的项目。</string>
+    <string name="settings_module_catalog">模块目录</string>
+    <string name="settings_module_catalog_summary">浏览 GitHub 上发布的模块</string>    <!-- 设置分组标题（只是分类，入口一个都没删） -->
+    <string name="settings_group_appearance">外观与交互</string>
+    <string name="settings_group_modules">ADB 模块</string>
+    <string name="settings_group_console">控制台</string>
+    <string name="settings_group_accessibility">无障碍与实验</string>
+    <string name="settings_group_system">系统</string>
+    <string name="settings_group_about">关于</string>    <string name="home_action_kill">杀死 Shizako 酱</string>
+    <string name="accessibility_manager_details">详情</string>
+    <string name="accessibility_manager_system_hint">服务自身的选项只能在系统无障碍设置里改。</string>    <string name="about_bilibili" translatable="false">Bilibili</string>
+    <string name="about_bilibili_link" translatable="false">https://b23.tv/hHJCSje</string>
+    <string name="about_open_link">打开主页</string>
+    <string name="about_github_link" translatable="false">https://github.com/cr1437</string>
 </resources>

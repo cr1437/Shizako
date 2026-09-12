@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.widget.ProgressBar
 import android.widget.TextView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import moe.shizuku.manager.ui.glass.GlassWindow
 import moe.shizuku.manager.R
 import java.util.Locale
 
@@ -54,7 +55,7 @@ class DownloadProgressDialog private constructor(
                     onCancel.onCancel()
                 }
                 .show()
-
+                    .also { GlassWindow.applyIfGlass(it) }
             return DownloadProgressDialog(context, dialog)
         }
     }

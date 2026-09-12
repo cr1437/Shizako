@@ -73,9 +73,6 @@
     <string name="app_management_item_summary_requires_root">* бара Shizako да работи со root</string>
     <string name="home_terminal_title">Користење Shizako во терминалски апликации</string>
     <string name="home_terminal_description">Извршувајте наредби преку Shizako во терминалските апликации што ги сакате</string>
-    <string name="home_activation_title">Активација со еден допир</string>
-    <string name="home_activation_summary">Активирајте Brevent, Stopapp и повеќе без сметач</string>
-    <string name="home_activation_summary_not_running">Прво стартувајте Shizako за да користите активација со еден допир</string>
     <string name="terminal_tutorial_1">Прво, извезете ги датотеките каде сакате. Ќе најдете две датотеки: %1$s и %2$s.</string>
     <string name="terminal_tutorial_1_description">Ако во избраната папка постојат датотеки со исто име, тие ќе бидат избришани.
 
@@ -115,7 +112,6 @@
     <string name="activation_status_activated">%1$s · веќе активирана</string>
     <string name="activation_status_not_activated">%1$s · инсталирана, не е активирана</string>
     <string name="activation_note_device_owner">Бара претходно да се отстранат сите сметки и секундарни корисници (гостински режим / двојник на апликација); по активацијата можете да ги вратите. Можни се посебности на ROM-от на производителот.</string>
-    <string name="activation_note_brevent">Серверот Brevent треба повторно да се активира по секое рестартирање.</string>
     <string name="activation_custom_title">Прилагодена наредба</string>
     <string name="activation_custom_hint">Било која наредба на школка, пр. dpm set-device-owner …</string>
     <string name="activation_custom_empty">Наредбата е празна</string>

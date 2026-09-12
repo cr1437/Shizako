@@ -73,9 +73,6 @@
     <string name="app_management_item_summary_requires_root">* Shizako Root‌తో నడవాలి</string>
     <string name="home_terminal_title">టెర్మినల్ యాప్‌లలో Shizako ఉపయోగించండి</string>
     <string name="home_terminal_description">మీకు నచ్చిన టెర్మినల్ యాప్‌లలో Shizako ద్వారా కమాండ్‌లు అమలు చేయండి</string>
-    <string name="home_activation_title">వన్-క్లిక్ యాక్టివేషన్</string>
-    <string name="home_activation_summary">కంప్యూటర్ లేకుండా Brevent, Stopapp మొదలైనవాటిని యాక్టివేట్ చేయండి</string>
-    <string name="home_activation_summary_not_running">వన్-క్లిక్ యాక్టివేషన్ ఉపయోగించడానికి ముందు Shizako ప్రారంభించండి</string>
     <string name="terminal_tutorial_1">ముందుగా, కావాల్సిన చోటికి ఫైళ్లను ఎక్స్‌పోర్ట్ చేయండి. %1$s మరియు %2$s అనే రెండు ఫైళ్లు దొరుకుతాయి.</string>
     <string name="terminal_tutorial_1_description">ఎంచుకున్న ఫోల్డర్‌లో అదే పేరుతో ఫైళ్లు ఉంటే, అవి డిలీట్ చేయబడతాయి.
 
@@ -115,7 +112,6 @@
     <string name="activation_status_activated">%1$s · ఇప్పటికే యాక్టివేట్ అయింది</string>
     <string name="activation_status_not_activated">%1$s · ఇన్‌స్టాల్ అయింది, యాక్టివేట్ కాలేదు</string>
     <string name="activation_note_device_owner">ముందుగా అన్ని ఖాతాలు మరియు సెకండరీ వినియోగదారులు (గెస్ట్ మోడ్ / యాప్ ట్విన్) తొలగించాలి; యాక్టివేషన్ తర్వాత తిరిగి జోడించవచ్చు. వెండర్ ROM భేదాలు వర్తించవచ్చు.</string>
-    <string name="activation_note_brevent">Brevent సర్వర్ ప్రతి రీబూట్ తర్వాత మళ్లీ యాక్టివేట్ చేయాల్సి ఉంటుంది.</string>
     <string name="activation_custom_title">కస్టమ్ కమాండ్</string>
     <string name="activation_custom_hint">ఏ shell కమాండ్ అయినా, ఉదా. dpm set-device-owner …</string>
     <string name="activation_custom_empty">కమాండ్ ఖాళీగా ఉంది</string>

@@ -74,9 +74,6 @@ Muudatuse jõustumiseks võib olla vaja Shizako taaskäivitada.</string>
     <string name="app_management_item_summary_requires_root">* nõuab, et Shizako töötaks juurkasutajana</string>
     <string name="home_terminal_title">Shizako kasutamine terminalirakendustes</string>
     <string name="home_terminal_description">Käivitage käsud Shizako kaudu oma lemmikterminalirakendustes</string>
-    <string name="home_activation_title">Ühe klõpsuga aktiveerimine</string>
-    <string name="home_activation_summary">Aktiveerige Brevent, Stopapp ja palju muud ilma arvutita</string>
-    <string name="home_activation_summary_not_running">Ühe klõpsuga aktiveerimise kasutamiseks käivitage kõigepealt Shizako</string>
     <string name="terminal_tutorial_1">Esmalt eksportige failid kohta, kuhu soovite. Leiate kaks faili: %1$s ja %2$s.</string>
     <string name="terminal_tutorial_1_description">Kui valitud kaustas on sama nimega faile, need kustutatakse.
 
@@ -116,7 +113,6 @@ Eksportimisfunktsioon kasutab SAF-i (Storage Access Framework). On teatatud, et 
     <string name="activation_status_activated">%1$s · juba aktiveeritud</string>
     <string name="activation_status_not_activated">%1$s · paigaldatud, pole aktiveeritud</string>
     <string name="activation_note_device_owner">Nõuab, et kõik kontod ja teisased kasutajad (külalisrežiim / rakenduse kloon) eemaldataks enne; pärast aktiveerimist saate need tagasi lisada. Võimalikud on tootja ROM-i eripärad.</string>
-    <string name="activation_note_brevent">Breventi server tuleb pärast iga taaskäivitust uuesti aktiveerida.</string>
     <string name="activation_custom_title">Kohandatud käsk</string>
     <string name="activation_custom_hint">Mis tahes kestakäsk, nt dpm set-device-owner …</string>
     <string name="activation_custom_empty">Käsk on tühi</string>

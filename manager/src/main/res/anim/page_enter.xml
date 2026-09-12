@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 新页面入场：淡入（稍晚开始）+ 0.98→1 轻微放大。
+     对应 Material 3 的 fade through —— 淡出不带位移，淡入时轻微放大会让切换"软"下来。
+     位移留给页面内部的 Compose 弹簧入场（卡片上浮），这里只做淡入淡出 + 缩放。 -->
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shareInterpolator="false">
+
+    <alpha
+        android:duration="220"
+        android:fromAlpha="0.0"
+        android:interpolator="@android:interpolator/fast_out_slow_in"
+        android:startOffset="60"
+        android:toAlpha="1.0" />
+
+    <scale
+        android:duration="300"
+        android:fromXScale="0.98"
+        android:fromYScale="0.98"
+        android:interpolator="@android:interpolator/fast_out_slow_in"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:toXScale="1.0"
+        android:toYScale="1.0" />
+
+</set>

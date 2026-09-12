@@ -23,20 +23,22 @@
 
     <style name="CardTitle">
         <item name="android:textAppearance">?textAppearanceBodyLarge</item>
-        <item name="android:textColor">?android:textColorPrimary</item>
+        <!-- 不用 ?android:textColorPrimary/Secondary（继承链上可能被调成半透明，深色下就发灰看不清），
+             直接用 M3 语义色：正文 onSurface、次要 onSurfaceVariant，两种模式下都是实色。 -->
+        <item name="android:textColor">?attr/colorOnSurface</item>
         <item name="android:textSize">16sp</item>
         <item name="android:lineSpacingExtra">1sp</item>
     </style>
 
     <style name="CardSummary">
         <item name="android:textAppearance">?textAppearanceBodyMedium</item>
-        <item name="android:textColor">?android:textColorSecondary</item>
+        <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
         <item name="android:layout_marginTop">4sp</item>
     </style>
 
     <style name="CardContent">
         <item name="android:textAppearance">?textAppearanceBodyMedium</item>
-        <item name="android:textColor">?android:textColorSecondary</item>
+        <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
     </style>
 
     <style name="CardIcon">
@@ -144,9 +146,86 @@
         <item name="cardBackgroundColor">?ksuSectionBackground</item>
     </style>
 
+    <!-- ══════════ 亚克力卡片 ══════════
+         半透明亚克力底（白 50%）+ 悬浮阴影 + 噪点纹理，**没有边框**。
+         玻璃风格下由 ThemeOverlay.Glass 把 ?ksuCardStyle 指到这来，
+         所以所有走这套样式的卡片（首页状态卡 / 信息卡 / 激活卡容器 / 设置分组）一起换。 -->
+    <style name="Widget.Ksu.Card.Glass" parent="Widget.Ksu.Card">
+        <item name="cardBackgroundColor">@color/glass_card_fill_top</item>
+        <!-- 边框全去掉：那圈 0.8dp 灰线是败笔 -->
+        <item name="strokeWidth">0dp</item>
+        <!-- 不要悬浮阴影 -->
+        <item name="cardElevation">0dp</item>
+        <item name="rippleColor">?colorPrimary</item>
+        <!-- 噪点纹理（白/黑微点 alpha≈0.03，平铺） -->
+        <item name="android:foreground">@drawable/acrylic_noise_tile</item>
+    </style>
+
+    <!-- 玻璃卡 · 自定义背景偏暗版：填充换成淡白罩（浅色主题配夜景照片时用）。
+         由 ThemeOverlay.Glass.OnDarkBackground 覆盖 ?ksuCardStyle 指过来。
+         判断在 AppActivity 里做：读背景图平均亮度 → 暗就叠这层。 -->
+    <style name="Widget.Ksu.Card.Glass.OnDarkBackground" parent="Widget.Ksu.Card.Glass">
+        <item name="cardBackgroundColor">@color/glass_card_fill_top_dark_bg</item>
+    </style>
+
+    <style name="Widget.Ksu.Button.Outlined.Glass.OnDarkBackground" parent="Widget.Ksu.Button.Outlined.Glass">
+        <item name="backgroundTint">@color/glass_card_fill_top_dark_bg</item>
+    </style>
+
+    <!-- ══════════ 玻璃风格按钮 ══════════
+         对应 Compose 侧 HintPrimaryButton / HintSecondaryButton 的玻璃版本：
+         主按钮 = 强调色实心胶囊 + 一圈浅色折射边；次按钮 = 半透明玻璃胶囊 + 强调色文字。
+         由 ThemeOverlay.Glass 覆盖 ?materialButtonStyle / ?materialButtonOutlinedStyle /
+         ?materialButtonTextStyle，所以布局里只要用主题属性（而不是写死的 @style/Widget.Material3.Button.*）
+         就会跟着风格走。 -->
+
+    <style name="Widget.Ksu.Button.Glass" parent="Widget.Material3.Button">
+        <item name="cornerRadius">24dp</item>
+        <item name="strokeColor">@color/glass_card_stroke</item>
+        <item name="strokeWidth">0.8dp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:paddingStart">24dp</item>
+        <item name="android:paddingEnd">24dp</item>
+        <item name="rippleColor">?colorOnPrimary</item>
+    </style>
+
+    <style name="Widget.Ksu.Button.Outlined.Glass" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="cornerRadius">24dp</item>
+        <item name="backgroundTint">@color/glass_card_fill_top</item>
+        <item name="strokeColor">@color/glass_card_stroke</item>
+        <item name="strokeWidth">0.8dp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:paddingStart">24dp</item>
+        <item name="android:paddingEnd">24dp</item>
+    </style>
+
+    <style name="Widget.Ksu.Button.Text.Glass" parent="Widget.Material3.Button.TextButton">
+        <item name="cornerRadius">24dp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:paddingEnd">20dp</item>
+    </style>
+
     <!-- 底栏 tab 标签（Figma「Home - Bottom」设计稿：10sp） -->
     <style name="TextAppearance.Ksu.NavLabel" parent="TextAppearance.Material3.LabelSmall">
         <item name="android:textSize">10sp</item>
     </style>
 
+    <!-- ══════════ 顶部标题（沉浸式：透明标题栏 + 壁纸透上来）══════════
+         纯白 + 淡淡阴影，配 appbar_scrim 渐变遮罩，任何壁纸上都清晰。 -->
+    <style name="TextAppearance.Ksu.AppBarTitle" parent="TextAppearance.Material3.HeadlineMedium">
+        <item name="android:textColor">@color/appbar_title</item>
+        <item name="android:shadowColor">#80000000</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">1.5</item>
+        <item name="android:shadowRadius">4</item>
+    </style>
+
+    <style name="TextAppearance.Ksu.AppBarTitle.Collapsed" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:textColor">@color/appbar_title</item>
+        <item name="android:shadowColor">#80000000</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">1.5</item>
+        <item name="android:shadowRadius">4</item>
+    </style>
 </resources>

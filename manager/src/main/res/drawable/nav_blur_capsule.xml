@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 只提供胶囊轮廓给 BlurView 的 clipToOutline 用（本身不画任何颜色）：
+     Compose 侧的 Liquid Glass 负责底色/描边/泛光，这里只把实时模糊裁成胶囊形。 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <corners android:radius="@dimen/ksu_nav_corner_radius" />
+    <solid android:color="@android:color/transparent" />
+</shape>

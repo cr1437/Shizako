@@ -6,4 +6,10 @@
     <attr name="ksuCardStyle" format="reference" />
     <!-- 分组容器背景：Miuix 分组列表用更亮表面，M3E 用 surfaceContainer -->
     <attr name="ksuSectionBackground" format="reference|color" />
+    <!-- 页面背景：MD3 = 不透明主题底色（标准观感）；玻璃材质 = 透明，露出窗口壁纸底 -->
+    <attr name="ksuPageBackground" format="reference|color" />
+    <!-- 折叠大标题栏（AppBarLayout）的背景：
+         MD3 标准模式 = 主题 surface（M3 默认观感）；
+         玻璃材质 = 全透明，让壁纸从状态栏一路透下来 -->
+    <attr name="ksuAppBarBackground" format="reference|color" />
 </resources>

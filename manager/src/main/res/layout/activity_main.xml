@@ -8,12 +8,14 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clipChildren="false"
     app:edgeToEdge="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:clipChildren="false">
 
         <moe.shizuku.blurview.BlurTarget
             android:id="@+id/blur_target"
@@ -29,18 +31,43 @@
                 android:name="androidx.navigation.fragment.NavHostFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?android:colorBackground"
+                android:background="?ksuPageBackground"
                 app:defaultNavHost="true"
                 app:navGraph="@navigation/main_nav" />
         </moe.shizuku.blurview.BlurTarget>
 
-        <include
+        <!-- 底部导航（Jetpack Compose · Liquid Glass）：
+             nav_blur 是 View 侧的实时磨砂底（BlurView 模糊其下方的滚动内容，
+             裁成胶囊形）；nav_compose 叠在其上，由 LiquidGlassNavBar 画
+             半透明底色 / 内部微光 / 边缘折射描边 / 泛光 / 滑块 / 图标。
+             容器比胶囊高 2×ksu_nav_glow_overflow，且不裁剪子视图 ——
+             滑块泛光可以透出玻璃栏画到胶囊之外。 -->
+        <FrameLayout
             android:id="@+id/nav_capsule"
-            layout="@layout/view_floating_nav"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/ksu_nav_height_outer"
+            android:layout_marginStart="@dimen/ksu_nav_outer_margin"
+            android:layout_marginEnd="@dimen/ksu_nav_outer_margin"
+            android:layout_marginBottom="@dimen/ksu_nav_outer_margin"
+            android:clipChildren="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent">
+
+            <moe.shizuku.blurview.BlurView
+                android:id="@+id/nav_blur"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ksu_nav_height"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/ksu_nav_glow_overflow"
+                android:layout_marginEnd="@dimen/ksu_nav_glow_overflow"
+                android:background="@drawable/nav_blur_capsule"
+                android:clipToOutline="true" />
+
+            <androidx.compose.ui.platform.ComposeView
+                android:id="@+id/nav_compose"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

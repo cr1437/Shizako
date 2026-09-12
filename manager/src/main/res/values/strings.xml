@@ -35,6 +35,12 @@
     <string name="dhizuku_revoke_title">Revoke access</string>
     <string name="dhizuku_revoke_message">Stop letting %1$s use Device Owner privileges?</string>
     <string name="dhizuku_revoke_confirm">Revoke</string>
+    <string name="dhizuku_revoke_action">Revoke</string>
+    <string name="dhizuku_refresh">Refresh list</string>
+    <string name="dhizuku_what_title">What is this</string>
+    <string name="dhizuku_what_body">In Dhizuku mode Shizako is the Device Owner and can lend that privilege to other apps. The apps below borrowed it — tap "Revoke" to take it back; they will ask again next time.</string>
+    <string name="apps_tab_shizako">Shizako apps</string>
+    <string name="apps_tab_dhizuku">Dhizuku apps</string>
     <string name="dhizuku_permission_warning_template"><![CDATA[Let <b>%1$s</b>%2$s borrow Shizako\'s Device Owner power?]]></string>
 
     <!-- Home - Wireless Adb -->
@@ -92,6 +98,51 @@ Note, do not disable \"Developer options\" or \"USB debugging\", or Shizako will
     </plurals>
     <string name="home_app_management_view_authorized_apps"><![CDATA[Tap to manage authorized apps]]></string>
     <string name="home_app_management_empty">Apps that has requested or declared Shizako will show here.</string>
+    <!-- 未激活时：应用列表页只提示激活 -->
+    <string name="apps_need_activation_title">Shizako is not activated yet</string>
+    <string name="apps_need_activation_body">The service is not running, so the app list is unavailable. Open the activation page and start the service first.</string>
+    <string name="apps_need_activation_action">Go to activation</string>
+
+    <!-- Recommended apps (download page) -->
+    <string name="toolbox_title">Toolbox</string>
+    <string name="toolbox_note">Every tinkering tool lives on this page — tap a row to open it.</string>
+    <string name="toolbox_note_secondary">Nothing was removed: modules, console, accessibility, lab, activation, recommended apps… Bottom bar entries can still be reordered in Settings → Bottom bar.</string>
+    <string name="toolbox_group_modules">Modules</string>
+    <string name="toolbox_group_console">Console &amp; terminal</string>
+    <string name="toolbox_group_automation">Accessibility &amp; lab</string>
+    <string name="toolbox_group_device">Device &amp; activation</string>
+    <string name="toolbox_group_more">More entries</string>
+    <string name="toolbox_summary_comput_settings">Model / API key / macros</string>
+    <string name="toolbox_summary_terminal">Use Shizako from your favourite terminal app</string>
+    <string name="toolbox_summary_activation">Root / wireless debugging / PC ADB / Dhizuku</string>
+    <string name="toolbox_summary_dhizuku">Device-owner commands and status</string>
+    <string name="dhizuku_in_apps_tab">Dhizuku authorisation lives on the second page of the apps tab</string>
+    <string name="toolbox_summary_apps">See which apps use Shizako</string>
+    <string name="toolbox_summary_settings">Appearance, background, bottom bar, system switches</string>
+    <string name="download_page_title">Recommended apps</string>
+    <string name="download_note">These apps get their privileges through Shizako (freeze, silent install, permission management and more).</string>
+    <string name="download_note_secondary">"Download" uses Shizako\'s own downloader — the same one that updates Shizako (progress dialog + notification), and it hands the APK straight to the system installer. The APKs come from the mirror repo cr1437/apk-mirror.</string>
+    <string name="download_installed">Installed</string>
+    <string name="download_not_installed">Not installed</string>
+    <string name="download_action_download">Download</string>
+    <string name="download_action_open">Open</string>
+    <string name="download_open_failed">This app has no launchable activity.</string>
+    <string name="download_how_title">How to use</string>
+    <string name="download_how_body">Install the app, open it and grant Shizako permission when it asks (the request shows up in Shizako\'s own list). Nothing is injected or authorized from this page.</string>
+    <string name="settings_recommended_apps">Recommended apps</string>
+    <string name="settings_group_apps">Apps</string>    <string name="settings_recommended_apps_summary">Common apps that work with Shizako — download them in your browser</string>
+    <string name="download_app_brevent">Brevent</string>
+    <string name="download_app_brevent_desc">Prevent background apps from running without root.</string>
+    <string name="download_app_stopapp">Stopapp</string>
+    <string name="download_app_stopapp_desc">Disable apps in one tap, with silent install and uninstall.</string>
+    <string name="download_app_icebox">IceBox</string>
+    <string name="download_app_icebox_desc">Freeze apps you rarely use and unfreeze them when needed.</string>
+    <string name="download_app_island">Island</string>
+    <string name="download_app_island_desc">Isolate a work space and manage the apps inside it.</string>
+    <string name="download_app_scene">Scene v9.3.8</string>
+    <string name="download_app_scene_desc">All-in-one toolbox: scheduler, thermal control, logs, power management.</string>
+    <string name="download_app_hail">Hail v1.11.0</string>
+    <string name="download_app_hail_desc">Freeze and unfreeze apps — a lighter alternative to IceBox.</string>
 
     <!-- Home - Learn more -->
     <string name="home_learn_more_title">Learn Shizako</string>
@@ -115,9 +166,6 @@ You may need to restart Shizako for the operation to take effect."</string>
     <string name="home_terminal_description">Run commands through Shizako in terminal apps you like</string>
 
     <!-- One-click activation home card -->
-    <string name="home_activation_title">One-click activation</string>
-    <string name="home_activation_summary">Activate Brevent, Stopapp and more without a computer</string>
-    <string name="home_activation_summary_not_running">Start Shizako first to use one-click activation</string>
     <string name="terminal_tutorial_1">First, Export files to any where you want. You will find two files, %1$s and %2$s.</string>
     <string name="terminal_tutorial_1_description">"If there are files with the same name in the selected folder, they will be deleted.
 
@@ -204,7 +252,7 @@ The export function uses SAF (Storage Access Framework). It's reported that MIUI
     <string name="home_activation_hub_title">Activation</string>
     <string name="home_activation_hub_desc">Pick a way to start Shizako, or activate Device Owner (Dhizuku) mode.</string>
     <string name="activation_hub_desc_running">Shizako is running. Device Owner mode can be activated in one tap.</string>
-    <string name="activation_hub_desc_not_running">Shizako is not running. Pick one of the ways below to start her.</string>
+        <string name="activation_hub_desc_not_running">Shizako is not running. Tap the button below for the step-by-step activation guide.</string>
     <string name="activation_method_dhizuku">Dhizuku (Device Owner)</string>
     <string name="activation_method_dhizuku_desc">Make Shizako the Device Owner; authorized apps can then use her privileges without root or wireless debugging.</string>
     <string name="activation_method_root">Root</string>
@@ -218,6 +266,7 @@ The export function uses SAF (Storage Access Framework). It's reported that MIUI
     <string name="activation_method_action_view_command">View command</string>
     <string name="activation_method_action_start">Start</string>
     <string name="activation_hub_details">Detailed guide</string>
+    <string name="activation_hub_action_open">Start activation</string>
 
     <!-- One-stop activation detail page -->
     <string name="activation_page_title">Activation</string>
@@ -235,9 +284,20 @@ The export function uses SAF (Storage Access Framework). It's reported that MIUI
     <string name="activation_tag_persistent">Survives reboot</string>
     <string name="activation_root_desc_detail">If your device is already rooted, this is the easiest way: grant superuser access and start directly.</string>
     <string name="activation_root_steps">1. Tap Start below\n2. Grant superuser access in the popup\n3. Wait until the service is running</string>
-    <string name="activation_wadb_desc_detail">On Android 11 and above you can start Shizako on the device itself via Wireless debugging — no computer needed. Everything happens in a floating window on top of the system settings, no app switching.</string>
-    <string name="activation_wadb_steps">1. Tap \"Floating window pairing\" below and grant the overlay permission\n2. In the opened Developer options, enable \"Wireless debugging\"\n3. Tap \"Pair device with pairing code\" to show the 6-digit code\n4. Enter the code in the floating window — pairing, connecting and starting are automatic</string>
-    <string name="activation_wadb_action_float_pair">Floating window pairing</string>
+    <string name="activation_wadb_desc_detail">On Android 11 and above you can start Shizako酱 without a computer. The pairing code is typed in the notification, so you never leave the app.</string>
+    <string name="activation_wadb_steps">1. Tap "Start pairing" below and allow notifications\n2. Enable "Wireless debugging" in the opened settings page\n3. Tap "Pair device with pairing code" — a 6-digit code appears\n4. Pull down the notification shade and enter the code there; pairing, connecting and starting are automatic</string>
+    <string name="activation_wadb_action_pair">Start pairing</string>
+    <string name="activation_wadb_action_start_paired">Start with existing pairing</string>
+    <!-- Quick start (already paired, no need to pair again) -->
+    <string name="activation_quick_start_title">Already paired — quick start</string>
+    <string name="activation_quick_start_desc">The pairing is remembered. After a reboot you can start the Shizako service without pairing again.</string>
+    <string name="activation_quick_start_action_start">Start service</string>
+    <string name="activation_quick_start_action_repair">Pair again</string>
+    <string name="activation_quick_start_action_forget">Forget pairing</string>
+    <string name="activation_quick_start_forget_confirm">The stored pairing will be removed and you will have to pair again before starting. Continue?</string>
+    <string name="activation_quick_start_hint_secure_settings">Note: without the "modify secure settings" permission, make sure Wireless debugging is still on before starting.</string>
+    <string name="activation_toast_starting">Starting Shizako service\u2026</string>
+    <string name="activation_toast_pairing_forgotten">Pairing data cleared</string>
     <string name="activation_wadb_action_open_settings">Open Developer options</string>
     <string name="activation_adb_desc_detail">If you have a computer at hand, run the start command once with USB debugging enabled.</string>
     <string name="activation_adb_steps">1. Enable USB debugging in Developer options and connect the computer\n2. Copy the command below and run it in a terminal (adb)\n3. The service starts immediately; no root needed</string>
@@ -256,29 +316,6 @@ The export function uses SAF (Storage Access Framework). It's reported that MIUI
     <string name="activation_faq_fail_a">Check that Wireless debugging is still enabled (some ROMs turn it off when the screen locks), that the pairing code and port are the latest ones shown, and that the device stays on the network. On MIUI, also enable \"USB debugging (Security settings)\".</string>
 
     <!-- Wireless debugging floating pair window (replaces notification input) -->
-    <string name="floating_pair_title">Wireless debugging pairing</string>
-    <string name="floating_pair_hint_code">6-digit pairing code</string>
-    <string name="floating_pair_hint_port">Port</string>
-    <string name="floating_pair_action_pair">Pair &amp; start</string>
-    <string name="floating_pair_action_start">Start</string>
-    <string name="floating_pair_hint_steps">Open \"Wireless debugging\" → \"Pair device with pairing code\", then enter the code here. Drag the title bar to move this window.</string>
-    <string name="floating_pair_status_discovering">Searching for the pairing service…</string>
-    <string name="floating_pair_status_ready">Pairing service found — enter the 6-digit code</string>
-    <string name="floating_pair_status_pairing">Pairing…</string>
-    <string name="floating_pair_status_paired">Paired. Looking for the connection port…</string>
-    <string name="floating_pair_status_starting">Starting Shizako…</string>
-    <string name="floating_pair_status_success">Done! Shizako is running.</string>
-    <string name="floating_pair_status_timeout">Still searching… Make sure the pairing dialog is open.</string>
-    <string name="floating_pair_status_failed">Failed: %1$s</string>
-    <string name="floating_pair_status_failed_unknown">Failed, please try again</string>
-    <string name="floating_pair_error_code">Enter the 6-digit pairing code</string>
-    <string name="floating_pair_error_port">Enter a valid port (1–65535)</string>
-    <string name="floating_pair_no_overlay_permission">Overlay permission is not granted, the floating window cannot be shown</string>
-    <string name="floating_pair_toast_started">Floating window shown. Enable Wireless debugging in the opened settings page</string>
-    <string name="floating_pair_overlay_dialog_title">Overlay permission needed</string>
-    <string name="floating_pair_overlay_dialog_message">The pairing code is entered in a floating window on top of the system settings, so you don\'t have to switch back and forth. Please grant \"Display over other apps\" first.</string>
-    <string name="floating_pair_overlay_dialog_grant">Grant</string>
-    <string name="close">Close</string>
 
     <string name="settings_translation_summary">Help us translate %s into your language</string>
     <string name="settings_start_on_boot">Start on boot (root)</string>
@@ -361,7 +398,7 @@ The export function uses SAF (Storage Access Framework). It's reported that MIUI
     <string name="action_about">About</string>
     <string name="about_view_source_code"><![CDATA[View source code at %s]]></string>
     <string name="about_author">Author</string>
-    <string name="about_author_name" translatable="false">初然</string>
+    <string name="about_author_name" translatable="false">cr1437</string>
     <string name="about_based_on">Based on</string>
     <string name="about_based_on_text"><![CDATA[%s open source project]]></string>
     <string name="about_license">License</string>
@@ -389,6 +426,9 @@ The export function uses SAF (Storage Access Framework). It's reported that MIUI
     <string name="notification_adb_pairing_succeed_text">You can start Shizako service now.</string>
     <string name="notification_adb_pairing_failed_title">Pairing failed</string>
     <string name="notification_adb_pairing_retry">Retry</string>
+    <string name="notification_adb_pairing_enter_activation">Open activation</string>
+    <string name="notification_adb_pairing_starting_service">Starting Shizako service\u2026</string>
+    <string name="notification_adb_pairing_service_started">Shizako service is running.</string>
 
     <!-- Quick settings tiles -->
     <string name="tile_service_label">Shizako service</string>
@@ -433,9 +473,9 @@ The export function uses SAF (Storage Access Framework). It's reported that MIUI
     <string name="theme_color_sakura">Sakura pink</string>
 
     <string name="settings_ui_style">Interface style</string>
-    <string name="settings_ui_style_summary">Switch between Material 3 Expressive and Miuix looks</string>
-    <string name="ui_style_m3e">Material 3 Expressive</string>
-    <string name="ui_style_miuix">Miuix</string>
+    <string name="settings_ui_style_summary">Switch between standard Material 3 and Liquid Glass</string>
+<string name="ui_style_md3">Material 3</string>
+<string name="ui_style_glass">Liquid Glass</string>
 
     <string name="home_info_android">Android</string>
     <string name="home_info_abi">ABI</string>
@@ -449,4 +489,155 @@ The export function uses SAF (Storage Access Framework). It's reported that MIUI
     <string name="home_info_apps_count">%1$d</string>
     <string name="home_info_copy">Copy</string>
     <string name="home_info_copied">Copied to clipboard</string>
+
+    <string name="hint_section_steps">Steps</string>
+    <string name="hint_section_notes">Good to know</string>
+    <string name="hint_step_open_wireless_title">Open "Wireless debugging"</string>
+    <string name="hint_step_copy_code_title">Note the 6-digit code</string>
+    <string name="hint_step_done_title">Type the code in the notification</string>
+        <string name="hint_note_notification_title">Notifications</string>
+    <string name="hint_note_network_title">Local network access</string>
+    <string name="hint_note_miui_title">MIUI / HyperOS</string>
+
+    <string name="home_logs_entry_summary">Review API calls made by authorized apps</string>
+    <string name="home_settings_entry_summary">Appearance, authorized apps and other settings</string>
+    <string name="activation_tag_terminal">Terminal</string>
+    <string name="activation_terminal_steps_ready">The service is running. Tap below for the terminal guide.</string>
+    <string name="activation_terminal_steps_not_running">Start the service first, then you can use Shizako in terminal apps.</string>
+    <string name="activation_terminal_action_open">Open terminal guide</string>
+    <string name="terminal_env_root">Service is running as root — one-tap deploy is available.</string>
+    <string name="terminal_env_adb">Service is running as adb — deploying to /data/local/tmp.</string>
+    <string name="terminal_env_no_service">Start the service first, then you can deploy rish.</string>
+    <string name="terminal_deploy_action">One-tap deploy rish</string>
+    <string name="terminal_deploy_running">Deploying…</string>
+    <string name="terminal_deploy_success">Deployed to %1$s</string>
+    <string name="terminal_deploy_hint_termux">Open Termux and run %1$s</string>
+    <string name="terminal_deploy_hint_path">Run %1$s in any terminal app</string>
+    <string name="terminal_deploy_failed">Deploy failed: %1$s</string>
+    <string name="terminal_open_docs">rish documentation</string>
+    <string name="terminal_section_manual">Manual setup</string>
+    <string name="terminal_step_export_title">Export the two files</string>
+    <string name="terminal_step_edit_title">Set your terminal app</string>
+    <string name="terminal_step_place_title">Move them where the terminal can reach</string>
+    <string name="terminal_note_dex_title">Android 14+ needs a read-only dex</string>
+    <string name="terminal_note_dex_body">app_process refuses to load a writable dex, so rish_shizuku.dex must be chmod 400 — one-tap deploy does this for you (shared storage cannot).</string>
+    <string name="terminal_note_env_title">Environment variables</string>
+    <string name="terminal_note_env_body">Set RISH_PRESERVE_ENV=1 to pass your terminal env (PATH, LD_PRELOAD) to the remote shell; default is 1 for root and 0 for adb.</string>
+    <string name="terminal_note_app_title">Terminal app</string>
+    <string name="terminal_note_app_termux">Termux detected — rish will be installed into its PATH.</string>
+    <string name="terminal_note_app_none">No Termux found. Deploy still works (/data/local/tmp/rish), or install Termux to get rish in PATH.</string>
+    <!-- ══════════ 设置页（二级菜单 + 隐藏调试项 + 日志开关）══════════ -->
+    <string name="settings_about">About</string>
+    <string name="settings_back">Back</string>
+    <string name="settings_api_log_enabled">Record API call log</string>
+    <string name="settings_api_log_enabled_summary">Write privileged API calls made by apps to a log file; turn off to stop recording</string>
+    <string name="settings_api_log_clear">Clear log</string>
+    <string name="settings_api_log_cleared">Log cleared</string>
+    <string name="settings_api_log_open">Open log page</string>
+    <string name="settings_tap_version_hint">Tap the version 5 times to show the crash log</string>
+    <string name="settings_debug_unlocked">Debug items unlocked</string>
+    <string name="settings_version">Version</string>
+    <!-- 一站式激活：已激活后收起激活方式 -->
+    <string name="activation_methods_collapsed">Shizako is already running, so the activation methods are tucked away.</string>
+    <string name="activation_methods_show">Show activation methods</string>
+    <string name="activation_methods_hide">Hide activation methods</string>
+
+    <!-- 自定义背景图片 + 模糊/亮暗 -->
+    <string name="settings_bg_title">Custom background</string>
+    <string name="settings_bg_pick">Pick an image</string>
+    <string name="settings_bg_pick_summary">Use your own picture as the app background</string>
+    <string name="settings_bg_set">Custom image in use</string>
+    <string name="settings_bg_none">Default color background</string>
+    <string name="settings_bg_blur">Blur</string>
+    <string name="settings_bg_dim">Brightness</string>
+    <string name="settings_bg_clear">Remove image</string>
+    <string name="settings_bg_failed">Could not load that image</string>
+
+    <!-- 设置页问候语（按时间变化） -->
+    <string name="settings_greeting_morning">Good morning, master</string>
+    <string name="settings_greeting_noon">Good afternoon, master</string>
+    <string name="settings_greeting_evening">Good evening, master</string>
+    <string name="settings_greeting_night">Good night, master</string>
+    <string name="settings_background">Background</string>
+    <string name="settings_bg_crop">Crop image</string>
+    <string name="settings_bg_crop_summary">Zoom and pan, then apply</string>
+    <string name="settings_bg_crop_apply">Apply</string>
+    <string name="settings_bg_crop_reset">Reset</string>
+    <string name="settings_bg_crop_cancel">Cancel</string>
+    <string name="settings_bg_crop_hint">Pinch to zoom, drag to move</string>
+    <string name="settings_bg_crop_locked">Ratio locked · %1$s</string>
+    <string name="settings_bg_crop_failed">Could not crop that image</string>
+
+    <!-- 底栏入口自定义 -->
+    <string name="settings_nav_bar">Bottom bar</string>
+    <string name="settings_nav_bar_summary">Choose entries and their order</string>
+    <string name="settings_nav_reset">Reset to default</string>
+    <string name="settings_nav_move_up">Move up</string>
+    <string name="settings_nav_move_down">Move down</string>
+    <string name="settings_nav_drag_to_sort">Drag to reorder</string>
+
+    <!-- 玻璃材质（照搬 Salt Player / Salt UI 的三档材质） -->
+    <string name="settings_glass_material">Material</string>
+    <string name="settings_glass_material_summary">Blurred glass / Acrylic / Mica, same recipes as Salt Player</string>
+    <string name="settings_glass_blur">Material blur</string>
+    <string name="glass_material_glass">Blurred glass</string>
+    <string name="glass_material_acrylic">Acrylic</string>
+    <string name="glass_material_mica">Mica</string>
+    <string name="glass_material_none">Off (translucent)</string>
+    <string name="settings_live_blur">Live blur (top/bottom bars)</string>
+    <string name="settings_live_blur_summary">Real frosted glass over scrolling content. Off by default: it re-records the whole screen every frame, so scrolling drops frames and the blur trails one frame behind.</string>
+    <string name="update_no_network">No network connection — everything else still works offline</string>
+
+    <string name="modules_title">ADB modules</string>
+
+    <!-- ADB Modules 策略 -->
+    <string name="settings_module_policy">Module policy</string>    <string name="settings_module_policy_summary">Access mode, background actions, WebUI bridge</string>
+    <string name="module_access_mode">Access mode</string>
+    <string name="module_mode_safe">Safe</string>
+    <string name="module_mode_custom">Custom</string>
+    <string name="module_mode_full">Full access</string>
+    <string name="module_service">Run service.sh</string>
+    <string name="module_background">Background actions</string>
+    <string name="module_webui_bridge">WebUI shell bridge</string>
+    <string name="module_webui_bridge_summary">Let module WebUI pages call window.Shizuku</string>
+    <string name="module_webview_internet">WebUI internet access</string>
+    <string name="module_webui_download">WebUI downloads</string>
+    <string name="module_recommand">Confirm before running commands</string>
+    <string name="module_recommand_summary">Show a review dialog before Action / WebUI shell execution</string>
+    <string name="module_ai_checker">Gemini command checker</string>
+    <string name="module_ai_checker_summary">Explain shell commands with Gemini before running them</string>
+    <string name="module_only_in_custom">Only takes effect in Custom mode</string>
+    <string name="module_trust_hint">Long-press a module card to trust it — trusted modules bypass every gate above (hard safety limits still apply).</string>
+    <string name="module_trusted_list">Trusted: %1$s</string>
+    <string name="accessibility_manager">Accessibility manager</string>
+    <string name="settings_open_modules_summary">Install and manage ADB module ZIPs</string>
+    <string name="settings_open_comput_summary">Shell console with macros and AI explanation</string>
+    <string name="settings_open_accessibility_summary">Keep an accessibility service alive</string>
+    <string name="settings_lab">Lab features</string>
+    <string name="settings_lab_summary">Experimental switches (Shizuku Connectors, backup)</string>    <string name="backup_done">Settings backed up</string>
+    <string name="backup_failed">Backup failed</string>
+    <string name="restore_done">Settings restored — restart the app to apply</string>
+    <string name="restore_failed">Restore failed</string>    <string name="settings_auto_disable_usb_debugging">Disable USB debugging on boot</string>
+    <string name="settings_auto_disable_usb_debugging_summary">Turns USB debugging off after a reboot, so the ADB channel cannot be reused without your consent</string>    <string name="catalog_search">Search</string>
+    <string name="catalog_searching">Searching…</string>
+    <string name="catalog_search_hint">Keyword, e.g. adb / module name (empty = browse topics)</string>
+    <string name="catalog_results">%1$d modules found</string>
+    <string name="catalog_install">Install</string>
+    <string name="catalog_installing">Installing…</string>
+    <string name="catalog_installed">%1$s installed</string>
+    <string name="catalog_empty">Nothing found — try another keyword</string>
+    <string name="catalog_tip">Only repositories that contain a valid module.prop are listed.</string>
+    <string name="settings_module_catalog">Module catalog</string>
+    <string name="settings_module_catalog_summary">Browse modules published on GitHub</string>    <!-- 设置分组标题（只是分类，入口一个都没删） -->
+    <string name="settings_group_appearance">Appearance &amp; interaction</string>
+    <string name="settings_group_modules">ADB modules</string>
+    <string name="settings_group_console">Console</string>
+    <string name="settings_group_accessibility">Accessibility &amp; lab</string>
+    <string name="settings_group_system">System</string>
+    <string name="settings_group_about">About</string>    <string name="home_action_kill">Kill Shizako</string>
+    <string name="accessibility_manager_details">Details</string>
+    <string name="accessibility_manager_system_hint">Service-specific options can only be changed in the system accessibility settings.</string>    <string name="about_bilibili" translatable="false">Bilibili</string>
+    <string name="about_bilibili_link" translatable="false">https://b23.tv/hHJCSje</string>
+    <string name="about_open_link">Open profile</string>
+    <string name="about_github_link" translatable="false">https://github.com/cr1437</string>
 </resources>

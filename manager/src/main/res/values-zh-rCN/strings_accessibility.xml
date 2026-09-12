@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  无障碍管理器（Shevery 功能移植）专用字符串：简体中文。
+  单独成文件，避免和正在并行修改的 strings.xml 冲突。
+-->
+<resources>
+    <!-- 页面标题 -->
+    <string name="accessibility_manager_title">无障碍管理器</string>
+
+    <!-- 常驻（keep-alive）开关 -->
+    <string name="accessibility_manager_keep_alive_group">常驻</string>
+    <string name="accessibility_manager_keep_alive_title">保持无障碍服务常驻</string>
+    <string name="accessibility_manager_keep_alive_summary">以后台守护进程运行：已被系统关闭的「已固定」无障碍服务会被自动重新启用。需要 Shizuku。</string>
+    <string name="accessibility_manager_auto_boot_title">开机自启</string>
+    <string name="accessibility_manager_auto_boot_summary">设备重启后自动拉起守护进程。</string>
+    <string name="accessibility_manager_open_system_settings">打开系统无障碍设置</string>
+
+    <!-- 服务列表 -->
+    <string name="accessibility_manager_services_group">已安装的服务（%1$d）</string>
+    <string name="accessibility_manager_services_empty">这台设备上没有安装任何无障碍服务。</string>
+    <string name="accessibility_manager_service_no_description">该服务没有提供说明。</string>
+
+    <!-- 固定 / 取消固定 -->
+    <string name="accessibility_manager_pin">固定</string>
+    <string name="accessibility_manager_unpin">取消固定</string>
+    <string name="accessibility_manager_pinned">已固定 —— 由守护进程保持启用</string>
+    <string name="accessibility_manager_not_pinned">未固定</string>
+
+    <!-- 错误 / 提示 -->
+    <string name="accessibility_manager_shizuku_required">Shizuku 未运行。启用或禁用服务需要由 Shizuku 授予的 WRITE_SECURE_SETTINGS 权限。</string>
+    <string name="accessibility_manager_write_failed_title">无法修改该服务</string>
+    <string name="accessibility_manager_write_failed">写入「已启用无障碍服务」列表失败。请确认 Shizuku 正在运行，且本应用仍持有 WRITE_SECURE_SETTINGS 权限。</string>
+
+    <!-- 常驻守护进程的前台通知 -->
+    <string name="accessibility_daemon_channel_name">无障碍常驻</string>
+    <string name="accessibility_daemon_notification_title">无障碍常驻</string>
+    <string name="accessibility_daemon_notification_text">正在保持已固定的无障碍服务处于启用状态</string>
+</resources>

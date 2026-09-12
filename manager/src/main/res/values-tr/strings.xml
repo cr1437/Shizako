@@ -137,9 +137,6 @@ Genellikle, bu kısıtlama \"Geliştirici seçenekleri\"ndeki bazı ayarlar değ
   
 İşlemin etkili olabilmesi için Shizako yeniden başlatılmalı."</string>
     <!-- Shizako: 补充翻译 -->
-    <string name="home_activation_title">Tek dokunuşla etkinleştirme</string>
-    <string name="home_activation_summary">Brevent, Stopapp ve daha fazlasını bilgisayar olmadan etkinleştirin</string>
-    <string name="home_activation_summary_not_running">Tek dokunuşla etkinleştirmeyi kullanmak için önce Shizako\'yu başlatın</string>
     <string name="settings_debug">Hata ayıklama</string>
     <string name="settings_crash_logs">Çökme kayıtları</string>
     <string name="settings_crash_logs_summary">Uygulama beklenmedik şekilde kapanınca çökmeler buraya kaydedilir</string>
@@ -161,7 +158,6 @@ Genellikle, bu kısıtlama \"Geliştirici seçenekleri\"ndeki bazı ayarlar değ
     <string name="activation_status_activated">%1$s · zaten etkin</string>
     <string name="activation_status_not_activated">%1$s · kurulu, etkin değil</string>
     <string name="activation_note_device_owner">Önce tüm hesapların ve ikincil kullanıcıların (konuk modu / uygulama ikizi) kaldırılması gerekir; etkinleştirmeden sonra geri ekleyebilirsiniz. Üreticinin ROM\'una göre özel durumlar olabilir.</string>
-    <string name="activation_note_brevent">Brevent sunucusu her yeniden başlatmadan sonra yeniden etkinleştirilmelidir.</string>
     <string name="activation_custom_title">Özel komut</string>
     <string name="activation_custom_hint">Herhangi bir kabuk komutu, örn. dpm set-device-owner …</string>
     <string name="activation_custom_empty">Komut boş</string>

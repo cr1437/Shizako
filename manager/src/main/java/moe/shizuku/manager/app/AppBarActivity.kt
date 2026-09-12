@@ -74,11 +74,73 @@ abstract class AppBarActivity : AppActivity() {
         // Fragment-based activities declare their BlurTarget directly in the
         // layout (appbar_fragment_activity.xml).
         findViewById<BlurTarget>(R.id.blur_target)?.let { attachBlur(it) }
+
+        // 顶栏标题按背景图定黑白（不然亮背景上的白字、暗背景上的黑字都看不清）
+        applyAppBarTextContrast()
+    }
+
+    /**
+     * 顶栏标题自适应：拿顶栏那一带的背景图算 WCAG 对比度，决定白字还是深字，
+     * 遮罩也跟着换（暗背景用深色渐变、亮背景用淡白渐变）。
+     *
+     * 只作用于玻璃风格 + 自定义背景图；MD3 标准模式保持原样。
+     */
+    private fun applyAppBarTextContrast() {
+        if (!ThemeHelper.isUsingGlass()) return
+        val bitmap = BackgroundHelper.cachedBitmap(this) ?: return
+
+        val windowManager = getSystemService(android.content.Context.WINDOW_SERVICE)
+            as? android.view.WindowManager ?: return
+        val bounds = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            windowManager.currentWindowMetrics.bounds
+        } else {
+            val size = android.graphics.Point()
+            @Suppress("DEPRECATION")
+            windowManager.defaultDisplay.getRealSize(size)
+            android.graphics.Rect(0, 0, size.x, size.y)
+        }
+        val region = AdaptiveTextHelper.regionBehind(
+            card = toolbarContainer,
+            bitmap = bitmap,
+            window = android.graphics.Point(bounds.width(), bounds.height()),
+        )
+        // 大标题是 HeadlineMedium（>18sp），按 WCAG 大字号标准 3:1 就够
+        val plan = AdaptiveTextHelper.planForRegion(
+            bitmap = bitmap,
+            region = region,
+            minRatio = AdaptiveTextHelper.MIN_CONTRAST_LARGE,
+            preferWhite = true,
+        ) ?: return
+
+        toolbar.setTitleTextColor(plan.textColor)
+        findViewById<com.google.android.material.appbar.CollapsingToolbarLayout>(
+            R.id.toolbar_layout,
+        )?.apply {
+            setExpandedTitleColor(plan.textColor)
+            setCollapsedTitleTextColor(plan.textColor)
+        }
+
+        // 遮罩换极性：深色字配淡白遮罩，浅色字配深色遮罩
+        val scrimColor = if (plan.textColor == android.graphics.Color.BLACK) {
+            R.drawable.appbar_scrim_light
+        } else {
+            R.drawable.appbar_scrim
+        }
+        findViewById<View>(R.id.appbar_scrim)?.setBackgroundResource(scrimColor)
     }
 
     private fun attachBlur(target: BlurTarget) {
         if (blurTarget === target) return
         blurTarget = target
+
+        // 实时磨砂默认关：这层每帧把整个内容层重录一遍再模糊（同一屏画两遍以上），
+        // 壁纸 + 半透明卡片一起上会掉帧、模糊还会比内容慢一帧（卡片边缘拖影）。
+        // 关掉时把 BlurView 收起来，顶栏只留渐变遮罩。
+        if (!moe.shizuku.manager.ui.glass.GlassMaterials.isLiveBlurEnabled()) {
+            blurView.visibility = View.GONE
+            return
+        }
+        blurView.visibility = View.VISIBLE
 
         // The window background (wallpaper + mask) is drawn under each blurred
         // frame so the frosted bar stays opaque even where the content is

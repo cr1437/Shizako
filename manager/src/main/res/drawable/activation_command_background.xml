@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- ADB 命令展示框：表面变体底色 + 8dp 圆角，等宽字体 TextView 的背景 -->
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
-    <corners android:radius="8dp" />
-    <solid android:color="?colorSurfaceVariant" />
-</shape>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Comput console strings (ComputScreen.kt only).
+  Kept in its own file so it never collides with the parallel edits to strings.xml.
+-->
+<resources>
+
+    <!-- Command card -->
+    <string name="comput_title">Comput console</string>
+    <string name="comput_command_label">Command</string>
+    <string name="comput_command_placeholder">e.g. pm list packages -3</string>
+    <string name="comput_run">Run</string>
+    <string name="comput_running">Running\u2026</string>
+    <string name="comput_history_title">Command history</string>
+    <string name="comput_history_empty">No command has been run yet.</string>
+    <string name="comput_history_prev">Previous command</string>
+    <string name="comput_history_next">Next command</string>
+    <string name="comput_history_hint">Use the keyboard up / down keys to walk through history.</string>
+    <string name="comput_quick_commands">Quick commands</string>
+
+    <!-- Toolbar -->
+    <string name="comput_toolbar_clear">Clear</string>
+    <string name="comput_toolbar_stop">Stop</string>
+    <string name="comput_toolbar_copy">Copy output</string>
+    <string name="comput_toolbar_ai">Explain</string>
+    <string name="comput_toolbar_ai_desc">Explain the command and its output with Gemini</string>
+
+    <!-- Output -->
+    <string name="comput_output_title">Output</string>
+    <string name="comput_output_empty">Nothing has been run yet. Type a command above and press Run.</string>
+    <string name="comput_output_truncated">\u2026 output truncated, showing the last 64 KB only.</string>
+    <string name="comput_output_exit_ok">\u2014 finished, exit code 0 \u2014</string>
+    <string name="comput_output_exit">\u2014 finished, exit code %1$d \u2014</string>
+    <string name="comput_output_timeout">\u2014 timed out after 120 s, process killed \u2014</string>
+    <string name="comput_output_cancelled">\u2014 stopped by the user \u2014</string>
+    <string name="comput_no_output">(no output)</string>
+    <string name="comput_echo_command">&gt; %1$s</string>
+
+    <!-- Shizuku state -->
+    <string name="comput_error_no_shizuku">Shizuku is not running, so no command can be executed. Start Shizuku first.</string>
+    <string name="comput_warning_not_running">A command is already running. Stop it first.</string>
+
+    <!-- Macros -->
+    <string name="comput_macros_title">Macros</string>
+    <string name="comput_macros_summary">A macro is a saved command that runs with one tap.</string>
+    <string name="comput_macros_empty">No macro yet. Add one with the button below.</string>
+    <string name="comput_macro_run">Run</string>
+    <string name="comput_macro_rename">Rename</string>
+    <string name="comput_macro_delete">Delete</string>
+    <string name="comput_macro_add">Add macro</string>
+    <string name="comput_macro_use_current">Use the command in the input box</string>
+    <string name="comput_macro_name_label">Macro name</string>
+    <string name="comput_macro_command_label">Command</string>
+    <string name="comput_macro_confirm">Save</string>
+    <string name="comput_macro_rename_title">Rename macro</string>
+    <string name="comput_macro_name_taken">That macro name is already used.</string>
+    <string name="comput_macro_name_empty">Enter a macro name.</string>
+    <string name="comput_macro_command_empty">Enter a command.</string>
+    <string name="comput_macro_commands">%1$d command(s)</string>
+    <string name="comput_macro_running">Running macro: %1$s</string>
+
+    <!-- AI explanation -->
+    <string name="comput_ai_title">AI explanation</string>
+    <string name="comput_ai_explain">Explain with Gemini</string>
+    <string name="comput_ai_explaining">Asking Gemini\u2026</string>
+    <string name="comput_ai_key_missing">No Gemini API key configured. Add one below, then the Explain button turns on.</string>
+    <string name="comput_ai_key_label">Gemini API key</string>
+    <string name="comput_ai_key_hint">Stored encrypted with the Android Keystore. Get a key at aistudio.google.com.</string>
+    <string name="comput_ai_key_save">Save key</string>
+    <string name="comput_ai_key_saved">API key saved.</string>
+    <string name="comput_ai_key_clear">Remove</string>
+    <string name="comput_ai_key_present">A key is configured.</string>
+    <string name="comput_ai_no_key_error">No Gemini API key configured.</string>
+    <string name="comput_ai_error_network">Could not reach Gemini: %1$s</string>
+    <string name="comput_ai_error_http">Gemini returned HTTP %1$d: %2$s</string>
+    <string name="comput_ai_error_empty">Gemini returned an empty answer.</string>
+    <string name="comput_ai_no_command">Run a command first, then ask Gemini to explain it.</string>
+
+    <!-- Clipboard -->
+    <string name="comput_copied_output">Output copied.</string>
+    <string name="comput_copied_command">Command copied.</string>
+
+</resources>

@@ -74,9 +74,6 @@
     <string name="app_management_item_summary_requires_root">* Shizako Root உடன் இயங்க வேண்டும்</string>
     <string name="home_terminal_title">டெர்மினல் ஆப்களில் Shizako-ஐப் பயன்படுத்துங்கள்</string>
     <string name="home_terminal_description">நீங்கள் விரும்பும் டெர்மினல் ஆப்களில் Shizako மூலம் கட்டளைகளை இயக்குங்கள்</string>
-    <string name="home_activation_title">ஒரே தட்டலில் செயல்படுத்தல்</string>
-    <string name="home_activation_summary">கணினி இல்லாமலே Brevent, Stopapp போன்றவற்றை செயல்படுத்துங்கள்</string>
-    <string name="home_activation_summary_not_running">ஒரே தட்டல் செயல்படுத்தலைப் பயன்படுத்த முதலில் Shizako-ஐ தொடங்கவும்</string>
     <string name="terminal_tutorial_1">முதலில், விரும்பும் இடத்தில் கோப்புகளை ஏற்றுமதி செய்யவும். %1$s மற்றும் %2$s என இரண்டு கோப்புகள் கிடைக்கும்.</string>
     <string name="terminal_tutorial_1_description">தேர்ந்தெடுத்த கோப்புறையில் அதே பெயரில் கோப்புகள் இருந்தால், அவை நீக்கப்படும்.
 
@@ -116,7 +113,6 @@
     <string name="activation_status_activated">%1$s · ஏற்கனவே செயல்படுத்தப்பட்டது</string>
     <string name="activation_status_not_activated">%1$s · நிறுவப்பட்டது, செயல்படுத்தப்படவில்லை</string>
     <string name="activation_note_device_owner">முதலில் அனைத்து கணக்குகளும் இரண்டாம் நிலை பயனர்களும் (விருந்தினர் பயன்முறை / ஆப் இரட்டிப்பு) நீக்கப்பட வேண்டும்; செயல்படுத்திய பின் மீண்டும் சேர்க்கலாம். ROM வித்தியாசங்கள் இருக்கலாம்.</string>
-    <string name="activation_note_brevent">Brevent சேவையகம் ஒவ்வொரு மறுதொடக்கத்திற்குப் பின்னும் மீண்டும் செயல்படுத்தப்பட வேண்டும்.</string>
     <string name="activation_custom_title">தனிப்பயன் கட்டளை</string>
     <string name="activation_custom_hint">எந்தவொரு shell கட்டளையும், எ.கா. dpm set-device-owner …</string>
     <string name="activation_custom_empty">கட்டளை காலியாக உள்ளது</string>

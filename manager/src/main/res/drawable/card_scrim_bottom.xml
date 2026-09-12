@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  底部渐变遮罩：顶部全透明 → 底部半透明黑（#B3000000，黑 70%）。
+  白色标题/副标题压在任何照片上都能读清，不依赖取色。
+
+  angle 说明：Android 的 android:angle 里
+      0   = 从左到右（startColor 在左）
+      90  = 从下到上（startColor 在下）
+      270 = 从上到下（startColor 在上）
+  所以 angle=270 + startColor=透明 + endColor=黑 → **顶部透明、底部黑**，正是要的效果。
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <!-- 多段停靠：黑度在中段就压到 55%，不像两段渐变那样"到底才黑"，
+         标题正好落在中间时也读得清（运行时会按实际背景重算，见 AdaptiveTextHelper） -->
+    <gradient
+        android:angle="270"
+        android:type="linear">
+        <item android:offset="0.0" android:color="#00000000" />
+        <item android:offset="0.35" android:color="#59000000" />
+        <item android:offset="0.65" android:color="#A6000000" />
+        <item android:offset="1.0" android:color="#D9000000" />
+    </gradient>
+</shape>

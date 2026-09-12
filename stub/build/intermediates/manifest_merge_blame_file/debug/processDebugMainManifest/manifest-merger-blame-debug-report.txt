@@ -1,0 +1,66 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<!--
+3  兼容性 Stub 的清单。
+4
+5  为什么刻意做得这么"简陋"：这个包的唯一作用是让写死 moe.shizuku.privileged.api 的第三方应用
+6  在 PackageManager 里"看得到 Shizuku 已安装"。真正的权限校验发生在 Shizako 本体
+7  （com.churan.shizako，它才是 Shizuku server 的持有者 / 权限提供方），所以这里不需要任何组件，
+8  只把 API 权限声明成和原版一致的形状，避免客户端 `pm list permissions` 之类的探测落空。
+9
+10  注意：applicationId 是 moe.shizuku.privileged.api，而权限名用相对写法
+11  "moe.shizuku.privileged.api.permission.API_V23"（和 Stub 包名同前缀），
+12  不是 com.churan.shizako.permission.*——两边权限归两家，互不覆盖。
+13-->
+14<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+15    package="moe.shizuku.privileged.api"
+16    android:versionCode="1"
+17    android:versionName="1.0" >
+18
+19    <uses-sdk
+20        android:minSdkVersion="24"
+21        android:targetSdkVersion="36" />
+22
+23    <!-- 和原版 Shizuku 一致的权限组 / API 权限：危险级，实际授权由本体授予 -->
+24    <permission-group
+24-->E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml:17:5-20:63
+25        android:name="moe.shizuku.privileged.api.permission-group.API"
+25-->E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml:18:9-71
+26        android:description="@string/stub_permission_group_description"
+26-->E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml:19:9-72
+27        android:label="@string/stub_permission_group_label" />
+27-->E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml:20:9-60
+28
+29    <permission
+29-->E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml:22:5-27:47
+30        android:name="moe.shizuku.privileged.api.permission.API_V23"
+30-->E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml:23:9-69
+31        android:description="@string/stub_permission_description"
+31-->E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml:24:9-66
+32        android:label="@string/stub_permission_label"
+32-->E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml:25:9-54
+33        android:permissionGroup="moe.shizuku.privileged.api.permission-group.API"
+33-->E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml:26:9-82
+34        android:protectionLevel="dangerous" />
+34-->E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml:27:9-44
+35
+36    <!--
+37     本包不自带 provider：第三方走的是本体 moe.shizuku.privileged.api.shizuku
+38         （见 manager 的 ShizukuManagerProvider authorities），这里再声明一个会打架。
+39         但同时也要让 Provider 路径在本包下"存在"，所以只声明权限、不声明组件。
+40    -->
+41    <application
+41-->E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml:32:5-37:68
+42        android:allowBackup="false"
+42-->E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml:33:9-36
+43        android:debuggable="true"
+44        android:extractNativeLibs="false"
+45        android:icon="@mipmap/ic_launcher"
+45-->E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml:34:9-43
+46        android:label="@string/stub_app_name"
+46-->E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml:35:9-46
+47        android:supportsRtl="true"
+47-->E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml:36:9-35
+48        android:theme="@android:style/Theme.DeviceDefault.Light" />
+48-->E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml:37:9-65
+49
+50</manifest>

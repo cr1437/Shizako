@@ -12,9 +12,12 @@ import androidx.lifecycle.Observer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import moe.shizuku.manager.MainActivity
 import moe.shizuku.manager.R
 import moe.shizuku.manager.ShizukuSettings
+import moe.shizuku.manager.starter.ServiceStartHelper
 import rikka.core.ktx.unsafeLazy
+import rikka.shizuku.Shizuku
 import java.net.ConnectException
 
 @TargetApi(Build.VERSION_CODES.R)
@@ -30,6 +33,7 @@ class AdbPairingService : Service() {
         private const val replyRequestId = 1
         private const val stopRequestId = 2
         private const val retryRequestId = 3
+        private const val activationRequestId = 4
         private const val startAction = "start"
         private const val stopAction = "stop"
         private const val replyAction = "reply"
@@ -217,14 +221,118 @@ class AdbPairingService : Service() {
                 .setSmallIcon(R.drawable.ic_system_icon)
                 .setContentTitle(title)
                 .setContentText(text)
-                /*.apply {
-                    if (!success) {
-                        addAction(retryNotificationAction)
+                .apply {
+                    if (success) {
+                        // 配对成功：点通知本体或点按钮都直接落到「一站式激活」页
+                        setContentIntent(activationPendingIntent)
+                        setAutoCancel(true)
+                        addAction(enterActivationAction)
                     }
-                }*/
+                    /*if (!success) {
+                        addAction(retryNotificationAction)
+                    }*/
+                }
                 .build()
         )
+
+        // 配对码输入完成 → 自动跳转「一站式激活」页，并直接跑启动脚本把服务拉起来
+        // （配对只是配对；「激活」= 用无线调试跑 [Starter.internalCommand] 起服务）
+        if (success) {
+            openActivationPage()
+            startServiceAfterPairing()
+        }
+
         stopSelf()
+    }
+
+    /**
+     * 配对成功后自动「激活」：走无线调试把启动脚本跑一遍（[ServiceStartHelper.startAdb]），
+     * 服务起来后把通知改成「服务已启动」；起不来就保留「配对成功」那条通知，
+     * 主人点「进入激活」可以手动再试。
+     */
+    private fun startServiceAfterPairing() {
+        notifySimple(R.string.notification_adb_pairing_starting_service)
+
+        ServiceStartHelper.startAdb(this) {
+            var running = Shizuku.pingBinder()
+            var waited = 0L
+            while (!running && waited < 8000) {
+                try {
+                    Thread.sleep(250)
+                } catch (e: InterruptedException) {
+                    break
+                }
+                waited += 250
+                running = Shizuku.pingBinder()
+            }
+
+            if (running) {
+                notifySimple(R.string.notification_adb_pairing_service_started, withActivationAction = true)
+            } else {
+                Log.w(tag, "Service did not come up after pairing")
+            }
+        }
+    }
+
+    private fun notifySimple(titleRes: Int, withActivationAction: Boolean = false) {
+        val builder = Notification.Builder(this, notificationChannel)
+            .setColor(getColor(R.color.notification))
+            .setSmallIcon(R.drawable.ic_system_icon)
+            .setContentTitle(getString(titleRes))
+        if (withActivationAction) {
+            builder.setContentIntent(activationPendingIntent)
+                .setAutoCancel(true)
+                .addAction(enterActivationAction)
+        }
+        getSystemService(NotificationManager::class.java).notify(notificationId, builder.build())
+    }
+
+    /**
+     * 配对成功后自动打开激活页。
+     *
+     * 输入配对码时通知栏是展开的、Shizako 仍然是可见窗口，所以直接 startActivity 一般放行；
+     * 万一被后台启动限制拦住，成功通知上还挂了 [activationPendingIntent] / [enterActivationAction]，
+     * 用户点一下同样进激活页。
+     */
+    private fun openActivationPage() {
+        val intent = MainActivity.destinationIntent(this, R.id.activation_fragment)
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        runCatching {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                startActivity(
+                    intent,
+                    ActivityOptions.makeBasic()
+                        .setPendingIntentBackgroundActivityStartMode(
+                            ActivityOptions.MODE_BACKGROUND_ACTIVITY_START_ALLOWED
+                        )
+                        .toBundle()
+                )
+            } else {
+                startActivity(intent)
+            }
+        }.onFailure {
+            Log.w(tag, "Unable to open activation page", it)
+        }
+    }
+
+    private val activationPendingIntent by unsafeLazy {
+        PendingIntent.getActivity(
+            this,
+            activationRequestId,
+            MainActivity.destinationIntent(this, R.id.activation_fragment),
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
+                PendingIntent.FLAG_IMMUTABLE
+            else
+                0
+        )
+    }
+
+    private val enterActivationAction by unsafeLazy {
+        Notification.Action.Builder(
+            null,
+            getString(R.string.notification_adb_pairing_enter_activation),
+            activationPendingIntent
+        ).build()
     }
 
     private val stopNotificationAction by unsafeLazy {

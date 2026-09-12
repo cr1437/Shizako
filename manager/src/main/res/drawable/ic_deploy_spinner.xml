@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- AnimatedVectorDrawable：部署进行中的转圈图标。
+     文档决策树的「基于美术素材 + 简单 SVG 微动效 → AnimatedVectorDrawable」这一支。 -->
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/ic_deploy_spinner_vector">
+
+    <target
+        android:name="spinner"
+        android:animation="@animator/spinner_rotation" />
+
+</animated-vector>

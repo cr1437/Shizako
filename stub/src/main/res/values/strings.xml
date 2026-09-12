@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 兼容性 Stub 专用字符串。单独文件，避免和本体的 strings.xml 冲突。 -->
+<resources>
+    <string name="stub_app_name">Shizuku</string>
+    <string name="stub_permission_group_label">Shizuku API</string>
+    <string name="stub_permission_group_description">Shizuku API 权限组</string>
+    <string name="stub_permission_label">Shizuku API</string>
+    <string name="stub_permission_description">通过 Shizuku 以 adb / root 身份执行特权操作</string>
+</resources>

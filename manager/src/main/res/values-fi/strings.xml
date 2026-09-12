@@ -75,9 +75,6 @@ Voi olla, että Shizako on käynnistettävä uudelleen, jotta muutos astuu voima
     <string name="app_management_item_summary_requires_root">* edellyttää, että Shizako toimii root-oikeuksilla</string>
     <string name="home_terminal_title">Shizakon käyttö päätesovelluksissa</string>
     <string name="home_terminal_description">Suorita komentoja Shizakon kautta haluamissasi päätesovelluksissa</string>
-    <string name="home_activation_title">Yhden napautuksen aktivointi</string>
-    <string name="home_activation_summary">Aktivoi Brevent, Stopapp ja paljon muuta ilman tietokonetta</string>
-    <string name="home_activation_summary_not_running">Käynnistä ensin Shizako käyttääksesi yhden napautuksen aktivointia</string>
     <string name="terminal_tutorial_1">Vie ensin tiedostot minne haluat. Löydät kaksi tiedostoa: %1$s ja %2$s.</string>
     <string name="terminal_tutorial_1_description">Jos valitussa kansiossa on samannimisiä tiedostoja, ne poistetaan.
 
@@ -117,7 +114,6 @@ Vientitoiminto käyttää SAF-kehystä (Storage Access Framework). On raportoitu
     <string name="activation_status_activated">%1$s · jo aktivoitu</string>
     <string name="activation_status_not_activated">%1$s · asennettu, ei aktivoitu</string>
     <string name="activation_note_device_owner">Edellyttää, että kaikki tilit ja toissijaiset käyttäjät (vierastila / sovelluskaksoiskappale) poistetaan ensin; voit lisätä ne takaisin aktivoinnin jälkeen. Valmistajan ROM-ominaisuudet voivat vaikuttaa.</string>
-    <string name="activation_note_brevent">Brevent-palvelin on aktivoitava uudelleen jokaisen uudelleenkäynnistyksen jälkeen.</string>
     <string name="activation_custom_title">Mukautettu komento</string>
     <string name="activation_custom_hint">Mikä tahansa komentorivikäsky, esim. dpm set-device-owner …</string>
     <string name="activation_custom_empty">Komento on tyhjä</string>

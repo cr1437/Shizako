@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Comput 控制台的中文文案（ComputScreen.kt 专用）。
+  单独一个文件，避免和并行改动的 strings.xml 冲突。
+-->
+<resources>
+
+    <!-- 命令卡 -->
+    <string name="comput_title">Comput 控制台</string>
+    <string name="comput_command_label">命令</string>
+    <string name="comput_command_placeholder">例如 pm list packages -3</string>
+    <string name="comput_run">执行</string>
+    <string name="comput_running">执行中\u2026</string>
+    <string name="comput_history_title">命令历史</string>
+    <string name="comput_history_empty">还没有执行过命令。</string>
+    <string name="comput_history_prev">上一条命令</string>
+    <string name="comput_history_next">下一条命令</string>
+    <string name="comput_history_hint">输入框里用键盘的上 / 下方向键翻历史。</string>
+    <string name="comput_quick_commands">常用命令</string>
+
+    <!-- 工具条 -->
+    <string name="comput_toolbar_clear">清屏</string>
+    <string name="comput_toolbar_stop">停止</string>
+    <string name="comput_toolbar_copy">复制输出</string>
+    <string name="comput_toolbar_ai">AI 解释</string>
+    <string name="comput_toolbar_ai_desc">让 Gemini 解释这条命令和它的输出</string>
+
+    <!-- 输出区 -->
+    <string name="comput_output_title">输出</string>
+    <string name="comput_output_empty">还没执行过命令。在上面输入一条，然后点「执行」。</string>
+    <string name="comput_output_truncated">\u2026 输出过长已截断，这里只显示最后 64 KB。</string>
+    <string name="comput_output_exit_ok">\u2014 执行结束，退出码 0 \u2014</string>
+    <string name="comput_output_exit">\u2014 执行结束，退出码 %1$d \u2014</string>
+    <string name="comput_output_timeout">\u2014 超过 120 秒已超时，进程已结束 \u2014</string>
+    <string name="comput_output_cancelled">\u2014 已被用户停止 \u2014</string>
+    <string name="comput_no_output">（无输出）</string>
+    <string name="comput_echo_command">&gt; %1$s</string>
+
+    <!-- Shizuku 状态 -->
+    <string name="comput_error_no_shizuku">Shizuku 没有运行，无法执行命令。请先启动 Shizuku。</string>
+    <string name="comput_warning_not_running">已有命令在执行，先停止它。</string>
+
+    <!-- 宏 -->
+    <string name="comput_macros_title">宏</string>
+    <string name="comput_macros_summary">宏就是把一条常用命令存下来，一键执行。</string>
+    <string name="comput_macros_empty">还没有宏。用下面的按钮添加一个。</string>
+    <string name="comput_macro_run">执行</string>
+    <string name="comput_macro_rename">改名</string>
+    <string name="comput_macro_delete">删除</string>
+    <string name="comput_macro_add">添加宏</string>
+    <string name="comput_macro_use_current">用输入框里的命令</string>
+    <string name="comput_macro_name_label">宏名称</string>
+    <string name="comput_macro_command_label">命令</string>
+    <string name="comput_macro_confirm">保存</string>
+    <string name="comput_macro_rename_title">重命名宏</string>
+    <string name="comput_macro_name_taken">这个宏名称已经用过了。</string>
+    <string name="comput_macro_name_empty">请填写宏名称。</string>
+    <string name="comput_macro_command_empty">请填写命令。</string>
+    <string name="comput_macro_commands">%1$d 条命令</string>
+    <string name="comput_macro_running">正在执行宏：%1$s</string>
+
+    <!-- AI 解释 -->
+    <string name="comput_ai_title">AI 解释</string>
+    <string name="comput_ai_explain">用 Gemini 解释</string>
+    <string name="comput_ai_explaining">正在问 Gemini\u2026</string>
+    <string name="comput_ai_key_missing">还没配置 Gemini API key。在下面填一个，「AI 解释」就会亮起来。</string>
+    <string name="comput_ai_key_label">Gemini API key</string>
+    <string name="comput_ai_key_hint">用 Android Keystore 加密后存储。key 在 aistudio.google.com 申请。</string>
+    <string name="comput_ai_key_save">保存 key</string>
+    <string name="comput_ai_key_saved">API key 已保存。</string>
+    <string name="comput_ai_key_clear">移除</string>
+    <string name="comput_ai_key_present">已配置 key。</string>
+    <string name="comput_ai_no_key_error">还没配置 Gemini API key。</string>
+    <string name="comput_ai_error_network">连不上 Gemini：%1$s</string>
+    <string name="comput_ai_error_http">Gemini 返回 HTTP %1$d：%2$s</string>
+    <string name="comput_ai_error_empty">Gemini 返回了空内容。</string>
+    <string name="comput_ai_no_command">先执行一条命令，再让 Gemini 解释。</string>
+
+    <!-- 剪贴板 -->
+    <string name="comput_copied_output">输出已复制。</string>
+    <string name="comput_copied_command">命令已复制。</string>
+
+</resources>

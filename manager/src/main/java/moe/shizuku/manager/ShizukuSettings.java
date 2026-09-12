@@ -31,6 +31,9 @@ public class ShizukuSettings {
     public static final String WATCHDOG_ENABLED = "watchdog_enabled";
     public static final String AUTO_UPDATE = "auto_update";
 
+    /** 开机后自动关掉 USB 调试（照搬 Shevery：ADB 启动过 Shizuku 之后把口子关上更安全） */
+    public static final String AUTO_DISABLE_USB_DEBUGGING = "auto_disable_usb_debugging";
+
     private static SharedPreferences sPreferences;
 
     public static SharedPreferences getPreferences() {
@@ -112,6 +115,26 @@ public class ShizukuSettings {
             defValue = AppCompatDelegate.MODE_NIGHT_YES;
         }
         return getPreferences().getInt(NIGHT_MODE, defValue);
+    }
+
+    /**
+     * 保存深浅色模式。
+     *
+     * 设置页以前只调 {@link AppCompatDelegate#setDefaultNightMode(int)}，**没写偏好** ——
+     * 那个调用只影响当前进程，重建之后 {@link #getNightMode()} 还是旧值，
+     * 外观页的滑块就"弹回跟随系统"。写偏好这一步不能省（和设置向导里一致）。
+     */
+    public static void setNightMode(@AppCompatDelegate.NightMode int mode) {
+        getPreferences().edit().putInt(NIGHT_MODE, mode).apply();
+    }
+
+    /** 开机自动关闭 USB 调试 */
+    public static boolean getAutoDisableUsbDebugging() {
+        return getPreferences().getBoolean(AUTO_DISABLE_USB_DEBUGGING, false);
+    }
+
+    public static void setAutoDisableUsbDebugging(boolean enabled) {
+        getPreferences().edit().putBoolean(AUTO_DISABLE_USB_DEBUGGING, enabled).apply();
     }
 
     public static Locale getLocale() {

@@ -76,9 +76,6 @@ Možda ćete morati ponovo da pokrenete Shizako da bi promena stupila na snagu.<
     <string name="app_management_item_summary_requires_root">* zahteva da Shizako radi sa root-om</string>
     <string name="home_terminal_title">Korišćenje Shizako u terminalskim aplikacijama</string>
     <string name="home_terminal_description">Izvršavajte komande putem Shizako u terminalskim aplikacijama koje volite</string>
-    <string name="home_activation_title">Aktivacija jednim klikom</string>
-    <string name="home_activation_summary">Aktivirajte Brevent, Stopapp i više bez računara</string>
-    <string name="home_activation_summary_not_running">Prvo pokrenite Shizako da biste koristili aktivaciju jednim klikom</string>
     <string name="terminal_tutorial_1">Prvo izvezite datoteke gde god želite. Pronaći ćete dve datoteke: %1$s i %2$s.</string>
     <string name="terminal_tutorial_1_description">Ako u izabranoj fascici postoje datoteke sa istim imenom, biće izbrisane.
 
@@ -118,7 +115,6 @@ Funkcija izvoza koristi SAF (Storage Access Framework). Prijavljuje se da MIUI k
     <string name="activation_status_activated">%1$s · već aktivirana</string>
     <string name="activation_status_not_activated">%1$s · instalirana, nije aktivirana</string>
     <string name="activation_note_device_owner">Zahteva da se prvo uklone svi nalozi i sekundarni korisnici (režim gosta / duplikat aplikacije); nakon aktivacije možete ih dodati nazad. Moguće su posebnosti ROM-a proizvođača.</string>
-    <string name="activation_note_brevent">Server Brevent treba ponovo aktivirati nakon svakog ponovnog pokretanja.</string>
     <string name="activation_custom_title">Prilagođena komanda</string>
     <string name="activation_custom_hint">Bilo koja komanda školjke, npr. dpm set-device-owner …</string>
     <string name="activation_custom_empty">Komanda je prazna</string>

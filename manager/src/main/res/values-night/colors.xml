@@ -14,4 +14,21 @@
     <color name="activation_status_unknown">#B0B0B0</color>
     <color name="activation_output_success">#81C784</color>
     <color name="activation_output_error">#E57373</color>
+    <color name="glass_dialog_surface">#1C1B1F</color>
+
+    <!-- 亚克力面板（夜间）：深色背景上亚克力是"更亮一层"，
+         用淡白罩 + 淡白细边，配 scrim 垫底 -->
+    <color name="glass_card_scrim">#33000000</color>
+    <color name="glass_card_fill_top">#1FFFFFFF</color>
+    <color name="glass_card_fill_bottom">#14FFFFFF</color>
+    <color name="glass_card_stroke">#2EFFFFFF</color>
+    <!-- 自定义背景偏暗（夜间本来就偏白，这里只再提一点点） -->
+    <color name="glass_card_fill_top_dark_bg">#2EFFFFFF</color>
+    <color name="glass_card_fill_bottom_dark_bg">#24FFFFFF</color>
+    <color name="glass_text_on_dark_bg">#F2F2F5</color>
+    <color name="glass_text_variant_on_dark_bg">#CFCFD6</color>
+    <color name="glass_outline_on_dark_bg">#9A9AA3</color>
+    <!-- 夜间：遮罩更实一点，白字压在深色壁纸上更稳 -->
+    <color name="appbar_scrim_top">#00000000</color>
+    <color name="appbar_title">#FFFFFFFF</color>
 </resources>

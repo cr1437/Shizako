@@ -82,9 +82,6 @@ Vi eble bezonos restartigi Shizako por ke la operacio efektiviĝu.</string>
     <string name="app_management_item_summary_requires_root">* postulas ke Shizako funkciu kun root</string>
     <string name="home_terminal_title">Uzado de Shizako en terminalaj apoj</string>
     <string name="home_terminal_description">Lanĉu komandojn per Shizako en terminalaj apoj kiujn vi ŝatas</string>
-    <string name="home_activation_title">Unu-klaka aktivigo</string>
-    <string name="home_activation_summary">Aktivigu Brevent, Stopapp kaj pli sen komputilo</string>
-    <string name="home_activation_summary_not_running">Startigu unue Shizako por uzi unu-klakan aktivigon</string>
     <string name="terminal_tutorial_1">Unue, eksportu la dosierojn kien vi volas. Vi trovos du dosierojn: %1$s kaj %2$s.</string>
     <string name="terminal_tutorial_1_description">Se ekzistas dosieroj kun la sama nomo en la elektita dosierujo, ili estos forigitaj.
 
@@ -120,7 +117,6 @@ La eksporta funkcio uzas SAF (Storage Access Framework). Oni raportas, ke MIUI r
     <string name="activation_status_activated">%1$s · jam aktivigita</string>
     <string name="activation_status_not_activated">%1$s · instalita, ne aktivigita</string>
     <string name="activation_note_device_owner">Postulas, ke ĉiuj kontoj kaj duarangaj uzantoj (gasta reĝimo / aplika ĝemelo) estu forigitaj unue; vi povas realdoni ilin post aktivigo. Vendistaj ROM- apartaĵoj povas aperi.</string>
-    <string name="activation_note_brevent">La Brevent-servilo bezonas esti reaktivigita post ĉiu restartigo.</string>
     <string name="activation_custom_title">Propra komando</string>
     <string name="activation_custom_hint">Iu ajn ŝelkomando, ekz. dpm set-device-owner …</string>
     <string name="activation_custom_empty">Komando estas malplena</string>

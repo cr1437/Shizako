@@ -1,5 +1,6 @@
 package moe.shizuku.manager.home
 
+import moe.shizuku.manager.R
 import moe.shizuku.manager.management.AppsViewModel
 import moe.shizuku.manager.utils.UserHandleCompat
 import rikka.recyclerview.IdBasedRecyclerViewAdapter
@@ -16,8 +17,6 @@ class HomeAdapter(private val homeModel: HomeViewModel, private val appsModel: A
     companion object {
 
         private const val ID_STATUS = 0L
-        private const val ID_APPS = 1L
-        private const val ID_TERMINAL = 2L
         private const val ID_LEARN_MORE = 6L
         private const val ID_ADB_PERMISSION_LIMITED = 7L
         private const val ID_ACTIVATION = 8L
@@ -39,13 +38,10 @@ class HomeAdapter(private val homeModel: HomeViewModel, private val appsModel: A
         addItem(ServerStatusViewHolder.CREATOR, status, ID_STATUS)
         addItem(InfoCardViewHolder.CREATOR, status to grantedCount, ID_INFO)
 
-        if (adbPermission) {
-            addItem(ManageAppsViewHolder.CREATOR, status to grantedCount, ID_APPS)
-            addItem(TerminalViewHolder.CREATOR, status, ID_TERMINAL)
-        }
+        // 注：「管理应用」「终端」两张卡片已移除 ——
+        // 应用管理交给底栏的 Tab，终端入口挪进「一站式激活」页。
 
-        // 一站式激活卡片：未运行时列出 Root / 无线调试 / 电脑 ADB 启动方式，
-        // 运行时可一键激活 Dhizuku 设备所有者。替代旧的 4 张独立启动卡片。
+        // 一站式激活卡片：状态总览 + 四种激活方式（Root / 无线调试 / 电脑 ADB / Dhizuku）
         if (isPrimaryUser) {
             addItem(ActivationViewHolder.CREATOR, status, ID_ACTIVATION)
         }

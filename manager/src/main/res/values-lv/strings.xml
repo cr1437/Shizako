@@ -73,9 +73,6 @@ Iespējams, jums būs jārestartē Shizako, lai izmaiņas stātos spēkā.</stri
     <string name="app_management_item_summary_requires_root">* pieprasa, lai Shizako darbotos ar root</string>
     <string name="home_terminal_title">Shizako izmantošana termināļa lietotnēs</string>
     <string name="home_terminal_description">Izpildiet komandas, izmantojot Shizako, jūsu iecienītajās termināļa lietotnēs</string>
-    <string name="home_activation_title">Aktivizēšana ar vienu klikšķi</string>
-    <string name="home_activation_summary">Aktivizējiet Brevent, Stopapp un citus bez datora</string>
-    <string name="home_activation_summary_not_running">Vispirms palaidiet Shizako, lai izmantotu aktivizēšanu ar vienu klikšķi</string>
     <string name="terminal_tutorial_1">Vispirms eksportējiet failus jebkurā vēlamajā vietā. Jūs atradīsit divus failus: %1$s un %2$s.</string>
     <string name="terminal_tutorial_1_description">Ja atlasītajā mapē ir faili ar tādu pašu nosaukumu, tie tiks izdzēsti.
 
@@ -115,7 +112,6 @@ Eksportēšanas funkcija izmanto SAF (Storage Access Framework). Ir ziņots, ka 
     <string name="activation_status_activated">%1$s · jau aktivizēta</string>
     <string name="activation_status_not_activated">%1$s · instalēta, nav aktivizēta</string>
     <string name="activation_note_device_owner">Nepieciešams, lai vispirms tiktu noņemti visi konti un sekundārie lietotāji (viesu režīms / lietotnes dublējums); pēc aktivizēšanas varat tos pievienot atpakaļ. Var piemist ražotāja ROM īpatnības.</string>
-    <string name="activation_note_brevent">Brevent serveris pēc katras restartēšanas ir jāaktivizē atkārtoti.</string>
     <string name="activation_custom_title">Pielāgota komanda</string>
     <string name="activation_custom_hint">Jebkura čaulas komanda, piem., dpm set-device-owner …</string>
     <string name="activation_custom_empty">Komanda ir tukša</string>

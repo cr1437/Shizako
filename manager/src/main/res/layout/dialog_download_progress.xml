@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="?android:textColorSecondary"
+        android:textColor="?attr/colorOnSurfaceVariant"
         android:layout_marginBottom="12dp" />
 
     <ProgressBar
@@ -37,14 +37,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="?android:textColorSecondary" />
+            android:textColor="?attr/colorOnSurfaceVariant" />
 
         <TextView
             android:id="@+id/download_speed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="?android:textColorSecondary" />
+            android:textColor="?attr/colorOnSurfaceVariant" />
     </LinearLayout>
 
 </LinearLayout>

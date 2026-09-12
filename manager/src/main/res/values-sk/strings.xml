@@ -73,9 +73,6 @@ Aby sa zmena prejavila, možno budete musieť Shizako reštartovať.</string>
     <string name="app_management_item_summary_requires_root">* vyžaduje, aby Shizako bežalo s rootom</string>
     <string name="home_terminal_title">Použitie Shizako v terminálových aplikáciách</string>
     <string name="home_terminal_description">Spúšťajte príkazy cez Shizako v terminálových aplikáciách, ktoré máte radi</string>
-    <string name="home_activation_title">Jednokliková aktivácia</string>
-    <string name="home_activation_summary">Aktivujte Brevent, Stopapp a ďalšie bez počítača</string>
-    <string name="home_activation_summary_not_running">Ak chcete použiť jednoklikovú aktiváciu, najprv spustite Shizako</string>
     <string name="terminal_tutorial_1">Najprv exportujte súbory kamkoľvek chcete. Nájdete dva súbory: %1$s a %2$s.</string>
     <string name="terminal_tutorial_1_description">Ak sa v vybratej zložke nachádzajú súbory s rovnakým názvom, budú vymazané.
 
@@ -115,7 +112,6 @@ Funkcia exportu používa SAF (Storage Access Framework). Podľa hlásení MIUI 
     <string name="activation_status_activated">%1$s · už aktivované</string>
     <string name="activation_status_not_activated">%1$s · nainštalované, neaktivované</string>
     <string name="activation_note_device_owner">Vyžaduje, aby boli najprv odstránené všetky účty a sekundárni používatelia (hosťovský režim / klon aplikácie); po aktivácii ich môžete pridať späť. Môžu sa vyskytnúť osobitnosti ROM výrobcu.</string>
-    <string name="activation_note_brevent">Server Brevent je potrebné po každom reštarte znova aktivovať.</string>
     <string name="activation_custom_title">Vlastný príkaz</string>
     <string name="activation_custom_hint">Ľubovoľný príkaz shellu, napr. dpm set-device-owner …</string>
     <string name="activation_custom_empty">Príkaz je prázdny</string>

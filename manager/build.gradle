@@ -4,6 +4,7 @@ import com.android.build.gradle.internal.tasks.CompileArtProfileTask
 plugins {
     id('com.android.application')
     id('org.jetbrains.kotlin.android')
+    id('org.jetbrains.kotlin.plugin.compose')
     id('dev.rikka.tools.refine')
     id('dev.rikka.tools.autoresconfig')
     id('dev.rikka.tools.materialthemebuilder')
@@ -25,6 +26,7 @@ android {
         buildConfig true
         viewBinding true
         prefab true
+        compose true
     }
     signingConfigs {
         sign
@@ -108,6 +110,40 @@ materialThemeBuilder {
     generateTextColors = true
 }
 
+// ══════════ 兼容性 Stub APK 打进 assets ══════════
+// 为什么用"复制"而不是把 :stub 当依赖：stub 是个独立 application 模块，不能作为 library 被依赖；
+// 它唯一的用途就是产出那个包名为 moe.shizuku.privileged.api 的占位 APK，
+// 由 StubManager 在运行时从 assets 里解出来再 pm install。
+def stubApkFile = new File(projectDir.absolutePath, 'src/main/assets/shizako-stub.apk')
+
+tasks.register('copyStubApk') {
+    group = 'build'
+    description = '把 :stub 的 debug APK 复制到 manager/src/main/assets/shizako-stub.apk'
+    // 显式依赖跨模块任务：这样单独跑 :stub:assembleDebug 也能工作，
+    // 跑 :manager:assembleDebug 时也会先自动把 stub 编出来。
+    dependsOn ':stub:assembleDebug'
+    inputs.file("${rootProject.projectDir}/stub/build/outputs/apk/debug/stub-debug.apk")
+    // 把 assets 里的产物也算进输入：文件被删掉时任务不会因为"输出已存在"而跳过
+    inputs.file(stubApkFile).optional()
+    outputs.file(stubApkFile)
+    doLast {
+        def src = file("${rootProject.projectDir}/stub/build/outputs/apk/debug/stub-debug.apk")
+        if (!src.exists()) {
+            throw new GradleException("stub APK 不存在：${src}（先执行 :stub:assembleDebug）")
+        }
+        stubApkFile.parentFile.mkdirs()
+        copy {
+            from src
+            into stubApkFile.parentFile
+            rename { 'shizako-stub.apk' }
+        }
+    }
+}
+
+// 手动重新生成（改了 stub 或想刷新 assets 里的 APK 时）：
+//   $env:JAVA_HOME='E:\jdk21'; $env:GRADLE_USER_HOME='E:\gh'; .\gradlew.bat :manager:copyStubApk "-Djava.io.tmpdir=E:/tmp"
+// assets 里的 APK 是产物而非源码，正常情况下不用手工动它，preBuild 会自动刷新。
+
 def collapseReleaseResourceNames = task('collapseReleaseResourceNames').doLast {
     def aapt2 = Paths.get(project.android.sdkDirectory.path, 'build-tools', project.android.buildToolsVersion, 'aapt2')
     def zip = Paths.get(project.buildDir.path, 'intermediates',
@@ -129,6 +165,13 @@ afterEvaluate {
     tasks.getByName('optimizeReleaseResources').finalizedBy(collapseReleaseResourceNames)
     tasks.getByName('preReleaseBuild').dependsOn(':shell:assembleRelease')
     tasks.getByName('preDebugBuild').dependsOn(':shell:assembleDebug')
+    // stub 占位 APK 必须在打包 assets 之前就位，否则第一次构建出来的 APK 里没有它。
+    // 除了 preBuild，再直接挂到 mergeDebugAssets / mergeReleaseAssets 上：
+    // 这样即使有人单独跑 `:manager:mergeDebugAssets`，也一定会先把 APK 复制过来。
+    tasks.getByName('preDebugBuild').dependsOn('copyStubApk')
+    tasks.getByName('preReleaseBuild').dependsOn('copyStubApk')
+    tasks.getByName('mergeDebugAssets').dependsOn('copyStubApk')
+    tasks.getByName('mergeReleaseAssets').dependsOn('copyStubApk')
 }
 
 android.applicationVariants.configureEach { variant ->
@@ -188,6 +231,28 @@ dependencies {
     implementation 'androidx.preference:preference-ktx:1.2.1'
 
     implementation 'com.google.android.material:material:1.12.0'
+
+    // Jetpack Compose：仅用于底部 Liquid Glass 导航栏（ComposeView 宿主在 activity_main.xml）
+    implementation platform('androidx.compose:compose-bom:2025.10.01')
+    implementation 'androidx.compose.ui:ui'
+    implementation 'androidx.compose.ui:ui-graphics'
+    implementation 'androidx.compose.foundation:foundation'
+    // Material 3 1.4 起带官方运动方案 MaterialTheme.motionScheme（spatial/effects 弹簧参数），
+    // 全部动画都取它，不再自己写时长/曲线 token。
+    implementation 'androidx.compose.material3:material3:1.4.0'
+    // 底栏图标库：Material Icons Extended（每个图标都有 Outlined/Filled 成对，
+    // 正好对上「描边常驻 + 实心泛光」的选中动效）。库很大但 release 会被 R8 裁掉未用图标。
+    implementation 'androidx.compose.material:material-icons-extended:1.7.8'
+
+    // 背景图取色：Palette API（dominantSwatch → titleTextColor / bodyTextColor）
+    implementation 'androidx.palette:palette-ktx:1.0.0'
+
+    // 背景模糊 / 材质：Haze（chrisbanes）—— 椒盐音乐的 Salt UI 用的就是它。
+    // SaltUI 的 SaltHazeStyles（blurryGlass / acrylic / mica）直接跑在 Haze 上，
+    // 所以这里用同一个库、同一套参数，材质观感才能对上。
+    // 2.0.x 需要 Compose 1.12 / Kotlin 2.4（本项目工具链是 2.2.21 / Compose 1.9.4），
+    // 1.6.10 正好是「Compose 1.8 起、Kotlin 2.1 起」的版本，功能和 API 够用。
+    implementation 'dev.chrisbanes.haze:haze:1.6.10'
 
     implementation 'com.github.topjohnwu.libsu:core:6.0.0'
 

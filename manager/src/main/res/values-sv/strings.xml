@@ -75,9 +75,6 @@ Du kan behöva starta om Shizako för att ändringen ska träda i kraft.</string
     <string name="app_management_item_summary_requires_root">* kräver att Shizako körs med root</string>
     <string name="home_terminal_title">Använd Shizako i terminalappar</string>
     <string name="home_terminal_description">Kör kommandon via Shizako i terminalappar du gillar</string>
-    <string name="home_activation_title">Aktivering med ett tryck</string>
-    <string name="home_activation_summary">Aktivera Brevent, Stopapp med mera utan dator</string>
-    <string name="home_activation_summary_not_running">Starta Shizako först för att använda aktivering med ett tryck</string>
     <string name="terminal_tutorial_1">Exportera först filerna var du vill. Du hittar två filer: %1$s och %2$s.</string>
     <string name="terminal_tutorial_1_description">Om det finns filer med samma namn i den valda mappen tas de bort.
 
@@ -117,7 +114,6 @@ Exportfunktionen använder SAF (Storage Access Framework). Det har rapporterats 
     <string name="activation_status_activated">%1$s · redan aktiverad</string>
     <string name="activation_status_not_activated">%1$s · installerad, inte aktiverad</string>
     <string name="activation_note_device_owner">Kräver att alla konton och sekundära användare (gästläge / appklon) tas bort först; du kan lägga till dem igen efter aktiveringen. ROM-egenheter från tillverkaren kan gälla.</string>
-    <string name="activation_note_brevent">Brevent-servern behöver aktiveras igen efter varje omstart.</string>
     <string name="activation_custom_title">Eget kommando</string>
     <string name="activation_custom_hint">Valfritt shell-kommando, t.ex. dpm set-device-owner …</string>
     <string name="activation_custom_empty">Kommandot är tomt</string>

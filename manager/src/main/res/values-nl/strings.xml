@@ -76,9 +76,6 @@ Mogelijk moet u Shizako herstarten om de wijziging door te voeren.</string>
     <string name="app_management_item_summary_requires_root">* vereist dat Shizako met root draait</string>
     <string name="home_terminal_title">Shizako gebruiken in terminal-apps</string>
     <string name="home_terminal_description">Voer commando\'s uit via Shizako in terminal-apps naar keuze</string>
-    <string name="home_activation_title">Activering met één tik</string>
-    <string name="home_activation_summary">Activeer Brevent, Stopapp en meer zonder computer</string>
-    <string name="home_activation_summary_not_running">Start eerst Shizako om activering met één tik te gebruiken</string>
     <string name="terminal_tutorial_1">Exporteer eerst de bestanden naar een locatie naar keuze. U vindt twee bestanden: %1$s en %2$s.</string>
     <string name="terminal_tutorial_1_description">Als er bestanden met dezelfde naam in de gekozen map staan, worden deze verwijderd.
 
@@ -118,7 +115,6 @@ De exportfunctie gebruikt SAF (Storage Access Framework). Er is gemeld dat MIUI 
     <string name="activation_status_activated">%1$s · al geactiveerd</string>
     <string name="activation_status_not_activated">%1$s · geïnstalleerd, niet geactiveerd</string>
     <string name="activation_note_device_owner">Vereist dat alle accounts en secundaire gebruikers (gastmodus / app-kloon) vooraf worden verwijderd; na activering kunt u ze terugzetten. Eigenaardigheden van leveranciers-ROMs kunnen van toepassing zijn.</string>
-    <string name="activation_note_brevent">De Brevent-server moet na elke herstart opnieuw worden geactiveerd.</string>
     <string name="activation_custom_title">Aangepast commando</string>
     <string name="activation_custom_hint">Elk shell-commando, bijv. dpm set-device-owner …</string>
     <string name="activation_custom_empty">Commando is leeg</string>

@@ -5,7 +5,7 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
 
-        <item name="android:windowBackground">@drawable/window_bg</item>
+        <item name="android:windowBackground">?attr/colorSurface</item>
         <item name="appColorPrimary">@color/app_color_light</item>
         <item name="homeCardStyle">@style/Card.Light</item>
 
@@ -14,6 +14,12 @@
         <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.Ksu.Large</item>
         <item name="ksuCardStyle">@style/Widget.Ksu.Card</item>
         <item name="ksuSectionBackground">?colorSurfaceContainer</item>
+        <!-- MD3（标准模式）：页面用不透明主题底色，和改动前完全一致 -->
+        <item name="ksuPageBackground">?android:colorBackground</item>
+        <item name="ksuAppBarBackground">?attr/colorSurface</item>
+
+        <!-- 对话框：用 Material 3 官方组件默认动效，不再自己挂补间 -->
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
 
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
@@ -26,7 +32,7 @@
     <style name="Base.AppTheme" parent="Theme.Material3.Dark.Shizuku">
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:windowBackground">@drawable/window_bg</item>
+        <item name="android:windowBackground">?attr/colorSurface</item>
         <item name="appColorPrimary">@color/app_color_dark</item>
         <item name="homeCardStyle">@style/Card</item>
 
@@ -35,6 +41,12 @@
         <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.Ksu.Large</item>
         <item name="ksuCardStyle">@style/Widget.Ksu.Card</item>
         <item name="ksuSectionBackground">?colorSurfaceContainer</item>
+        <!-- MD3（标准模式）：页面用不透明主题底色，和改动前完全一致 -->
+        <item name="ksuPageBackground">?android:colorBackground</item>
+        <item name="ksuAppBarBackground">?attr/colorSurface</item>
+
+        <!-- 对话框：用 Material 3 官方组件默认动效 -->
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
 
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
@@ -43,5 +55,56 @@
     </style>
 
     <style name="Theme" parent="Base.AppTheme" />
+
+    <!-- ══════════ 对话框 ══════════
+         不再挂自定义 windowEnterAnimation —— 交给 Material 3 组件的默认动效。 -->
+    <style name="ThemeOverlay.App.MaterialAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog" />
+
+    <!-- ══════════ 玻璃风格（设置 → 界面风格 = 玻璃材质）══════════
+         对话框/弹窗走 Android 12 的窗口模糊：窗口背景模糊（圆角轮廓决定模糊区域）
+         + 模糊后方屏幕，由 GlassWindow 在运行时开关。这里把对话框容器置为透明，
+         好让窗口自己的圆角玻璃底透出来。
+         另外把两套卡片样式整体指向玻璃卡 —— 所有卡片一起换风格，不需要逐个布局改。 -->
+    <style name="ThemeOverlay.Glass" parent="">
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.Glass.MaterialAlertDialog</item>
+        <!-- 卡片样式整体指向玻璃卡：首页状态卡/信息卡/激活卡容器、设置分组一起换风格。
+             （?homeCardStyle 是卡片**内部**布局用的，本身不带背景 —— 外层
+              home_item_container 已经是 ?ksuCardStyle，所以这里不动它，避免卡片套卡片。） -->
+        <item name="ksuCardStyle">@style/Widget.Ksu.Card.Glass</item>
+        <!-- 设置页分组背景也一起透，否则玻璃底上会出现不透明的 M3 色块 -->
+        <item name="ksuSectionBackground">@color/glass_card_fill_top</item>
+        <item name="materialCardViewFilledStyle">@style/Widget.Ksu.Card.Glass</item>
+        <!-- 玻璃材质：页面背景透明，让窗口壁纸底透上来，玻璃卡才有东西可透 -->
+        <item name="ksuPageBackground">@android:color/transparent</item>
+        <!-- 折叠标题栏也要透：不然状态栏那一条是不透明的 surface，看起来像贴了块色板 -->
+        <item name="ksuAppBarBackground">@android:color/transparent</item>
+        <!-- 按钮也一起换：主按钮 / 描边按钮 / 文字按钮三套 -->
+        <item name="materialButtonStyle">@style/Widget.Ksu.Button.Glass</item>
+        <item name="materialButtonOutlinedStyle">@style/Widget.Ksu.Button.Outlined.Glass</item>
+        <item name="borderlessButtonStyle">@style/Widget.Ksu.Button.Text.Glass</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.Ksu.Button.Text.Glass</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Widget.Ksu.Button.Text.Glass</item>
+        <item name="buttonBarNeutralButtonStyle">@style/Widget.Ksu.Button.Text.Glass</item>
+    </style>
+
+    <style name="ThemeOverlay.Glass.MaterialAlertDialog" parent="ThemeOverlay.App.MaterialAlertDialog">
+        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="colorSurfaceContainerHigh">@android:color/transparent</item>
+    </style>
+
+    <!-- ══════════ 文字自适应（自定义背景偏暗）══════════
+         用户拿一张夜景照片当背景、主题又是浅色时：卡片那层"黑 8%"和深色文字会一起沉进照片里。
+         这层 Overlay 在检测到背景偏暗时（AppActivity 里按背景平均亮度判断）叠在玻璃风格之上：
+         卡片换淡白罩、正文换成亮色、导航栏图标也跟着转浅。MD3 风格不叠这层。 -->
+    <style name="ThemeOverlay.Glass.OnDarkBackground" parent="">
+        <item name="ksuCardStyle">@style/Widget.Ksu.Card.Glass.OnDarkBackground</item>
+        <item name="ksuSectionBackground">@color/glass_card_fill_top_dark_bg</item>
+        <item name="materialCardViewFilledStyle">@style/Widget.Ksu.Card.Glass.OnDarkBackground</item>
+        <item name="materialButtonOutlinedStyle">@style/Widget.Ksu.Button.Outlined.Glass.OnDarkBackground</item>
+        <item name="colorOnBackground">@color/glass_text_on_dark_bg</item>
+        <item name="colorOnSurface">@color/glass_text_on_dark_bg</item>
+        <item name="colorOnSurfaceVariant">@color/glass_text_variant_on_dark_bg</item>
+        <item name="colorOutline">@color/glass_outline_on_dark_bg</item>
+    </style>
 
 </resources>

@@ -25,7 +25,7 @@
         android:paddingTop="16dp"
         android:paddingEnd="24dp"
         android:paddingBottom="24dp"
-        android:textColor="?android:textColorPrimary"
+        android:textColor="?attr/colorOnSurface"
         android:textSize="20sp"
         tools:text="@string/permission_warning_template" />
 

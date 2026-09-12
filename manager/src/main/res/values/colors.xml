@@ -24,4 +24,28 @@
     <color name="activation_status_unknown">#9E9E9E</color>
     <color name="activation_output_success">#2E7D32</color>
     <color name="activation_output_error">#C62828</color>
+    <!-- 玻璃风格：窗口/对话框玻璃底色与圆角区域（配合 Android 12 窗口模糊 API） -->
+    <color name="glass_dialog_surface">#F7F2FA</color>
+
+    <!-- ══════════ 玻璃风格卡片（浅色）══════════
+         浅色主题的页面底已经接近纯白（#FAF8FF），玻璃卡再用"白色半透明"就等于看不见 ——
+         所以浅色这套用**一点点压暗**（黑 8% / 5%）做出玻璃面板的层次，
+         观感上接近 M3 的 surfaceContainer，但底是透的（下面是页面底色）。
+         夜间用白色半透明（见 values-night/colors.xml）。 -->
+    <color name="glass_card_scrim">#00000000</color>
+    <color name="glass_card_fill_top">#14000000</color>
+    <color name="glass_card_fill_bottom">#0D000000</color>
+    <color name="glass_card_stroke">#00000000</color>
+    <!-- 自定义背景图偏暗时的玻璃卡填充：换成淡白罩（+ 字色）。浅色主题配一张夜景照片，
+         原来那层"黑 8%"会让卡片和字一起沉进背景里 —— 这就是文字自适应的另一半。 -->
+    <color name="glass_card_fill_top_dark_bg">#26FFFFFF</color>
+    <color name="glass_card_fill_bottom_dark_bg">#1FFFFFFF</color>
+    <!-- 同上：偏暗背景下的正文 / 次要文字 / 描边颜色（浅色主题下把深字换成亮字） -->
+    <color name="glass_text_on_dark_bg">#F2F2F5</color>
+    <color name="glass_text_variant_on_dark_bg">#CFCFD6</color>
+    <color name="glass_outline_on_dark_bg">#9A9AA3</color>
+    <!-- 顶部（状态栏 + 标题栏）渐变遮罩的起始色：让白色标题在任何壁纸上都看得清 -->
+    <color name="appbar_scrim_top">#00000000</color>
+    <!-- 顶部标题文字：纯白 + 阴影 -->
+    <color name="appbar_title">#FFFFFFFF</color>
 </resources>

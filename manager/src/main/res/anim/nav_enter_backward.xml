@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 后退转场 · 新页面：从左侧滑入 + 淡入（返回时方向反过来） -->
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shareInterpolator="false">
+
+    <translate
+        android:duration="260"
+        android:fromXDelta="-14%p"
+        android:interpolator="@android:interpolator/fast_out_slow_in"
+        android:toXDelta="0" />
+
+    <alpha
+        android:duration="220"
+        android:fromAlpha="0.0"
+        android:interpolator="@android:interpolator/linear"
+        android:startOffset="40"
+        android:toAlpha="1.0" />
+
+</set>

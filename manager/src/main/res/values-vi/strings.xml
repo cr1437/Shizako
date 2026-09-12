@@ -128,9 +128,6 @@ Chức năng xuất sử dụng SAF (Khung Truy cập Bộ nhớ). Có báo cáo
     <string name="home_app_management_empty">Các ứng dụng đã yêu cầu hoặc khai báo Shizako sẽ hiển thị ở đây.</string>
     <string name="dialog_adb_discovery_message_toggle_wireless_debugging">Vui lòng thử tắt và bật \"Gỡ lỗi không dây\" nếu nó tiếp tục tìm kiếm.</string>
     <!-- Shizako: 补充翻译 -->
-    <string name="home_activation_title">Kích hoạt một chạm</string>
-    <string name="home_activation_summary">Kích hoạt Brevent, Stopapp và nhiều hơn nữa mà không cần máy tính</string>
-    <string name="home_activation_summary_not_running">Hãy khởi động Shizako trước để dùng tính năng kích hoạt một chạm</string>
     <string name="settings_debug">Gỡ lỗi</string>
     <string name="settings_crash_logs">Nhật ký sự cố</string>
     <string name="settings_crash_logs_summary">Sự cố được lưu ở đây khi ứng dụng thoát đột ngột</string>
@@ -152,7 +149,6 @@ Chức năng xuất sử dụng SAF (Khung Truy cập Bộ nhớ). Có báo cáo
     <string name="activation_status_activated">%1$s · đã kích hoạt rồi</string>
     <string name="activation_status_not_activated">%1$s · đã cài, chưa kích hoạt</string>
     <string name="activation_note_device_owner">Cần xóa tất cả tài khoản và người dùng phụ (chế độ khách / nhân đôi ứng dụng) trước; bạn có thể thêm lại sau khi kích hoạt. Có thể có khác biệt tùy ROM của hãng.</string>
-    <string name="activation_note_brevent">Máy chủ Brevent cần được kích hoạt lại sau mỗi lần khởi động lại.</string>
     <string name="activation_custom_title">Lệnh tùy chỉnh</string>
     <string name="activation_custom_hint">Bất kỳ lệnh shell nào, vd. dpm set-device-owner …</string>
     <string name="activation_custom_empty">Lệnh đang trống</string>

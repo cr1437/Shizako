@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 玻璃风格卡片底（View 侧卡片统一用这个）：
+     1) 暗色 scrim —— 深色下把卡片从背景里垫出来；
+     2) 上亮下更透的白色渐变 —— 玻璃本体；
+     3) 0.8dp 左上偏亮的细描边 —— 折射边缘。
+     圆角与 Compose 侧 HintCard 的玻璃卡一致（22dp）。 -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="22dp" />
+            <solid android:color="@color/glass_card_scrim" />
+        </shape>
+    </item>
+
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="22dp" />
+            <gradient
+                android:angle="270"
+                android:startColor="@color/glass_card_fill_top"
+                android:endColor="@color/glass_card_fill_bottom"
+                android:type="linear" />
+            <stroke
+                android:width="0.8dp"
+                android:color="@color/glass_card_stroke" />
+        </shape>
+    </item>
+
+</layer-list>

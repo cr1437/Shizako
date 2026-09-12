@@ -26,7 +26,7 @@
             android:paddingTop="16dp"
             android:paddingEnd="@dimen/list_item_padding"
             android:paddingBottom="16dp"
-            android:textColor="?android:textColorPrimary"
+            android:textColor="?attr/colorOnSurface"
             android:textIsSelectable="true"
             android:textSize="12sp" />
 

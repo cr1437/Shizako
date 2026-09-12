@@ -40,6 +40,8 @@ object AuthorizationManager {
 
     fun getPackages(): List<PackageInfo> {
         val packages: MutableList<PackageInfo> = ArrayList()
+        // 服务没在跑时拿不到列表（binder 都没有），直接返回空
+        if (!isServiceAvailable()) return packages
         if (Shizuku.isPreV11() || (Shizuku.getVersion() == 11 && Shizuku.getServerPatchVersion() < 3)) {
             val allPackages: MutableList<PackageInfo> = ArrayList()
             for (user in ShizukuSystemApis.getUsers(useCache = false)) {
@@ -62,27 +64,56 @@ object AuthorizationManager {
         return packages
     }
 
+    /**
+     * 服务是否可用。
+     *
+     * 服务没起来（未激活 / 刚被杀掉）时调用 [Shizuku] 的接口会抛
+     * `IllegalStateException: binder haven't been received` —— 界面在绑定列表项时
+     * 必须能安全地问「授权了吗」，所以这里先探一下 binder。
+     */
+    private fun isServiceAvailable(): Boolean = try {
+        Shizuku.pingBinder()
+    } catch (e: Throwable) {
+        false
+    }
+
     fun granted(packageName: String, uid: Int): Boolean {
-        return if (Shizuku.isPreV11()) {
-            ShizukuSystemApis.checkPermission(Manifest.permission.API_V23, packageName, uid / 100000) == PackageManager.PERMISSION_GRANTED
-        } else {
-            (Shizuku.getFlagsForUid(uid, MASK_PERMISSION) and FLAG_ALLOWED) == FLAG_ALLOWED
+        return try {
+            if (Shizuku.isPreV11()) {
+                ShizukuSystemApis.checkPermission(Manifest.permission.API_V23, packageName, uid / 100000) == PackageManager.PERMISSION_GRANTED
+            } else {
+                (Shizuku.getFlagsForUid(uid, MASK_PERMISSION) and FLAG_ALLOWED) == FLAG_ALLOWED
+            }
+        } catch (e: Throwable) {
+            // 服务没在跑：当作没授权（列表页此时会显示「请先激活」）
+            LOGGER.w(e, "granted($packageName)")
+            false
         }
     }
 
     fun grant(packageName: String, uid: Int) {
-        if (Shizuku.isPreV11()) {
-            ShizukuSystemApis.grantRuntimePermission(packageName, Manifest.permission.API_V23, uid / 100000)
-        } else {
-            Shizuku.updateFlagsForUid(uid, MASK_PERMISSION, FLAG_ALLOWED)
+        if (!isServiceAvailable()) return
+        try {
+            if (Shizuku.isPreV11()) {
+                ShizukuSystemApis.grantRuntimePermission(packageName, Manifest.permission.API_V23, uid / 100000)
+            } else {
+                Shizuku.updateFlagsForUid(uid, MASK_PERMISSION, FLAG_ALLOWED)
+            }
+        } catch (e: Throwable) {
+            LOGGER.w(e, "grant($packageName)")
         }
     }
 
     fun revoke(packageName: String, uid: Int) {
-        if (Shizuku.isPreV11()) {
-            ShizukuSystemApis.revokeRuntimePermission(packageName, Manifest.permission.API_V23, uid / 100000)
-        } else {
-            Shizuku.updateFlagsForUid(uid, MASK_PERMISSION, 0)
+        if (!isServiceAvailable()) return
+        try {
+            if (Shizuku.isPreV11()) {
+                ShizukuSystemApis.revokeRuntimePermission(packageName, Manifest.permission.API_V23, uid / 100000)
+            } else {
+                Shizuku.updateFlagsForUid(uid, MASK_PERMISSION, 0)
+            }
+        } catch (e: Throwable) {
+            LOGGER.w(e, "revoke($packageName)")
         }
     }
 

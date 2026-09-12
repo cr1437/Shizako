@@ -94,9 +94,6 @@ Morda boste morali znova zagnati Shizako, da sprememba začne veljati.</string>
     <string name="app_management_item_summary_requires_root">* zahteva, da Shizako deluje s rootom</string>
     <string name="home_terminal_title">Uporaba Shizako v terminalskih aplikacijah</string>
     <string name="home_terminal_description">Izvajajte ukaze prek Shizako v terminalskih aplikacijah, ki jih imate radi</string>
-    <string name="home_activation_title">Aktivacija z enim klikom</string>
-    <string name="home_activation_summary">Aktivirajte Brevent, Stopapp in več brez računalnika</string>
-    <string name="home_activation_summary_not_running">Najprej zaženite Shizako, da uporabite aktivacijo z enim klikom</string>
     <string name="terminal_tutorial_1">Najprej izvozite datoteke kamor koli želite. Našli boste dve datoteki: %1$s in %2$s.</string>
     <string name="terminal_tutorial_1_description">Če v izbrani mapi obstajajo datoteke z istim imenom, bodo izbrisane.
 
@@ -136,7 +133,6 @@ Funkcija izvoza uporablja SAF (Storage Access Framework). Poročajo, da MIUI lom
     <string name="activation_status_activated">%1$s · že aktivirano</string>
     <string name="activation_status_not_activated">%1$s · nameščeno, ni aktivirano</string>
     <string name="activation_note_device_owner">Zahteva, da se najprej odstranijo vsi računi in sekundarni uporabniki (način gosta / dvojnik aplikacije); po aktivaciji jih lahko dodate nazaj. Lahko se pojavijo posebnosti ROM-a proizvajalca.</string>
-    <string name="activation_note_brevent">Strežnik Brevent je treba po vsakem ponovnem zagonu znova aktivirati.</string>
     <string name="activation_custom_title">Ukaz po meri</string>
     <string name="activation_custom_hint">Kateri koli ukaz lupine, npr. dpm set-device-owner …</string>
     <string name="activation_custom_empty">Ukaz je prazen</string>

@@ -6,10 +6,10 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <!-- 无线调试悬浮窗配对：悬浮于系统设置之上直接输入配对码 -->
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <!-- 无障碍守护：Android 14+ 前台服务要声明 specialUse -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
     <uses-permission
         android:name="android.permission.WRITE_SECURE_SETTINGS"
         tools:ignore="ProtectedPermissions" />
@@ -17,17 +17,9 @@
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="28"
         tools:ignore="ScopedStorage" />
-    <!-- 一键注入页需要直接检测目标应用的安装状态（Android 11+ 包可见性） -->
     <uses-permission
         android:name="android.permission.QUERY_ALL_PACKAGES"
         tools:ignore="QueryAllPackagesPermission" />
-
-    <queries>
-        <package android:name="me.piebridge.brevent" />
-        <package android:name="web1n.stopapp" />
-        <package android:name="com.catchingnow.icebox" />
-        <package android:name="com.oasisfeng.island" />
-    </queries>
 
     <uses-feature
         android:name="android.software.leanback"
@@ -168,12 +160,6 @@
             android:exported="false"
             android:foregroundServiceType="shortService" />
 
-        <!-- 无线调试悬浮窗配对：普通 Service + 可见悬浮窗即保持前台重要性，无需通知 -->
-        <service
-            android:name=".pairing.FloatingPairService"
-            android:enabled="true"
-            android:exported="false" />
-
         <service
             android:name=".tile.ServiceTile"
             android:enabled="true"
@@ -270,6 +256,16 @@
             </intent-filter>
         </receiver>
 
+        <!-- 开机自动关掉 USB 调试（ADB 启过 Shizuku 之后把口子关上，更安全） -->
+        <receiver
+            android:name=".receiver.AutoDisableUsbDebuggingReceiver"
+            android:directBootAware="true"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
         <provider
             android:name=".ShizukuManagerProvider"
             android:authorities="${applicationId}.shizuku;moe.shizuku.privileged.api.shizuku"
@@ -278,6 +274,47 @@
             android:exported="true"
             android:multiprocess="false"
             android:permission="android.permission.INTERACT_ACROSS_USERS_FULL" />
+
+        <!-- ══════════ ADB Modules（照搬 Shevery）══════════ -->
+        <!-- 模块本地 WebUI（只有模块目录里的页面，路径穿越会被拒） -->
+        <activity
+            android:name=".module.ModuleWebViewActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:exported="false"
+            android:label="@string/modules_title" />
+
+        <!-- ══════════ 无障碍管理器（照搬 Shevery）══════════ -->
+        <activity
+            android:name=".accessibility.AccessibilityManagerActivity"
+            android:exported="false"
+            android:label="@string/accessibility_manager" />
+        <service
+            android:name=".accessibility.AccessibilityDaemonService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="keep_accessibility_service_alive" />
+        </service>
+        <receiver
+            android:name=".accessibility.AccessibilityBootReceiver"
+            android:directBootAware="true"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- ══════════ Shizuku Connectors（实验室功能，默认关闭）══════════
+             开着时第三方「激活器」可以 query 出启动本地 Shizuku server 的命令；
+             关着时返回空结果。 -->
+        <provider
+            android:name=".connector.ShizukuConnectorProvider"
+            android:authorities="${applicationId}.connector"
+            android:enabled="true"
+            android:exported="true" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

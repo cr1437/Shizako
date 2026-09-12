@@ -75,9 +75,6 @@ Potser haureu de reiniciar Shizako perquè el canvi tingui efecte.</string>
     <string name="app_management_item_summary_requires_root">* requereix que Shizako s\'executi amb root</string>
     <string name="home_terminal_title">Utilitzar Shizako a aplicacions de terminal</string>
     <string name="home_terminal_description">Executeu ordres mitjançant Shizako a les aplicacions de terminal que us agradin</string>
-    <string name="home_activation_title">Activació amb un toc</string>
-    <string name="home_activation_summary">Activeu Brevent, Stopapp i més sense ordinador</string>
-    <string name="home_activation_summary_not_running">Inicieu primer Shizako per utilitzar l\'activació amb un toc</string>
     <string name="terminal_tutorial_1">Primer, exporteu els fitxers on vulgueu. Hi trobareu dos fitxers: %1$s i %2$s.</string>
     <string name="terminal_tutorial_1_description">Si hi ha fitxers amb el mateix nom a la carpeta seleccionada, se suprimiran.
 
@@ -117,7 +114,6 @@ La funció d\'exportació utilitza SAF (Storage Access Framework). S\'ha informa
     <string name="activation_status_activated">%1$s · ja activada</string>
     <string name="activation_status_not_activated">%1$s · instal·lada, no activada</string>
     <string name="activation_note_device_owner">Requereix eliminar primer tots els comptes i usuaris secundaris (mode convidat / aplicació dual); els podeu tornar a afegir després de l\'activació. Poden haver-hi particularitats del ROM del fabricant.</string>
-    <string name="activation_note_brevent">El servidor de Brevent s\'ha de tornar a activar després de cada reinici.</string>
     <string name="activation_custom_title">Ordre personalitzada</string>
     <string name="activation_custom_hint">Qualsevol ordre del shell, p. ex. dpm set-device-owner …</string>
     <string name="activation_custom_empty">L\'ordre és buida</string>

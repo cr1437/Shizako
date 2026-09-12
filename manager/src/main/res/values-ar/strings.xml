@@ -140,9 +140,6 @@
 \n تم نسخه إلى الحافظة.</string>
     <string name="dialog_legacy_not_support_title">%1$s لا يدعم النسخة الحديثة من Shizako</string>
     <!-- Shizako: 补充翻译 -->
-    <string name="home_activation_title">تفعيل بنقرة واحدة</string>
-    <string name="home_activation_summary">فعِّل Brevent وStopapp وغيرها دون حاجة إلى حاسوب</string>
-    <string name="home_activation_summary_not_running">ابدأ تشغيل Shizako أولاً لاستخدام التفعيل بنقرة واحدة</string>
     <string name="settings_debug">تصحيح الأخطاء</string>
     <string name="settings_crash_logs">سجلات الأعطال</string>
     <string name="settings_crash_logs_summary">تُحفظ الأعطال هنا عندما يُغلق التطبيق بشكل غير متوقع</string>
@@ -164,7 +161,6 @@
     <string name="activation_status_activated">%1$s · مفعَّل بالفعل</string>
     <string name="activation_status_not_activated">%1$s · مثبت، غير مفعَّل</string>
     <string name="activation_note_device_owner">يتطلب إزالة جميع الحسابات والمستخدمين الثانويين (وضع الضيف / استنساخ التطبيقات) أولاً؛ يمكنك إعادتها بعد التفعيل. قد توجد قيود خاصة بنظام الشركة المصنعة.</string>
-    <string name="activation_note_brevent">يحتاج خادم Brevent إلى إعادة التفعيل بعد كل إعادة تشغيل.</string>
     <string name="activation_custom_title">أمر مخصص</string>
     <string name="activation_custom_hint">أي أمر shell، مثال: dpm set-device-owner …</string>
     <string name="activation_custom_empty">الأمر فارغ</string>

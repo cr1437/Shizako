@@ -136,9 +136,6 @@ Pode ser necessário reiniciar o Shizako para que a operação entre em vigor."<
     <string name="home_app_management_empty">Os aplicativos que solicitaram ou declararem Shizako serão exibidos aqui.</string>
     <string name="dialog_adb_discovery_message_toggle_wireless_debugging">Por favor, tente desabilitar e habilitar \"Depuração sem fio\" se continuar procurando.</string>
     <!-- Shizako: 补充翻译 -->
-    <string name="home_activation_title">Ativação num toque</string>
-    <string name="home_activation_summary">Ative o Brevent, Stopapp e mais sem computador</string>
-    <string name="home_activation_summary_not_running">Inicie primeiro o Shizako para usar a ativação num toque</string>
     <string name="settings_debug">Depuração</string>
     <string name="settings_crash_logs">Registos de falhas</string>
     <string name="settings_crash_logs_summary">As falhas são guardadas aqui quando a aplicação termina inesperadamente</string>
@@ -160,7 +157,6 @@ Pode ser necessário reiniciar o Shizako para que a operação entre em vigor."<
     <string name="activation_status_activated">%1$s · já ativado</string>
     <string name="activation_status_not_activated">%1$s · instalado, não ativado</string>
     <string name="activation_note_device_owner">Requer a remoção prévia de todas as contas e utilizadores secundários (modo convidado / app gémea); poderá adicioná-los de novo após a ativação. Podem aplicar-se particularidades da ROM do fabricante.</string>
-    <string name="activation_note_brevent">O servidor do Brevent tem de ser reativado após cada reinício.</string>
     <string name="activation_custom_title">Comando personalizado</string>
     <string name="activation_custom_hint">Qualquer comando de shell, ex.: dpm set-device-owner …</string>
     <string name="activation_custom_empty">O comando está vazio</string>

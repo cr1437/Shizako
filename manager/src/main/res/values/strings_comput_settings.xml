@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 控制台设置（Comput 二级菜单）的文案 -->
+<resources>
+    <string name="comput_settings">Console settings</string>
+    <string name="comput_settings_ai">Gemini explanation</string>
+    <string name="comput_settings_key_note">The key is encrypted with the Android Keystore and only used for explaining commands.</string>
+    <string name="comput_settings_model">Model</string>
+    <string name="comput_settings_save">Save</string>
+    <string name="comput_settings_saved">Saved</string>
+    <string name="comput_settings_model_fetch">Fetch model list from API</string>
+    <string name="comput_settings_model_fetching">Fetching models\u2026</string>
+    <string name="comput_settings_model_pick">Pick a model</string>
+    <string name="comput_settings_model_picked">Model switched to %1$s</string>
+    <string name="comput_settings_model_fetch_empty">This key / endpoint returned no models</string>
+    <string name="comput_settings_model_fetch_failed">Failed: %1$s</string>
+    <string name="comput_settings_macros">Macros</string>
+    <string name="comput_settings_macros_count">%1$d macros saved</string>
+    <string name="comput_settings_macros_clear">Clear all macros</string>
+    <string name="comput_settings_macros_cleared">Macros cleared</string>
+    <string name="comput_ai_provider">Provider</string>
+    <string name="comput_ai_base_url">Base URL (blank = preset)</string>
+    <string name="comput_settings_change">Change</string>
+</resources>

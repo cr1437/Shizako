@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import moe.shizuku.manager.ui.glass.GlassWindow
 import moe.shizuku.manager.R
 import moe.shizuku.manager.ShizukuSettings
 import moe.shizuku.manager.databinding.AboutDialogBinding
@@ -61,20 +62,7 @@ class HomeFragment : Fragment() {
         val binding = binding ?: return
 
         binding.toolbar.title = getString(R.string.app_name)
-        binding.toolbar.inflateMenu(R.menu.menu_home)
-        binding.toolbar.setOnMenuItemClickListener { item ->
-            when (item.itemId) {
-                R.id.action_about -> {
-                    showAboutDialog()
-                    true
-                }
-                R.id.action_stop -> {
-                    showStopDialog()
-                    true
-                }
-                else -> false
-            }
-        }
+        // 右上角三个点去掉了：停止服务挪到首页状态卡上的按钮，关于在设置里就有
 
         homeModel.serviceStatus.observe(viewLifecycleOwner) {
             if (it.status == Status.SUCCESS) {
@@ -95,6 +83,13 @@ class HomeFragment : Fragment() {
         val recyclerView = binding.list
         recyclerView.adapter = adapter
         recyclerView.fixEdgeEffect()
+        // 列表项增删/移动的动画时长收紧到 200ms，默认 250ms 在慢机上显得拖
+        recyclerView.itemAnimator?.apply {
+            addDuration = 200L
+            removeDuration = 160L
+            moveDuration = 200L
+            changeDuration = 200L
+        }
         recyclerView.addItemSpacing(top = 4f, bottom = 4f, unit = TypedValue.COMPLEX_UNIT_DIP)
         recyclerView.addEdgeSpacing(
             top = 4f, bottom = 4f, left = 16f, right = 16f,
@@ -145,6 +140,7 @@ class HomeFragment : Fragment() {
         MaterialAlertDialogBuilder(context)
             .setView(binding.root)
             .show()
+                .also { GlassWindow.applyIfGlass(it) }
     }
 
     private fun showStopDialog() {
@@ -162,5 +158,6 @@ class HomeFragment : Fragment() {
             }
             .setNegativeButton(android.R.string.cancel, null)
             .show()
+                .also { GlassWindow.applyIfGlass(it) }
     }
 }

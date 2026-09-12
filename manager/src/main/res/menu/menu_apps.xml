@@ -8,4 +8,9 @@
         android:title="@string/search"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="always|collapseActionView" />
+
+    <item
+        android:id="@+id/menu_recommended_apps"
+        android:title="@string/download_page_title"
+        app:showAsAction="never" />
 </menu>

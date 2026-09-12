@@ -1,0 +1,6 @@
+moe.shizuku.privileged.api:string/stub_permission_group_label = 0x7f020003
+moe.shizuku.privileged.api:string/stub_permission_group_description = 0x7f020002
+moe.shizuku.privileged.api:string/stub_app_name = 0x7f020000
+moe.shizuku.privileged.api:string/stub_permission_description = 0x7f020001
+moe.shizuku.privileged.api:string/stub_permission_label = 0x7f020004
+moe.shizuku.privileged.api:mipmap/ic_launcher = 0x7f010000

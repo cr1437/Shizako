@@ -53,7 +53,9 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@android:id/button1"
-        style="@style/CardButton"
+        style="?attr/materialButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="@string/home_adb_button_view_help"
         android:textColor="?colorOnError"
         app:backgroundTint="?colorError"

@@ -39,6 +39,17 @@ class LogsFragment : Fragment() {
 
         binding.toolbar.title = getString(R.string.api_log_title)
         binding.toolbar.inflateMenu(R.menu.api_log)
+
+        // 日志默认不在底栏里：从工具箱点进来时它就是普通次级页，给个返回箭头
+        // （主人在「设置 → 底部栏」把日志打开后，这里就不再显示箭头，当正常 Tab 用）
+        if (!moe.shizuku.manager.ui.nav.NavTabs.isEnabled(moe.shizuku.manager.ui.nav.NavTabs.KEY_LOGS)) {
+            binding.toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
+            binding.toolbar.setNavigationOnClickListener {
+                androidx.navigation.fragment.NavHostFragment.findNavController(this@LogsFragment)
+                    .navigateUp()
+            }
+        }
+
         binding.toolbar.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.action_refresh -> {

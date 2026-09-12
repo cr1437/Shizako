@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 实验室功能页（LabFeaturesScreen）专用字符串。单独一个文件，避免和 strings.xml 并行冲突。 -->
+<resources>
+    <string name="lab_features_title">实验室功能</string>
+
+    <!-- Shizuku Connectors -->
+    <string name="lab_connectors_title">Shizuku Connectors</string>
+    <string name="lab_connectors_summary">通过本地 Provider 对外提供本应用的 Shizuku 启动命令，让激活器类应用在拿到临时权限后自行拉起 Shizuku 服务。</string>
+    <string name="lab_connectors_uri">Provider 地址（只读，一列，列名 command）：</string>
+    <string name="lab_connectors_notes_title">关于 Shizuku Connectors</string>
+    <string name="lab_connectors_what_title">它做什么</string>
+    <string name="lab_connectors_what_body">激活器应用查询这个 Provider，拿到「启动本地 Shizuku 服务」的那条 shell 命令。命令和本应用自己启动服务时用的完全一致：内置 starter 可执行文件 + 本 APK 的路径。</string>
+    <string name="lab_connectors_query_title">怎么读</string>
+    <string name="lab_connectors_query_body">查询返回一行一列，列名为 command。开关关闭时返回空结果而不是报错，客户端因此能一眼区分「没开」和「出错」。</string>
+    <string name="lab_connectors_risk_title">安全</string>
+    <string name="lab_connectors_risk_body">任何能读到这个 Provider 的应用，都能以特权身份拉起 Shizuku 服务。不用激活器时就关掉它，用完也记得关。</string>
+    <string name="lab_connectors_unsafe_title">开启 Shizuku Connectors？</string>
+    <string name="lab_connectors_unsafe_message">开启后，本机任何应用只要查询该 Provider，就能拿到启动 Shizuku 服务的命令。恶意应用可能配合本地提权漏洞，在没有你确认的情况下把服务拉起来。确认你了解风险、并且确实在使用可信的激活器应用后再继续。</string>
+    <string name="lab_connectors_risk_accept">我已了解风险</string>
+
+    <!-- Compatibility stub -->
+    <string name="lab_stub_title">兼容性 Stub</string>
+    <string name="lab_stub_installed">已安装</string>
+    <string name="lab_stub_not_installed">未安装</string>
+    <string name="lab_stub_summary">部分应用把原版 Shizuku 的包名（moe.shizuku.privileged.api）写死在代码里，查不到就判定"没有 Shizuku"而拒绝工作。装一个同名占位包，它们就能看到"Shizuku 已安装"。</string>
+    <string name="lab_stub_install">安装</string>
+    <string name="lab_stub_uninstall">卸载</string>
+    <string name="lab_stub_working">处理中…</string>
+    <string name="lab_stub_ok">完成（经由 %1$s）。</string>
+    <string name="lab_stub_failed">失败：%1$s</string>
+    <string name="lab_stub_note_title">关于兼容性 Stub</string>
+    <string name="lab_stub_note_body">占位包只有清单、没有任何实现：它声明的 API 权限和 Shizuku 一致，真正的权限校验仍然由 Shizako 本体完成。安装时依次尝试 Shizuku 服务、root、无线 ADB 三条通道；卸载会把占位包删掉。</string>
+
+    <!-- Backup &amp; restore -->
+    <string name="lab_backup_title">备份与恢复</string>
+    <string name="lab_backup_summary">把全部应用设置（含实验室开关）导出成 JSON 文件，或从文件恢复。恢复会覆盖当前设置，重启应用后生效。</string>
+    <string name="lab_backup_button">备份设置</string>
+    <string name="lab_restore_button">恢复设置</string>
+</resources>

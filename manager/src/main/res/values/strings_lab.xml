@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 实验室功能页（LabFeaturesScreen）专用字符串。单独一个文件，避免和 strings.xml 并行冲突。 -->
+<resources>
+    <string name="lab_features_title">Lab Features</string>
+
+    <!-- Shizuku Connectors -->
+    <string name="lab_connectors_title">Shizuku Connectors</string>
+    <string name="lab_connectors_summary">Expose this app\'s Shizuku start command through a local provider, so that activator apps can boot the Shizuku server on their own after obtaining temporary privileges.</string>
+    <string name="lab_connectors_uri">Provider address (read-only, one column named command):</string>
+    <string name="lab_connectors_notes_title">About Shizuku Connectors</string>
+    <string name="lab_connectors_what_title">What it does</string>
+    <string name="lab_connectors_what_body">Activator apps query this provider and receive the exact shell command that starts the local Shizuku server. The command is the same one this app runs itself: the bundled starter binary plus the path of this APK.</string>
+    <string name="lab_connectors_query_title">How to read it</string>
+    <string name="lab_connectors_query_body">A query returns one row with one column named command. When the switch is off, the query returns an empty result instead of an error, so clients can always tell enabled from disabled.</string>
+    <string name="lab_connectors_risk_title">Security</string>
+    <string name="lab_connectors_risk_body">Anyone who can read this provider can start the Shizuku server with elevated privileges. Keep it off unless you are actually using an activator app, and turn it off again afterwards.</string>
+    <string name="lab_connectors_unsafe_title">Turn on Shizuku Connectors?</string>
+    <string name="lab_connectors_unsafe_message">This exposes the command that starts the Shizuku server to any app on this device that queries the provider. A malicious app could use it together with a local privilege escalation exploit to start the server without your confirmation. Only continue if you understand the risk and are using a trusted activator app.</string>
+    <string name="lab_connectors_risk_accept">I understand the risk</string>
+
+    <!-- Compatibility stub -->
+    <string name="lab_stub_title">Compatibility stub</string>
+    <string name="lab_stub_installed">Installed</string>
+    <string name="lab_stub_not_installed">Not installed</string>
+    <string name="lab_stub_summary">Some apps only recognise the original Shizuku package name (moe.shizuku.privileged.api) and refuse to work without it. Installing this placeholder makes them see Shizuku as available.</string>
+    <string name="lab_stub_install">Install</string>
+    <string name="lab_stub_uninstall">Uninstall</string>
+    <string name="lab_stub_working">Working…</string>
+    <string name="lab_stub_ok">Done (via %1$s).</string>
+    <string name="lab_stub_failed">Failed: %1$s</string>
+    <string name="lab_stub_note_title">About the stub</string>
+    <string name="lab_stub_note_body">The stub is a signature-only APK: it declares the same API permissions as Shizuku but implements nothing. Real privilege checks still go through Shizako itself. Installation is attempted through the Shizuku server, then root, then wireless ADB; uninstalling removes the placeholder package again.</string>
+
+    <!-- Backup &amp; restore -->
+    <string name="lab_backup_title">Backup and restore</string>
+    <string name="lab_backup_summary">Export all app settings, including the lab switches, into a JSON file, or restore them from one. Restoring replaces the current settings and takes effect after the app is restarted.</string>
+    <string name="lab_backup_button">Back up settings</string>
+    <string name="lab_restore_button">Restore settings</string>
+</resources>

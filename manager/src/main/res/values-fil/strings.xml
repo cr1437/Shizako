@@ -135,9 +135,6 @@ Tandaan, huwag patayin ang \"Mga opsyon ng developer\" o \"Pag-debug ng USB\", m
     <string name="dialog_requesting_legacy_button_open_shizuku">Buksan ang Shizako</string>
     <string name="dialog_requesting_legacy_message">Suportado ng &lt;b>%1$s&lt;/b> ang makabagong Shizako, pero humihiling ito nang makalumang Shizako. Pakitingnan sa Shizako app kung tumatakbo ba nang maayos ang Shizako dahil baka ito ay dahil nagkakaproblema ang Shizako.&lt;p>Hindi na suportado ang makalumang Shizako simula Marso 2019.</string>
     <!-- Shizako: 补充翻译 -->
-    <string name="home_activation_title">Activation sa isang tap</string>
-    <string name="home_activation_summary">I-activate ang Brevent, Stopapp at iba pa nang walang kompyuter</string>
-    <string name="home_activation_summary_not_running">Simulan muna ang Shizako bago gamitin ang activation sa isang tap</string>
     <string name="settings_debug">Debug</string>
     <string name="settings_crash_logs">Mga crash log</string>
     <string name="settings_crash_logs_summary">Nagse-save dito ng mga crash kapag bigla na lamang nagsara ang app</string>
@@ -159,7 +156,6 @@ Tandaan, huwag patayin ang \"Mga opsyon ng developer\" o \"Pag-debug ng USB\", m
     <string name="activation_status_activated">%1$s · activated na</string>
     <string name="activation_status_not_activated">%1$s · naka-install, hindi pa activated</string>
     <string name="activation_note_device_owner">Kailangan munang tanggalin ang lahat ng account at mga sekondaryang user (guest mode / app twin); pwede nang idagdag muli pagkatapos i-activate. Maaaring may mga pagkakaiba depende sa ROM ng manufacturer.</string>
-    <string name="activation_note_brevent">Kailangang i-activate muli ang server ng Brevent pagkatapos ng bawat pag-reboot.</string>
     <string name="activation_custom_title">Custom na command</string>
     <string name="activation_custom_hint">Anumang shell command, hal. dpm set-device-owner …</string>
     <string name="activation_custom_empty">Walang laman ang command</string>

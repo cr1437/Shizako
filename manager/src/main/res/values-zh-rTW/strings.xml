@@ -134,9 +134,6 @@
  
 您可能需要重新啟動 Shizako 以使作業生效。"</string>
     <!-- Shizako: 补充翻译 -->
-    <string name="home_activation_title">一鍵注入</string>
-    <string name="home_activation_summary">不用電腦，讓 Shizako醬 幫你調教它們❤️</string>
-    <string name="home_activation_summary_not_running">先讓 Shizako醬 醒過來才能幫你注入喔~</string>
     <string name="settings_debug">除錯</string>
     <string name="settings_crash_logs">當機記錄</string>
     <string name="settings_crash_logs_summary">應用程式意外結束時，當機記錄會儲存在這裡</string>
@@ -150,7 +147,7 @@
     <string name="home_activation_hub_title">一站式啟用</string>
     <string name="home_activation_hub_desc">選一種方式喚醒 Shizako醬，或讓她直接成為裝置擁有者（Dhizuku）。</string>
     <string name="activation_hub_desc_running">Shizako醬 正在待命，點一下就能啟用裝置擁有者模式。</string>
-    <string name="activation_hub_desc_not_running">Shizako醬 還沒醒，從下面選一種方式叫醒她吧～</string>
+        <string name="activation_hub_desc_not_running">Shizako醬 還沒醒呢，點下方按鈕挑一種方式叫醒她吧～</string>
     <string name="activation_method_dhizuku">Dhizuku（裝置擁有者）</string>
     <string name="activation_method_dhizuku_desc">讓 Shizako醬 成為裝置擁有者，授權應用不需 Root、不需保持無線偵錯也能借用她的特權。</string>
     <string name="activation_method_root">Root</string>
@@ -164,6 +161,7 @@
     <string name="activation_method_action_view_command">檢視指令</string>
     <string name="activation_method_action_start">啟動</string>
     <string name="activation_hub_details">詳細指南</string>
+    <string name="activation_hub_action_open">開始啟用</string>
     <string name="home_dhizuku_activate_success">裝置擁有者模式啟用成功啦～</string>
     <string name="home_dhizuku_activate_failed">啟用失敗：%1$s</string>
 
@@ -183,9 +181,9 @@
     <string name="activation_tag_persistent">重開機不失效</string>
     <string name="activation_root_desc_detail">裝置已有 Root 權限的話，這是最省事的方式：授予超級使用者權限後直接啟動。</string>
     <string name="activation_root_steps">1. 輕觸下方「啟動」\n2. 在彈窗中授予超級使用者權限\n3. 等待服務執行即可</string>
-    <string name="activation_wadb_desc_detail">Android 11 以上可以完全不用電腦，在本機透過「無線偵錯」啟動 Shizako醬。整個流程都在懸浮於系統設定之上的懸浮窗裡完成，不用來回切換應用程式。</string>
-    <string name="activation_wadb_steps">1. 輕觸下方「懸浮窗配對」，並授予「顯示在其他應用程式上層」權限\n2. 在開啟的開發人員選項裡開啟「無線偵錯」\n3. 輕觸「使用配對碼配對裝置」，螢幕上會顯示 6 位數配對碼\n4. 在懸浮窗裡輸入配對碼，剩下的配對、連線、啟動全部自動完成</string>
-    <string name="activation_wadb_action_float_pair">懸浮窗配對</string>
+    <string name="activation_wadb_desc_detail">Android 11 以上可以完全不靠電腦，在本機透過「無線偵錯」啟動 Shizako醬。配對碼在通知列裡輸入，不用來回切換應用程式。</string>
+    <string name="activation_wadb_steps">1. 點下方「開始配對」，依提示允許通知\n2. 在開啟的開發人員選項裡開啟「無線偵錯」\n3. 點「使用配對碼配對裝置」，畫面上會顯示 6 位數配對碼\n4. 下拉通知列，在通知裡輸入配對碼；配對、連線、啟動全自動完成</string>
+    <string name="activation_wadb_action_pair">開始配對</string>
     <string name="activation_wadb_action_open_settings">開啟開發人員選項</string>
     <string name="activation_adb_desc_detail">手邊有電腦的話，開啟 USB 偵錯後執行一次啟動指令即可。</string>
     <string name="activation_adb_steps">1. 在開發人員選項中開啟 USB 偵錯並連接電腦\n2. 複製下面的指令，在電腦終端機（adb）裡執行\n3. 服務立即啟動，無需 Root</string>
@@ -204,29 +202,6 @@
     <string name="activation_faq_fail_a">確認「無線偵錯」還開著（部分系統鎖定螢幕後會自動關閉）；確認輸入的是目前畫面上最新顯示的配對碼和通訊埠；MIUI 還需要額外開啟「USB 偵錯（安全設定）」。</string>
 
     <!-- 無線偵錯懸浮配對窗（取代通知列輸入） -->
-    <string name="floating_pair_title">無線偵錯配對</string>
-    <string name="floating_pair_hint_code">6 位數配對碼</string>
-    <string name="floating_pair_hint_port">通訊埠</string>
-    <string name="floating_pair_action_pair">配對並啟動</string>
-    <string name="floating_pair_action_start">啟動</string>
-    <string name="floating_pair_hint_steps">在系統設定裡開啟「無線偵錯」→「使用配對碼配對裝置」，把顯示的配對碼填到這裡。按住標題列可以拖動本視窗。</string>
-    <string name="floating_pair_status_discovering">正在搜尋配對服務…</string>
-    <string name="floating_pair_status_ready">已找到配對服務，請輸入 6 位數配對碼</string>
-    <string name="floating_pair_status_pairing">正在配對…</string>
-    <string name="floating_pair_status_paired">配對成功，正在尋找連線通訊埠…</string>
-    <string name="floating_pair_status_starting">正在啟動 Shizako醬…</string>
-    <string name="floating_pair_status_success">完成！Shizako醬 已經跑起來了～</string>
-    <string name="floating_pair_status_timeout">還在搜尋…請確認配對碼對話框已開啟</string>
-    <string name="floating_pair_status_failed">失敗：%1$s</string>
-    <string name="floating_pair_status_failed_unknown">失敗了，請重試</string>
-    <string name="floating_pair_error_code">請輸入 6 位數配對碼</string>
-    <string name="floating_pair_error_port">請輸入正確的通訊埠（1–65535）</string>
-    <string name="floating_pair_no_overlay_permission">還沒有「顯示在其他應用程式上層」權限，無法顯示懸浮窗</string>
-    <string name="floating_pair_toast_started">懸浮窗已顯示，請在開啟的設定頁裡開啟「無線偵錯」</string>
-    <string name="floating_pair_overlay_dialog_title">需要懸浮窗權限</string>
-    <string name="floating_pair_overlay_dialog_message">配對碼會直接輸入在懸浮於系統設定之上的懸浮窗裡，不用來回切換應用程式。請先授予「顯示在其他應用程式上層」權限。</string>
-    <string name="floating_pair_overlay_dialog_grant">去授權</string>
-    <string name="close">關閉</string>
     <string name="about_author">作者</string>
     <string name="about_based_on">基於</string>
     <string name="about_based_on_text">%s 開源專案二次開發</string>
@@ -261,4 +236,41 @@
     <string name="setup_next">下一步</string>
     <string name="setup_get_started">開始調教</string>
     <string name="setup_skip">跳過</string>
+
+    <string name="hint_section_steps">操作步驟</string>
+    <string name="hint_section_notes">注意事項</string>
+    <string name="hint_step_open_wireless_title">開啟「無線偵錯」</string>
+    <string name="hint_step_copy_code_title">記下 6 位數配對碼</string>
+    <string name="hint_step_done_title">在通知裡輸入配對碼</string>
+        <string name="hint_note_notification_title">通知</string>
+    <string name="hint_note_network_title">本機網路權限</string>
+    <string name="hint_note_miui_title">MIUI / HyperOS</string>
+
+    <string name="home_logs_entry_summary">查看已授權應用程式的 API 呼叫記錄</string>
+    <string name="home_settings_entry_summary">外觀、授權應用程式與其他設定</string>
+    <string name="activation_tag_terminal">終端</string>
+    <string name="activation_terminal_steps_ready">服務正在執行，點下方按鈕進入終端使用教學。</string>
+    <string name="activation_terminal_steps_not_running">先把服務啟動起來，之後就能在終端應用程式裡調教 Shizako醬了。</string>
+    <string name="activation_terminal_action_open">開啟終端教學</string>
+    <string name="terminal_env_root">服務以 root 身分執行 —— 可以一鍵部署。</string>
+    <string name="terminal_env_adb">服務以 adb 身分執行 —— 將部署到 /data/local/tmp。</string>
+    <string name="terminal_env_no_service">先啟動服務，然後才能部署 rish。</string>
+    <string name="terminal_deploy_action">一鍵部署 rish</string>
+    <string name="terminal_deploy_running">正在部署…</string>
+    <string name="terminal_deploy_success">已部署到 %1$s</string>
+    <string name="terminal_deploy_hint_termux">開啟 Termux，輸入 %1$s 即可</string>
+    <string name="terminal_deploy_hint_path">在任意終端裡執行 %1$s</string>
+    <string name="terminal_deploy_failed">部署失敗：%1$s</string>
+    <string name="terminal_open_docs">rish 文件</string>
+    <string name="terminal_section_manual">手動方式</string>
+    <string name="terminal_step_export_title">匯出這兩個檔案</string>
+    <string name="terminal_step_edit_title">填上你的終端應用程式包名</string>
+    <string name="terminal_step_place_title">放到終端能存取的目錄</string>
+    <string name="terminal_note_dex_title">Android 14+ 要求 dex 唯讀</string>
+    <string name="terminal_note_dex_body">app_process 拒絕載入可寫的 dex，所以 rish_shizuku.dex 必須 chmod 400 —— 一鍵部署會自動處理（放共享儲存做不到）。</string>
+    <string name="terminal_note_env_title">環境變數</string>
+    <string name="terminal_note_env_body">設 RISH_PRESERVE_ENV=1 可把終端的環境變數（PATH、LD_PRELOAD）帶給遠端 shell；root 預設 1，adb 預設 0。</string>
+    <string name="terminal_note_app_title">終端應用程式</string>
+    <string name="terminal_note_app_termux">偵測到 Termux —— rish 會裝進它的 PATH。</string>
+    <string name="terminal_note_app_none">沒偵測到 Termux。仍可部署到 /data/local/tmp/rish，或裝個 Termux 讓 rish 進 PATH。</string>
 </resources>

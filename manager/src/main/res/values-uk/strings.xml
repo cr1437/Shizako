@@ -137,9 +137,6 @@
     <string name="home_adb_is_limited_title">Потрібен ще один крок</string>
     <string name="dialog_adb_discovery_message_toggle_wireless_debugging">Будь ласка, спробуйте вимкнути та увімкнути \"Налагодження через Wi-Fi\", якщо пошук продовжується.</string>
     <!-- Shizako: 补充翻译 -->
-    <string name="home_activation_title">Активація в один клік</string>
-    <string name="home_activation_summary">Активуйте Brevent, Stopapp та інші без комп\'ютера</string>
-    <string name="home_activation_summary_not_running">Спочатку запустіть Shizako, щоб використовувати активацію в один клік</string>
     <string name="settings_debug">Налагодження</string>
     <string name="settings_crash_logs">Журнали збоїв</string>
     <string name="settings_crash_logs_summary">Тут зберігаються журнали збоїв, коли застосунок несподівано завершує роботу</string>
@@ -161,7 +158,6 @@
     <string name="activation_status_activated">%1$s · уже активовано</string>
     <string name="activation_status_not_activated">%1$s · встановлено, не активовано</string>
     <string name="activation_note_device_owner">Спочатку потрібно видалити всі облікові записи та додаткових користувачів (гостьовий режим / клонування застосунків). Після активації їх можна додати назад. Можливі особливості залежно від прошивки виробника.</string>
-    <string name="activation_note_brevent">Сервер Brevent потребує повторної активації після кожного перезавантаження.</string>
     <string name="activation_custom_title">Власна команда</string>
     <string name="activation_custom_hint">Будь-яка команда оболонки, напр. dpm set-device-owner …</string>
     <string name="activation_custom_empty">Команда порожня</string>

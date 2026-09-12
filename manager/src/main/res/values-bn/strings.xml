@@ -74,9 +74,6 @@
     <string name="app_management_item_summary_requires_root">* Shizako রুট সহ চলা প্রয়োজন</string>
     <string name="home_terminal_title">টার্মিনাল অ্যাপে Shizako ব্যবহার</string>
     <string name="home_terminal_description">আপনার পছন্দের টার্মিনাল অ্যাপে Shizako এর মাধ্যমে কমান্ড চালান</string>
-    <string name="home_activation_title">এক-ক্লিক অ্যাক্টিভেশন</string>
-    <string name="home_activation_summary">কম্পিউটার ছাড়াই Brevent, Stopapp এবং আরও অ্যাক্টিভেট করুন</string>
-    <string name="home_activation_summary_not_running">এক-ক্লিক অ্যাক্টিভেশন ব্যবহার করতে প্রথমে Shizako শুরু করুন</string>
     <string name="terminal_tutorial_1">প্রথমে ফাইলগুলো যেকোনো জায়গায় এক্সপোর্ট করুন। আপনি দুটি ফাইল পাবেন: %1$s এবং %2$s।</string>
     <string name="terminal_tutorial_1_description">নির্বাচিত ফোল্ডারে একই নামের ফাইল থাকলে সেগুলো মুছে যাবে।
 
@@ -116,7 +113,6 @@
     <string name="activation_status_activated">%1$s · আগেই অ্যাক্টিভেটেড</string>
     <string name="activation_status_not_activated">%1$s · ইনস্টল আছে, অ্যাক্টিভেটেড নয়</string>
     <string name="activation_note_device_owner">এর জন্য প্রথমে সব অ্যাকাউন্ট ও সেকেন্ডারি ব্যবহারকারী (গেস্ট মোড / অ্যাপ টুইন) সরাতে হবে; অ্যাক্টিভেশনের পরে ফিরিয়ে আনতে পারবেন। নির্মাতার ROM ভিন্নতা থাকতে পারে।</string>
-    <string name="activation_note_brevent">প্রতি রিবুটের পরে Brevent সার্ভার আবার অ্যাক্টিভেট করতে হবে।</string>
     <string name="activation_custom_title">কাস্টম কমান্ড</string>
     <string name="activation_custom_hint">যেকোনো শেল কমান্ড, যেমন dpm set-device-owner …</string>
     <string name="activation_custom_empty">কমান্ড খালি</string>

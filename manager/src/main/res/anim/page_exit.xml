@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 旧页面退场：快速淡出 + 极轻微放大（1→1.006），比入场短，避免两个页面"叠着动"。
+     加速曲线（fast_out_linear_in）对应 M3 的 emphasized accelerate。 -->
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shareInterpolator="false">
+
+    <alpha
+        android:duration="140"
+        android:fromAlpha="1.0"
+        android:interpolator="@android:interpolator/fast_out_linear_in"
+        android:toAlpha="0.0" />
+
+    <scale
+        android:duration="180"
+        android:fromXScale="1.0"
+        android:fromYScale="1.0"
+        android:interpolator="@android:interpolator/fast_out_linear_in"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:toXScale="1.006"
+        android:toYScale="1.006" />
+
+</set>

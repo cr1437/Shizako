@@ -36,7 +36,7 @@
         android:title="@string/settings_user_interface">
 
         <moe.shizuku.manager.settings.StringSimpleMenuPreference
-            android:defaultValue="m3e"
+            android:defaultValue="glass"
             android:entries="@array/ui_style_names"
             android:entryValues="@array/ui_style_values"
             android:key="ui_style"

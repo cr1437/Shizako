@@ -136,9 +136,6 @@ Poate fi necesar să repornești Shizako pentru ca operațiunea să intre în vi
     <string name="home_adb_is_limited_title">Trebuie să faci un pas suplimentar</string>
     <string name="dialog_adb_discovery_message_toggle_wireless_debugging">Încearcă să dezactivezi și să activezi „Depanare fără fir” dacă caută în continuare.</string>
     <!-- Shizako: 补充翻译 -->
-    <string name="home_activation_title">Activare dintr-o atingere</string>
-    <string name="home_activation_summary">Activează Brevent, Stopapp și altele fără calculator</string>
-    <string name="home_activation_summary_not_running">Pornește mai întâi Shizako pentru a folosi activarea dintr-o atingere</string>
     <string name="settings_debug">Depanare</string>
     <string name="settings_crash_logs">Jurnalele de erori</string>
     <string name="settings_crash_logs_summary">Aici sunt salvate erorile atunci când aplicația se închide neașteptat</string>
@@ -160,7 +157,6 @@ Poate fi necesar să repornești Shizako pentru ca operațiunea să intre în vi
     <string name="activation_status_activated">%1$s · deja activat</string>
     <string name="activation_status_not_activated">%1$s · instalat, neactivat</string>
     <string name="activation_note_device_owner">Necesită eliminarea prealabilă a tuturor conturilor și utilizatorilor secundari (modul invitat / clona aplicației); îi poți adăuga din nou după activare. Pot exista particularități în funcție de ROM-ul producătorului.</string>
-    <string name="activation_note_brevent">Serverul Brevent trebuie reactivat după fiecare repornire.</string>
     <string name="activation_custom_title">Comandă personalizată</string>
     <string name="activation_custom_hint">Orice comandă shell, ex. dpm set-device-owner …</string>
     <string name="activation_custom_empty">Comanda este goală</string>

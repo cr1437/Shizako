@@ -32,14 +32,28 @@
         <item>MATERIAL_DEEP_ORANGE</item><item>MATERIAL_BROWN</item><item>MATERIAL_BLUE_GREY</item>
     </string-array>
 
-    <!-- KernelSU 双风格（界面风格） -->
+    <!-- 双风格：MD3 / 玻璃材质 -->
     <string-array name="ui_style_names">
-        <item>@string/ui_style_m3e</item>
-        <item>@string/ui_style_miuix</item>
+        <item>@string/ui_style_md3</item>
+        <item>@string/ui_style_glass</item>
     </string-array>
     <string-array name="ui_style_values">
-        <item>m3e</item>
-        <item>miuix</item>
+        <item>md3</item>
+        <item>glass</item>
+    </string-array>
+
+    <!-- 玻璃材质：照搬椒盐音乐 Salt UI 的三档（blurryGlass / acrylic / mica） -->
+    <string-array name="glass_material_names">
+        <item>@string/glass_material_glass</item>
+        <item>@string/glass_material_acrylic</item>
+        <item>@string/glass_material_mica</item>
+        <item>@string/glass_material_none</item>
+    </string-array>
+    <string-array name="glass_material_values">
+        <item>glass</item>
+        <item>acrylic</item>
+        <item>mica</item>
+        <item>none</item>
     </string-array>
 
 </resources>

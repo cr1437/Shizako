@@ -85,8 +85,10 @@ class AppViewHolder(private val binding: AppListItemBinding) : BaseViewHolder<Pa
         val userId = UserHandleCompat.getUserId(uid)
         icon.setImageDrawable(ai.loadIcon(pm))
         name.text = if (userId != UserHandleCompat.myUserId()) {
-            val userInfo = ShizukuSystemApis.getUserInfo(userId)
-            "${ai.loadLabel(pm)} - ${userInfo.name} ($userId)"
+            // 其他用户的应用信息要问服务要，服务没在跑时退回普通标签
+            val label = runCatching { ai.loadLabel(pm).toString() }.getOrDefault("")
+            val userInfo = runCatching { ShizukuSystemApis.getUserInfo(userId) }.getOrNull()
+            if (userInfo != null) "$label - ${userInfo.name} ($userId)" else "$label ($userId)"
         } else {
             ai.loadLabel(pm)
         }

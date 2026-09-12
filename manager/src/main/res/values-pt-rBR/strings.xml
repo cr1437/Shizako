@@ -135,9 +135,6 @@ Normalmente, essa limitação pode ser eliminada ajustando algumas opções nas 
  
 Pode ser necessário reiniciar o Shizako para que a operação tenha efeito."</string>
     <!-- Shizako: 补充翻译 -->
-    <string name="home_activation_title">Ativação com um toque</string>
-    <string name="home_activation_summary">Ative Brevent, Stopapp e mais sem computador</string>
-    <string name="home_activation_summary_not_running">Inicie o Shizako primeiro para usar a ativação com um toque</string>
     <string name="settings_debug">Depuração</string>
     <string name="settings_crash_logs">Registros de falhas</string>
     <string name="settings_crash_logs_summary">As falhas são salvas aqui quando o app fecha inesperadamente</string>
@@ -159,7 +156,6 @@ Pode ser necessário reiniciar o Shizako para que a operação tenha efeito."</s
     <string name="activation_status_activated">%1$s · já ativado</string>
     <string name="activation_status_not_activated">%1$s · instalado, não ativado</string>
     <string name="activation_note_device_owner">Requer remover antes todas as contas e usuários secundários (modo visitante / app gêmeo); você pode adicioná-los de volta após a ativação. Podem haver particularidades da ROM do fabricante.</string>
-    <string name="activation_note_brevent">O servidor do Brevent precisa ser reativado após cada reinício.</string>
     <string name="activation_custom_title">Comando personalizado</string>
     <string name="activation_custom_hint">Qualquer comando shell, ex.: dpm set-device-owner …</string>
     <string name="activation_custom_empty">O comando está vazio</string>

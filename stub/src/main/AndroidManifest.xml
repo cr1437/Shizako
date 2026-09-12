@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  兼容性 Stub 的清单。
+
+  为什么刻意做得这么"简陋"：这个包的唯一作用是让写死 moe.shizuku.privileged.api 的第三方应用
+  在 PackageManager 里"看得到 Shizuku 已安装"。真正的权限校验发生在 Shizako 本体
+  （com.churan.shizako，它才是 Shizuku server 的持有者 / 权限提供方），所以这里不需要任何组件，
+  只把 API 权限声明成和原版一致的形状，避免客户端 `pm list permissions` 之类的探测落空。
+
+  注意：applicationId 是 moe.shizuku.privileged.api，而权限名用相对写法
+  "moe.shizuku.privileged.api.permission.API_V23"（和 Stub 包名同前缀），
+  不是 com.churan.shizako.permission.*——两边权限归两家，互不覆盖。
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 和原版 Shizuku 一致的权限组 / API 权限：危险级，实际授权由本体授予 -->
+    <permission-group
+        android:name="moe.shizuku.privileged.api.permission-group.API"
+        android:description="@string/stub_permission_group_description"
+        android:label="@string/stub_permission_group_label" />
+
+    <permission
+        android:name="moe.shizuku.privileged.api.permission.API_V23"
+        android:description="@string/stub_permission_description"
+        android:label="@string/stub_permission_label"
+        android:permissionGroup="moe.shizuku.privileged.api.permission-group.API"
+        android:protectionLevel="dangerous" />
+
+    <!-- 本包不自带 provider：第三方走的是本体 moe.shizuku.privileged.api.shizuku
+         （见 manager 的 ShizukuManagerProvider authorities），这里再声明一个会打架。
+         但同时也要让 Provider 路径在本包下"存在"，所以只声明权限、不声明组件。 -->
+    <application
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/stub_app_name"
+        android:supportsRtl="true"
+        android:theme="@android:style/Theme.DeviceDefault.Light" />
+
+</manifest>

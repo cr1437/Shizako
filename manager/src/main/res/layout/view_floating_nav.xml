@@ -4,8 +4,8 @@
      叠加半透明磨砂罩层 nav_frost_scrim，圆角胶囊轮廓由 nav_capsule_background
      提供（clipToOutline 把模糊裁成胶囊形）。内部 BottomNavigationView 背景透明，
      完整复用 menu / 选中态 / 徽标 / removeItem 逻辑。
-     每个 tab = 24dp 图标 + 10sp 标签上下排布（labelVisibilityMode=labeled），
-     选中 tab 背后垫一个全圆角玻璃滑动胶囊（nav_active_pill，47dp 高），
+     每个 tab 只显示 24dp 图标（labelVisibilityMode=unlabeled，无文字标签），
+     选中 tab 背后垫一个全圆角玻璃滑动胶囊（nav_active_pill，36dp 高），
      切换 Tab 时沿水平方向平滑滑过去（MainActivity.setupNavPill 驱动，无弹簧）。
      模糊源（BlurTarget）与 setupWith 在 MainActivity 中接线；
      底部避让手势条由 MainActivity.applyNavCapsuleInsets 动态加 margin。
@@ -29,7 +29,7 @@
     <!-- 选中 tab 滑动胶囊：声明在 BottomNavigationView 之前（FrameLayout z 序
          靠后），垫在图标+标签下方；初始 invisible 且宽度 0，由
          MainActivity.setupNavPill() 完成首次定位（宽度对齐选中 tab）后显示。
-         center_vertical 让它在 59dp 底栏里上下各留 6dp（Figma 47dp 胶囊）。 -->
+         center_vertical 让它在 48dp 底栏里上下各留 6dp（36dp 胶囊）。 -->
     <View
         android:id="@+id/nav_active_pill"
         android:layout_width="0dp"
@@ -51,9 +51,6 @@
         app:itemActiveIndicatorStyle="@null"
         app:itemIconSize="@dimen/ksu_nav_tab_icon_size"
         app:itemIconTint="@color/nav_icon_tint"
-        app:itemTextAppearanceActive="@style/TextAppearance.Ksu.NavLabel"
-        app:itemTextAppearanceInactive="@style/TextAppearance.Ksu.NavLabel"
-        app:itemTextColor="@color/nav_icon_tint"
-        app:labelVisibilityMode="labeled"
+        app:labelVisibilityMode="unlabeled"
         app:menu="@menu/navigation_menu" />
 </moe.shizuku.blurview.BlurView>

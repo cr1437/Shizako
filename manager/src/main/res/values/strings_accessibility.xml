@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  无障碍管理器（Shevery 功能移植）专用字符串。
+  单独成文件，避免和正在并行修改的 strings.xml 冲突。
+-->
+<resources>
+    <!-- 页面标题 -->
+    <string name="accessibility_manager_title">Accessibility manager</string>
+
+    <!-- 常驻（keep-alive）开关 -->
+    <string name="accessibility_manager_keep_alive_group">Keep-alive</string>
+    <string name="accessibility_manager_keep_alive_title">Keep accessibility services alive</string>
+    <string name="accessibility_manager_keep_alive_summary">Runs a foreground daemon that re-enables the pinned accessibility services whenever the system turns them off. Requires Shizuku.</string>
+    <string name="accessibility_manager_auto_boot_title">Start on boot</string>
+    <string name="accessibility_manager_auto_boot_summary">Restart the daemon automatically after the device reboots.</string>
+    <string name="accessibility_manager_open_system_settings">Open system accessibility settings</string>
+
+    <!-- 服务列表 -->
+    <string name="accessibility_manager_services_group">Installed services (%1$d)</string>
+    <string name="accessibility_manager_services_empty">No accessibility service is installed on this device.</string>
+    <string name="accessibility_manager_service_no_description">This service provides no description.</string>
+
+    <!-- 固定 / 取消固定 -->
+    <string name="accessibility_manager_pin">Pin</string>
+    <string name="accessibility_manager_unpin">Unpin</string>
+    <string name="accessibility_manager_pinned">Pinned — kept alive by the daemon</string>
+    <string name="accessibility_manager_not_pinned">Not pinned</string>
+
+    <!-- 错误 / 提示 -->
+    <string name="accessibility_manager_shizuku_required">Shizuku is not running. Enabling or disabling a service needs the WRITE_SECURE_SETTINGS permission granted through Shizuku.</string>
+    <string name="accessibility_manager_write_failed_title">Could not change the service</string>
+    <string name="accessibility_manager_write_failed">Writing the enabled accessibility service list failed. Make sure Shizuku is running and this app still holds WRITE_SECURE_SETTINGS.</string>
+
+    <!-- 常驻守护进程的前台通知 -->
+    <string name="accessibility_daemon_channel_name">Accessibility keep-alive</string>
+    <string name="accessibility_daemon_notification_title">Accessibility keep-alive</string>
+    <string name="accessibility_daemon_notification_text">Keeping pinned accessibility services enabled</string>
+</resources>

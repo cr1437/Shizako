@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  亮背景用的顶栏遮罩：透明 → 淡白。
+  背景图偏亮时标题要换成深色字，深色遮罩反而会把对比度拉低，
+  所以这里换成"提亮"的遮罩（配合 ThemeOverlay.Glass.OnLightBackground）。
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <gradient
+        android:angle="270"
+        android:type="linear">
+        <item android:offset="0.0" android:color="#B3FFFFFF" />
+        <item android:offset="0.55" android:color="#66FFFFFF" />
+        <item android:offset="1.0" android:color="#00FFFFFF" />
+    </gradient>
+</shape>

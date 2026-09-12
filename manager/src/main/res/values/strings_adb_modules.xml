@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ADB Modules 界面的字符串（ModulesScreen.kt 专用）。
+  单独一个文件，避免和并行改动的 strings.xml 冲突；键统一 adb_modules_ 前缀。
+-->
+<resources>
+
+    <string name="adb_modules_title">ADB Modules</string>
+    <string name="adb_modules_summary">A module is a ZIP installed into the app private storage. Its scripts run through Shizuku as shell (or root).</string>
+    <string name="adb_modules_count">%1$d installed</string>
+    <string name="adb_modules_install_zip">Install module ZIP</string>
+    <string name="adb_modules_installing">Installing…</string>
+    <string name="adb_modules_trust_hint">Long press a card to mark a module as Full Trust: it then bypasses the access mode policy.</string>
+
+    <string name="adb_modules_version">Version %1$s</string>
+    <string name="adb_modules_author">Author %1$s</string>
+    <string name="adb_modules_unknown">-</string>
+
+    <string name="adb_modules_tag_trusted">Full Trust</string>
+    <string name="adb_modules_tag_disabled">Disabled</string>
+
+    <string name="adb_modules_action">Action</string>
+    <string name="adb_modules_service">Service</string>
+    <string name="adb_modules_webui">WebUI</string>
+    <string name="adb_modules_delete">Delete</string>
+    <string name="adb_modules_running">Running…</string>
+    <string name="adb_modules_reason_line">%1$s: %2$s</string>
+    <string name="adb_modules_reason_disabled">module is disabled</string>
+    <string name="adb_modules_reason_no_action">no action.sh in this module</string>
+    <string name="adb_modules_reason_action_policy">blocked by the access mode policy</string>
+    <string name="adb_modules_reason_no_service">no service.sh in this module</string>
+    <string name="adb_modules_reason_service_policy">service.sh is blocked by the access mode policy</string>
+    <string name="adb_modules_reason_background">background actions are off</string>
+    <string name="adb_modules_reason_no_webui">no webui/index.html in this module</string>
+    <string name="adb_modules_reason_webui_policy">opening a WebUI is blocked in safe mode</string>
+
+    <string name="adb_modules_empty_title">No modules installed</string>
+    <string name="adb_modules_empty_summary">Any ZIP with a module.prop in its root is a module. Pick one below and it is unpacked into files/adb_modules.</string>
+    <string name="adb_modules_howto_title">How to build a module</string>
+    <string name="adb_modules_step_1_title">module.prop</string>
+    <string name="adb_modules_step_1_body">Metadata at the ZIP root: id, name, version, versionCode, author, description. Optional keys: banner, webui, action, usesShellBridge.</string>
+    <string name="adb_modules_step_1_hint">id must start with a letter and contain 2 to 64 characters of A-Z a-z 0-9 . _ -</string>
+    <string name="adb_modules_step_2_title">action.sh / service.sh</string>
+    <string name="adb_modules_step_2_body">action.sh runs when the Action button is tapped. service.sh runs when the module is enabled and both the service and background policies allow it.</string>
+    <string name="adb_modules_step_2_hint">Both run as shell or root, with MODDIR pointing at the module directory.</string>
+    <string name="adb_modules_step_3_title">webui/index.html</string>
+    <string name="adb_modules_step_3_body">Put an index.html into webui/ and the WebUI button opens it in a local WebView.</string>
+    <string name="adb_modules_layout_title">ZIP layout</string>
+    <string name="adb_modules_layout_body">my-module/\n  module.prop\n  action.sh\n  service.sh\n  webui/index.html\n  banner.png</string>
+    <string name="adb_modules_env_title">Environment variables</string>
+    <string name="adb_modules_env_body">MODDIR=files/adb_modules/my-module\nMODPATH=$MODDIR\nSHIZUKU_MODULE_ID=my-module\nSHIZUKU_MODULE_MODE=safe\nSHIZUKU_MODULE_TRUSTED=0\nSHIZUKU_MODULE_BACKGROUND=0\nARCH=arm64-v8a</string>
+    <string name="adb_modules_hard_limits">Hard limits: 2048 entries and 200 MB per ZIP, scripts up to 256 KB and 120 s runtime, only the last 64 KB of output is kept.</string>
+
+    <string name="adb_modules_panel_action">%1$s · action.sh</string>
+    <string name="adb_modules_panel_service">%1$s · service.sh</string>
+    <string name="adb_modules_exit_code">exit code %1$d</string>
+    <string name="adb_modules_no_output">(no output)</string>
+    <string name="adb_modules_close">Close</string>
+    <string name="adb_modules_dismiss">Dismiss</string>
+
+    <string name="adb_modules_tag_version_code">code %1$d</string>
+
+    <string name="adb_modules_toggle_failed">Could not change the module state: %1$s</string>
+    <string name="adb_modules_install_success">Installed %1$s</string>
+    <string name="adb_modules_install_failed">Install failed: %1$s</string>
+    <string name="adb_modules_action_failed">Action failed: %1$s</string>
+    <string name="adb_modules_service_failed">Service failed: %1$s</string>
+
+    <string name="adb_modules_trust_on">%1$s is now trusted (Full Trust).</string>
+    <string name="adb_modules_trust_off">%1$s is no longer trusted.</string>
+
+    <string name="adb_modules_delete_title">Delete module</string>
+    <string name="adb_modules_delete_message">Delete %1$s (%2$s) and everything in its directory? This cannot be undone.</string>
+    <string name="adb_modules_delete_confirm">Delete</string>
+    <string name="adb_modules_delete_done">Deleted %1$s</string>
+    <string name="adb_modules_delete_failed">Delete failed: %1$s</string>
+    <string name="adb_modules_cancel">Cancel</string>
+
+    <string name="adb_modules_confirm_action_title">Run action.sh?</string>
+    <string name="adb_modules_confirm_action_body">The script runs with shell or root rights. Review it before you continue.</string>
+    <string name="adb_modules_confirm_run">Run</string>
+
+</resources>

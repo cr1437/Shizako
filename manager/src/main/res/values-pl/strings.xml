@@ -137,9 +137,6 @@ Może być konieczne ponowne uruchomienie Shizako, aby operacja zaczęła obowi�
     <string name="dialog_adb_discovery_message_toggle_wireless_debugging">Proszę spróbować wyłączyć i włączyć ponownie \"Debugowanie bezprzewodowe\" jeśli nadal szuka.</string>
     <string name="settings_use_system_color">Użyj systemowego motywu kolorystycznego</string>
     <!-- Shizako: 补充翻译 -->
-    <string name="home_activation_title">Aktywacja jednym kliknięciem</string>
-    <string name="home_activation_summary">Aktywuj Brevent, Stopapp i inne bez komputera</string>
-    <string name="home_activation_summary_not_running">Najpierw uruchom Shizako, aby korzystać z aktywacji jednym kliknięciem</string>
     <string name="settings_debug">Debugowanie</string>
     <string name="settings_crash_logs">Dzienniki awarii</string>
     <string name="settings_crash_logs_summary">Tutaj zapisywane są awarie, gdy aplikacja nieoczekiwanie się zamyka</string>
@@ -161,7 +158,6 @@ Może być konieczne ponowne uruchomienie Shizako, aby operacja zaczęła obowi�
     <string name="activation_status_activated">%1$s · już aktywowano</string>
     <string name="activation_status_not_activated">%1$s · zainstalowano, nie aktywowano</string>
     <string name="activation_note_device_owner">Wymaga wcześniejszego usunięcia wszystkich kont i użytkowników dodatkowych (tryb gościa / klonowanie aplikacji); po aktywacji można je dodać ponownie. Mogą wystąpić osobliwości zależne od ROM producenta.</string>
-    <string name="activation_note_brevent">Serwer Brevent trzeba ponownie aktywować po każdym ponownym uruchomieniu.</string>
     <string name="activation_custom_title">Własne polecenie</string>
     <string name="activation_custom_hint">Dowolne polecenie powłoki, np. dpm set-device-owner …</string>
     <string name="activation_custom_empty">Polecenie jest puste</string>

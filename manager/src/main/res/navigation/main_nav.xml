@@ -20,6 +20,24 @@
         android:name="moe.shizuku.manager.settings.SettingsTabFragment"
         android:label="settings" />
 
+    <!-- ADB 模块（可放进底栏：设置 → 底部栏 → 入口） -->
+    <fragment
+        android:id="@+id/modules_fragment"
+        android:name="moe.shizuku.manager.module.ModulesFragment"
+        android:label="modules" />
+
+    <!-- Comput 控制台（shell 会话 + 宏 + AI 解释） -->
+    <fragment
+        android:id="@+id/comput_fragment"
+        android:name="moe.shizuku.manager.comput.ComputFragment"
+        android:label="comput" />
+
+    <!-- 工具箱（一页收拢所有搞机入口，可放进底栏） -->
+    <fragment
+        android:id="@+id/toolbox_fragment"
+        android:name="moe.shizuku.manager.toolbox.ToolboxFragment"
+        android:label="toolbox" />
+
     <!-- 次级页（单入口：全部由 MainActivity 承载，带返回键） -->
     <fragment
         android:id="@+id/activation_fragment"
@@ -41,4 +59,22 @@
         android:id="@+id/dhizuku_fragment"
         android:name="moe.shizuku.manager.dhizuku.DhizukuManageFragment"
         android:label="dhizuku" />
+
+    <!-- 推荐应用（下载引导页：只给官方下载入口，不再做「注入」） -->
+    <fragment
+        android:id="@+id/apps_download_fragment"
+        android:name="moe.shizuku.manager.download.AppsDownloadFragment"
+        android:label="apps_download" />
+
+    <!-- 工具箱里的工具页（模块 / 模块目录 / 模块策略 / 控制台 / 控制台设置 / 实验室）：
+         一个目的地 + tool 参数，从工具箱点进来，返回回工具箱（不落进设置） -->
+    <fragment
+        android:id="@+id/tool_page_fragment"
+        android:name="moe.shizuku.manager.toolbox.ToolPageFragment"
+        android:label="tool_page">
+        <argument
+            android:name="tool"
+            android:defaultValue="modules"
+            app:argType="string" />
+    </fragment>
 </navigation>

@@ -153,9 +153,6 @@ Az export funkció SAF-et használ (Storage Access Framework). A jelentések sze
     <string name="dialog_requesting_legacy_button_open_shizuku">Nyissa meg a Shizakot</string>
     <string name="dialog_adb_discovery_message_toggle_wireless_debugging">Próbálja kikapcsolni majd engedélyezni a \"Vezeték nélküli hibakeresés\" opciót, ha továbbra is keres.</string>
     <!-- Shizako: 补充翻译 -->
-    <string name="home_activation_title">Egykattintásos aktiválás</string>
-    <string name="home_activation_summary">Brevent, Stopapp és mások aktiválása számítógép nélkül</string>
-    <string name="home_activation_summary_not_running">Indítsa el előbb a Shizako-t az egykattintásos aktiváláshoz</string>
     <string name="settings_debug">Hibakeresés</string>
     <string name="settings_crash_logs">Összeomlási naplók</string>
     <string name="settings_crash_logs_summary">Az összeomlások ide kerülnek mentésre, ha az app váratlanul kilép</string>
@@ -177,7 +174,6 @@ Az export funkció SAF-et használ (Storage Access Framework). A jelentések sze
     <string name="activation_status_activated">%1$s · már aktiválva</string>
     <string name="activation_status_not_activated">%1$s · telepítve, nincs aktiválva</string>
     <string name="activation_note_device_owner">Először az összes fiókot és másodlagos felhasználót (vendégmód / alkalmazás-iker) el kell távolítani; az aktiválás után újra hozzáadhatók. A gyártó ROM-jától függően sajátosságok lehetnek.</string>
-    <string name="activation_note_brevent">A Brevent kiszolgálóját minden újraindítás után újra kell aktiválni.</string>
     <string name="activation_custom_title">Egyéni parancs</string>
     <string name="activation_custom_hint">Bármilyen shell parancs, pl. dpm set-device-owner …</string>
     <string name="activation_custom_empty">A parancs üres</string>

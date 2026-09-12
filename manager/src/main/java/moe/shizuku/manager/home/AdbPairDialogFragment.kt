@@ -1,5 +1,6 @@
 package moe.shizuku.manager.home
 
+import moe.shizuku.manager.ui.glass.GlassWindow
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.ActivityNotFoundException
@@ -23,6 +24,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import moe.shizuku.manager.MainActivity
 import moe.shizuku.manager.R
 import moe.shizuku.manager.ShizukuSettings
 import moe.shizuku.manager.adb.*
@@ -36,6 +38,9 @@ class AdbPairDialogFragment : DialogFragment() {
     private lateinit var binding: AdbPairDialogBinding
 
     private val viewModel by viewModels { ViewModel(requireContext()) }
+
+    /** 已经自动提交过的配对码：避免输满 6 位后被重复提交 */
+    private var lastSubmittedCode: String? = null
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val context = requireContext()
@@ -54,9 +59,16 @@ class AdbPairDialogFragment : DialogFragment() {
         return dialog
     }
 
+    override fun onStart() {
+        super.onStart()
+        // 玻璃材质风格：对话框套 Android 12 窗口模糊（背景模糊 + 模糊后方屏幕）
+        GlassWindow.applyIfGlass(dialog)
+    }
+
     private fun onDialogShow(dialog: AlertDialog) {
         binding.pairingCode.editText!!.doAfterTextChanged {
             binding.pairingCode.error = null
+            autoSubmitIfComplete()
         }
 
         binding.pairingCode.error = null
@@ -75,21 +87,7 @@ class AdbPairDialogFragment : DialogFragment() {
         }
 
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
-            val context = it.context
-            val port = try {
-                binding.port.editText!!.text.toString().toInt()
-            } catch (e: Exception) {
-                -1
-            }
-            if (port > 65535 || port < 1) {
-                binding.port.isVisible = true
-                binding.port.error = context.getString(R.string.dialog_adb_invalid_port)
-                return@setOnClickListener
-            }
-
-            val password = binding.pairingCode.editText!!.text.toString()
-
-            viewModel.run(port, password)
+            submitPairing()
         }
 
         viewModel.port.observe(this) {
@@ -113,7 +111,6 @@ class AdbPairDialogFragment : DialogFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
         val context = requireContext()
         val inMultiScreenOrDisplay = (requireActivity().isInMultiWindowMode
                 || (requireActivity().window?.decorView?.display?.displayId ?: -1) > 0)
@@ -129,7 +126,10 @@ class AdbPairDialogFragment : DialogFragment() {
 
         viewModel.result.observe(this) {
             if (it == null) {
+                // 配对成功：先关对话框，再自动跳转「一站式激活」页
+                val ctx = context
                 dismissAllowingStateLoss()
+                if (ctx != null) openActivationPage(ctx)
             } else {
                 when (it) {
                     is ConnectException -> {
@@ -137,6 +137,8 @@ class AdbPairDialogFragment : DialogFragment() {
                     }
                     is AdbInvalidPairingCodeException -> {
                         binding.pairingCode.error = context.getString(R.string.paring_code_is_wrong)
+                        // 允许改完重输后再自动提交
+                        lastSubmittedCode = null
                     }
                     is AdbKeyException -> {
                         Toast.makeText(context, context.getString(R.string.adb_error_key_store), Toast.LENGTH_LONG)
@@ -150,6 +152,53 @@ class AdbPairDialogFragment : DialogFragment() {
     fun show(fragmentManager: FragmentManager) {
         if (fragmentManager.isStateSaved) return
         show(fragmentManager, javaClass.simpleName)
+    }
+
+    /** 点「确定」或自动提交：端口非法就提示，其他情况直接开始配对 */
+    private fun submitPairing() {
+        val port = try {
+            binding.port.editText!!.text.toString().toInt()
+        } catch (e: Exception) {
+            -1
+        }
+        if (port > 65535 || port < 1) {
+            binding.port.isVisible = true
+            binding.port.error = requireContext().getString(R.string.dialog_adb_invalid_port)
+            return
+        }
+
+        val password = binding.pairingCode.editText!!.text.toString()
+        lastSubmittedCode = password
+        viewModel.run(port, password)
+    }
+
+    /**
+     * 配对码输满 6 位（且端口已被 mDNS 发现）就自动开始配对 —— 不用再点「确定」，
+     * 成功后 [openActivationPage] 自动跳到「一站式激活」页。
+     */
+    private fun autoSubmitIfComplete() {
+        if (isStateSaved) return
+        val code = binding.pairingCode.editText!!.text.toString().trim()
+        if (code.length < 6 || code == lastSubmittedCode) return
+
+        val port = try {
+            binding.port.editText!!.text.toString().toInt()
+        } catch (e: Exception) {
+            -1
+        }
+        if (port !in 1..65535) return
+
+        submitPairing()
+    }
+
+    /** 配对成功 → 自动跳转「一站式激活」页（应用不在前台时顺便切到前台） */
+    private fun openActivationPage(context: Context) {
+        runCatching {
+            context.startActivity(
+                MainActivity.destinationIntent(context, R.id.activation_fragment)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            )
+        }.onFailure { it.printStackTrace() }
     }
 
     override fun getDialog(): AlertDialog? {

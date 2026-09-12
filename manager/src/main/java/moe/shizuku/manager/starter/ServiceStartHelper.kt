@@ -74,9 +74,15 @@ object ServiceStartHelper {
         }
 
         val cr = context.contentResolver
-        Settings.Global.putInt(cr, "adb_wifi_enabled", 1)
-        Settings.Global.putInt(cr, Settings.Global.ADB_ENABLED, 1)
-        Settings.Global.putLong(cr, "adb_allowed_connection_time", 0L)
+        // 自动开无线调试需要 WRITE_SECURE_SETTINGS；没有权限时不要写系统设置
+        // （配对流程里无线调试本来就是开着的，直接连就行）
+        if (canAdbAutoStart(context)) {
+            runCatching {
+                Settings.Global.putInt(cr, "adb_wifi_enabled", 1)
+                Settings.Global.putInt(cr, Settings.Global.ADB_ENABLED, 1)
+                Settings.Global.putLong(cr, "adb_allowed_connection_time", 0L)
+            }
+        }
 
         CoroutineScope(Dispatchers.IO).launch {
             val latch = CountDownLatch(1)

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  文字底部遮罩（bottom scrim）：从上透明到深色。
+  用在「图片上直接压文字」的地方（ImageView 上方、文字下方），
+  作为自适应取色的兜底 —— 背景是半黑半白的照片时，光靠算亮度判不准，
+  压一层 scrim 就能保证任何照片上都读得清。
+
+  用法（ImageView + 两个 TextView 的叠放）：
+    <FrameLayout ...>
+        <ImageView android:id="@+id/background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop" />
+        <View android:layout_width="match_parent" android:layout_height="160dp"
+            android:layout_gravity="bottom"
+            android:background="@drawable/bg_text_scrim" />
+        <LinearLayout android:layout_gravity="bottom" android:orientation="vertical" ...>
+            <TextView android:id="@+id/title" ... />
+            <TextView android:id="@+id/subtitle" ... />
+        </LinearLayout>
+    </FrameLayout>
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <gradient
+        android:angle="90"
+        android:startColor="#00000000"
+        android:centerColor="#66000000"
+        android:endColor="#B3000000"
+        android:type="linear" />
+</shape>

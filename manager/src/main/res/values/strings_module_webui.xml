@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  模块本地 WebUI 的字符串（自己一份文件，不动 strings.xml）。
+  默认语言英文，中文在 values-zh-rCN/strings_module_webui.xml。
+-->
+<resources>
+    <!-- 顶部工具栏 -->
+    <string name="module_webui_close">Close</string>
+
+    <!-- 打不开 WebUI 时的提示 -->
+    <string name="module_webui_unavailable">This module has no WebUI.</string>
+    <string name="module_webui_blocked">The current access policy does not allow opening this WebUI.</string>
+
+    <!-- ReCommand：执行命令前的确认框 -->
+    <string name="module_webui_command_title">Run this command?</string>
+    <string name="module_webui_command_message">%1$s wants to run:</string>
+    <string name="module_webui_allow">Run</string>
+    <string name="module_webui_deny">Cancel</string>
+
+    <!-- 下载 -->
+    <string name="module_webui_download_blocked">Download is not allowed by the current access policy.</string>
+    <string name="module_webui_download_started">Downloading…</string>
+    <string name="module_webui_download_saved">Saved to %1$s</string>
+    <string name="module_webui_download_failed">Download failed: %1$s</string>
+
+    <!-- 外链 -->
+    <string name="module_webui_external_blocked">Opening external links is blocked because WebView internet access is off.</string>
+</resources>

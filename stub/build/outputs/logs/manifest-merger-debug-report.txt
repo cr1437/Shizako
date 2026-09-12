@@ -1,0 +1,57 @@
+-- Merging decision tree log ---
+manifest
+ADDED from E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml:14:1-39:12
+INJECTED from E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml:14:1-39:12
+INJECTED from E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml:14:1-39:12
+INJECTED from E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml:14:1-39:12
+	package
+		INJECTED from E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml
+	android:versionCode
+		INJECTED from E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml:14:11-69
+permission-group#moe.shizuku.privileged.api.permission-group.API
+ADDED from E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml:17:5-20:63
+	android:label
+		ADDED from E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml:20:9-60
+	android:description
+		ADDED from E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml:19:9-72
+	android:name
+		ADDED from E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml:18:9-71
+permission#moe.shizuku.privileged.api.permission.API_V23
+ADDED from E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml:22:5-27:47
+	android:label
+		ADDED from E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml:25:9-54
+	android:protectionLevel
+		ADDED from E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml:27:9-44
+	android:permissionGroup
+		ADDED from E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml:26:9-82
+	android:description
+		ADDED from E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml:24:9-66
+	android:name
+		ADDED from E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml:23:9-69
+application
+ADDED from E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml:32:5-37:68
+INJECTED from E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml:32:5-37:68
+	android:extractNativeLibs
+		INJECTED from E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml
+	android:supportsRtl
+		ADDED from E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml:36:9-35
+	android:label
+		ADDED from E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml:35:9-46
+	android:icon
+		ADDED from E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml:34:9-43
+	android:allowBackup
+		ADDED from E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml:33:9-36
+	android:theme
+		ADDED from E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml:37:9-65
+uses-sdk
+INJECTED from E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml
+INJECTED from E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\AndroidManifest.xml

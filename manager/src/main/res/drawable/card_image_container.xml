@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 图片卡片的圆角容器：clipToOutline=true 时，里面的图片和遮罩都会被裁成这个圆角 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="#1F000000" />
+    <corners android:radius="24dp" />
+</shape>

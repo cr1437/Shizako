@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  模块本地 WebUI 的字符串（简体中文）。只新增这一个文件，不改 strings.xml。
+-->
+<resources>
+    <!-- 顶部工具栏 -->
+    <string name="module_webui_close">关闭</string>
+
+    <!-- 打不开 WebUI 时的提示 -->
+    <string name="module_webui_unavailable">这个模块没有 WebUI。</string>
+    <string name="module_webui_blocked">当前访问策略不允许打开这个 WebUI。</string>
+
+    <!-- ReCommand：执行命令前的确认框 -->
+    <string name="module_webui_command_title">要执行这条命令吗？</string>
+    <string name="module_webui_command_message">%1$s 想执行：</string>
+    <string name="module_webui_allow">执行</string>
+    <string name="module_webui_deny">取消</string>
+
+    <!-- 下载 -->
+    <string name="module_webui_download_blocked">当前访问策略不允许 WebUI 下载。</string>
+    <string name="module_webui_download_started">正在下载…</string>
+    <string name="module_webui_download_saved">已保存到 %1$s</string>
+    <string name="module_webui_download_failed">下载失败：%1$s</string>
+
+    <!-- 外链 -->
+    <string name="module_webui_external_blocked">WebView 联网没开，外链已拦截。</string>
+</resources>

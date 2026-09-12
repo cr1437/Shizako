@@ -1,0 +1,39 @@
+// 兼容性 Stub：一个包名为 moe.shizuku.privileged.api 的空壳 APK。
+// 为什么单独开一个模块：占位包和本体的包名必须不同（applicationId 冲突），
+// 但又要复用根 build.gradle 里 subprojects{} 统一注入的 compileSdk / minSdk / Java 版本，
+// 所以这里只声明差异项，不重复自造一套 SDK 配置。
+plugins {
+    id('com.android.application')
+    id('org.jetbrains.kotlin.android')
+}
+
+// 和 manager 一样复用根工程的签名配置。
+// 注意顺序：signing.gradle 只会往名为 sign 的 signingConfig 里填值（`signingConfigs.sign.storeFile = ...`），
+// 这个 config 必须先存在，否则签名脚本一上来就报 "Could not get unknown property 'sign'"。
+// 和本体同一签名，是为了避免用户先装过原版 Shizuku 再装占位包时出现签名冲突提示。
+android.signingConfigs.create("sign")
+apply from: rootProject.file('signing.gradle')
+
+android {
+    namespace 'moe.shizuku.privileged.api'
+    defaultConfig {
+        applicationId "moe.shizuku.privileged.api"
+        // 占位包没有版本语义，固定 1 就行（pm install 命令里带 -d，版本号不涨也不会被拦）
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.sign
+        }
+        release {
+            signingConfig signingConfigs.sign
+        }
+    }
+    lint {
+        checkReleaseBuilds false
+    }
+    dependenciesInfo {
+        includeInApk false
+    }
+}

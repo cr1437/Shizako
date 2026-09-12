@@ -14,27 +14,45 @@
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?attr/ksuAppBarBackground"
+        android:elevation="0dp"
+        android:stateListAnimator="@null"
+        app:liftOnScroll="false"
         android:fitsSystemWindows="false"
         app:fitsSystemWindowsInsets="@integer/internal_fragment_top_insets">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/toolbar_layout"
             style="?collapsingToolbarLayoutLargeStyle"
+            android:background="@null"
             android:layout_width="match_parent"
             android:layout_height="?collapsingToolbarLayoutLargeSize"
             android:fitsSystemWindows="false"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:titleCollapseMode="scale">
+            app:titleCollapseMode="scale"
+            app:contentScrim="@null"
+            app:statusBarScrim="@null"
+            app:expandedTitleTextAppearance="@style/TextAppearance.Ksu.AppBarTitle"
+            app:collapsedTitleTextAppearance="@style/TextAppearance.Ksu.AppBarTitle.Collapsed">
 
             <View
                 android:id="@+id/click_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
+            <!-- 顶部渐变遮罩：白字标题在任何壁纸上都清晰 -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/appbar_scrim"
+                android:background="@drawable/appbar_scrim"
+                android:importantForAccessibility="no" />
+
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize"
+                android:background="@null"
                 android:elevation="0dp"
                 app:layout_collapseMode="pin" />
         </com.google.android.material.appbar.CollapsingToolbarLayout>
@@ -46,6 +64,23 @@
         app:fitsSystemWindowsInsets="@integer/internal_fragment_bottom_insets"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:ignore="MissingPrefix">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- 两页：Shizako 授权应用 / Dhizuku 授权应用 -->
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/apps_tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tabGravity="fill"
+                app:tabMode="fixed" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipe_refresh"
@@ -64,5 +99,61 @@
                 app:borderTopVisibility="whenTop"
                 app:layoutManager="@string/main_layout_manager" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <!-- 第二页：Dhizuku 授权管理（Compose） -->
+        <FrameLayout
+            android:id="@+id/dhizuku_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
+        <!-- 未激活（服务没在跑）：列表区换成「请先激活」提示（Tab 还在，能切到 Dhizuku 页） -->
+        <LinearLayout
+            android:id="@+id/activation_prompt"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?android:attr/colorBackground"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="32dp"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <ImageView
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_system_icon"
+                android:tint="?colorPrimary"
+                android:tintMode="src_in" />
+
+            <TextView
+                android:id="@+id/activation_prompt_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="@string/apps_need_activation_title"
+                android:textAppearance="?textAppearanceTitleMedium" />
+
+            <TextView
+                android:id="@+id/activation_prompt_body"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="@string/apps_need_activation_body"
+                android:textAppearance="?textAppearanceBodyMedium" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/activation_prompt_action"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/apps_need_activation_action" />
+
+        </LinearLayout>
+            </FrameLayout>
+        </LinearLayout>
     </FrameLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -148,9 +148,6 @@
     <string name="dialog_requesting_legacy_message"><![CDATA[<b>%1$s</b> پشتیبانی نسخه جدید شیزوکو دارد، اما شیزوکو قدیمی را درخواست می‌کند. این ممکن است به این دلیل باشد که Shizako در حال اجرا نیست، لطفاً در برنامه Shizako بررسی کنید.<p>Shizako قدیمی از مارس ۲۰۱۹ منسوخ شده است.]]></string>
     <string name="dialog_requesting_legacy_button_open_shizuku">باز کردن Shizako</string>
     <!-- Shizako: 补充翻译 -->
-    <string name="home_activation_title">فعال‌سازی با یک لمس</string>
-    <string name="home_activation_summary">Brevent، Stopapp و موارد دیگر را بدون رایانه فعال کنید</string>
-    <string name="home_activation_summary_not_running">برای استفاده از فعال‌سازی با یک لمس، ابتدا Shizako را اجرا کنید</string>
     <string name="settings_debug">اشکال‌زدایی</string>
     <string name="settings_crash_logs">گزارش‌های خرابی</string>
     <string name="settings_crash_logs_summary">خرابی‌ها هنگام بسته‌شدن غیرمنتظره برنامه در اینجا ذخیره می‌شوند</string>
@@ -172,7 +169,6 @@
     <string name="activation_status_activated">%1$s · از قبل فعال است</string>
     <string name="activation_status_not_activated">%1$s · نصب شده، فعال نشده</string>
     <string name="activation_note_device_owner">ابتدا باید همه حساب‌ها و کاربران ثانویه (حالت مهمان / نسخه دوقلوی برنامه) حذف شوند؛ پس از فعال‌سازی می‌توانید دوباره آن‌ها را اضافه کنید. بسته به رام سازنده ممکن است محدودیت‌هایی وجود داشته باشد.</string>
-    <string name="activation_note_brevent">سرور Brevent پس از هر بار راه‌اندازی مجدد باید دوباره فعال شود.</string>
     <string name="activation_custom_title">دستور سفارشی</string>
     <string name="activation_custom_hint">هر دستور پوسته‌ای، مثلاً dpm set-device-owner …</string>
     <string name="activation_custom_empty">دستور خالی است</string>

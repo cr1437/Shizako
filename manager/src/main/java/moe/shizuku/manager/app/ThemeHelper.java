@@ -89,18 +89,40 @@ public class ThemeHelper {
         return res == null ? 0 : res;
     }
 
-    // ==================== KernelSU 双风格（M3E / Miuix） ====================
+    // ==================== 双风格：MD3 / 玻璃 ====================
 
     public static final String KEY_UI_STYLE = "ui_style";
-    public static final String UI_STYLE_M3E = "m3e";
-    /** 值固定为 "miuix"，对应小米 HyperOS 观感（主题 Overlay 近似实现） */
-    public static final String UI_STYLE_MIUI = "miuix";
+    /** 标准 Material 3 观感：不透明表面、M3 组件、M3 底栏指示器 */
+    public static final String UI_STYLE_MD3 = "md3";
+    /** Liquid Glass 玻璃材质：半透明玻璃卡片 + 胶囊底栏 + 滑块指示器 */
+    public static final String UI_STYLE_GLASS = "glass";
+
+    /** 旧值（M3E / Miuix）映射：M3E → md3，Miuix → md3 */
+    private static final String UI_STYLE_M3E_LEGACY = "m3e";
+    private static final String UI_STYLE_MIUIX_LEGACY = "miuix";
 
     public static String getUiStyle() {
-        return ShizukuSettings.getPreferences().getString(KEY_UI_STYLE, UI_STYLE_M3E);
+        String value = ShizukuSettings.getPreferences().getString(KEY_UI_STYLE, UI_STYLE_GLASS);
+        if (UI_STYLE_GLASS.equals(value)) {
+            return UI_STYLE_GLASS;
+        }
+        if (UI_STYLE_MD3.equals(value)) {
+            return UI_STYLE_MD3;
+        }
+        // 兼容旧值
+        if (UI_STYLE_MIUIX_LEGACY.equals(value) || UI_STYLE_M3E_LEGACY.equals(value)) {
+            return UI_STYLE_MD3;
+        }
+        return UI_STYLE_GLASS;
     }
 
-    public static boolean isUsingMiuix() {
-        return UI_STYLE_MIUI.equals(getUiStyle());
+    /** 玻璃材质风格（默认） */
+    public static boolean isUsingGlass() {
+        return UI_STYLE_GLASS.equals(getUiStyle());
+    }
+
+    /** 标准 Material 3 风格 */
+    public static boolean isUsingMd3() {
+        return UI_STYLE_MD3.equals(getUiStyle());
     }
 }
