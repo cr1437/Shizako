@@ -74,6 +74,9 @@ class MainActivity : AppActivity() {
         const val EXTRA_DESTINATION = "moe.shizuku.manager.extra.DESTINATION"
         const val EXTRA_DESTINATION_ARGS = "moe.shizuku.manager.extra.DESTINATION_ARGS"
 
+        /** 「更新欢迎页」已弹过的版本号记录 */
+        private const val KEY_UPDATE_WELCOME_VERSION = "update_welcome_shown_version"
+
         @JvmStatic
         fun tabIntent(context: Context, tab: String): Intent =
             Intent(context, MainActivity::class.java).putExtra(EXTRA_TAB, tab)
@@ -121,31 +124,63 @@ class MainActivity : AppActivity() {
     /** 当前风格：读运行时可观察状态（设置里切换立即生效，不需要重建 Activity） */
     private val isGlassStyle: Boolean get() = moe.shizuku.manager.ui.style.UiStyle.isGlass
 
+    /**
+     * 老用户升级后的「更新欢迎页」：确实被更新过（lastUpdateTime > firstInstallTime）才弹；
+     * 新装用户不会看到（首次引导已经照顾到了）。每个版本弹一次。
+     */
+    private fun checkUpdateWelcome() {
+        runCatching {
+            val prefs = ShizukuSettings.getPreferences()
+            val current = moe.shizuku.manager.BuildConfig.VERSION_CODE.toLong()
+            if (prefs.getLong(KEY_UPDATE_WELCOME_VERSION, -1L) == current) return@runCatching
+
+            val pi = packageManager.getPackageInfo(packageName, 0)
+            val everUpdated = pi.lastUpdateTime > pi.firstInstallTime + 1000L
+            if (!everUpdated) return@runCatching
+
+            prefs.edit().putLong(KEY_UPDATE_WELCOME_VERSION, current).apply()
+            startActivity(Intent(this, moe.shizuku.manager.setup.UpdateWelcomeActivity::class.java))
+        }.onFailure { it.printStackTrace() }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // 首次启动：先跑设置向导（原 HomeActivity 的逻辑）
-        if (!ShizukuSettings.isSetupCompleted()) {
+        // 首次启动：先跑设置向导（原 HomeActivity 的逻辑）。
+        // 例外：带「次级页目的地」进来的（引导页里的配对入口、通知点「进入激活」）
+        // 不重定向 —— 那些本来就是引导流程的一部分。
+        val pendingDestination = intent?.getIntExtra(EXTRA_DESTINATION, 0) ?: 0
+        if (!ShizukuSettings.isSetupCompleted() && pendingDestination == 0) {
             startActivity(Intent(this, SetupActivity::class.java))
             finish()
             return
         }
 
+        // 老用户升级后的一次性「更新欢迎页」（新装用户不弹）
+        checkUpdateWelcome()
+
         val binding = ActivityMainBinding.inflate(layoutInflater)
         this.binding = binding
         setContentView(binding.root)
+
+        val t0 = moe.shizuku.manager.utils.StartupTrace.begin()
+        moe.shizuku.manager.utils.StartupTrace.newLaunch(this)
 
         // 风格状态与偏好同步（进程内单例，设置页改完即更新）
         moe.shizuku.manager.ui.style.UiStyle.refresh()
 
         resolveNavColors()
         showLogsTab = ShizukuSettings.getPreferences().getBoolean("show_logs_tab", true)
+        moe.shizuku.manager.utils.StartupTrace.since(this, t0, "MainActivity.resolveNavColors")
 
         applyNavBarStyle()
         setupNavInsets()
+        moe.shizuku.manager.utils.StartupTrace.since(this, t0, "MainActivity.navSetup")
         // 始终接线磨砂底（幂等）：MD3 下 BlurView 隐藏，切到玻璃时立刻就有磨砂
         ensureAcrylicNav()
+        moe.shizuku.manager.utils.StartupTrace.since(this, t0, "MainActivity.ensureAcrylicNav")
         setupComposeNav()
+        moe.shizuku.manager.utils.StartupTrace.since(this, t0, "MainActivity.setupComposeNav")
 
         val navController = findNavController() ?: return
         applyNavVisibility(navController)
@@ -163,6 +198,25 @@ class MainActivity : AppActivity() {
         }
 
         handleIntent(intent)
+        maybeShowStarPrompt()
+        moe.shizuku.manager.utils.StartupTrace.since(this, t0, "MainActivity.onCreate total")
+    }
+
+    /**
+     * 「给项目点个 Star」提醒：冷启动满 4 次、并且不在冷静期里才弹。
+     *
+     * 延后 1.2s 再弹 —— 让首页的入场动画播完，不在转场中间糊一张对话框。
+     */
+    private fun maybeShowStarPrompt() {
+        moe.shizuku.manager.utils.StarPrompt.countLaunch()
+        if (!moe.shizuku.manager.utils.StarPrompt.shouldPrompt()) return
+        window?.decorView?.postDelayed({
+            if (isFinishing || isDestroyed) return@postDelayed
+            // 真正弹之前再判一次（这期间可能从别处被标记成「不再提醒」）
+            if (!moe.shizuku.manager.utils.StarPrompt.shouldPrompt()) return@postDelayed
+            moe.shizuku.manager.utils.StarPrompt.markShown()
+            moe.shizuku.manager.utils.StarPromptDialog.show(this)
+        }, 1200)
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -389,13 +443,50 @@ class MainActivity : AppActivity() {
             ResourceUtils.resolveColor(theme, com.google.android.material.R.attr.colorOnSecondaryContainer)
     }
 
+    /** 切页转场的窗口：连点合并的间隔（转场 240ms + 一点余量） */
+    private val tabSwitchWindowMs = 320L
+
+    private val tabNavHandler = android.os.Handler(android.os.Looper.getMainLooper())
+
+    /** 连点合并：当前窗口结束前不再执行新切页，只记住"最后点的那个" */
+    private var tabNavBusyUntil = 0L
+    private var pendingTabDestination = 0
+    private val flushPendingTabNav = Runnable {
+        // Activity 已销毁 / 正在结束（比如切主题重建）：丢弃排队的切页，避免摸到已销毁的控制器
+        if (!isFinishing && !isDestroyed) {
+            val id = pendingTabDestination
+            if (id != 0) {
+                pendingTabDestination = 0
+                navigateToTabNow(id)
+            }
+        }
+    }
+
+    /**
+     * 【性能】连点合并版：上一段切页转场还没播完时，不紧接着再切
+     * （转场互相打断、Fragment 反复创建销毁，正是"按快一点就很卡"的来源）；
+     * 只记下最后一次的意图，等当前转场走完再切 —— 快速连点最终会干净地停在"最后点的那个"。
+     */
+    private fun navigateToTab(destinationId: Int) {
+        val now = android.os.SystemClock.uptimeMillis()
+        if (now < tabNavBusyUntil) {
+            pendingTabDestination = destinationId
+            tabNavHandler.removeCallbacks(flushPendingTabNav)
+            tabNavHandler.postDelayed(flushPendingTabNav, tabNavBusyUntil - now)
+            return
+        }
+
+        tabNavHandler.removeCallbacks(flushPendingTabNav)
+        navigateToTabNow(destinationId)
+    }
+
     /**
      * 切换顶层 Tab：与 NavigationUI 的行为一致（singleTop + 状态保存/恢复）。
      *
      * 过渡是**横向滑动**：往右切（目标 Tab 在当前 Tab 右边）新页从右滑入，
      * 往左切则反过来 —— 方向和底栏的排列一致，观感才对得上。
      */
-    private fun navigateToTab(destinationId: Int) {
+    private fun navigateToTabNow(destinationId: Int) {
         val navController = findNavController() ?: return
         val current = navController.currentDestination?.id ?: return
         if (current == destinationId) return
@@ -418,6 +509,9 @@ class MainActivity : AppActivity() {
                 forward = forward,
             ),
         )
+
+        // 接下来一个窗口内只接纳一次切页（连点会被合并到窗口末尾执行）
+        tabNavBusyUntil = android.os.SystemClock.uptimeMillis() + tabSwitchWindowMs
     }
 
     private fun handleIntent(intent: Intent?) {
@@ -552,6 +646,8 @@ class MainActivity : AppActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        // 排队的切页任务不跟随已销毁的 Activity
+        tabNavHandler.removeCallbacks(flushPendingTabNav)
         binding = null
     }
 }

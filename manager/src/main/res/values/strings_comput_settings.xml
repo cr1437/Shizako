@@ -2,7 +2,7 @@
 <!-- 控制台设置（Comput 二级菜单）的文案 -->
 <resources>
     <string name="comput_settings">Console settings</string>
-    <string name="comput_settings_ai">Gemini explanation</string>
+    <string name="comput_settings_ai">AI explanation</string>
     <string name="comput_settings_key_note">The key is encrypted with the Android Keystore and only used for explaining commands.</string>
     <string name="comput_settings_model">Model</string>
     <string name="comput_settings_save">Save</string>

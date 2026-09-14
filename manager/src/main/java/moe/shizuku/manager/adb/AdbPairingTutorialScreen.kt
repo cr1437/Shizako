@@ -67,9 +67,9 @@ fun AdbPairingTutorialScreen(
         modifier = modifier,
         // 页面本身有横向推入动画，卡片阶梯晚 120ms 再开始，避免两层动画打架
     ) {
-        item { Box(modifier = Modifier.animateItem().itemEntrance(0)) { HeroCard(state, palette, onOpenNotificationSettings, onOpenDeveloperOptions) } }
-        item { Box(modifier = Modifier.animateItem().itemEntrance(1)) { StepsCard(palette) } }
-        item { Box(modifier = Modifier.animateItem().itemEntrance(2)) { NotesCard(state, palette, onOpenNotificationSettings) } }
+        item { Box(modifier = Modifier.itemEntrance(0)) { HeroCard(state, palette, onOpenNotificationSettings, onOpenDeveloperOptions) } }
+        item { Box(modifier = Modifier.itemEntrance(1)) { StepsCard(palette) } }
+        item { Box(modifier = Modifier.itemEntrance(2)) { NotesCard(state, palette, onOpenNotificationSettings) } }
     }
 }
 

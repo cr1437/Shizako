@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string name="lab_connectors_risk_title">安全</string>
+<string name="lab_connectors_notes_title">關於 Shizuku Connectors</string>
+<string name="lab_features_title">實驗室功能</string>
+<string name="lab_stub_title">兼容性 Stub</string>
+<string name="lab_connectors_risk_body">任何能讀到這個 Provider 的應用，都能以特權身份拉起 Shizuku 服務。不用激活器時就關掉它，用完也記得關。</string>
+<string name="lab_restore_button">恢復設置</string>
+<string name="lab_backup_summary">把全部應用設置（含實驗室開關）導出成 JSON 文件，或從文件恢復。恢復會覆蓋當前設置，重啟應用後生效。</string>
+<string name="lab_connectors_query_body">查詢返回一行一列，列名為 command。開關關閉時返回空結果而不是報錯，客戶端因此能一眼區分「沒開」和「出錯」。</string>
+<string name="lab_connectors_unsafe_title">開啟 Shizuku Connectors？</string>
+<string name="lab_stub_note_body">佔位包只有清單、沒有任何實現：它聲明的 API 權限和 Shizuku 一致，真正的權限校驗仍然由 Shizako 本體完成。安裝時依次嘗試 Shizuku 服務、root、無線 ADB 三條通道；卸載會把佔位包刪掉。</string>
+<string name="lab_connectors_unsafe_message">開啟後，本機任何應用只要查詢該 Provider，就能拿到啟動 Shizuku 服務的命令。惡意應用可能配合本地提權漏洞，在沒有你確認的情況下把服務拉起來。確認你了解風險、並且確實在使用可信的激活器應用後再繼續。</string>
+<string name="lab_connectors_what_title">它做什麼</string>
+<string name="lab_backup_title">備份與恢復</string>
+<string name="lab_stub_not_installed">未安裝</string>
+<string name="lab_connectors_uri">Provider 地址（只讀，一列，列名 command）：</string>
+<string name="lab_stub_note_title">關於兼容性 Stub</string>
+<string name="lab_stub_ok">完成（經由 %1$s）。</string>
+<string name="lab_stub_failed">失敗：%1$s</string>
+<string name="lab_backup_button">備份設置</string>
+<string name="lab_connectors_risk_accept">我已了解風險</string>
+<string name="lab_stub_summary">部分應用把原版 Shizuku 的包名（moe.shizuku.privileged.api）寫死在代碼裡，查不到就判定"沒有 Shizuku"而拒絕工作。裝一個同名佔位包，它們就能看到"Shizuku 已安裝"。</string>
+<string name="lab_stub_uninstall">卸載</string>
+<string name="lab_connectors_summary">通過本地 Provider 對外提供本應用的 Shizuku 啟動命令，讓激活器類應用在拿到臨時權限後自行拉起 Shizuku 服務。</string>
+<string name="lab_stub_install">安裝</string>
+<string name="lab_connectors_title">Shizuku Connectors</string>
+<string name="lab_stub_working">處理中…</string>
+<string name="lab_stub_installed">已安裝</string>
+<string name="lab_connectors_what_body">激活器應用查詢這個 Provider，拿到「啟動本地 Shizuku 服務」的那條 shell 命令。命令和本應用自己啟動服務時用的完全一致：內置 starter 可執行文件 + 本 APK 的路徑。</string>
+<string name="lab_connectors_query_title">怎麼讀</string>
+</resources>

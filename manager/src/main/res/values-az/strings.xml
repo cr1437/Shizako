@@ -188,7 +188,6 @@ Dəyişikliyin tətbiqi üçün Shizako-nu yenidən başlatmağınız lazım ola
     <string name="setup_disclaimer_agree">Yuxarıdakıları oxudum və razıyam</string>
     <string name="setup_language_title">Dil seçin</string>
     <string name="setup_language_subtitle">Bunu daha sonra Parametrlərdə dəyişə bilərsiniz.</string>
-    <string name="setup_mode_subtitle">Shizako-nun necə görünəcəyini seçin. Daha sonra Parametrlərdə dəyişə bilərsiniz.</string>
     <string name="setup_mode_follow_system">Sistemi izlə</string>
     <string name="setup_mode_light">Açıq</string>
     <string name="setup_mode_dark">Tünd</string>
@@ -203,5 +202,4 @@ Dəyişikliyin tətbiqi üçün Shizako-nu yenidən başlatmağınız lazım ola
     <string name="setup_back">Geri</string>
     <string name="setup_next">İrəli</string>
     <string name="setup_get_started">Başla</string>
-    <string name="setup_skip">Ötür</string>
 </resources>

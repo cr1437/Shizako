@@ -188,7 +188,6 @@ kopeeriti lõikelauale.</string>
     <string name="setup_disclaimer_agree">Olen ülaltoodule läbi lugenud ja nõustun</string>
     <string name="setup_language_title">Vali keel</string>
     <string name="setup_language_subtitle">Saad seda hiljem seadetes muuta.</string>
-    <string name="setup_mode_subtitle">Vali, kuidas Shizako välja näeb. Saad seda hiljem seadetes muuta.</string>
     <string name="setup_mode_follow_system">Järgi süsteemi</string>
     <string name="setup_mode_light">Hele</string>
     <string name="setup_mode_dark">Tume</string>
@@ -203,5 +202,4 @@ kopeeriti lõikelauale.</string>
     <string name="setup_back">Tagasi</string>
     <string name="setup_next">Edasi</string>
     <string name="setup_get_started">Alusta</string>
-    <string name="setup_skip">Jäta vahele</string>
 </resources>

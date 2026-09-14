@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- MD3 风格分段切换条底：一格「次级容器」色的胶囊；玻璃风格用 bg_glass_card。 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/segmented_indicator_md3" />
+    <corners android:radius="999dp" />
+</shape>

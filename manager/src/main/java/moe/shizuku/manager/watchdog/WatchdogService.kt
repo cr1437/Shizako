@@ -11,10 +11,15 @@ import android.os.Build
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import moe.shizuku.manager.MainActivity
 import moe.shizuku.manager.R
 import moe.shizuku.manager.ShizukuSettings
+import moe.shizuku.manager.adb.AdbStarter
 import moe.shizuku.manager.starter.ServiceStartHelper
+import moe.shizuku.manager.utils.EnvironmentUtils
 import rikka.shizuku.Shizuku
 
 /**
@@ -41,6 +46,21 @@ class WatchdogService : Service() {
         @Volatile
         var isRunning = false
             private set
+
+        /**
+         * 预期内的暂停窗口：AdbStarter 切 TCP 端口 / 重启 adbd 时，服务会短暂“死”一下。
+         * 这个时间窗里收到的 binder 死亡事件看门狗直接放过，不当崩溃处理。
+         * （照搬 Shevery 的 expectingDeath 思路，改成时间窗，避免误吞下一次真崩溃。）
+         */
+        @Volatile
+        private var expectedDeathUntilMs = 0L
+
+        fun expectDeathWindow(ms: Long = 15_000L) {
+            expectedDeathUntilMs = android.os.SystemClock.elapsedRealtime() + ms
+        }
+
+        private fun inExpectedDeathWindow(): Boolean =
+            android.os.SystemClock.elapsedRealtime() < expectedDeathUntilMs
 
         fun start(context: Context) {
             val intent = Intent(context, WatchdogService::class.java)
@@ -86,7 +106,11 @@ class WatchdogService : Service() {
         }
 
         binderDeadListener = Shizuku.OnBinderDeadListener {
-            if (wasRunning) {
+            if (inExpectedDeathWindow()) {
+                // 预期内的死亡（TCP 切换 / 重启 adbd）：就地消掉窗口，不安排重启
+                expectedDeathUntilMs = 0L
+                wasRunning = false
+            } else if (wasRunning) {
                 val now = System.currentTimeMillis()
                 if (now - lastCrashTime > CRASH_WINDOW_MS) {
                     consecutiveCrashes = 0
@@ -193,7 +217,14 @@ class WatchdogService : Service() {
                 ServiceStartHelper.startRoot()
             }
             ShizukuSettings.LaunchMethod.ADB -> {
-                if (ServiceStartHelper.canAdbAutoStart(this)) {
+                if (ShizukuSettings.isTcpMode() && EnvironmentUtils.isAdbPortLive(AdbStarter.TCP_MODE_PORT)) {
+                    // TCP 模式：本机 5555 还活着，直接连回来（不用网络、不用无线调试）——照搬 Shevery
+                    CoroutineScope(Dispatchers.IO).launch {
+                        runCatching {
+                            AdbStarter.start("127.0.0.1", AdbStarter.TCP_MODE_PORT, applicationContext)
+                        }
+                    }
+                } else if (ServiceStartHelper.canAdbAutoStart(this)) {
                     ServiceStartHelper.startAdb(this)
                 }
             }

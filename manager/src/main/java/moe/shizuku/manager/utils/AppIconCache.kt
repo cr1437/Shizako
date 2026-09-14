@@ -85,6 +85,15 @@ object AppIconCache : CoroutineScope {
         return bitmap
     }
 
+    /**
+     * 只读缓存查询（不触发加载、不解码）：命中就能立即上屏。
+     * 用于列表绑定：先查缓存，未命中再走占位加载 —— 避免每次绑定都同步全量加载图标。
+     */
+    fun peekCachedBitmap(context: Context, info: ApplicationInfo, userId: Int, viewSize: Int): Bitmap? {
+        val size = if (viewSize > 0) viewSize else context.resources.getDimensionPixelSize(R.dimen.default_app_icon_size)
+        return get(info.packageName, userId, size)
+    }
+
     @JvmStatic
     fun loadIconBitmapAsync(context: Context,
                             info: ApplicationInfo, userId: Int,

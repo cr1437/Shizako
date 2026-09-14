@@ -1,6 +1,0 @@
-int mipmap ic_launcher 0x7f010000
-int string stub_app_name 0x7f020000
-int string stub_permission_description 0x7f020001
-int string stub_permission_group_description 0x7f020002
-int string stub_permission_group_label 0x7f020003
-int string stub_permission_label 0x7f020004

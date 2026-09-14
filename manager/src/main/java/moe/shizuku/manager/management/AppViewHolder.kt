@@ -83,7 +83,14 @@ class AppViewHolder(private val binding: AppListItemBinding) : BaseViewHolder<Pa
     override fun onBind() {
         val pm = itemView.context.packageManager
         val userId = UserHandleCompat.getUserId(uid)
-        icon.setImageDrawable(ai.loadIcon(pm))
+        // 【性能】先查图标缓存：命中直接上屏，避免每次绑定都同步全量加载图标；
+        // 未命中才退回占位加载（随后异步替换为正确尺寸的位图）。
+        val cachedIcon = AppIconCache.peekCachedBitmap(context, ai, ai.uid / 100000, icon.measuredWidth)
+        if (cachedIcon != null) {
+            icon.setImageBitmap(cachedIcon)
+        } else {
+            icon.setImageDrawable(ai.loadIcon(pm))
+        }
         name.text = if (userId != UserHandleCompat.myUserId()) {
             // 其他用户的应用信息要问服务要，服务没在跑时退回普通标签
             val label = runCatching { ai.loadLabel(pm).toString() }.getOrDefault("")

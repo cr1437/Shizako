@@ -40,14 +40,16 @@ class LogsFragment : Fragment() {
         binding.toolbar.title = getString(R.string.api_log_title)
         binding.toolbar.inflateMenu(R.menu.api_log)
 
-        // 日志默认不在底栏里：从工具箱点进来时它就是普通次级页，给个返回箭头
-        // （主人在「设置 → 底部栏」把日志打开后，这里就不再显示箭头，当正常 Tab 用）
-        if (!moe.shizuku.manager.ui.nav.NavTabs.isEnabled(moe.shizuku.manager.ui.nav.NavTabs.KEY_LOGS)) {
+        // 给返回箭头的情形：从工具箱 push 进来（上一级是工具箱），或者日志没放进底栏
+        // （那时它是普通次级页）。从底栏 Tab 进来时不加箭头，当顶层页用。
+        val nav = runCatching {
+            androidx.navigation.fragment.NavHostFragment.findNavController(this)
+        }.getOrNull()
+        val fromToolbox = nav?.previousBackStackEntry?.destination?.id ==
+            moe.shizuku.manager.R.id.toolbox_fragment
+        if (fromToolbox || !moe.shizuku.manager.ui.nav.NavTabs.isEnabled(moe.shizuku.manager.ui.nav.NavTabs.KEY_LOGS)) {
             binding.toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
-            binding.toolbar.setNavigationOnClickListener {
-                androidx.navigation.fragment.NavHostFragment.findNavController(this@LogsFragment)
-                    .navigateUp()
-            }
+            binding.toolbar.setNavigationOnClickListener { nav?.navigateUp() }
         }
 
         binding.toolbar.setOnMenuItemClickListener { item ->

@@ -2,9 +2,9 @@
 <resources>
     <color name="notification">#A63B51</color>
 
-    <!-- KernelSU Sakura 粉色系（种子 #FF9CA8 的 tone-40 / tone-80） -->
-    <color name="app_color_light">#A63B51</color>
-    <color name="app_color_dark">#FFB3BF</color>
+    <!-- 「appColorPrimary」颜色别名已移到 res/color/（app_color_light / app_color_dark）：
+         跟随应用色板 ?colorPrimary —— 动态取色 / 主题色 / 深浅色都会一起变，
+         不再写死 Sakura 红（#A63B51 / #FFB3BF）。 -->
 
     <!-- Real-time frosted app bar overlay (BlurView). Slightly more solid
          than the content area's ~70% white wallpaper mask so the bar reads
@@ -48,4 +48,11 @@
     <color name="appbar_scrim_top">#00000000</color>
     <!-- 顶部标题文字：纯白 + 阴影 -->
     <color name="appbar_title">#FFFFFFFF</color>
+    <!-- 分段切换条（应用页两个 Tab）：指示器 = 选中那一格的胶囊底；未选中文字单独一档灰 -->
+    <color name="segmented_indicator_md3">#1F000000</color>
+    <color name="segmented_indicator_glass">#14000000</color>
+    <color name="segmented_tab_text">#99000000</color>
+    <color name="segmented_tab_selected">#CC000000</color>
+    <!-- 玻璃风格下的强调按钮底：比卡片再亮一档 -->
+    <color name="glass_button_fill">#1F000000</color>
 </resources>

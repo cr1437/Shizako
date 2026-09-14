@@ -133,12 +133,12 @@ export ANDROID_HOME=/opt/android-sdk
 cd /data/user/work/shizako/Shizako-KernelSU-UI
 /opt/gradle-8.14/bin/gradle :manager:assembleDebug --console=plain
 
-# 产物：manager/build/outputs/apk/debug/shizako-vzako2.12-debug.apk
+# 产物：manager/build/outputs/apk/debug/shizako-zako3.01-debug.apk
 ```
 
 ### 构建相关注意事项
 
-- `versionCode` 由 `git rev-list --count HEAD` 生成（当前 = 3），`versionName = zako2.12`。改代码后记得 `git commit`，versionCode 才会涨。
+- `versionCode` 由 `git rev-list --count HEAD` 生成（当前 = 3），`versionName = zako3.01`。改代码后记得 `git commit`，versionCode 才会涨。
 - **签名**：无 `signing.properties`，走 debug 自动签名。每个新沙箱的 debug 密钥都不同 → 用户安装新包前**必须先卸载旧版**（签名冲突），应用数据会重置。
 - 原生代码（`manager/src/main/jni`）用 CMake 编 4 个 ABI，NDK 版本不对会直接配置失败。
 - 验证 APK 无某资源：`unzip -p app.apk resources.arsc | strings | grep nav_fab`。

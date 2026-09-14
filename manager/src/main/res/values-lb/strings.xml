@@ -187,7 +187,6 @@ ass an d\'Tëschespäicher kopéiert ginn.</string>
     <string name="setup_disclaimer_agree">Ech hunn dat uewen gelies an averstan</string>
     <string name="setup_language_title">Sprooch wielen</string>
     <string name="setup_language_subtitle">Dir kënnt dat méi spéit an den Astellungen änneren.</string>
-    <string name="setup_mode_subtitle">Wielt, wéi Shizako ausgesäit. Dir kënnt dat méi spéit an den Astellungen änneren.</string>
     <string name="setup_mode_follow_system">Dem System follegen</string>
     <string name="setup_mode_light">Hell</string>
     <string name="setup_mode_dark">Däischter</string>
@@ -202,5 +201,4 @@ ass an d\'Tëschespäicher kopéiert ginn.</string>
     <string name="setup_back">Zréck</string>
     <string name="setup_next">Weider</string>
     <string name="setup_get_started">Ufänken</string>
-    <string name="setup_skip">Iwwersprangen</string>
 </resources>

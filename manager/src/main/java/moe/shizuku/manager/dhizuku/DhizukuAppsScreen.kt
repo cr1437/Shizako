@@ -74,7 +74,7 @@ fun DhizukuAppsScreen(
 ) {
     HintPage(listState = listState, onCollapsedChange = onCollapsedChange) {
         item {
-            Box(modifier = Modifier.animateItem().itemEntrance(0)) {
+            Box(modifier = Modifier.itemEntrance(0)) {
                 HintNote(
                     palette = palette,
                     iconRes = R.drawable.ic_dhizuku_24dp,
@@ -89,7 +89,7 @@ fun DhizukuAppsScreen(
 
         if (!deviceOwner) {
             item {
-                Box(modifier = Modifier.animateItem().itemEntrance(1)) {
+                Box(modifier = Modifier.itemEntrance(1)) {
                     HintCard(palette = palette) {
                         HintPrimaryButton(
                             palette = palette,
@@ -111,7 +111,7 @@ fun DhizukuAppsScreen(
         }
 
         item {
-            Box(modifier = Modifier.animateItem().itemEntrance(2)) {
+            Box(modifier = Modifier.itemEntrance(2)) {
                 HintSectionTitle(
                     palette = palette,
                     text = stringResource(R.string.dhizuku_manage_title),
@@ -121,7 +121,7 @@ fun DhizukuAppsScreen(
 
         if (apps.isEmpty()) {
             item {
-                Box(modifier = Modifier.animateItem().itemEntrance(2)) {
+                Box(modifier = Modifier.itemEntrance(2)) {
                     HintCard(palette = palette) {
                         Text(
                             text = stringResource(R.string.dhizuku_manage_empty),
@@ -138,7 +138,7 @@ fun DhizukuAppsScreen(
             }
         } else {
             items(apps, key = { it.uid }) { app ->
-                Box(modifier = Modifier.animateItem().itemEntrance(3)) {
+                Box(modifier = Modifier.itemEntrance(3)) {
                     HintCard(palette = palette) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             DhizukuIcon(app)
@@ -168,7 +168,7 @@ fun DhizukuAppsScreen(
         }
 
         item {
-            Box(modifier = Modifier.animateItem().itemEntrance(4)) {
+            Box(modifier = Modifier.itemEntrance(4)) {
                 HintCard(palette = palette) {
                     HintSectionTitle(
                         palette = palette,

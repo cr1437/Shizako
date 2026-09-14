@@ -130,7 +130,16 @@ Note, do not disable \"Developer options\" or \"USB debugging\", or Shizako will
     <string name="download_how_title">How to use</string>
     <string name="download_how_body">Install the app, open it and grant Shizako permission when it asks (the request shows up in Shizako\'s own list). Nothing is injected or authorized from this page.</string>
     <string name="settings_recommended_apps">Recommended apps</string>
-    <string name="settings_group_apps">Apps</string>    <string name="settings_recommended_apps_summary">Common apps that work with Shizako — download them in your browser</string>
+    <string name="settings_group_apps">Apps</string>
+    <!-- Star the project -->
+    <string name="star_prompt_title">Give Shizako a star?</string>
+    <string name="star_prompt_message">If she has been useful to you, a star on GitHub is the biggest encouragement — it also helps other tinkerers find her.\n\nTap "Never" and we will not ask again.</string>
+    <string name="star_prompt_go">Star it</string>
+    <string name="star_prompt_later">Later</string>
+    <string name="star_prompt_never">Never</string>
+    <string name="star_no_browser">No browser available — the project URL was copied.</string>
+    <string name="about_star">Star the project</string>
+    <string name="about_star_summary">Give Shizako a star on GitHub</string>    <string name="settings_recommended_apps_summary">Common apps that work with Shizako — download them in your browser</string>
     <string name="download_app_brevent">Brevent</string>
     <string name="download_app_brevent_desc">Prevent background apps from running without root.</string>
     <string name="download_app_stopapp">Stopapp</string>
@@ -180,6 +189,9 @@ The export function uses SAF (Storage Access Framework). It's reported that MIUI
     <!-- Settings -->
     <string name="settings_title">Settings</string>
     <string name="settings_language">Language</string>
+    <!-- 语言列表里中文这两种写全（不写 zh-CN / zh-TW）；两种文字里写法相同，所以不参与翻译 -->
+    <string name="language_zh_hans" translatable="false">简体中文</string>
+    <string name="language_zh_hant" translatable="false">繁體中文</string>
     <string name="settings_user_interface">Appearance</string>
     <string name="settings_black_night_theme">Black night theme</string>
     <string name="settings_black_night_theme_summary">Use the pure black theme if night mode is enabled</string>
@@ -203,50 +215,100 @@ The export function uses SAF (Storage Access Framework). It's reported that MIUI
     <string name="setup_disclaimer_title">Disclaimer</string>
     <string name="setup_disclaimer_text"><![CDATA[<b>1. Provided "as is"</b><p>Shizako is provided "as is", without warranty of any kind, express or implied, including but not limited to merchantability and fitness for a particular purpose. The developer is not responsible for any device damage, data loss, or system malfunction resulting from using this app or granting apps access to Shizako.</p><p><b>2. It grants real privilege</b><p>Shizako runs a privileged service on your device (shell / root identity), or makes Shizako itself the Device Owner. Authorized apps gain near-system capabilities: freezing or uninstalling apps, changing system settings, reading/writing protected data. Only authorize apps you trust, and check where they come from.</p><p><b>3. Device Owner side effects</b><p>After activating Device Owner: Shizako cannot be uninstalled or downgraded until the Device Owner role is removed; only one Device Owner can exist per device; activation requires no accounts or secondary users (accounts can be restored afterwards).</p><p><b>4. Root risks</b><p>If you start Shizako with root, the risks of rooting itself (system integrity, warranty, malware abuse) are yours to bear.</p><p><b>5. Third-party behavior</b><p>Actions performed by third-party apps through Shizako, and their consequences, are between you and those apps. Shizako only provides the channel.</p><p><b>6. License</b><p>Apache License 2.0, based on RikkaApps/Shizuku. Use at your own risk — you can stop using Shizako at any time.</p>]]></string>
     <string name="setup_disclaimer_agree">I have read and agree to the above</string>
-    <string name="setup_disclaimer_agree_countdown">I have read and agree to the above (%1$d s)</string>
     <string name="setup_language_title">Choose language</string>
     <string name="setup_language_subtitle">You can change this later in Settings.</string>
-    <string name="setup_mode_subtitle">Choose how Shizako looks. You can change this later in Settings.</string>
     <string name="setup_mode_follow_system">Follow system</string>
     <string name="setup_mode_light">Light</string>
     <string name="setup_mode_dark">Dark</string>
+
+    <!-- ══════════ 引导（首次启动，8 步，不给跳过）══════════ -->
+    <string name="setup_welcome_detail">1 · Read the disclaimer and agree\n2 · Pick language and looks\n3 · Choose a way to activate\n4 · Wake her up right here\n5 · Done — everything can be changed later in Settings\n\nNothing is uploaded, no account needed. Every permission is granted by you, personally.</string>
+    <string name="setup_welcome_feat_title">What she can do for you</string>
+    <string name="setup_welcome_feat_apps">App management</string>
+    <string name="setup_welcome_feat_apps_desc">Grant, freeze, uninstall — or let her become the Device Owner and watch over apps for you.</string>
+    <string name="setup_welcome_feat_system">System tuning</string>
+    <string name="setup_welcome_feat_system_desc">Secure settings, wireless debugging, developer options… only touched when an app asks and you agree.</string>
+    <string name="setup_welcome_feat_auto">Automation &amp; tools</string>
+    <string name="setup_welcome_feat_auto_desc">Share the privilege with Tasker and friends; modules, console and the accessibility manager live in the Toolbox.</string>
+    <string name="setup_disclaimer_hint">The checkbox below unlocks after %1$d s — read it, it really matters.</string>
+    <string name="setup_language_detail">Shizako ships with 50 languages. The list shows your system language first; tap any row to apply it instantly.</string>
+    <string name="setup_appearance_title">Pick your look</string>
+    <string name="setup_appearance_subtitle">Two styles, one tap apart. You can switch anytime.</string>
+    <string name="setup_appearance_detail">Liquid Glass puts wallpaper and blur behind frosted cards — pretty, and a bit heavier on the GPU. Material 3 is the sober, lighter one.</string>
+    <string name="setup_style_md3_summary">Standard Material look, lightest on the GPU</string>
+    <string name="setup_style_glass_summary">Frosted cards over your wallpaper</string>
+    <string name="setup_dark_title">Dark mode</string>
+    <string name="setup_dark_subtitle">Follow the system, or pin it. Only affects the app.</string>
+    <string name="setup_dark_detail">Pick how Shizako behaves at night. If you choose dark, an extra option for a pure-black night theme shows up right here.</string>
+    <string name="setup_step_counter_hint">Step %1$d of %2$d</string>
     <string name="setup_start_method_title">Activation method</string>
-    <string name="setup_start_method_subtitle">Pick how you plan to start Shizako. The home page will show that method first.</string>
+    <string name="setup_start_method_subtitle">Pick the route that suits you now — the next step follows it. You can switch anytime later.</string>
     <string name="setup_start_method_wadb">Wireless debugging</string>
-    <string name="setup_start_method_wadb_summary">On Android 11 or above, no computer needed</string>
+    <string name="setup_start_method_wadb_summary">Android 11+ · no computer needed</string>
+    <string name="setup_start_method_wadb_detail">Pair once in Developer options → Wireless debugging, then Shizako can start herself from this phone. Pairing is lost after a reboot — pair again, or use root.</string>
     <string name="setup_start_method_root">Root</string>
-    <string name="setup_start_method_root_summary">For rooted devices, one tap to start</string>
+    <string name="setup_start_method_root_summary">Rooted device · one tap, survives reboots</string>
+    <string name="setup_start_method_root_detail">The cleanest path: Shizako starts as root, so she also survives reboots and can write into apps\' private directories when deploying rish.</string>
     <string name="setup_start_method_adb">Connect to a computer</string>
-    <string name="setup_start_method_adb_summary">Use adb over USB, repeat after each reboot</string>
+    <string name="setup_start_method_adb_summary">USB + adb · repeat after each reboot</string>
+    <string name="setup_method_note">No worries about the choice: every other method stays available, and the Dhizuku Device Owner mode can be activated in the next step too.</string>
+    <string name="setup_start_method_adb_detail">No root and no Android 11? Plug into a computer and run the command once per reboot. The exact command is shown in the next step.</string>
     <string name="setup_back">Back</string>
     <string name="setup_next">Next</string>
     <string name="setup_get_started">Get started</string>
-    <string name="setup_skip">Skip</string>
 
     <!-- Setup: activation step (real actions) -->
-    <string name="setup_skip_activation">Skip activation</string>
     <string name="setup_activate_title">Wake her up</string>
-    <string name="setup_activate_subtitle">Start the Shizako service right here with the method you picked. You can skip this and do it later from the home page.</string>
+    <string name="setup_activate_subtitle">Wake her up right here with the method you just picked — finishing this step unlocks the whole app.</string>
     <string name="setup_activate_not_running">Service not running yet</string>
     <string name="setup_activate_running">Service is running — she is awake!</string>
     <string name="setup_activate_hint">After starting, apps can ask Shizako for permission. You approve every app yourself and can revoke anytime.</string>
     <string name="setup_activate_hint_done">All set. Continue to finish, or activate Device Owner mode below for Dhizuku apps.</string>
-    <string name="setup_activate_start">Start via computer (ADB)</string>
     <string name="setup_activate_start_root">Start with root</string>
     <string name="setup_activate_start_wadb">Start via wireless debugging</string>
     <string name="setup_activate_view_command">View command</string>
     <string name="setup_activate_started">Started</string>
     <string name="setup_activate_failed">Failed to start</string>
-    <string name="setup_activate_wadb_unavailable">Wireless debugging is not ready yet. Pair it on the home page first.</string>
+    <string name="setup_activate_root_hint">A reboot stops the service: open the app and wake her once more, or enable "Start on boot" in Settings.</string>
+    <string name="setup_activate_adb_hint">Run it once on the computer; repeat after every reboot.</string>
+
+    <!-- Update welcome (shown once after an update; fresh installs never see it) -->
+    <string name="update_welcome_title">Welcome back</string>
+    <string name="update_welcome_subtitle">Shizako is updated. Here is a quick look at what’s new.</string>
+    <string name="update_welcome_badge">Updated to %1$s</string>
+    <string name="update_welcome_highlights_title">What’s new</string>
+    <string name="update_welcome_h1_t">Polished look &amp; motion</string>
+    <string name="update_welcome_h1_b">Glass / Material 3 styles feel more consistent; scrolling and transitions are smoother.</string>
+    <string name="update_welcome_h2_t">Performance &amp; stability</string>
+    <string name="update_welcome_h2_b">Faster lists and cold starts; the background service got more reliable.</string>
+    <string name="update_welcome_h3_t">Easier activation</string>
+    <string name="update_welcome_h3_b">Wireless debugging pairing, Root and Dhizuku — all in one place.</string>
+    <string name="update_welcome_h4_t">And a lot more</string>
+    <string name="update_welcome_h4_b">Toolbox, accessibility manager, API logs… take your time.</string>
+    <string name="update_welcome_action">Get started</string>
     <string name="setup_activate_dhizuku">Activate Device Owner (Dhizuku)</string>
     <string name="setup_activate_dhizuku_running">Activating…</string>
     <string name="setup_activate_dhizuku_success">Device Owner mode activated</string>
     <string name="setup_activate_dhizuku_failed">Device Owner activation failed</string>
     <string name="setup_activate_dhizuku_not_running">Start the Shizaku service first</string>
+    <string name="setup_wadb_paired">Already paired — just start her. This keeps working after reboots.</string>
+    <string name="setup_wadb_unpaired">Not paired with this computer yet: walk through the three steps below once, and she can start herself after every reboot.</string>
+    <string name="setup_wadb_step_open_t">Turn on wireless debugging</string>
+    <string name="setup_wadb_step_open_b">Developer options → Wireless debugging — flip the switch on (keep this screen open).</string>
+    <string name="setup_wadb_step_code_t">Start pairing</string>
+    <string name="setup_wadb_step_code_b">Tap "Pair device with pairing code" — the system shows a six-digit code.</string>
+    <string name="setup_wadb_step_input_t">Type it in the notification</string>
+    <string name="setup_wadb_step_input_b">Pull down the notification shade and enter the code in the Shizako notification; the service starts automatically once paired.</string>
+    <string name="setup_wadb_action_pair">Start pairing</string>
+    <string name="setup_wadb_action_open_dev">Open developer options</string>
+    <string name="setup_wadb_need_notification">Pairing needs notification permission — please allow Shizako to send you one notification.</string>
+    <string name="setup_wadb_pairing_started">Pairing service is ready: enter the code in the notification (step 3).</string>
+    <string name="setup_activate_detail">Starting her is the only step that needs the outside world: root, wireless debugging, or a computer. Everything after this is just tapping Allow when an app asks.</string>
 
     <!-- Setup: finish step -->
     <string name="setup_finish_title">Everything is ready</string>
-    <string name="setup_finish_summary">Start method: %1$s\nService: %2$s</string>
+    <string name="setup_finish_summary">Start method: %1$s\nService: %2$s\nDevice Owner: %3$s</string>
+    <string name="setup_finish_detail">That is everything. Four things worth knowing now:\n\n1 · Authorize apps one by one — nothing gets privilege without your tap.\n2 · A reboot stops the service: open the app and wake her again (Device Owner mode survives reboots).\n3 · Everything you picked lives in Settings: looks, bottom bar, automation…\n4 · There is also a Toolbox: modules, console, accessibility manager and lab features.</string>
 
     <!-- Home: one-stop activation hub -->
     <string name="home_activation_hub_title">Activation</string>
@@ -513,7 +575,10 @@ The export function uses SAF (Storage Access Framework). It's reported that MIUI
     <string name="terminal_deploy_success">Deployed to %1$s</string>
     <string name="terminal_deploy_hint_termux">Open Termux and run %1$s</string>
     <string name="terminal_deploy_hint_path">Run %1$s in any terminal app</string>
+    <string name="terminal_deploy_hint_shell">The service is running as adb (shell), so rish can only live in %1$s. Start the service with root to install it into Termux\'s PATH.</string>
     <string name="terminal_deploy_failed">Deploy failed: %1$s</string>
+    <string name="terminal_copy_command">Copy the command</string>
+    <string name="terminal_copy_command_done">Command copied — paste it into your terminal</string>
     <string name="terminal_open_docs">rish documentation</string>
     <string name="terminal_section_manual">Manual setup</string>
     <string name="terminal_step_export_title">Export the two files</string>
@@ -640,4 +705,13 @@ The export function uses SAF (Storage Access Framework). It's reported that MIUI
     <string name="about_bilibili_link" translatable="false">https://b23.tv/hHJCSje</string>
     <string name="about_open_link">Open profile</string>
     <string name="about_github_link" translatable="false">https://github.com/cr1437</string>
+
+    <!-- 持久 TCP 模式（照搬 Shevery） -->
+    <string name="settings_tcp_mode">Persistent TCP Mode</string>
+    <string name="settings_tcp_mode_summary">Bind ADB to local TCP port 5555 so Shizako can reconnect directly — even offline or after Wireless Debugging is turned off — until reboot.</string>
+    <string name="tcp_prompt_dialog_title">Enable Persistent TCP Mode?</string>
+    <string name="tcp_prompt_dialog_message">Shizako is running, but Persistent TCP Mode is currently off.\n\nEnabling it binds ADB to local TCP port 5555, allowing Shizako to stay running and auto-reconnect in the background — even without Wi-Fi — until your device is restarted.</string>
+    <string name="tcp_prompt_dialog_enable">Enable</string>
+    <string name="tcp_prompt_dialog_later">Not Now</string>
+    <string name="tcp_prompt_dialog_do_not_remind">Don’t remind me again</string>
 </resources>

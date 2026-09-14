@@ -189,7 +189,6 @@ kopirano je u međuspremnik.</string>
     <string name="setup_disclaimer_agree">Pročitao/la sam i prihvaćam gore navedeno</string>
     <string name="setup_language_title">Odaberite jezik</string>
     <string name="setup_language_subtitle">Kasnije ga možete promijeniti u postavkama.</string>
-    <string name="setup_mode_subtitle">Odaberite kako će Shizako izgledati. Kasnije možete promijeniti u postavkama.</string>
     <string name="setup_mode_follow_system">Prema sustavu</string>
     <string name="setup_mode_light">Svijetlo</string>
     <string name="setup_mode_dark">Tamno</string>
@@ -204,5 +203,4 @@ kopirano je u međuspremnik.</string>
     <string name="setup_back">Natrag</string>
     <string name="setup_next">Dalje</string>
     <string name="setup_get_started">Započni</string>
-    <string name="setup_skip">Preskoči</string>
 </resources>

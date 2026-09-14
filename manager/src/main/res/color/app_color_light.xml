@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- appColorPrimary 别名（浅色主题使用）：跟随应用色板 ?colorPrimary，
+     和底栏 pill / 图标着色同一个主题色。之前写死 #A63B51（Sakura 红），
+     开启动态取色后系统强调色是蓝色，这些引用处会"独树一帜"地发红
+     —— 首页「开始激活」按钮的红字就是这么来的。 -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="?colorPrimary" />
+</selector>

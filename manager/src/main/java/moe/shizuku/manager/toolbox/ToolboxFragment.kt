@@ -60,6 +60,9 @@ class ToolboxFragment : Fragment() {
 
     private var page by mutableStateOf(ToolboxPage.MAIN)
 
+    /** 大标题当前是不是展开的（去重：状态没变就不再动画，防止滚动中反复 setExpanded） */
+    private var appBarExpanded = true
+
     /** 每页各记滚动位置：进工具页从顶部开始，返回入口列表还在原来的位置 */
     private val pageListStates = mutableMapOf<ToolboxPage, LazyListState>()
 
@@ -106,11 +109,10 @@ class ToolboxFragment : Fragment() {
             AnimatedContent(
                 targetState = page,
                 transitionSpec = {
-                    val dir = if (targetState.ordinal > initialState.ordinal) 1 else -1
-                    (slideInHorizontally(animationSpec = tween(240)) { w -> dir * w / 4 } +
-                        fadeIn(animationSpec = tween(180))) togetherWith
-                        (slideOutHorizontally(animationSpec = tween(200)) { w -> -dir * w / 4 } +
-                            fadeOut(animationSpec = tween(140)))
+                    // 转场参数全应用统一（PageMotion）：设置二级页 / 底栏 Tab / 次级页同一组数字
+                    moe.shizuku.manager.ui.motion.PageMotion.slideSpec(
+                        targetState.ordinal > initialState.ordinal,
+                    )
                 },
                 label = "toolboxPage",
             ) { target ->
@@ -119,9 +121,12 @@ class ToolboxFragment : Fragment() {
                 // 从工具页退回入口列表时，工具页滚过的 index 落到列表的条目数之外，
                 // 列表就「卡住、滑不动」（之前的版本就是这么写错的）。
                 val pageListState = pageListStates.getOrPut(target) { LazyListState() }
-                // 同一时刻只让当前页驱动大标题折叠，避免两页同时 setExpanded 把 AppBarLayout 顶错位
+                // 同一时刻只让当前页驱动大标题折叠，避免两页同时 setExpanded 把 AppBarLayout 顶错位；
+                // 【性能】同时做「状态没变就不动画」的去重（和设置页同一处修复）——滚动中反复
+                // setExpanded 会让 AppBar 偏移与内容对不上，滚动发涩就来自这类来回拉扯。
                 val pageCollapsedChange: (Boolean) -> Unit = { expanded ->
-                    if (target == page) {
+                    if (target == page && expanded != appBarExpanded) {
+                        appBarExpanded = expanded
                         shell?.appBar?.setExpanded(expanded, true)
                     }
                 }
@@ -279,19 +284,21 @@ class ToolboxFragment : Fragment() {
                     R.string.settings_recommended_apps_summary) { openDestination(R.id.apps_download_fragment) },
                 entry(R.drawable.ic_dhizuku_24dp, R.string.activation_method_dhizuku,
                     R.string.toolbox_summary_dhizuku) {
-                    // Dhizuku 的授权管理在「被调教的小可爱们」栏的第二页
-                    openTab(MainActivity.TAB_APPS)
-                    Toast.makeText(requireContext(), R.string.dhizuku_in_apps_tab, Toast.LENGTH_SHORT).show()
+                    // Dhizuku 的授权管理在「被调教的小可爱们」的第二页 —— 同样按次级页 push
+                    openDestination(R.id.apps_fragment)
                 },
             ),
         ),
         ToolboxGroup(
             titleRes = R.string.toolbox_group_more,
             items = listOf(
+                // 这两个本身也是底栏 Tab：从工具箱进来按**次级页 push**（转场和其他入口一致、
+                // 返回回工具箱），而不是切 Tab（切 Tab 是 popUpTo+restoreState，没有转场动画，
+                // 返回也不会回到工具箱 —— 主人反馈"打开/返回动画和其他不同"就是这个原因）
                 entry(R.drawable.ic_outline_apps_24, R.string.home_app_management_title,
-                    R.string.toolbox_summary_apps) { openTab(MainActivity.TAB_APPS) },
+                    R.string.toolbox_summary_apps) { openDestination(R.id.apps_fragment) },
                 entry(R.drawable.ic_outline_settings_24, R.string.settings_title,
-                    R.string.toolbox_summary_settings) { openTab(MainActivity.TAB_SETTINGS) },
+                    R.string.toolbox_summary_settings) { openDestination(R.id.settings_fragment) },
             ),
         ),
     )

@@ -15,6 +15,9 @@ import static rikka.shizuku.server.ServerConstants.MANAGER_APPLICATION_ID;
 import static rikka.shizuku.server.ServerConstants.PERMISSION;
 import static rikka.shizuku.server.ServerConstants.PERMISSION_UPSTREAM_API;
 
+import android.app.ActivityOptions;
+import android.app.ActivityThread;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.IContentProvider;
 import android.content.Intent;
@@ -24,6 +27,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.UserInfo;
 import android.ddm.DdmHandleAppName;
 import android.os.Binder;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -196,8 +200,18 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
     private static final long AUDIT_LOG_MAX_BYTES = 512L * 1024L;
 
     /** 限流去重：同 uid+func 的调用 1 秒内只记一次，防止高频 API 刷爆日志 */
-    private static String lastAuditKey = null;
+    private static int lastAuditUid = Integer.MIN_VALUE;
+    private static String lastAuditFunc = null;
     private static long lastAuditTime = 0L;
+
+    // 【性能】审计在「每一笔特权调用」的检查路径上（transactRemote 也走这里），写入端必须省：
+    // - 时间戳格式化器只建一次（synchronized 复用），不再每次 new SimpleDateFormat；
+    // - 保持一个追加中的 FileOutputStream + 内存字节计数，不再每条 open/write/close；
+    // - 轮转只在内存计数超过阈值时做，不再每条都 stat 文件长度。
+    private static final java.text.SimpleDateFormat AUDIT_STAMP =
+            new java.text.SimpleDateFormat("MM-dd HH:mm:ss", java.util.Locale.US);
+    private static java.io.FileOutputStream auditOut = null;
+    private static long auditWritten = -1L;
 
     /**
      * 每次特权 API 调用审计：时间,uid,pid,func,allowed。
@@ -213,25 +227,53 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
                 return; // 用户在设置里关掉了日志
             }
             long now = System.currentTimeMillis();
-            String key = uid + ":" + func;
-            if (key.equals(lastAuditKey) && now - lastAuditTime < 1000L) {
-                return; // 1 秒内同 uid 同 API 去重
-            }
-            lastAuditKey = key;
-            lastAuditTime = now;
 
-            java.io.File file = new java.io.File(AUDIT_LOG_PATH);
-            if (file.length() > AUDIT_LOG_MAX_BYTES) {
-                // 轮转：旧文件挪走，只保留一份
-                java.io.File old = new java.io.File(AUDIT_LOG_PATH + ".old");
-                if (old.exists()) old.delete();
-                file.renameTo(old);
-            }
-            String stamp = new java.text.SimpleDateFormat("MM-dd HH:mm:ss", java.util.Locale.US)
-                    .format(new java.util.Date());
-            String line = stamp + "," + uid + "," + pid + "," + func + "," + (allowed ? "allow" : "deny") + "\n";
-            try (java.io.FileOutputStream fos = new java.io.FileOutputStream(file, true)) {
-                fos.write(line.getBytes(java.nio.charset.StandardCharsets.UTF_8));
+            synchronized (ShizukuService.class) {
+                // 1 秒内同 uid 同 API 去重（不再为去重拼 key 字符串）
+                if (uid == lastAuditUid && lastAuditFunc != null && lastAuditFunc.equals(func)
+                        && now - lastAuditTime < 1000L) {
+                    return;
+                }
+                lastAuditUid = uid;
+                lastAuditFunc = func;
+                lastAuditTime = now;
+
+                String stamp;
+                synchronized (AUDIT_STAMP) {
+                    stamp = AUDIT_STAMP.format(new java.util.Date(now));
+                }
+                String line = stamp + "," + uid + "," + pid + "," + func + "," + (allowed ? "allow" : "deny") + "\n";
+                byte[] bytes = line.getBytes(java.nio.charset.StandardCharsets.UTF_8);
+
+                try {
+                    java.io.File file = new java.io.File(AUDIT_LOG_PATH);
+                    long diskLen = file.exists() ? file.length() : 0L;
+                    if (auditOut == null || diskLen != auditWritten) {
+                        // 第一次 / 外部「清空日志」删除或截断了文件：以磁盘为准重开，
+                        // 否则追加偏移会落在旧位置（出现空洞 / 写进已删除的 inode）。
+                        try { if (auditOut != null) auditOut.close(); } catch (Throwable ignored) { }
+                        auditWritten = diskLen;
+                        auditOut = new java.io.FileOutputStream(file, true);
+                    }
+                    if (auditWritten > AUDIT_LOG_MAX_BYTES) {
+                        // 轮转：旧文件挪走，只保留一份
+                        try { auditOut.close(); } catch (Throwable ignored) { }
+                        auditOut = null;
+                        java.io.File old = new java.io.File(AUDIT_LOG_PATH + ".old");
+                        if (old.exists()) old.delete();
+                        file.renameTo(old);
+                        auditOut = new java.io.FileOutputStream(file, true);
+                        auditWritten = 0L;
+                    }
+                    auditOut.write(bytes);
+                    auditOut.flush();
+                    auditWritten += bytes.length;
+                } catch (Throwable t) {
+                    // 写失败（磁盘满 / 权限变动）：关掉流，下一笔再重试
+                    try { if (auditOut != null) auditOut.close(); } catch (Throwable ignored) { }
+                    auditOut = null;
+                    auditWritten = -1L;
+                }
             }
         } catch (Throwable ignored) {
             // 审计失败不影响主流程
@@ -346,7 +388,30 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
                 .putExtra("pid", callingPid)
                 .putExtra("requestCode", requestCode)
                 .putExtra("applicationInfo", ai);
-        ActivityManagerApis.startActivityNoThrow(intent, null, isWorkProfileUser ? 0 : userId);
+        int userIdToUse = isWorkProfileUser ? 0 : userId;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            // Android 14+ 收紧了后台启动 Activity（BAL）：服务进程直接 startActivity 会被系统
+            // 静默丢掉 —— 用户在终端里敲 rish 只会看到 “Request timeout”，连授权弹窗都不会出现。
+            // 用 PendingIntent + BACKGROUND_ACTIVITY_START_ALLOWED 发送，等同于用户自己点的行为。
+            try {
+                Context systemContext = ActivityThread.currentActivityThread().getSystemContext();
+                PendingIntent pendingIntent = PendingIntent.getActivity(
+                        systemContext,
+                        requestCode,
+                        intent,
+                        PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+                if (pendingIntent != null) {
+                    ActivityOptions options = ActivityOptions.makeBasic();
+                    options.setPendingIntentBackgroundActivityStartMode(
+                            ActivityOptions.MODE_BACKGROUND_ACTIVITY_START_ALLOWED);
+                    pendingIntent.send(null, 0, null, null, null, null, options.toBundle());
+                    return;
+                }
+            } catch (Throwable e) {
+                LOGGER.w(e, "showPermissionConfirmation: pending intent path failed, fallback to startActivity");
+            }
+        }
+        ActivityManagerApis.startActivityNoThrow(intent, null, userIdToUse);
     }
 
     @Override

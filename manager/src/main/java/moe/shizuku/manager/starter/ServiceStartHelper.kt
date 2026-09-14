@@ -4,18 +4,23 @@ import android.Manifest.permission.WRITE_SECURE_SETTINGS
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.provider.Settings
+import android.widget.Toast
 import com.topjohnwu.superuser.Shell
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withTimeout
+import moe.shizuku.manager.R
 import moe.shizuku.manager.ShizukuSettings
-import moe.shizuku.manager.adb.AdbClient
-import moe.shizuku.manager.adb.AdbKey
+import moe.shizuku.manager.adb.AdbAuthPendingException
 import moe.shizuku.manager.adb.AdbMdns
-import moe.shizuku.manager.adb.PreferenceAdbKeyStore
-import java.util.concurrent.CountDownLatch
-import java.util.concurrent.TimeUnit
+import moe.shizuku.manager.adb.AdbStarter
+import moe.shizuku.manager.utils.EnvironmentUtils
 
 /**
  * Shared service start logic, used by both [moe.shizuku.manager.receiver.BootCompleteReceiver]
@@ -58,8 +63,12 @@ object ServiceStartHelper {
     }
 
     /**
-     * Enable wireless debugging, discover the local ADB port via mDNS and
-     * start the service through it, asynchronously.
+     * Start the service through ADB, asynchronously.
+     *
+     * 顺序（照搬 Shevery 的 TCP 模式设计）：
+     * 1. TCP 模式且 5555 还活着 → 直接本机连上，不需要任何网络；
+     * 2. 尽力打开无线调试（需要 [canAdbAutoStart]），等 mDNS 报出端口；
+     * 3. 交给 [AdbStarter] 连接启动 —— TCP 模式下会顺手切到 5555 并关掉无线调试。
      *
      * No-op below Android 13; callers should check [canAdbAutoStart] first.
      *
@@ -73,39 +82,69 @@ object ServiceStartHelper {
             return
         }
 
-        val cr = context.contentResolver
-        // 自动开无线调试需要 WRITE_SECURE_SETTINGS；没有权限时不要写系统设置
-        // （配对流程里无线调试本来就是开着的，直接连就行）
-        if (canAdbAutoStart(context)) {
-            runCatching {
-                Settings.Global.putInt(cr, "adb_wifi_enabled", 1)
-                Settings.Global.putInt(cr, Settings.Global.ADB_ENABLED, 1)
-                Settings.Global.putLong(cr, "adb_allowed_connection_time", 0L)
-            }
-        }
-
+        val appContext = context.applicationContext
+        val cr = appContext.contentResolver
         CoroutineScope(Dispatchers.IO).launch {
-            val latch = CountDownLatch(1)
-            val adbMdns = AdbMdns(context, AdbMdns.TLS_CONNECT) { port ->
-                if (port > 0) {
+            try {
+                // ① TCP 模式且 5555 还活着：直接本机连上——断网也能启动（照搬 Shevery 的 TCP 模式设计）
+                if (ShizukuSettings.isTcpMode() && EnvironmentUtils.isAdbPortLive(AdbStarter.TCP_MODE_PORT)) {
                     try {
-                        val keystore = PreferenceAdbKeyStore(ShizukuSettings.getPreferences())
-                        val key = AdbKey(keystore, "shizuku")
-                        val client = AdbClient("127.0.0.1", port, key)
-                        client.connect()
-                        client.shellCommand(Starter.internalCommand, null)
-                        client.close()
-                    } catch (_: Exception) {
+                        AdbStarter.start("127.0.0.1", AdbStarter.TCP_MODE_PORT, appContext)
+                        return@launch
+                    } catch (e: AdbAuthPendingException) {
+                        notifyAuthPending(appContext)
+                        return@launch
+                    } catch (_: Throwable) {
+                        // TCP 直连失败：继续走无线调试路径兜底（比如 adbd 状态不稳的时候）
                     }
                 }
-                latch.countDown()
-            }
-            if (Settings.Global.getInt(cr, "adb_wifi_enabled", 0) == 1) {
+
+                // ② 自动开无线调试需要 WRITE_SECURE_SETTINGS；没有权限时不要写系统设置
+                // （配对流程里无线调试本来就是开着的，直接连就行）
+                if (canAdbAutoStart(appContext)) {
+                    runCatching {
+                        Settings.Global.putInt(cr, "adb_wifi_enabled", 1)
+                        Settings.Global.putInt(cr, Settings.Global.ADB_ENABLED, 1)
+                        Settings.Global.putLong(cr, "adb_allowed_connection_time", 0L)
+                    }
+                }
+
+                if (Settings.Global.getInt(cr, "adb_wifi_enabled", 0) != 1) {
+                    return@launch
+                }
+
+                // ③ mDNS 找无线调试端口 → 交给 AdbStarter 连接并启动
+                // （TCP 模式下它顺手把端口切到 5555 并关掉无线调试）
+                val discovered = CompletableDeferred<Int>()
+                val adbMdns = AdbMdns(appContext, AdbMdns.TLS_CONNECT) { port ->
+                    if (port > 0) discovered.complete(port)
+                }
                 adbMdns.start()
-                latch.await(3, TimeUnit.SECONDS)
-                adbMdns.stop()
+                val port = try {
+                    withTimeout(3_000L) { discovered.await() }
+                } catch (_: TimeoutCancellationException) {
+                    -1
+                } finally {
+                    adbMdns.stop()
+                }
+                if (port > 0) {
+                    try {
+                        AdbStarter.start("127.0.0.1", port, appContext)
+                    } catch (e: AdbAuthPendingException) {
+                        notifyAuthPending(appContext)
+                    } catch (_: Throwable) {
+                    }
+                }
+            } finally {
+                onFinished?.invoke()
             }
-            onFinished?.invoke()
+        }
+    }
+
+    /** 密钥还没被 adbd 信任时的统一提示（设备上可能有确认框，或需要重新配对）。 */
+    private fun notifyAuthPending(context: Context) {
+        Handler(Looper.getMainLooper()).post {
+            Toast.makeText(context, R.string.adb_pair_required, Toast.LENGTH_LONG).show()
         }
     }
 }

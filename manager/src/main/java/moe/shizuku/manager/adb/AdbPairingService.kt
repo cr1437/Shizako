@@ -295,6 +295,10 @@ class AdbPairingService : Service() {
      * 用户点一下同样进激活页。
      */
     private fun openActivationPage() {
+        // 首次引导还没完成时不打扰：主界面此刻会重定向回引导页，
+        // 而引导页自己的「叫醒她」步骤会实时显示状态。
+        if (!ShizukuSettings.isSetupCompleted()) return
+
         val intent = MainActivity.destinationIntent(this, R.id.activation_fragment)
             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         runCatching {

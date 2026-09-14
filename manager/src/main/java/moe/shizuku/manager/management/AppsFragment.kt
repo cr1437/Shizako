@@ -6,10 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SegmentedButton
+import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.SingleChoiceSegmentedButtonRow
+import androidx.compose.material3.Text
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
@@ -23,6 +34,9 @@ import moe.shizuku.manager.dhizuku.DhizukuApp
 import moe.shizuku.manager.dhizuku.DhizukuAppsScreen
 import moe.shizuku.manager.dhizuku.DhizukuSettings
 import moe.shizuku.manager.dhizuku.loadDhizukuApps
+import moe.shizuku.manager.ui.glass.GlassOptionSlider
+import moe.shizuku.manager.ui.hint.HintStyle
+import moe.shizuku.manager.ui.hint.resolveHintPalette
 import rikka.lifecycle.Status
 import rikka.recyclerview.fixEdgeEffect
 import rikka.shizuku.Shizuku
@@ -41,6 +55,9 @@ class AppsFragment : Fragment() {
     private lateinit var adapter: AppsAdapter
 
     private var binding: FragmentAppsBinding? = null
+
+    /** 顶部两页：0 = Shizako 应用 / 1 = Dhizuku 应用（Compose 滑块驱动） */
+    private var selectedPage by mutableStateOf(0)
 
     private val binderReceivedListener = Shizuku.OnBinderReceivedListener {
         // 服务起来了：自动加载列表
@@ -73,6 +90,14 @@ class AppsFragment : Fragment() {
 
         binding.toolbar.title = getString(R.string.home_app_management_title)
         binding.toolbar.inflateMenu(R.menu.menu_apps)
+
+        // 从工具箱 push 进来时（上一级就是工具箱）当次级页用：给返回箭头，
+        // 从底栏 Tab 进来时不加（那是顶层页，右上角也没有"上一级"）
+        val nav = runCatching { findNavController() }.getOrNull()
+        if (nav?.previousBackStackEntry?.destination?.id == R.id.toolbox_fragment) {
+            binding.toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
+            binding.toolbar.setNavigationOnClickListener { nav.navigateUp() }
+        }
         val searchItem = binding.toolbar.menu.findItem(R.id.menu_search)
         (searchItem?.actionView as? SearchView)?.setOnQueryTextListener(
             object : SearchView.OnQueryTextListener {
@@ -142,21 +167,8 @@ class AppsFragment : Fragment() {
             }
         }
 
-        // 两页：Shizako 授权应用 / Dhizuku 授权应用
-        binding.appsTabs.addTab(
-            binding.appsTabs.newTab().setText(R.string.apps_tab_shizako),
-        )
-        binding.appsTabs.addTab(
-            binding.appsTabs.newTab().setText(R.string.apps_tab_dhizuku),
-        )
-        binding.appsTabs.addOnTabSelectedListener(object : com.google.android.material.tabs.TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: com.google.android.material.tabs.TabLayout.Tab) {
-                showPage(tab.position == 1)
-            }
-
-            override fun onTabUnselected(tab: com.google.android.material.tabs.TabLayout.Tab) = Unit
-            override fun onTabReselected(tab: com.google.android.material.tabs.TabLayout.Tab) = Unit
-        })
+        // 两页：Shizako 授权应用 / Dhizuku 授权应用（与设置里「界面风格」同款 Compose 滑块）
+        setupSegmentedHeader()
 
         setupDhizukuPage()
 
@@ -176,8 +188,8 @@ class AppsFragment : Fragment() {
         if (!::adapter.isInitialized) return
         updateActivationState()
         adapter.notifyDataSetChanged()
-        // Dhizuku 页：回到前台时刷新（授权可能在别处被改过）
-        if (binding?.appsTabs?.selectedTabPosition == 1) refreshDhizuku()
+        // Dhizuku 页：回到前台时刷新（授权可能在别处被改过）——30 秒内已有数据就不重复查
+        if (selectedPage == 1) refreshDhizuku(skipIfFresh = true)
     }
 
     /** 服务是否可用（未激活时不能问服务要列表，也不该绑定开关状态） */
@@ -191,12 +203,80 @@ class AppsFragment : Fragment() {
     private fun updateActivationState() {
         val binding = binding ?: return
         val available = isServiceAvailable()
-        val onFirstPage = binding.appsTabs.selectedTabPosition <= 0
+        val onFirstPage = selectedPage <= 0
 
         binding.activationPrompt.isVisible = !available && onFirstPage
         binding.swipeRefresh.isVisible = available && onFirstPage
         if (!available || !onFirstPage) {
             binding.swipeRefresh.isRefreshing = false
+        }
+    }
+
+    /**
+     * 顶部两页滑块（Shizako 应用 / Dhizuku 应用）：
+     * 照搬设置里「界面风格」那一项 —— 玻璃风格用 GlassOptionSlider（可拖动 + 弹簧吸附），
+     * MD3 用 M3 分段按钮；配色走同一份 HintPalette（强调色 + onAccent + variant）。
+     */
+    private fun setupSegmentedHeader() {
+        val binding = binding ?: return
+
+        binding.appsSegmented.setContent {
+            val style = moe.shizuku.manager.ui.style.UiStyle.current
+            val palette = remember(style) { resolveHintPalette(requireContext()) }
+            val labels = listOf(
+                getString(R.string.apps_tab_shizako),
+                getString(R.string.apps_tab_dhizuku),
+            )
+            val onSelected: (Int) -> Unit = { index ->
+                if (index != selectedPage) {
+                    selectedPage = index
+                    showPage(index == 1)
+                }
+            }
+
+            if (palette.style == HintStyle.GLASS) {
+                // 和设置里「界面风格」同款：玻璃滑块，拖动 + 点击 + 弹簧吸附
+                GlassOptionSlider(
+                    options = labels,
+                    selectedIndex = selectedPage.coerceIn(0, labels.lastIndex),
+                    onSelected = onSelected,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 2.dp),
+                    thumbColor = palette.accent,
+                    thumbContentColor = palette.onAccent,
+                    unselectedContentColor = palette.variant,
+                    trackColor = Color.White.copy(alpha = 0.10f),
+                    edgeColor = Color.White.copy(alpha = 0.38f),
+                )
+            } else {
+                SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
+                    labels.forEachIndexed { index, label ->
+                        SegmentedButton(
+                            selected = index == selectedPage,
+                            onClick = { onSelected(index) },
+                            shape = SegmentedButtonDefaults.itemShape(
+                                index = index,
+                                count = labels.size,
+                            ),
+                            colors = SegmentedButtonDefaults.colors(
+                                activeContainerColor = palette.accent,
+                                activeContentColor = palette.onAccent,
+                                inactiveContainerColor = Color.Transparent,
+                                inactiveContentColor = palette.variant,
+                                activeBorderColor = Color.Transparent,
+                                inactiveBorderColor = palette.variant.copy(alpha = 0.4f),
+                            ),
+                            modifier = Modifier.weight(1f),
+                        ) {
+                            Text(
+                                text = label,
+                                style = MaterialTheme.typography.labelMedium,
+                            )
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -207,11 +287,42 @@ class AppsFragment : Fragment() {
     private var dhizukuActivating by mutableStateOf(false)
     private val dhizukuListState = LazyListState()
 
+    /** 刷新序号：后台加载完成后只有"最新一次"的结果会被采用 */
+    private var dhizukuRefreshSeq = 0
+
+    /** 数据缓存时间戳（uptimeMillis）：用于「回前台 30 秒内不重复查询」的缓存新鲜度 */
+    private var dhizukuLoadedAt = 0L
+
     private fun showPage(dhizuku: Boolean) {
         val binding = binding ?: return
-        binding.dhizukuContainer.isVisible = dhizuku
+        // 和页面转场同一组曲线：新页淡入 + 从右侧轻滑 12dp，旧页反向淡出
+        val offset = 12f * resources.displayMetrics.density
+        val interpolator = android.view.animation.PathInterpolator(0.2f, 0f, 0f, 1f)
+        val inView = if (dhizuku) binding.dhizukuContainer else binding.pageShizako
+        val outView = if (dhizuku) binding.pageShizako else binding.dhizukuContainer
+
+        outView.animate().cancel()
+        inView.animate().cancel()
+        outView.animate()
+            .alpha(0f)
+            .translationX(-offset)
+            .setDuration(160)
+            .setInterpolator(interpolator)
+            .withEndAction { if (outView.alpha == 0f) outView.visibility = View.GONE }
+            .start()
+        inView.visibility = View.VISIBLE
+        inView.alpha = 0f
+        inView.translationX = offset
+        inView.animate()
+            .alpha(1f)
+            .translationX(0f)
+            .setDuration(200)
+            .setInterpolator(interpolator)
+            .start()
+
         updateActivationState()
-        if (dhizuku) refreshDhizuku()
+        // 【性能】切页不再重复加载：Dhizuku 列表走缓存 ——
+        // 打开页时加载一次；只有授权变更 / 回前台（数据过期）才刷新；切页瞬间零查询。
     }
 
     private fun setupDhizukuPage() {
@@ -235,7 +346,7 @@ class AppsFragment : Fragment() {
                 apps = dhizukuApps,
                 activating = dhizukuActivating,
                 onRevoke = ::revokeDhizuku,
-                onRefresh = ::refreshDhizuku,
+                onRefresh = { refreshDhizuku() },
                 onActivate = ::activateDhizuku,
                 onViewCommand = ::showDhizukuCommand,
                 onCollapsedChange = { expanded -> binding.appBar.setExpanded(expanded, true) },
@@ -244,10 +355,32 @@ class AppsFragment : Fragment() {
         refreshDhizuku()
     }
 
-    private fun refreshDhizuku() {
+    /**
+     * 刷新 Dhizuku 授权列表（带缓存）。
+     *
+     * 【性能】① 查询走 PackageManager 的 IPC，以前在 UI 线程上跑 —— 正好落在切页那一瞬间，
+     * 会卡一下；现在整段挪到后台线程，回主线程只做状态赋值（序号防串场）。
+     * ② 切页不再重复加载（showPage 里已不调用）；回前台 30 秒内也不重复查，
+     * 只有首次打开 / 授权变更 / 用户点「重新加载」时才真正查询。
+     * 列表保持"旧数据直到新数据就绪"，过程里不会闪空态。
+     */
+    private fun refreshDhizuku(skipIfFresh: Boolean = false) {
         val context = context ?: return
-        dhizukuDeviceOwner = DhizukuSettings.isDeviceOwner(context)
-        dhizukuApps = loadDhizukuApps(context.packageManager)
+        if (skipIfFresh && android.os.SystemClock.uptimeMillis() - dhizukuLoadedAt < 30_000L) return
+        val seq = ++dhizukuRefreshSeq
+        val appContext = context.applicationContext
+        Thread {
+            val owner = DhizukuSettings.isDeviceOwner(appContext)
+            val apps = loadDhizukuApps(appContext.packageManager)
+            activity?.runOnUiThread {
+                // 期间又刷新过 / 页面已销毁：丢弃这次结果
+                if (seq == dhizukuRefreshSeq && isAdded) {
+                    dhizukuLoadedAt = android.os.SystemClock.uptimeMillis()
+                    dhizukuDeviceOwner = owner
+                    dhizukuApps = apps
+                }
+            }
+        }.start()
     }
 
     private fun revokeDhizuku(app: DhizukuApp) {

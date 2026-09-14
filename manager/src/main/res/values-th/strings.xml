@@ -187,7 +187,6 @@
     <string name="setup_disclaimer_agree">ฉันได้อ่านและยอมรับข้อความข้างต้น</string>
     <string name="setup_language_title">เลือกภาษา</string>
     <string name="setup_language_subtitle">คุณสามารถเปลี่ยนได้ภายหลังในการตั้งค่า</string>
-    <string name="setup_mode_subtitle">เลือกรูปแบบของ Shizako เปลี่ยนได้ภายหลังในการตั้งค่า</string>
     <string name="setup_mode_follow_system">ตามระบบ</string>
     <string name="setup_mode_light">สว่าง</string>
     <string name="setup_mode_dark">มืด</string>
@@ -202,5 +201,4 @@
     <string name="setup_back">ย้อนกลับ</string>
     <string name="setup_next">ถัดไป</string>
     <string name="setup_get_started">เริ่มต้นใช้งาน</string>
-    <string name="setup_skip">ข้าม</string>
 </resources>

@@ -190,7 +190,6 @@
     <string name="setup_disclaimer_agree">Я прочитав(-ла) і погоджуюся з наведеним вище</string>
     <string name="setup_language_title">Виберіть мову</string>
     <string name="setup_language_subtitle">Пізніше її можна змінити в налаштуваннях.</string>
-    <string name="setup_mode_subtitle">Виберіть, як виглядатиме Shizako. Пізніше можна змінити в налаштуваннях.</string>
     <string name="setup_mode_follow_system">Як у системі</string>
     <string name="setup_mode_light">Світла</string>
     <string name="setup_mode_dark">Темна</string>
@@ -205,5 +204,4 @@
     <string name="setup_back">Назад</string>
     <string name="setup_next">Далі</string>
     <string name="setup_get_started">Почати</string>
-    <string name="setup_skip">Пропустити</string>
 </resources>

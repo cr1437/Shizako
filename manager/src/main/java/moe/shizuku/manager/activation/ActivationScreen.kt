@@ -1,10 +1,13 @@
 package moe.shizuku.manager.activation
 
+import android.os.Build
+import android.widget.Toast
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.animateFloat
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,18 +22,27 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
@@ -38,7 +50,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import moe.shizuku.manager.R
+import moe.shizuku.manager.ShizukuSettings
+import moe.shizuku.manager.adb.AdbStarter
+import moe.shizuku.manager.starter.ServiceStartHelper
 import moe.shizuku.manager.ui.hint.HintCard
 import moe.shizuku.manager.ui.hint.HintPage
 import moe.shizuku.manager.ui.hint.itemEntrance
@@ -46,6 +63,7 @@ import moe.shizuku.manager.ui.hint.HintPalette
 import moe.shizuku.manager.ui.hint.HintPrimaryButton
 import moe.shizuku.manager.ui.hint.HintSecondaryButton
 import moe.shizuku.manager.ui.hint.HintStep
+import moe.shizuku.manager.utils.EnvironmentUtils
 
 /** 服务当前跑在什么身份下。 */
 enum class ServiceMode { NOT_RUNNING, ROOT, ADB }
@@ -102,23 +120,51 @@ fun ActivationScreen(
     }
     val methodsVisible = !state.serviceRunning || showMethods
 
+    // 持久 TCP 模式提示（照搬 Shevery）：服务以 ADB 方式跑着、但还没开 TCP 模式时弹一次询问。
+    // 开启后 ADB 会绑到本机 5555 —— 断网、无线调试被系统关掉，也能直接连回来。
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    var showTcpPrompt by remember { mutableStateOf(false) }
+    var tcpDoNotRemind by remember { mutableStateOf(false) }
+    var tcpPromptShown by remember { mutableStateOf(false) }
+
+    // 应用内配对（照搬 Shevery）：在分屏/多窗口里直接用对话框配对（系统要求配对对话框保持可见）
+    val activity = context.findActivity()
+    val inPairingWindow = activity != null && (
+        activity.isInMultiWindowMode ||
+            (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && (activity.display?.displayId ?: -1) > 0)
+        )
+    var showPairDialog by remember { mutableStateOf(false) }
+    LaunchedEffect(state.serviceMode, state.serviceRunning) {
+        if (!tcpPromptShown &&
+            state.serviceMode == ServiceMode.ADB &&
+            !ShizukuSettings.isTcpMode() &&
+            !ShizukuSettings.isTcpModePromptSuppressed()
+        ) {
+            tcpPromptShown = true
+            showTcpPrompt = true
+        }
+    }
+
     HintPage(
         listState = listState,
         onCollapsedChange = onCollapsedChange,
         modifier = modifier,
         // 页面本身有横向推入动画，卡片阶梯晚 120ms 再开始，避免两层动画打架
     ) {
-        item { Box(modifier = Modifier.animateItem().itemEntrance(0)) { StatusCard(state, palette) } }
+        item { Box(modifier = Modifier.itemEntrance(0)) { StatusCard(state, palette) } }
 
         // 已经配对过（服务没在跑）：给一排「不用再配对」的按钮 —— 重启后一键把服务拉起来
         if (state.paired && !state.serviceRunning) {
             item {
-                Box(modifier = Modifier.animateItem().itemEntrance(1)) {
+                Box(modifier = Modifier.itemEntrance(1)) {
                     QuickStartCard(
                         state = state,
                         palette = palette,
                         onStart = onStartAdbPaired,
-                        onPairAgain = onStartPairing,
+                        onPairAgain = {
+                        if (inPairingWindow) showPairDialog = true else onStartPairing()
+                    },
                         onForget = onForgetPairing,
                     )
                 }
@@ -127,7 +173,7 @@ fun ActivationScreen(
 
         if (state.serviceRunning) {
             item {
-                Box(modifier = Modifier.animateItem().itemEntrance(1)) {
+                Box(modifier = Modifier.itemEntrance(1)) {
                     HintCard(palette = palette) {
                         Text(
                             text = stringResource(R.string.activation_methods_collapsed),
@@ -149,7 +195,7 @@ fun ActivationScreen(
 
         if (methodsVisible) {
 
-        item { Box(modifier = Modifier.animateItem().itemEntrance(1)) {
+        item { Box(modifier = Modifier.itemEntrance(1)) {
             MethodCard(
                 iconRes = R.drawable.ic_root_24dp,
                 titleRes = R.string.activation_method_root,
@@ -168,7 +214,7 @@ fun ActivationScreen(
         }}
 
         if (state.supportsWirelessAdb) {
-            item { Box(modifier = Modifier.animateItem().itemEntrance(2)) {
+            item { Box(modifier = Modifier.itemEntrance(2)) {
                 MethodCard(
                     iconRes = R.drawable.ic_wireless_adb_24dp,
                     titleRes = R.string.activation_method_wireless_adb,
@@ -184,14 +230,22 @@ fun ActivationScreen(
                             else R.string.activation_wadb_action_pair
                         ),
                         enabled = !state.serviceRunning,
-                        onClick = if (state.paired) onStartAdbPaired else onStartPairing,
+                        onClick = {
+                        when {
+                            state.paired -> onStartAdbPaired()
+                            inPairingWindow -> showPairDialog = true
+                            else -> onStartPairing()
+                        }
+                    },
                     )
                     if (state.paired) {
                         HintSecondaryButton(
                             palette = palette,
                             text = stringResource(R.string.activation_quick_start_action_repair),
                             enabled = !state.serviceRunning,
-                            onClick = onStartPairing,
+                            onClick = {
+                                if (inPairingWindow) showPairDialog = true else onStartPairing()
+                            },
                         )
                     }
                     HintSecondaryButton(
@@ -211,7 +265,7 @@ fun ActivationScreen(
             }}
         }
 
-        item { Box(modifier = Modifier.animateItem().itemEntrance(3)) {
+        item { Box(modifier = Modifier.itemEntrance(3)) {
             MethodCard(
                 iconRes = R.drawable.ic_adb_24dp,
                 titleRes = R.string.activation_method_adb,
@@ -256,7 +310,7 @@ fun ActivationScreen(
             }
         }}
 
-        item { Box(modifier = Modifier.animateItem().itemEntrance(4)) {
+        item { Box(modifier = Modifier.itemEntrance(4)) {
             MethodCard(
                 iconRes = R.drawable.ic_dhizuku_24dp,
                 titleRes = R.string.activation_method_dhizuku,
@@ -291,10 +345,120 @@ fun ActivationScreen(
 
         } // end if (methodsVisible)
 
-        item { Box(modifier = Modifier.animateItem().itemEntrance(5)) { TerminalCard(state, palette, onOpenTerminal) } }
+        item { Box(modifier = Modifier.itemEntrance(5)) { TerminalCard(state, palette, onOpenTerminal) } }
 
-        item { Box(modifier = Modifier.animateItem().itemEntrance(6)) { FaqCard(palette) } }
+        item { Box(modifier = Modifier.itemEntrance(6)) { FaqCard(palette) } }
     }
+
+    // 持久 TCP 模式提示（照搬 Shevery 的 tcp_prompt_dialog 设计）
+    if (showTcpPrompt) {
+        TcpModePromptDialog(
+            palette = palette,
+            doNotRemind = tcpDoNotRemind,
+            onDoNotRemindChange = { tcpDoNotRemind = it },
+            onEnable = {
+                showTcpPrompt = false
+                if (tcpDoNotRemind) ShizukuSettings.setTcpModePromptSuppressed(true)
+                ShizukuSettings.setTcpMode(true)
+                // 立刻把当前连接切到 TCP 5555（用现存端口发 tcpip:5555，再重连启动）
+                scope.launch(Dispatchers.IO) {
+                    runCatching {
+                        val port = EnvironmentUtils.getLiveAdbTcpPort().takeIf { it > 0 }
+                            ?: ShizukuSettings.getLastAdbPort().takeIf { it > 0 }
+                            ?: -1
+                        if (port > 0) {
+                            AdbStarter.start("127.0.0.1", port, context.applicationContext)
+                        }
+                    }
+                }
+            },
+            onDismiss = {
+                showTcpPrompt = false
+                if (tcpDoNotRemind) ShizukuSettings.setTcpModePromptSuppressed(true)
+            },
+        )
+    }
+
+    // 应用内配对对话框（照搬 Shevery 的 AdbPairDialog 设计）：分屏里配对，直连本机回环
+    if (showPairDialog && Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        AdbPairDialog(
+            palette = palette,
+            inPairingWindow = inPairingWindow,
+            onDismissRequest = { showPairDialog = false },
+            onPairSuccess = {
+                showPairDialog = false
+                Toast.makeText(
+                    context,
+                    context.getString(R.string.notification_adb_pairing_succeed_title),
+                    Toast.LENGTH_SHORT,
+                ).show()
+                // 配对完成 → 通过（刚配好的）无线调试把服务拉起来，TCP 模式下会自动切到 5555
+                scope.launch(Dispatchers.IO) {
+                    runCatching { ServiceStartHelper.startAdb(context.applicationContext) }
+                }
+            },
+        )
+    }
+}
+
+/** 「启用持久 TCP 模式？」弹窗（照搬 Shevery 的 tcp_prompt_dialog 设计 + 本项目配色）。 */
+@Composable
+private fun TcpModePromptDialog(
+    palette: HintPalette,
+    doNotRemind: Boolean,
+    onDoNotRemindChange: (Boolean) -> Unit,
+    onEnable: () -> Unit,
+    onDismiss: () -> Unit,
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = {
+            Text(
+                text = stringResource(R.string.tcp_prompt_dialog_title),
+                style = MaterialTheme.typography.titleLarge,
+                color = palette.onCard,
+            )
+        },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                Text(
+                    text = stringResource(R.string.tcp_prompt_dialog_message),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = palette.variant,
+                )
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(8.dp))
+                        .clickable { onDoNotRemindChange(!doNotRemind) }
+                        .padding(vertical = 4.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Checkbox(
+                        checked = doNotRemind,
+                        onCheckedChange = onDoNotRemindChange,
+                    )
+                    Spacer(Modifier.width(8.dp))
+                    Text(
+                        text = stringResource(R.string.tcp_prompt_dialog_do_not_remind),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = palette.onCard,
+                    )
+                }
+            }
+        },
+        confirmButton = {
+            Button(onClick = onEnable) {
+                Text(stringResource(R.string.tcp_prompt_dialog_enable))
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text(stringResource(R.string.tcp_prompt_dialog_later))
+            }
+        },
+        containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+    )
 }
 
 /**
@@ -431,6 +595,18 @@ private fun StatusCard(state: ActivationUiState, palette: HintPalette) {
     }
 }
 
+/** 状态圆点：只在绘制阶段读动画值（不触发重组） */
+@Composable
+private fun StatusDot(color: Color, alpha: Float) {
+    Box(
+        modifier = Modifier
+            .size(8.dp)
+            .clip(CircleShape)
+            .graphicsLayer { this.alpha = alpha }
+            .background(color),
+    )
+}
+
 @Composable
 private fun StatusRow(
     @StringRes labelRes: Int,
@@ -439,27 +615,24 @@ private fun StatusRow(
     palette: HintPalette,
 ) {
     Row(verticalAlignment = Alignment.CenterVertically) {
-        // 运行中：状态点呼吸 —— 文档里的 rememberInfiniteTransition 分支（需要无限重复的动画）
-        val infinite = androidx.compose.animation.core.rememberInfiniteTransition(label = "statusDot")
-        val pulse by infinite.animateFloat(
-            initialValue = 1f,
-            targetValue = 0.35f,
-            animationSpec = androidx.compose.animation.core.infiniteRepeatable(
-                animation = androidx.compose.animation.core.tween(1100),
-                repeatMode = androidx.compose.animation.core.RepeatMode.Reverse,
-            ),
-            label = "statusDotAlpha",
-        )
-        Box(
-            modifier = Modifier
-                .size(8.dp)
-                .clip(CircleShape)
-                .graphicsLayer {
-                    // 只在 draw 阶段读动画值；未运行时恒为 1（不做无意义的动画）
-                    alpha = if (running) pulse else 1f
-                }
-                .background(if (running) palette.accent else palette.variant.copy(alpha = 0.5f)),
-        )
+        // 【性能】状态点呼吸只在**真的在跑**时才建这个无限动画。
+        // 以前是无条件 rememberInfiniteTransition（靠 draw 里 if(running) 把值忽略掉），
+        // 动画本身照样每帧 tick —— 页面不动的时候也在持续刷帧、唤醒渲染线程。
+        if (running) {
+            val infinite = androidx.compose.animation.core.rememberInfiniteTransition(label = "statusDot")
+            val pulse by infinite.animateFloat(
+                initialValue = 1f,
+                targetValue = 0.35f,
+                animationSpec = androidx.compose.animation.core.infiniteRepeatable(
+                    animation = androidx.compose.animation.core.tween(1100),
+                    repeatMode = androidx.compose.animation.core.RepeatMode.Reverse,
+                ),
+                label = "statusDotAlpha",
+            )
+            StatusDot(palette.accent, pulse)
+        } else {
+            StatusDot(palette.variant.copy(alpha = 0.5f), 1f)
+        }
         Spacer(Modifier.width(8.dp))
         Text(
             text = stringResource(labelRes),

@@ -189,7 +189,6 @@ Poate fi necesar să repornești Shizako pentru ca operațiunea să intre în vi
     <string name="setup_disclaimer_agree">Am citit și accept cele de mai sus</string>
     <string name="setup_language_title">Alegeți limba</string>
     <string name="setup_language_subtitle">O puteți schimba mai târziu din Setări.</string>
-    <string name="setup_mode_subtitle">Alegeți cum arată Shizako. Îl puteți schimba mai târziu din Setări.</string>
     <string name="setup_mode_follow_system">Urmează sistemul</string>
     <string name="setup_mode_light">Deschis</string>
     <string name="setup_mode_dark">Întunecat</string>
@@ -204,5 +203,4 @@ Poate fi necesar să repornești Shizako pentru ca operațiunea să intre în vi
     <string name="setup_back">Înapoi</string>
     <string name="setup_next">Înainte</string>
     <string name="setup_get_started">Începeți</string>
-    <string name="setup_skip">Omiteți</string>
 </resources>

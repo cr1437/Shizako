@@ -31,4 +31,10 @@
     <!-- 夜间：遮罩更实一点，白字压在深色壁纸上更稳 -->
     <color name="appbar_scrim_top">#00000000</color>
     <color name="appbar_title">#FFFFFFFF</color>
+    <!-- 分段切换条 / 玻璃按钮（夜间）：淡白而不是淡黑 -->
+    <color name="segmented_indicator_md3">#33FFFFFF</color>
+    <color name="segmented_indicator_glass">#26FFFFFF</color>
+    <color name="segmented_tab_text">#B3FFFFFF</color>
+    <color name="segmented_tab_selected">#F2FFFFFF</color>
+    <color name="glass_button_fill">#26FFFFFF</color>
 </resources>

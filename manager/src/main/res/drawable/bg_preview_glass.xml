@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- 外观预览图（玻璃）：半透明 + 细描边，圆角更大 —— 一眼看出和 MD3 的区别。 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/glass_card_fill_top" />
+    <stroke
+        android:width="0.8dp"
+        android:color="@color/glass_card_stroke" />
+    <corners android:radius="22dp" />
+</shape>

@@ -29,7 +29,16 @@ class SettingsTabFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val binding = binding ?: return
         binding.toolbar.title = getString(R.string.settings_title)
-        binding.toolbar.setNavigationOnClickListener { /* 顶层 Tab，无返回 */ }
+
+        // 默认是顶层 Tab（没有上一级）；从工具箱 push 进来时给返回箭头，返回回工具箱
+        val nav = runCatching { androidx.navigation.fragment.NavHostFragment.findNavController(this) }
+            .getOrNull()
+        if (nav?.previousBackStackEntry?.destination?.id == R.id.toolbox_fragment) {
+            binding.toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
+            binding.toolbar.setNavigationOnClickListener { nav.navigateUp() }
+        } else {
+            binding.toolbar.setNavigationOnClickListener { /* 顶层 Tab，无返回 */ }
+        }
 
         if (savedInstanceState == null) {
             childFragmentManager.beginTransaction()

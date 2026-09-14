@@ -189,7 +189,6 @@ er kopieret til udklipsholderen.</string>
     <string name="setup_disclaimer_agree">Jeg har læst og accepterer ovenstående</string>
     <string name="setup_language_title">Vælg sprog</string>
     <string name="setup_language_subtitle">Du kan ændre det senere i indstillingerne.</string>
-    <string name="setup_mode_subtitle">Vælg, hvordan Shizako skal se ud. Kan ændres senere i indstillingerne.</string>
     <string name="setup_mode_follow_system">Følg systemet</string>
     <string name="setup_mode_light">Lys</string>
     <string name="setup_mode_dark">Mørk</string>
@@ -204,5 +203,4 @@ er kopieret til udklipsholderen.</string>
     <string name="setup_back">Tilbage</string>
     <string name="setup_next">Næste</string>
     <string name="setup_get_started">Kom i gang</string>
-    <string name="setup_skip">Spring over</string>
 </resources>

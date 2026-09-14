@@ -17,6 +17,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
@@ -92,7 +93,9 @@ fun GlassOptionSlider(
     }
 
     val segmentPx = if (count == 0) 0f else widthPx.toFloat() / count
-    val currentIndex = if (dragging) dragPosition else position.value
+    // 【性能】不把拖动 / 弹簧动画状态读进组合期：位移在绘制阶段读，
+    // 文字高亮用 derivedStateOf —— 只在跨过半格时触发重组。
+    val activeIndex by remember { derivedStateOf { (if (dragging) dragPosition else position.value).roundToInt() } }
 
     Box(
         modifier = modifier
@@ -130,7 +133,9 @@ fun GlassOptionSlider(
                 .height(height)
                 .padding(vertical = 3.dp)
                 .graphicsLayer {
-                    translationX = insetPx + currentIndex * segmentPx
+                    // 【性能】绘制阶段读状态：拖动时不再每帧重组
+                    val pos = if (dragging) dragPosition else position.value
+                    translationX = insetPx + pos * segmentPx
                 }
                 .clip(RoundedCornerShape(percent = 50))
                 .background(thumbColor)
@@ -140,7 +145,7 @@ fun GlassOptionSlider(
         // 文案层（在滑块之上）
         Row(modifier = Modifier.fillMaxSize()) {
             options.forEachIndexed { index, label ->
-                val active = currentIndex.roundToInt() == index
+                val active = activeIndex == index
                 Box(
                     modifier = Modifier
                         .weight(1f)

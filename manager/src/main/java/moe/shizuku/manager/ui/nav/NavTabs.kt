@@ -129,15 +129,37 @@ object NavTabs {
     private fun split(value: String?): List<String> =
         value?.split(',')?.map { it.trim() }?.filter { it.isNotEmpty() } ?: emptyList()
 
-    /** 当前顺序（含被隐藏的）：偏好里没记录的（新增入口）接在末尾 */
-    fun order(): List<NavTabSpec> {
-        version // 订阅：改完自动重组
+    // ---- 结果缓存 ----
+    // order()/hiddenKeys()/visible() 每次调用都要读 SharedPreferences + 切字符串，
+    // 而它们在组合里被反复读（一级菜单摘要、排序页每一行、MainActivity 建底栏……）。
+    // 用一个版本号把它们缓存住，只有 setEnabled/move/reset 之后才失效。
+
+    private var cacheVersion = -1
+    private var cachedOrder: List<NavTabSpec> = emptyList()
+    private var cachedHidden: Set<String> = emptySet()
+    private var cachedVisible: List<NavTabSpec> = emptyList()
+
+    private fun ensureCache() {
+        val v = version // 订阅：改完自动重组
+        if (v == cacheVersion) return
         val saved = split(prefs().getString(PREF_ORDER, null))
         val known = saved.mapNotNull { key -> all.firstOrNull { it.key == key } }
-        return known + all.filter { spec -> known.none { it.key == spec.key } }
+        val order = known + all.filter { spec -> known.none { it.key == spec.key } }
+        val hidden = hiddenKeysUncached()
+        cachedOrder = order
+        cachedHidden = hidden
+        cachedVisible = order.filter { it.key !in hidden }
+            .ifEmpty { all.filter { it.key == KEY_HOME } }
+        cacheVersion = v
     }
 
-    fun hiddenKeys(): Set<String> {
+    /** 当前顺序（含被隐藏的）：偏好里没记录的（新增入口）接在末尾 */
+    fun order(): List<NavTabSpec> {
+        ensureCache()
+        return cachedOrder
+    }
+
+    private fun hiddenKeysUncached(): Set<String> {
         version
         val saved = prefs().getString(PREF_HIDDEN, null)
         // 没存过 → 用默认（只显示首页 / 应用 / 工具箱 / 设置）
@@ -145,13 +167,17 @@ object NavTabs {
         return split(saved).toSet()
     }
 
+    fun hiddenKeys(): Set<String> {
+        ensureCache()
+        return cachedHidden
+    }
+
     fun isEnabled(key: String): Boolean = key !in hiddenKeys()
 
     /** 底栏最终显示顺序：按自定义顺序 + 过滤隐藏项；全隐藏时兜底只留首页 */
     fun visible(): List<NavTabSpec> {
-        val hidden = hiddenKeys()
-        val list = order().filter { it.key !in hidden }
-        return list.ifEmpty { all.filter { it.key == KEY_HOME } }
+        ensureCache()
+        return cachedVisible
     }
 
     fun setEnabled(key: String, enabled: Boolean) {

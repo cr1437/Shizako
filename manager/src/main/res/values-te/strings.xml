@@ -187,7 +187,6 @@
     <string name="setup_disclaimer_agree">పైన ఉన్నది చదివాను, అంగీకరిస్తున్నాను</string>
     <string name="setup_language_title">భాషను ఎంచుకోండి</string>
     <string name="setup_language_subtitle">తర్వాత సెట్టింగ్‌లలో మార్చవచ్చు.</string>
-    <string name="setup_mode_subtitle">Shizako ఎలా కనిపించాలో ఎంచుకోండి. తర్వాత సెట్టింగ్‌లలో మార్చవచ్చు.</string>
     <string name="setup_mode_follow_system">సిస్టమ్‌ను అనుసరించు</string>
     <string name="setup_mode_light">లైట్</string>
     <string name="setup_mode_dark">డార్క్</string>
@@ -202,5 +201,4 @@
     <string name="setup_back">వెనుకకు</string>
     <string name="setup_next">తర్వాత</string>
     <string name="setup_get_started">ప్రారంభించు</string>
-    <string name="setup_skip">వదిలివేయి</string>
 </resources>

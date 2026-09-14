@@ -55,10 +55,6 @@
         android:id="@+id/starter_fragment"
         android:name="moe.shizuku.manager.starter.StarterFragment"
         android:label="starter" />
-    <fragment
-        android:id="@+id/dhizuku_fragment"
-        android:name="moe.shizuku.manager.dhizuku.DhizukuManageFragment"
-        android:label="dhizuku" />
 
     <!-- 推荐应用（下载引导页：只给官方下载入口，不再做「注入」） -->
     <fragment

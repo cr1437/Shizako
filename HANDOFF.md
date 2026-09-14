@@ -1,7 +1,7 @@
 # Shizako 项目交接文档
 
 > 写给下一个接手的模型/开发者。读完本文档应能直接继续开发，无需重新探索。
-> 日期：2026-09-10 ｜ 版本：zako2.12 ｜ 状态：debug 构建通过
+> 日期：2026-09-10 ｜ 版本：zako3.01 ｜ 状态：debug 构建通过
 
 ---
 
@@ -35,7 +35,7 @@ cd /data/user/work/shizako/Shizako-KernelSU-UI && \
   /opt/gradle814/gradle-8.14/bin/gradle :manager:assembleDebug --console=plain
 ```
 
-产物：`manager/build/outputs/apk/debug/shizako-vzako2.12-debug.apk`（约 17MB）。
+产物：`manager/build/outputs/apk/debug/shizako-zako3.01-debug.apk`（约 17MB）。
 
 ### 已知网络限制
 
@@ -169,4 +169,4 @@ cat manager/src/main/java/moe/shizuku/manager/activation/ActivationFragment.kt
 cat manager/src/main/res/layout/floating_pair.xml
 ```
 
-交接包内容：`Shizako-KernelSU-UI/`（完整源码，已排除 build/.gradle 产物）、`HANDOFF.md`（本文档）、`shizako-vzako2.12-debug.apk`（当前构建产物）。
+交接包内容：`Shizako-KernelSU-UI/`（完整源码，已排除 build/.gradle 产物）、`HANDOFF.md`（本文档）、`shizako-zako3.01-debug.apk`（当前构建产物）。

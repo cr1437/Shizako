@@ -69,15 +69,25 @@ abstract class AppActivity : MaterialActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val t0 = moe.shizuku.manager.utils.StartupTrace.begin()
+        moe.shizuku.manager.utils.StartupTrace.newLaunch(this)
+        // binder 状态缓存：显示用的判断不再每次都打一次 IPC
+        moe.shizuku.manager.utils.ShizukuState.install()
         // 实时磨砂关着的时候，BlurTarget 那层离屏 RenderNode 必须一起关：
         // 它会把整个内容区变成一个硬件层，每帧多录一遍，滚动时还比窗口背景慢一帧
         // （整屏背景抖 / 卡片边缘拖影都来自这里）。
         moe.shizuku.blurview.BlurTarget.snapshotEnabled =
             moe.shizuku.manager.ui.glass.GlassMaterials.isLiveBlurEnabled()
         applyEdgeToEdge()
+        moe.shizuku.manager.utils.StartupTrace.since(this, t0, "AppActivity.applyEdgeToEdge")
+        val tBg = moe.shizuku.manager.utils.StartupTrace.now()
         applyCustomBackground()
+        moe.shizuku.manager.utils.StartupTrace.since(this, tBg, "AppActivity.applyCustomBackground")
+        val tHr = moe.shizuku.manager.utils.StartupTrace.now()
         applyHighRefreshRate()
+        moe.shizuku.manager.utils.StartupTrace.since(this, tHr, "AppActivity.applyHighRefreshRate")
         fadeInContent()
+        moe.shizuku.manager.utils.StartupTrace.since(this, t0, "AppActivity.onCreate total")
     }
 
     /**
@@ -124,10 +134,24 @@ abstract class AppActivity : MaterialActivity() {
      */
     internal fun applyCustomBackground() {
         val window = window ?: return
-        val drawable = BackgroundHelper.loadDrawable(this)
-        if (drawable != null) {
-            window.setBackgroundDrawable(drawable)
+
+        // 【性能】解码底图（1600px 左右的 PNG，约 20MB 位图）以前是在 onCreate 主线程上做的，
+        // 冷启动那几百毫秒里它占一块。现在：命中缓存就直接用，没命中就丢到后台线程解码，
+        // 好了再换窗口底 —— 内容本来就有 220ms 淡入，晚一帧换底看不出来。
+        val cached = BackgroundHelper.cachedWindowDrawable(this)
+        if (cached != null) {
+            window.setBackgroundDrawable(cached)
+        } else {
+            Thread {
+                val drawable = BackgroundHelper.loadDrawable(this)
+                runOnUiThread {
+                    if (drawable != null && !isFinishing && !isDestroyed) {
+                        window.setBackgroundDrawable(drawable)
+                    }
+                }
+            }.start()
         }
+
         // 自愈：处理图还没生成（模糊/亮暗那一步没跑成）就补一次，
         // 否则窗口底会退回到未处理的底图 —— 表现就是"模糊和亮暗没效果"。
         if (BackgroundHelper.isProcessedStale(this) && !backgroundProcessing) {

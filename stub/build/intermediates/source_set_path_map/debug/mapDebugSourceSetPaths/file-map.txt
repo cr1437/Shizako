@@ -1,7 +1,0 @@
-moe.shizuku.privileged.api.stub-pngs-0 E:\DeepSeek Work\Shizako-KernelSU-UI\stub\build\generated\res\pngs\debug
-moe.shizuku.privileged.api.stub-resValues-1 E:\DeepSeek Work\Shizako-KernelSU-UI\stub\build\generated\res\resValues\debug
-moe.shizuku.privileged.api.stub-mergeDebugResources-2 E:\DeepSeek Work\Shizako-KernelSU-UI\stub\build\intermediates\incremental\debug\mergeDebugResources\merged.dir
-moe.shizuku.privileged.api.stub-mergeDebugResources-3 E:\DeepSeek Work\Shizako-KernelSU-UI\stub\build\intermediates\incremental\debug\mergeDebugResources\stripped.dir
-moe.shizuku.privileged.api.stub-debug-4 E:\DeepSeek Work\Shizako-KernelSU-UI\stub\build\intermediates\merged_res\debug\mergeDebugResources
-moe.shizuku.privileged.api.stub-debug-5 E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\debug\res
-moe.shizuku.privileged.api.stub-main-6 E:\DeepSeek Work\Shizako-KernelSU-UI\stub\src\main\res

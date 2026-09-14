@@ -125,7 +125,45 @@ data class HintPalette(
  * 从 Android 主题解析提示页配色（跟随动态取色 / 色板 / 深浅色 / 当前风格）。
  * 所有提示页共用这一份，保证两套风格在各页面完全一致。
  */
+/**
+ * 提示页配色缓存。
+ *
+ * [resolveHintPalette] 每次要解析十几个主题属性 + 两三个 TypedArray（圆角 shapeAppearance），
+ * 而每个页面组合时都会调一次 —— 换页、切风格、进二级页都在付这笔钱。
+ * 颜色只跟「风格 / 深浅色 / 主题色 / 动态取色 / 背景图」有关，把这些组成 key 缓存住即可。
+ */
+private val paletteCache = HashMap<String, HintPalette>()
+
 fun resolveHintPalette(context: android.content.Context): HintPalette {
+    val key = try {
+        val prefs = moe.shizuku.manager.ShizukuSettings.getPreferences()
+        buildString {
+            append(currentHintStyle()).append('|')
+            append(context.resources.configuration.uiMode).append('|')
+            append(prefs.getString("theme_color", "")).append('|')
+            append(prefs.getBoolean(moe.shizuku.manager.app.ThemeHelper.KEY_USE_SYSTEM_COLOR, false)).append('|')
+            append(prefs.getBoolean(moe.shizuku.manager.app.ThemeHelper.KEY_BLACK_NIGHT_THEME, false)).append('|')
+            append(moe.shizuku.manager.app.BackgroundHelper.isEnabled(context)).append('|')
+            append(moe.shizuku.manager.app.BackgroundHelper.isBackgroundDark(context)).append('|')
+            append(moe.shizuku.manager.app.BackgroundHelper.imageVersion(context))
+        }
+    } catch (e: Throwable) {
+        "" // 取不到 key 就不缓存，行为退回原来
+    }
+
+    if (key.isNotEmpty()) {
+        paletteCache[key]?.let { return it }
+    }
+
+    val palette = resolveHintPaletteUncached(context)
+    if (key.isNotEmpty()) {
+        if (paletteCache.size > 6) paletteCache.clear()
+        paletteCache[key] = palette
+    }
+    return palette
+}
+
+private fun resolveHintPaletteUncached(context: android.content.Context): HintPalette {
     val theme = context.theme
     fun color(attr: Int): Color = Color(rikka.core.util.ResourceUtils.resolveColor(theme, attr))
 
@@ -328,12 +366,23 @@ private fun HintBackdrop(hazeState: dev.chrisbanes.haze.HazeState, modifier: Mod
  * 而且值只在 `graphicsLayer`（绘制阶段）里读 —— 不触发重组、不改布局。
  *
  * 页面级进度由 [HintPage] 驱动（一次动画带动整页），阶梯感用 [index] 做相位偏移。
+ *
+ * 【性能】原来这里用 `Modifier.composed {}` 包了一层：**每个 item 都会多一个组合包装节点**，
+ * 一页二十几张卡就是二十几次额外的组合开销。现在改成普通的 @Composable 扩展函数，
+ * 只在组合期取一次进度状态和密度，绘制期照旧只读值 —— 效果一样，节点少一层。
+ *
+ * 另外：入场只做前 [ENTRANCE_MAX_ITEMS] 个 item，后面的直接给到终态。
+ * 长列表（工具箱那种十几张卡的页面）没必要把相位一路排到 0.45 之后，白等一帧的动画。
  */
-fun Modifier.itemEntrance(index: Int): Modifier = this.composed {
+private const val ENTRANCE_MAX_ITEMS = 8
+
+@Composable
+fun Modifier.itemEntrance(index: Int): Modifier {
     val progress = LocalPageEntrance.current
-    val shift = (index * 0.08f).coerceAtMost(0.45f)
     val rise = with(androidx.compose.ui.platform.LocalDensity.current) { 18.dp.toPx() }
-    graphicsLayer {
+    val shift = if (index >= ENTRANCE_MAX_ITEMS) 1f else (index * 0.08f).coerceAtMost(0.45f)
+    if (shift >= 1f) return this
+    return this.graphicsLayer {
         val local = ((progress.value - shift) / (1f - shift)).coerceIn(0f, 1f)
         alpha = local
         translationY = (1f - local) * rise
@@ -508,7 +557,10 @@ fun HintCard(
             ),
     ) {
         if (hazeState == null || materialStyle == null) {
-            // 没有 Haze 源（独立使用卡片时）→ 退回老样子：同一块料 + 噪点纹理
+            // 没有 Haze 源（独立使用卡片时）→ 退回老样子：同一块料 + 噪点纹理。
+            // 【性能】「固体底 + 噪点」合并成同一个绘制节点：滚动时每张卡片少画一层
+            // （工具箱那种大卡片多、滚动量大的页面收益最明显）；外层 clip(cardShape)
+            // 仍在，圆角与观感和合并前完全一致。
             val fallbackSurface =
                 if (errorTone) palette.error.copy(alpha = 0.30f) else palette.glassFillTop
             val noise = remember {
@@ -520,19 +572,16 @@ fun HintCard(
             Box(
                 modifier = Modifier
                     .matchParentSize()
-                    .background(color = fallbackSurface, shape = cardShape),
-            )
-            Box(
-                modifier = Modifier
-                    .matchParentSize()
                     .drawWithCache {
                         val shader = androidx.compose.ui.graphics.ImageShader(
                             image = noise,
                             tileModeX = androidx.compose.ui.graphics.TileMode.Repeated,
                             tileModeY = androidx.compose.ui.graphics.TileMode.Repeated,
                         )
+                        val shaderBrush = androidx.compose.ui.graphics.ShaderBrush(shader)
                         onDrawBehind {
-                            drawRect(brush = androidx.compose.ui.graphics.ShaderBrush(shader))
+                            drawRect(color = fallbackSurface)
+                            drawRect(brush = shaderBrush)
                         }
                     },
             )

@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import rikka.recyclerview.BaseRecyclerViewAdapter;
 import rikka.recyclerview.ClassCreatorPool;
@@ -15,6 +17,9 @@ public class AppsAdapter extends BaseRecyclerViewAdapter<ClassCreatorPool> {
     private final Context context;
     private List<PackageInfo> fullData = new ArrayList<>();
     private String query = "";
+
+    /** 【性能】应用标签的小写缓存：搜索时不再对全表反复 loadLabel。 */
+    private final Map<String, String> labelCache = new HashMap<>();
 
     public AppsAdapter(Context context) {
         super();
@@ -37,6 +42,8 @@ public class AppsAdapter extends BaseRecyclerViewAdapter<ClassCreatorPool> {
 
     public void updateData(List<PackageInfo> data) {
         fullData = data != null ? data : new ArrayList<>();
+        // 列表数据换了：标签缓存一并失效
+        labelCache.clear();
         applyFilter();
     }
 
@@ -67,9 +74,19 @@ public class AppsAdapter extends BaseRecyclerViewAdapter<ClassCreatorPool> {
             return true;
         }
         if (pi.applicationInfo != null) {
-            CharSequence label = pi.applicationInfo.loadLabel(context.getPackageManager());
-            return label != null && label.toString().toLowerCase(Locale.ROOT).contains(q);
+            return cachedLabel(pi).contains(q);
         }
         return false;
+    }
+
+    private String cachedLabel(PackageInfo pi) {
+        String key = pi.packageName + '/' + pi.applicationInfo.uid;
+        String label = labelCache.get(key);
+        if (label == null) {
+            CharSequence cs = pi.applicationInfo.loadLabel(context.getPackageManager());
+            label = cs != null ? cs.toString().toLowerCase(Locale.ROOT) : "";
+            labelCache.put(key, label);
+        }
+        return label;
     }
 }

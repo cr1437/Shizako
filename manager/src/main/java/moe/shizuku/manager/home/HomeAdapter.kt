@@ -27,12 +27,26 @@ class HomeAdapter(private val homeModel: HomeViewModel, private val appsModel: A
         return IndexCreatorPool()
     }
 
+    /** 上一次列表的"指纹"：内容没变就不重建列表（下面解释了为什么） */
+    private var lastSignature: String? = null
+
     fun updateData() {
         val status = homeModel.serviceStatus.value?.data ?: return
         val grantedCount = appsModel.grantedCount.value?.data ?: 0
         val adbPermission = status.permission
         val running = status.isRunning
         val isPrimaryUser = UserHandleCompat.myUserId() == 0
+
+        // 【性能】首页会收到很多次状态更新（服务状态、授权数量……），
+        // 以前每次都 clear() + notifyDataSetChanged()，等于把所有卡片重新绑定一遍
+        // （含应用图标异步加载）。先比一下指纹：内容没变就直接返回。
+        val signature = buildString {
+            append(running).append('|').append(adbPermission).append('|')
+            append(grantedCount).append('|').append(isPrimaryUser).append('|')
+            append(status.uid).append('|').append(status.apiVersion).append('|').append(status.seContext)
+        }
+        if (signature == lastSignature) return
+        lastSignature = signature
 
         clear()
         addItem(ServerStatusViewHolder.CREATOR, status, ID_STATUS)
@@ -50,7 +64,11 @@ class HomeAdapter(private val homeModel: HomeViewModel, private val appsModel: A
             addItem(AdbPermissionLimitedViewHolder.CREATOR, status, ID_ADB_PERMISSION_LIMITED)
         }
 
-        addItem(LearnMoreViewHolder.CREATOR, null, ID_LEARN_MORE)
+        // 「深入了解 Shizako酱」那张卡按主人要求从首页去掉。
+        // 代码**没删**（LearnMoreViewHolder / home_learn_more.xml / 文案都还在），
+        // 想恢复就把下面这行加回来：
+        // addItem(LearnMoreViewHolder.CREATOR, null, ID_LEARN_MORE)
+
         notifyDataSetChanged()
     }
 }

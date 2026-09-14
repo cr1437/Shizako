@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- KernelSU 风格列表页（应用管理）：大标题折叠栏 + 下拉刷新 + 列表 -->
+<!-- KernelSU 风格列表页（应用管理）：大标题折叠栏 + 两页（Shizako 授权 / Dhizuku 授权） -->
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -42,9 +42,9 @@
 
             <!-- 顶部渐变遮罩：白字标题在任何壁纸上都清晰 -->
             <View
+                android:id="@+id/appbar_scrim"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/appbar_scrim"
                 android:background="@drawable/appbar_scrim"
                 android:importantForAccessibility="no" />
 
@@ -67,92 +67,109 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <!-- 两页：Shizako 授权应用 / Dhizuku 授权应用 -->
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/apps_tabs"
+            <!-- 两页：Shizako 授权应用 / Dhizuku 授权应用。
+                 与设置里「界面风格」同款滑块：玻璃 = GlassOptionSlider（可拖动 + 弹簧吸附），
+                 MD3 = M3 分段按钮，在 AppsFragment 里以 Compose 组合。 -->
+            <androidx.compose.ui.platform.ComposeView
+                android:id="@+id/apps_segmented"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:tabGravity="fill"
-                app:tabMode="fixed" />
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="10dp" />
 
+            <!-- 页容器：切页时两层交叉淡入淡出（和页面转场同一组曲线）。
+                 0dp + weight=1：TabLayout 之外的高度全给它，否则 wrap_content 父容器里
+                 match_parent 的子层会被量成 0 高（整页空白）。 -->
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="0dp"
+                android:layout_weight="1">
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swipe_refresh"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+                <!-- 第一页：Shizako 授权应用（列表 / 未激活提示都在这层里） -->
+                <FrameLayout
+                    android:id="@+id/page_shizako"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-            <rikka.widget.borderview.BorderRecyclerView
-                android:id="@android:id/list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:scrollbarStyle="insideOverlay"
-                android:scrollbars="vertical"
-                app:borderBottomVisibility="never"
-                app:borderTopDrawable="@null"
-                app:borderTopVisibility="whenTop"
-                app:layoutManager="@string/main_layout_manager" />
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                        android:id="@+id/swipe_refresh"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
-        <!-- 第二页：Dhizuku 授权管理（Compose） -->
-        <FrameLayout
-            android:id="@+id/dhizuku_container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone" />
+                        <rikka.widget.borderview.BorderRecyclerView
+                            android:id="@android:id/list"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:clipToPadding="false"
+                            android:scrollbarStyle="insideOverlay"
+                            android:scrollbars="vertical"
+                            app:borderBottomVisibility="never"
+                            app:borderTopDrawable="@null"
+                            app:borderTopVisibility="whenTop"
+                            app:layoutManager="@string/main_layout_manager" />
+                    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-        <!-- 未激活（服务没在跑）：列表区换成「请先激活」提示（Tab 还在，能切到 Dhizuku 页） -->
-        <LinearLayout
-            android:id="@+id/activation_prompt"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="?android:attr/colorBackground"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="32dp"
-            android:visibility="gone"
-            tools:visibility="visible">
+                    <!-- 未激活（服务没在跑）：列表区换成「请先激活」提示（Tab 还在，能切到 Dhizuku 页） -->
+                    <LinearLayout
+                        android:id="@+id/activation_prompt"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="?android:attr/colorBackground"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="32dp"
+                        android:visibility="gone"
+                        tools:visibility="visible">
 
-            <ImageView
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:importantForAccessibility="no"
-                android:src="@drawable/ic_system_icon"
-                android:tint="?colorPrimary"
-                android:tintMode="src_in" />
+                        <ImageView
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_system_icon"
+                            android:tint="?colorPrimary"
+                            android:tintMode="src_in" />
 
-            <TextView
-                android:id="@+id/activation_prompt_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:text="@string/apps_need_activation_title"
-                android:textAppearance="?textAppearanceTitleMedium" />
+                        <TextView
+                            android:id="@+id/activation_prompt_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:gravity="center"
+                            android:text="@string/apps_need_activation_title"
+                            android:textAppearance="?textAppearanceTitleMedium" />
 
-            <TextView
-                android:id="@+id/activation_prompt_body"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="center"
-                android:text="@string/apps_need_activation_body"
-                android:textAppearance="?textAppearanceBodyMedium" />
+                        <TextView
+                            android:id="@+id/activation_prompt_body"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:gravity="center"
+                            android:text="@string/apps_need_activation_body"
+                            android:textAppearance="?textAppearanceBodyMedium" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/activation_prompt_action"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/apps_need_activation_action" />
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/activation_prompt_action"
+                            style="?attr/ksuActionButtonStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="@string/apps_need_activation_action" />
+                    </LinearLayout>
+                </FrameLayout>
 
-        </LinearLayout>
+                <!-- 第二页：Dhizuku 授权管理（Compose）。
+                 初始用 invisible（而不是 gone）：参与布局测量 → Compose 页在打开时
+                 就完成首次组合/排版，切换过来时不会在转场中间现场付这笔账（切走后仍会置 GONE）。 -->
+                <FrameLayout
+                    android:id="@+id/dhizuku_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="invisible" />
             </FrameLayout>
         </LinearLayout>
     </FrameLayout>

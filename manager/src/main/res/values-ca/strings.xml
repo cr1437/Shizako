@@ -188,7 +188,6 @@ s\'ha copiat al porta-retalls.</string>
     <string name="setup_disclaimer_agree">He llegit i accepto l\'anterior</string>
     <string name="setup_language_title">Trieu l’idioma</string>
     <string name="setup_language_subtitle">Podreu canviar-lo més endavant als ajustos.</string>
-    <string name="setup_mode_subtitle">Trieu com es veurà Shizako. Podreu canviar-ho més endavant als ajustos.</string>
     <string name="setup_mode_follow_system">Segueix el sistema</string>
     <string name="setup_mode_light">Clar</string>
     <string name="setup_mode_dark">Fosc</string>
@@ -203,5 +202,4 @@ s\'ha copiat al porta-retalls.</string>
     <string name="setup_back">Enrere</string>
     <string name="setup_next">Següent</string>
     <string name="setup_get_started">Comença</string>
-    <string name="setup_skip">Omet</string>
 </resources>

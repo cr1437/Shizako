@@ -255,7 +255,8 @@ fun ComputSettingsPage(
 
     /** 正在用 API 拉模型列表 / 拉回来的候选（非空就弹选择框） */
     var fetchingModels by remember { mutableStateOf(false) }
-    var fetchedModels by remember { mutableStateOf<List<String>>(emptyList()) }
+    // 待选模型列表：null = 不显示弹窗。必须走状态 + LaunchedEffect 来弹（原因见下方注释）
+    var pendingModelPick by remember { mutableStateOf<List<String>?>(null) }
 
     LaunchedEffect(Unit) {
         macroCount = withContext(Dispatchers.IO) { ComputMacroStore.load().size }
@@ -457,7 +458,7 @@ fun ComputSettingsPage(
                                     context,
                                     context.getString(R.string.comput_settings_model_fetch_empty),
                                 )
-                                else -> fetchedModels = list
+                                else -> pendingModelPick = list
                             }
                         }
                     },
@@ -494,45 +495,55 @@ fun ComputSettingsPage(
         item { Spacer(Modifier.padding(bottom = 96.dp)) }
     }
 
-    // 模型列表：从 API 拉回来以后弹单选，选中即保存
-    if (fetchedModels.isNotEmpty()) {
-        androidx.appcompat.app.AlertDialog.Builder(context)
-            .setTitle(R.string.comput_settings_model_pick)
-            .setSingleChoiceItems(fetchedModels.toTypedArray(), fetchedModels.indexOf(model)) { dialog, which ->
-                val picked = fetchedModels[which]
-                model = picked
-                scope.launch {
-                    withContext(Dispatchers.IO) { AiExplainUtil.setModel(picked) }
-                    toast(context, context.getString(R.string.comput_settings_model_picked, picked))
+    // 模型列表：从 API 拉回来以后弹单选，选中即保存。
+    // 注意：弹窗只能在 LaunchedEffect 里弹一次，回调只读「快照」——之前直接在
+    // 组合里 show()、回调读实时状态：每次重组合都会再叠一层弹窗，上面那个一关
+    // 就把状态清空，再点下面残留那个就 EmptyList[1] 崩溃（2026-09-13 实机日志）。
+    val modelsToPick = pendingModelPick
+    if (modelsToPick != null) {
+        LaunchedEffect(modelsToPick) {
+            androidx.appcompat.app.AlertDialog.Builder(context)
+                .setTitle(R.string.comput_settings_model_pick)
+                .setSingleChoiceItems(modelsToPick.toTypedArray(), modelsToPick.indexOf(model)) { dialog, which ->
+                    val picked = modelsToPick.getOrNull(which) ?: return@setSingleChoiceItems
+                    model = picked
+                    scope.launch {
+                        withContext(Dispatchers.IO) { AiExplainUtil.setModel(picked) }
+                        toast(context, context.getString(R.string.comput_settings_model_picked, picked))
+                    }
+                    dialog.dismiss()
                 }
-                dialog.dismiss()
-            }
-            .setNegativeButton(android.R.string.cancel, null)
-            .setOnDismissListener { fetchedModels = emptyList() }
-            .show()
-            .also { moe.shizuku.manager.ui.glass.GlassWindow.applyIfGlass(it) }
+                .setNegativeButton(android.R.string.cancel, null)
+                .setOnDismissListener { pendingModelPick = null }
+                .show()
+                .also { moe.shizuku.manager.ui.glass.GlassWindow.applyIfGlass(it) }
+        }
     }
 
-    // 提供商选择弹窗：单选列表，和语言选择那套一致
+    // 提供商选择弹窗：单选列表，和语言选择那套一致。
+    // 同样只在 LaunchedEffect 里弹一次；关掉时把标志复位，避免重组合时反复弹。
     if (showProviderDialog) {
-        val labels = AiExplainUtil.PROVIDERS.map { it.label }.toTypedArray()
-        val currentIndex = AiExplainUtil.PROVIDERS.indexOfFirst { it.id == provider.id }
-            .coerceAtLeast(0)
-        androidx.appcompat.app.AlertDialog.Builder(context)
-            .setTitle(R.string.comput_ai_provider)
-            .setSingleChoiceItems(labels, currentIndex) { dialog, which ->
-                val picked = AiExplainUtil.PROVIDERS[which]
-                AiExplainUtil.setProviderId(picked.id)
-                // 换厂商就把「覆盖用的 base URL」清掉，免得拿着上一家的地址请求下一家
-                if (picked.id != "custom") AiExplainUtil.setBaseUrl("")
-                model = picked.defaultModel.ifBlank { model }
-                provider = picked
-                providerLabel = picked.label
-                baseUrl = AiExplainUtil.getRawBaseUrl()
-                dialog.dismiss()
-            }
-            .setNegativeButton(android.R.string.cancel, null)
-            .show()
-            .also { moe.shizuku.manager.ui.glass.GlassWindow.applyIfGlass(it) }
+        LaunchedEffect(Unit) {
+            val labels = AiExplainUtil.PROVIDERS.map { it.label }.toTypedArray()
+            val currentIndex = AiExplainUtil.PROVIDERS.indexOfFirst { it.id == provider.id }
+                .coerceAtLeast(0)
+            androidx.appcompat.app.AlertDialog.Builder(context)
+                .setTitle(R.string.comput_ai_provider)
+                .setSingleChoiceItems(labels, currentIndex) { dialog, which ->
+                    val picked = AiExplainUtil.PROVIDERS.getOrNull(which) ?: return@setSingleChoiceItems
+                    AiExplainUtil.setProviderId(picked.id)
+                    // 换厂商就把「覆盖用的 base URL」清掉，免得拿着上一家的地址请求下一家
+                    if (picked.id != "custom") AiExplainUtil.setBaseUrl("")
+                    model = picked.defaultModel.ifBlank { model }
+                    provider = picked
+                    providerLabel = picked.label
+                    baseUrl = AiExplainUtil.getRawBaseUrl()
+                    dialog.dismiss()
+                }
+                .setNegativeButton(android.R.string.cancel, null)
+                .setOnDismissListener { showProviderDialog = false }
+                .show()
+                .also { moe.shizuku.manager.ui.glass.GlassWindow.applyIfGlass(it) }
+        }
     }
 }

@@ -206,7 +206,6 @@ Az export funkció SAF-et használ (Storage Access Framework). A jelentések sze
     <string name="setup_disclaimer_agree">Elolvastam és elfogadom a fentiakat</string>
     <string name="setup_language_title">Nyelv kiválasztása</string>
     <string name="setup_language_subtitle">Ezt később a Beállításokban módosíthatja.</string>
-    <string name="setup_mode_subtitle">Válassza ki, hogyan nézzen ki a Shizako. Később a Beállításokban módosíthatja.</string>
     <string name="setup_mode_follow_system">Rendszer követése</string>
     <string name="setup_mode_light">Világos</string>
     <string name="setup_mode_dark">Sötét</string>
@@ -221,5 +220,4 @@ Az export funkció SAF-et használ (Storage Access Framework). A jelentések sze
     <string name="setup_back">Vissza</string>
     <string name="setup_next">Tovább</string>
     <string name="setup_get_started">Kezdés</string>
-    <string name="setup_skip">Kihagyás</string>
 </resources>

@@ -78,7 +78,7 @@ fun ToolboxScreen(
         modifier = modifier,
     ) {
         item(key = "toolbox-note") {
-            Box(modifier = Modifier.animateItem().itemEntrance(0)) {
+            Box(modifier = Modifier.itemEntrance(0)) {
                 HintNote(
                     palette = palette,
                     iconRes = R.drawable.ic_toolbox_24,
@@ -90,7 +90,7 @@ fun ToolboxScreen(
 
         groups.forEachIndexed { groupIndex, group ->
             item(key = "toolbox-group-${group.titleRes}") {
-                Box(modifier = Modifier.animateItem().itemEntrance(1 + groupIndex)) {
+                Box(modifier = Modifier.itemEntrance(1 + groupIndex)) {
                     HintSectionTitle(
                         palette = palette,
                         text = stringResource(group.titleRes),
@@ -98,7 +98,7 @@ fun ToolboxScreen(
                 }
             }
             item(key = "toolbox-card-${group.titleRes}") {
-                Box(modifier = Modifier.animateItem().itemEntrance(1 + groupIndex)) {
+                Box(modifier = Modifier.itemEntrance(1 + groupIndex)) {
                     HintCard(palette = palette) {
                         group.items.forEach { item -> ToolboxRow(palette, item) }
                     }

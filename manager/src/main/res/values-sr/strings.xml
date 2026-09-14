@@ -191,7 +191,6 @@ je kopirano u ostavu.</string>
     <string name="setup_disclaimer_agree">Прочитао сам и прихватам горе наведено</string>
     <string name="setup_language_title">Изаберите језик</string>
     <string name="setup_language_subtitle">Касније га можете променити у подешавањима.</string>
-    <string name="setup_mode_subtitle">Изаберите како ће Shizako изгледати. Касније можете променити у подешавањима.</string>
     <string name="setup_mode_follow_system">Према систему</string>
     <string name="setup_mode_light">Светла</string>
     <string name="setup_mode_dark">Тамна</string>
@@ -206,5 +205,4 @@ je kopirano u ostavu.</string>
     <string name="setup_back">Назад</string>
     <string name="setup_next">Даље</string>
     <string name="setup_get_started">Започни</string>
-    <string name="setup_skip">Прескочи</string>
 </resources>

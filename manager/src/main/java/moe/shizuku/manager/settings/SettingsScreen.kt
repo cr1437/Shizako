@@ -91,6 +91,8 @@ data class SettingsUiState(
     val debugUnlocked: Boolean = false,
     /** 开机自动关闭 USB 调试 */
     val autoDisableUsbDebugging: Boolean = false,
+    /** 持久 TCP 模式（照搬 Shevery）：断网也能直连回来 */
+    val tcpMode: Boolean = false,
 )
 
 /** 设置页的层级：一级菜单 + 各二级页。 */
@@ -122,6 +124,7 @@ fun SettingsScreen(
     onAutoDisableUsbDebugging: (Boolean) -> Unit = {},
     onStartOnBoot: (Boolean) -> Unit,
     onWatchdog: (Boolean) -> Unit,
+    onTcpMode: (Boolean) -> Unit,
     onAutoUpdate: (Boolean) -> Unit,
     onApiLogEnabled: (Boolean) -> Unit,
     onApiLogClear: () -> Unit,
@@ -131,6 +134,8 @@ fun SettingsScreen(
     onCrashLogs: () -> Unit,
     onTranslation: () -> Unit,
     onUnlockDebug: () -> Unit,
+    /** 关于页「给项目点个 Star」：宿主用系统浏览器打开项目主页 */
+    onOpenStar: () -> Unit = {},
     onPickBackground: () -> Unit,
     onCropBackground: () -> Unit,
     onClearBackground: () -> Unit,
@@ -189,11 +194,10 @@ fun SettingsScreen(
     AnimatedContent(
         targetState = page,
         transitionSpec = {
-            val dir = if (targetState.ordinal > initialState.ordinal) 1 else -1
-            (slideInHorizontally(animationSpec = tween(240)) { w -> dir * w / 4 } +
-                fadeIn(animationSpec = tween(180))) togetherWith
-                (slideOutHorizontally(animationSpec = tween(200)) { w -> -dir * w / 4 } +
-                    fadeOut(animationSpec = tween(140)))
+            // 转场参数全应用统一（PageMotion）：和底栏 Tab / 次级页那套 XML 是同一组数字
+            moe.shizuku.manager.ui.motion.PageMotion.slideSpec(
+                targetState.ordinal > initialState.ordinal,
+            )
         },
         label = "settingsPage",
     ) { current ->
@@ -296,7 +300,7 @@ fun SettingsScreen(
 
             SettingsPage.STARTUP -> StartupPage(
                 state, palette, pageListState, pageCollapsedChange, go,
-                onStartOnBoot, onWatchdog, onAutoUpdate, onAutoDisableUsbDebugging,
+                onStartOnBoot, onWatchdog, onTcpMode, onAutoUpdate, onAutoDisableUsbDebugging,
             )
 
             SettingsPage.LANGUAGE -> LanguagePage(
@@ -312,6 +316,7 @@ fun SettingsScreen(
             SettingsPage.ABOUT -> AboutPage(
                 state, palette, pageListState, pageCollapsedChange, go,
                 onUnlockDebug, onCrashLogs,
+                onOpenStar = onOpenStar,
             )
         }
     }
@@ -832,6 +837,7 @@ private fun StartupPage(
     go: (SettingsPage) -> Unit,
     onStartOnBoot: (Boolean) -> Unit,
     onWatchdog: (Boolean) -> Unit,
+    onTcpMode: (Boolean) -> Unit,
     onAutoUpdate: (Boolean) -> Unit,
     onAutoDisableUsbDebugging: (Boolean) -> Unit,
 ) {
@@ -849,6 +855,14 @@ private fun StartupPage(
             summary = stringResource(R.string.settings_watchdog_summary),
             checked = state.watchdog,
             onChange = onWatchdog,
+        )
+        // 持久 TCP 模式（照搬 Shevery）：切到本机 5555，断网也能直连回来
+        SettingSwitchRow(
+            palette = palette,
+            title = stringResource(R.string.settings_tcp_mode),
+            summary = stringResource(R.string.settings_tcp_mode_summary),
+            checked = state.tcpMode,
+            onChange = onTcpMode,
         )
         SettingSwitchRow(
             palette = palette,
@@ -968,6 +982,8 @@ private fun AboutPage(
     go: (SettingsPage) -> Unit,
     onUnlockDebug: () -> Unit,
     onCrashLogs: () -> Unit,
+    /** 关于页「给项目点个 Star」：宿主用系统浏览器打开项目主页 */
+    onOpenStar: () -> Unit = {},
 ) {
     var taps by remember { mutableIntStateOf(0) }
     val soonUnlocked = state.debugUnlocked
@@ -1064,6 +1080,13 @@ private fun AboutPage(
                             context.getString(R.string.about_github_link),
                         )
                     },
+                )
+                // 求 Star：顺手能点到，比冷启动弹一次更管用（弹窗那套在 StarPrompt 里）
+                ProfileRow(
+                    palette = palette,
+                    label = stringResource(R.string.about_star),
+                    value = stringResource(R.string.about_star_summary),
+                    onClick = { onOpenStar() },
                 )
                 ProfileRow(
                     palette = palette,

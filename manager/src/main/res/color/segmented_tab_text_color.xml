@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- 分段切换条 Tab 文字：未选中一档灰，选中走 tabSelectedTextColor。 -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_selected="true" android:color="@color/segmented_tab_selected" />
+    <item android:color="@color/segmented_tab_text" />
+</selector>

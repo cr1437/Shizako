@@ -187,7 +187,6 @@ Anda mungkin perlu memulai ulang Shizako agar operasi dapat diterapkan."</string
     <string name="setup_disclaimer_agree">Saya telah membaca dan menyetujui hal di atas</string>
     <string name="setup_language_title">Pilih bahasa</string>
     <string name="setup_language_subtitle">Anda dapat mengubahnya nanti di Pengaturan.</string>
-    <string name="setup_mode_subtitle">Pilih tampilan Shizako. Anda dapat mengubahnya nanti di Pengaturan.</string>
     <string name="setup_mode_follow_system">Ikuti sistem</string>
     <string name="setup_mode_light">Terang</string>
     <string name="setup_mode_dark">Gelap</string>
@@ -202,5 +201,4 @@ Anda mungkin perlu memulai ulang Shizako agar operasi dapat diterapkan."</string
     <string name="setup_back">Kembali</string>
     <string name="setup_next">Berikutnya</string>
     <string name="setup_get_started">Mulai</string>
-    <string name="setup_skip">Lewati</string>
 </resources>

@@ -188,7 +188,6 @@ Bạn có thể cần khởi động lại Shizako để thay đổi có hiệu 
     <string name="setup_disclaimer_agree">Tôi đã đọc và đồng ý với những điều trên</string>
     <string name="setup_language_title">Chọn ngôn ngữ</string>
     <string name="setup_language_subtitle">Bạn có thể thay đổi sau này trong Cài đặt.</string>
-    <string name="setup_mode_subtitle">Chọn giao diện của Shizako. Bạn có thể thay đổi sau này trong Cài đặt.</string>
     <string name="setup_mode_follow_system">Theo hệ thống</string>
     <string name="setup_mode_light">Sáng</string>
     <string name="setup_mode_dark">Tối</string>
@@ -203,5 +202,4 @@ Bạn có thể cần khởi động lại Shizako để thay đổi có hiệu 
     <string name="setup_back">Quay lại</string>
     <string name="setup_next">Tiếp theo</string>
     <string name="setup_get_started">Bắt đầu</string>
-    <string name="setup_skip">Bỏ qua</string>
 </resources>

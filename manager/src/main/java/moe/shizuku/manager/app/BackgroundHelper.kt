@@ -224,34 +224,106 @@ object BackgroundHelper {
         return !proc.exists() || proc.lastModified() < src.lastModified()
     }
 
-    /** 处理图重新生成后，让缓存的那张底图作废（下次取会重新解码）。 */
+    /** 处理图重新生成后，让缓存的底图作废（下次取会重新解码）。 */
     @Synchronized
     fun invalidateBitmapCache() {
         cachedKey = null
-        cachedBitmap?.recycle()
         cachedBitmap = null
+        windowBitmapKey = null
+        windowBitmap = null
     }
 
     /** 窗口背景 drawable；没设置自定义图片时返回 null（用主题纯色底）。 */
     fun loadDrawable(context: Context): Drawable? {
         val file = if (processedFile(context).exists()) processedFile(context) else sourceFile(context)
         if (!file.exists()) return null
-        val bmp = BitmapFactory.decodeFile(file.path) ?: return null
+        val bmp = windowBitmapCache(context, file) ?: return null
         // centerCrop：保持原始比例、居中裁剪填充（不再拉伸变形）
         return CenterCropDrawable(bmp)
     }
 
     /**
-     * Compose 侧用的背景 Bitmap（Haze 的 hazeSource 需要真像素，不能只是 View 的 windowBackground）。
-     * 没设置自定义图片时返回 null —— 这时候页面底色就是主题纯色。
+     * 只取**已经在缓存里**的窗口背景（不触发解码）。
+     *
+     * onCreate 主线程上先问这个：命中就直接换底，没命中交给后台线程去解
+     * （见 [moe.shizuku.manager.app.AppActivity.applyCustomBackground]）。
      */
-    fun loadBitmap(context: Context): Bitmap? {
-        val file = currentFile(context) ?: return null
+    @Synchronized
+    fun cachedWindowDrawable(context: Context): Drawable? {
+        val file = if (processedFile(context).exists()) processedFile(context) else sourceFile(context)
+        if (!file.exists()) return null
+        val key = file.absolutePath + ":" + file.lastModified() + ":" + screenMaxEdge(context)
+        val existing = windowBitmap
+        if (key == windowBitmapKey && existing != null && !existing.isRecycled) {
+            return CenterCropDrawable(existing)
+        }
+        return null
+    }
+
+    // ---- 窗口背景位图缓存（按 文件+修改时间+采样率 复用，避免每次重建都解码） ----
+
+    @Volatile
+    private var windowBitmapKey: String? = null
+
+    @Volatile
+    private var windowBitmap: Bitmap? = null
+
+    @Synchronized
+    private fun windowBitmapCache(context: Context, file: File): Bitmap? {
+        val target = screenMaxEdge(context)
+        val key = file.absolutePath + ":" + file.lastModified() + ":" + target
+        val existing = windowBitmap
+        if (key == windowBitmapKey && existing != null && !existing.isRecycled) return existing
+
+        val decoded = decodeSampled(file, target)
+        // 旧图不 recycle：可能还被上一帧的绘制引用（让 GC 自己收），只换引用
+        windowBitmapKey = key
+        windowBitmap = decoded
+        return decoded
+    }
+
+    /** 屏幕最长边（px）：窗口底的采样目标 */
+    private fun screenMaxEdge(context: Context): Int {
+        val dm = context.resources.displayMetrics
+        return maxOf(dm.widthPixels, dm.heightPixels).coerceAtLeast(720)
+    }
+
+    /**
+     * 按「解码后最长边 >= targetMax」的 2 的幂采样解码。
+     *
+     * 相比 `BitmapFactory.decodeFile(path)`（原尺寸）：内存降到 ~1/4 或更低，主线程解码快得多。
+     */
+    private fun decodeSampled(file: File, targetMax: Int, config: Bitmap.Config = Bitmap.Config.ARGB_8888): Bitmap? {
         return try {
-            BitmapFactory.decodeFile(file.path)
+            val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+            BitmapFactory.decodeFile(file.path, bounds)
+            if (bounds.outWidth <= 0 || bounds.outHeight <= 0) return null
+
+            var sample = 1
+            while (maxOf(bounds.outWidth, bounds.outHeight) / (sample * 2) >= targetMax) {
+                sample *= 2
+            }
+            BitmapFactory.decodeFile(
+                file.path,
+                BitmapFactory.Options().apply {
+                    inSampleSize = sample
+                    inPreferredConfig = config
+                },
+            )
         } catch (e: Throwable) {
             null
         }
+    }
+
+    /**
+     * Compose 侧用的背景 Bitmap（Haze 的 hazeSource 需要真像素，不能只是 View 的 windowBackground）。
+     * 没设置自定义图片时返回 null —— 这时候页面底色就是主题纯色。
+     *
+     * 同样按屏幕尺寸采样解码：Haze 取像本来就会自己缩，没必要拿 4K 原图。
+     */
+    fun loadBitmap(context: Context): Bitmap? {
+        val file = currentFile(context) ?: return null
+        return decodeSampled(file, screenMaxEdge(context))
     }
 
     /** 当前底图的版本号（文件修改时间）：换图/裁切/调模糊后用它让 Compose 重新记 Bitmap。 */
@@ -272,12 +344,8 @@ object BackgroundHelper {
         val key = file.absolutePath + ":" + file.lastModified()
         val existing = cachedBitmap
         if (key == cachedKey && existing != null && !existing.isRecycled) return existing
-        existing?.recycle()
-        val decoded = try {
-            BitmapFactory.decodeFile(file.path)
-        } catch (e: Throwable) {
-            null
-        }
+        // 【性能】这张图只用来算明暗/取色，512 px 足够；以前是全尺寸解码，白占几十 MB
+        val decoded = decodeSampled(file, 512, Bitmap.Config.RGB_565)
         cachedKey = key
         cachedBitmap = decoded
         return decoded

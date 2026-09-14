@@ -190,7 +190,6 @@ Genellikle, bu kısıtlama \"Geliştirici seçenekleri\"ndeki bazı ayarlar değ
     <string name="setup_disclaimer_agree">Yukarıdakileri okudum ve kabul ediyorum</string>
     <string name="setup_language_title">Dil seçin</string>
     <string name="setup_language_subtitle">Bunu daha sonra Ayarlar’dan değiştirebilirsiniz.</string>
-    <string name="setup_mode_subtitle">Shizako’nun nasıl görüneceğini seçin. Daha sonra Ayarlar’dan değiştirebilirsiniz.</string>
     <string name="setup_mode_follow_system">Sistemi izle</string>
     <string name="setup_mode_light">Açık</string>
     <string name="setup_mode_dark">Koyu</string>
@@ -205,5 +204,4 @@ Genellikle, bu kısıtlama \"Geliştirici seçenekleri\"ndeki bazı ayarlar değ
     <string name="setup_back">Geri</string>
     <string name="setup_next">İleri</string>
     <string name="setup_get_started">Başla</string>
-    <string name="setup_skip">Atla</string>
 </resources>

@@ -190,7 +190,6 @@ is gekopieerd naar het klembord.</string>
     <string name="setup_disclaimer_agree">Ik heb het bovenstaande gelezen en ga ermee akkoord</string>
     <string name="setup_language_title">Kies taal</string>
     <string name="setup_language_subtitle">Je kunt dit later wijzigen in de instellingen.</string>
-    <string name="setup_mode_subtitle">Kies hoe Shizako eruitziet. Je kunt dit later wijzigen in de instellingen.</string>
     <string name="setup_mode_follow_system">Systeem volgen</string>
     <string name="setup_mode_light">Licht</string>
     <string name="setup_mode_dark">Donker</string>
@@ -205,5 +204,4 @@ is gekopieerd naar het klembord.</string>
     <string name="setup_back">Terug</string>
     <string name="setup_next">Volgende</string>
     <string name="setup_get_started">Aan de slag</string>
-    <string name="setup_skip">Overslaan</string>
 </resources>

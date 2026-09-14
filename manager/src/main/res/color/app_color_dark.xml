@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- appColorPrimary 别名（深色主题使用）：跟随应用色板 ?colorPrimary。
+     之前写死 #FFB3BF（Sakura 浅粉）；M3 深色色板的 primary 本身就是
+     提亮过的 tone，动态取色 / 主题色切换都会自动跟着变。 -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="?colorPrimary" />
+</selector>

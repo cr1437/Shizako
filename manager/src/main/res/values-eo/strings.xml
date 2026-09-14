@@ -188,7 +188,6 @@ estas kopiita al la tondujo.</string>
     <string name="setup_disclaimer_agree">Mi legis kaj konsentas kun la supre</string>
     <string name="setup_language_title">Elektu lingvon</string>
     <string name="setup_language_subtitle">Vi povos ŝanĝi ĝin poste en Agordoj.</string>
-    <string name="setup_mode_subtitle">Elektu, kiel Shizako aspektos. Vi povos ŝanĝi ĝin poste en Agordoj.</string>
     <string name="setup_mode_follow_system">Sekvi la sistemon</string>
     <string name="setup_mode_light">Hela</string>
     <string name="setup_mode_dark">Malhela</string>
@@ -203,5 +202,4 @@ estas kopiita al la tondujo.</string>
     <string name="setup_back">Reen</string>
     <string name="setup_next">Sekva</string>
     <string name="setup_get_started">Komenci</string>
-    <string name="setup_skip">Preterpasi</string>
 </resources>

@@ -188,7 +188,6 @@
     <string name="setup_disclaimer_agree">மேலே உள்ளதைப் படித்து ஒப்புக்கொள்கிறேன்</string>
     <string name="setup_language_title">மொழியைத் தேர்ந்தெடுக்கவும்</string>
     <string name="setup_language_subtitle">பின்னர் அமைப்புகளில் இதை மாற்றலாம்.</string>
-    <string name="setup_mode_subtitle">Shizako எப்படி இருக்க வேண்டும் என்பதைத் தேர்ந்தெடுக்கவும். பின்னர் அமைப்புகளில் மாற்றலாம்.</string>
     <string name="setup_mode_follow_system">கணினியைப் பின்பற்று</string>
     <string name="setup_mode_light">ஒளி</string>
     <string name="setup_mode_dark">இருள்</string>
@@ -203,5 +202,4 @@
     <string name="setup_back">பின்</string>
     <string name="setup_next">அடுத்து</string>
     <string name="setup_get_started">தொடங்கு</string>
-    <string name="setup_skip">தவிர்</string>
 </resources>

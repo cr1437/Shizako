@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.getValue
@@ -17,9 +18,11 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import moe.shizuku.manager.AppConstants
+import moe.shizuku.manager.BuildConfig
 import moe.shizuku.manager.Helps
 import moe.shizuku.manager.R
 import moe.shizuku.manager.databinding.FragmentSubPageBinding
+import moe.shizuku.manager.comput.copyToClipboard
 import moe.shizuku.manager.ui.hint.HintPalette
 import moe.shizuku.manager.ui.hint.resolveHintPalette
 import moe.shizuku.manager.utils.CustomTabsHelper
@@ -39,12 +42,16 @@ class ShellTutorialFragment : Fragment() {
     companion object {
         private const val SH_NAME = "rish"
         private const val DEX_NAME = "rish_shizuku.dex"
+
+        /** DEBUG 自检开关：`am start ... --ez zako_deploy_selftest true`。 */
+        private const val EXTRA_SELFTEST = "zako_deploy_selftest"
     }
 
     private var shell: FragmentSubPageBinding? = null
 
     private var uiState by mutableStateOf(TerminalTutorialState())
     private val listState = LazyListState()
+    private var selfTestRan = false
 
     private val deployExecutor = Executors.newSingleThreadExecutor { r ->
         Thread(r, "rish-deploy").apply { isDaemon = true }
@@ -122,6 +129,7 @@ class ShellTutorialFragment : Fragment() {
                 onDeploy = ::startDeploy,
                 onExportFiles = { openDocumentsTree.launch(null) },
                 onOpenDocs = { CustomTabsHelper.launchUrlOrCopy(requireContext(), Helps.RISH.get()) },
+                onCopyCommand = ::copyCommand,
             )
         }
         return shell.root
@@ -134,11 +142,47 @@ class ShellTutorialFragment : Fragment() {
             findNavController().navigateUp()
         }
         refreshEnvironment()
+        maybeRunSelfTest()
+    }
+
+    /**
+     * 部署自检：只有显式带着 `zako_deploy_selftest` 启动本页时才跑，
+     * 结果写到 `/data/local/tmp/shizako-deploy.log`（部分 ROM 过滤应用日志，只能靠文件回读）。
+     */
+    private fun maybeRunSelfTest() {
+        if (!BuildConfig.DEBUG || selfTestRan) return
+        val context = context ?: return
+        if (!requireActivity().intent.getBooleanExtra(EXTRA_SELFTEST, false)) return
+        selfTestRan = true
+        if (uiState.deploy is DeployState.Running) return
+        uiState = uiState.copy(deploy = DeployState.Running)
+        deployExecutor.execute {
+            val installIntoTermux = RishInstaller.hasTermux() && RishInstaller.isRoot()
+            val result = RishInstaller.deploy(context, installIntoTermux)
+            RishInstaller.dumpSelfTest(context, result)
+            // 部署成功后顺手跑一次 rish（验证 dex 能被非属主 uid 加载）
+            (result as? RishInstaller.Result.Success)?.let {
+                RishInstaller.selfRunTest(context, it.targetDir)
+            }
+            view?.post {
+                uiState = uiState.copy(
+                    deploy = when (result) {
+                        is RishInstaller.Result.Success -> DeployState.Success(
+                            targetDir = result.targetDir,
+                            inTermuxPath = result.inTermuxPath,
+                            isRoot = result.runtime == RishInstaller.Runtime.ROOT,
+                        )
+                        is RishInstaller.Result.Failure -> DeployState.Failure(result.message)
+                    },
+                )
+            }
+        }
     }
 
     override fun onResume() {
         super.onResume()
         refreshEnvironment()
+        maybeRunSelfTest()
     }
 
     /** 环境探测（服务身份 / Termux 是否存在）放到后台线程，避免阻塞首帧。 */
@@ -174,12 +218,25 @@ class ShellTutorialFragment : Fragment() {
                         is RishInstaller.Result.Success -> DeployState.Success(
                             targetDir = result.targetDir,
                             inTermuxPath = result.inTermuxPath,
+                            isRoot = result.runtime == RishInstaller.Runtime.ROOT,
                         )
                         is RishInstaller.Result.Failure -> DeployState.Failure(result.message)
                     }
                 )
             }
         }
+    }
+
+    /**
+     * 「复制调用命令」：把一行完整命令塞进剪贴板（含 RISH_APPLICATION_ID），
+     * 用户在终端里粘贴回车即可，不用自己拼路径和包名。
+     */
+    private fun copyCommand() {
+        val context = context ?: return
+        val deploy = uiState.deploy as? DeployState.Success ?: return
+        val command = RishInstaller.commandLine(deploy.targetDir, deploy.inTermuxPath)
+        copyToClipboard(context, getString(R.string.app_name), command)
+        Toast.makeText(context, getString(R.string.terminal_copy_command_done), Toast.LENGTH_LONG).show()
     }
 
     override fun onDestroyView() {

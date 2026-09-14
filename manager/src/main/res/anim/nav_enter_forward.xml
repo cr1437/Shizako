@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 前进转场 · 新页面：从右侧滑入 + 淡入（M3 shared axis X） -->
+<!-- 前进转场 · 新页面：从右侧滑入 + 淡入（和设置/工具箱二级页同一组数字）
+     数字与 ui/motion/PageMotion.kt 一一对应：滑入 240ms / 滑出 180ms，距离 1/4 页宽。
+     （改一个就要一起改另一个，别只改一半） -->
 <set xmlns:android="http://schemas.android.com/apk/res/android"
     android:shareInterpolator="false">
 
     <translate
-        android:duration="260"
-        android:fromXDelta="14%p"
+        android:duration="240"
+        android:fromXDelta="25%p"
         android:interpolator="@android:interpolator/fast_out_slow_in"
         android:toXDelta="0" />
 
     <alpha
-        android:duration="220"
+        android:duration="180"
         android:fromAlpha="0.0"
         android:interpolator="@android:interpolator/linear"
-        android:startOffset="40"
         android:toAlpha="1.0" />
 
 </set>

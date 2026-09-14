@@ -12,4 +12,15 @@
          MD3 标准模式 = 主题 surface（M3 默认观感）；
          玻璃材质 = 全透明，让壁纸从状态栏一路透下来 -->
     <attr name="ksuAppBarBackground" format="reference|color" />
+
+    <!-- 分段切换条（应用页的「Shizako 授权 / Dhizuku 授权」TabLayout）：
+         玻璃风格下要换成一整块玻璃底 + 强调色指示器，否则是不透明色板 -->
+    <attr name="ksuSegmentedStyle" format="reference" />
+
+    <!-- 强调动作按钮（首页「开始激活」/ 未激活提示的「去激活」/ 引导页底部按钮）：
+         玻璃风格下要变成玻璃底 + 强调色文字，而不是实心色块 -->
+    <attr name="ksuActionButtonStyle" format="reference" />
+
+    <!-- 引导页每步内容所在的卡片：玻璃风格下透出壁纸底 -->
+    <attr name="ksuSetupCardStyle" format="reference" />
 </resources>

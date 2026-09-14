@@ -188,7 +188,6 @@ ir nokopēts starpliktuvē.</string>
     <string name="setup_disclaimer_agree">Esmu izlasījis un piekrītu iepriekš minētajam</string>
     <string name="setup_language_title">Izvēlieties valodu</string>
     <string name="setup_language_subtitle">Vēlāk to varēsiet mainīt iestatījumos.</string>
-    <string name="setup_mode_subtitle">Izvēlieties, kā Shizako izskatīsies. Vēlāk varēsiet mainīt iestatījumos.</string>
     <string name="setup_mode_follow_system">Pēc sistēmas</string>
     <string name="setup_mode_light">Gaišs</string>
     <string name="setup_mode_dark">Tumšs</string>
@@ -203,5 +202,4 @@ ir nokopēts starpliktuvē.</string>
     <string name="setup_back">Atpakaļ</string>
     <string name="setup_next">Tālāk</string>
     <string name="setup_get_started">Sākt</string>
-    <string name="setup_skip">Izlaist</string>
 </resources>

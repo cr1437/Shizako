@@ -190,7 +190,6 @@ Może być konieczne ponowne uruchomienie Shizako, aby operacja zaczęła obowi�
     <string name="setup_disclaimer_agree">Przeczytałem powyższe i zgadzam się</string>
     <string name="setup_language_title">Wybierz język</string>
     <string name="setup_language_subtitle">Możesz to później zmienić w ustawieniach.</string>
-    <string name="setup_mode_subtitle">Wybierz, jak ma wyglądać Shizako. Możesz to później zmienić w ustawieniach.</string>
     <string name="setup_mode_follow_system">Zgodnie z systemem</string>
     <string name="setup_mode_light">Jasny</string>
     <string name="setup_mode_dark">Ciemny</string>
@@ -205,5 +204,4 @@ Może być konieczne ponowne uruchomienie Shizako, aby operacja zaczęła obowi�
     <string name="setup_back">Wstecz</string>
     <string name="setup_next">Dalej</string>
     <string name="setup_get_started">Rozpocznij</string>
-    <string name="setup_skip">Pomiń</string>
 </resources>

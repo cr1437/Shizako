@@ -189,7 +189,6 @@ Pode ser necessário reiniciar o Shizako para que a operação entre em vigor."<
     <string name="setup_disclaimer_agree">Li e aceito o acima exposto</string>
     <string name="setup_language_title">Escolher idioma</string>
     <string name="setup_language_subtitle">Poderá alterá-lo mais tarde nas configurações.</string>
-    <string name="setup_mode_subtitle">Escolha a aparência do Shizako. Poderá alterá-la mais tarde nas configurações.</string>
     <string name="setup_mode_follow_system">Seguir o sistema</string>
     <string name="setup_mode_light">Claro</string>
     <string name="setup_mode_dark">Escuro</string>
@@ -204,5 +203,4 @@ Pode ser necessário reiniciar o Shizako para que a operação entre em vigor."<
     <string name="setup_back">Voltar</string>
     <string name="setup_next">Avançar</string>
     <string name="setup_get_started">Começar</string>
-    <string name="setup_skip">Ignorar</string>
 </resources>

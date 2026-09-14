@@ -34,6 +34,15 @@ public class ShizukuSettings {
     /** 开机后自动关掉 USB 调试（照搬 Shevery：ADB 启动过 Shizuku 之后把口子关上更安全） */
     public static final String AUTO_DISABLE_USB_DEBUGGING = "auto_disable_usb_debugging";
 
+    /** 持久 TCP 模式：把 ADB 切到本机 5555，断网也能直接连回来（照搬 Shevery）。 */
+    public static final String TCP_MODE = "tcp_mode";
+
+    /** 上次启动用的 ADB 端口（TCP 模式直连的候选）。 */
+    public static final String LAST_ADB_PORT = "last_adb_port";
+
+    /** 用户对“启用持久 TCP 模式？”提示选择了不再提醒。 */
+    public static final String SUPPRESS_TCP_MODE_PROMPT = "suppress_tcp_mode_prompt";
+
     private static SharedPreferences sPreferences;
 
     public static SharedPreferences getPreferences() {
@@ -92,6 +101,31 @@ public class ShizukuSettings {
         getPreferences().edit().putInt("mode", method).apply();
     }
 
+    /** 默认开启（2026-09-14 起）：激活完自动把 ADB 切到本机 TCP 5555，免网络也能直连回来。 */
+    public static boolean isTcpMode() {
+        return getPreferences().getBoolean(TCP_MODE, true);
+    }
+
+    public static void setTcpMode(boolean enabled) {
+        getPreferences().edit().putBoolean(TCP_MODE, enabled).apply();
+    }
+
+    public static boolean isTcpModePromptSuppressed() {
+        return getPreferences().getBoolean(SUPPRESS_TCP_MODE_PROMPT, false);
+    }
+
+    public static void setTcpModePromptSuppressed(boolean suppressed) {
+        getPreferences().edit().putBoolean(SUPPRESS_TCP_MODE_PROMPT, suppressed).apply();
+    }
+
+    public static int getLastAdbPort() {
+        return getPreferences().getInt(LAST_ADB_PORT, -1);
+    }
+
+    public static void setLastAdbPort(int port) {
+        getPreferences().edit().putInt(LAST_ADB_PORT, port).apply();
+    }
+
     /**
      * Whether activities should request the display's highest refresh rate.
      * Defaults to true (the historical behavior).
@@ -142,7 +176,13 @@ public class ShizukuSettings {
         if (TextUtils.isEmpty(tag) || "SYSTEM".equals(tag)) {
             return Locale.getDefault();
         }
-        return Locale.forLanguageTag(tag);
+        // 中文按文字分：老版本存的 zh-CN / zh-TW 迁到 zh-Hans / zh-Hant 后写回，
+        // 免得设置里那个单选列表选中项对不上（列表用的是新标签）
+        String normalized = moe.shizuku.manager.utils.LanguageNames.normalize(tag);
+        if (!normalized.equals(tag)) {
+            getPreferences().edit().putString(LANGUAGE, normalized).apply();
+        }
+        return Locale.forLanguageTag(normalized);
     }
 
     /**

@@ -19,12 +19,24 @@ import rikka.core.util.BuildUtils
 import java.io.Closeable
 import java.io.DataInputStream
 import java.io.DataOutputStream
+import java.io.IOException
+import java.net.InetSocketAddress
 import java.net.Socket
+import java.net.SocketTimeoutException
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import javax.net.ssl.SSLSocket
 
 private const val TAG = "AdbClient"
+
+/** 连接建立超时（连不上就快点失败，别无限等）。 */
+private const val CONNECT_TIMEOUT_MS = 10_000
+
+/** 单次消息读取超时；授权阶段超时会被归类为 [AdbAuthPendingException]。 */
+private const val READ_TIMEOUT_MS = 15_000
+
+/** 连接上了、但密钥还没被 adbd 信任（设备上可能有确认框，或需要重新配对）。 */
+class AdbAuthPendingException : IOException("ADB authorization pending")
 
 class AdbClient(private val host: String, private val port: Int, private val key: AdbKey) : Closeable {
 
@@ -42,7 +54,9 @@ class AdbClient(private val host: String, private val port: Int, private val key
     private val outputStream get() = if (useTls) tlsOutputStream else plainOutputStream
 
     fun connect() {
-        socket = Socket(host, port)
+        socket = Socket()
+        socket.connect(InetSocketAddress(host, port), CONNECT_TIMEOUT_MS)
+        socket.soTimeout = READ_TIMEOUT_MS
         socket.tcpNoDelay = true
         plainInputStream = DataInputStream(socket.getInputStream())
         plainOutputStream = DataOutputStream(socket.getOutputStream())
@@ -58,6 +72,7 @@ class AdbClient(private val host: String, private val port: Int, private val key
 
             val sslContext = key.sslContext
             tlsSocket = sslContext.socketFactory.createSocket(socket, host, port, true) as SSLSocket
+            tlsSocket.soTimeout = READ_TIMEOUT_MS
             tlsSocket.startHandshake()
             Log.d(TAG, "Handshake succeeded.")
 
@@ -67,22 +82,27 @@ class AdbClient(private val host: String, private val port: Int, private val key
 
             message = read()
         } else if (message.command == A_AUTH) {
-            if (message.command != A_AUTH && message.arg0 != ADB_AUTH_TOKEN) error("not A_AUTH ADB_AUTH_TOKEN")
+            if (message.arg0 != ADB_AUTH_TOKEN) error("not ADB_AUTH_TOKEN")
             write(A_AUTH, ADB_AUTH_SIGNATURE, 0, key.sign(message.data))
 
-            message = read()
+            message = readAuthReply()
             if (message.command != A_CNXN) {
                 write(A_AUTH, ADB_AUTH_RSAPUBLICKEY, 0, key.adbPublicKey)
-                message = read()
+                message = readAuthReply()
             }
         }
 
         if (message.command != A_CNXN) error("not A_CNXN")
     }
 
-    fun shellCommand(command: String, listener: ((ByteArray) -> Unit)?) {
+    /**
+     * 打开一个 ADB 服务通道并等它跑完（照搬 Shevery 的 AdbClient）：
+     * `shellCommand` 走 `shell:` 前缀，而 TCP 模式的 `tcpip:5555`
+     * 这类传输层命令直接把服务名原样传进来，两者共用同一套收发逻辑。
+     */
+    fun command(command: String, listener: ((ByteArray) -> Unit)? = null) {
         val localId = 1
-        write(A_OPEN, localId, 0, "shell:$command")
+        write(A_OPEN, localId, 0, command)
 
         var message = read()
         when (message.command) {
@@ -113,6 +133,8 @@ class AdbClient(private val host: String, private val port: Int, private val key
         }
     }
 
+    fun shellCommand(command: String, listener: ((ByteArray) -> Unit)?) = this.command("shell:$command", listener)
+
     private fun write(command: Int, arg0: Int, arg1: Int, data: ByteArray? = null) = write(AdbMessage(command, arg0, arg1, data))
 
     private fun write(command: Int, arg0: Int, arg1: Int, data: String) = write(AdbMessage(command, arg0, arg1, data))
@@ -121,6 +143,16 @@ class AdbClient(private val host: String, private val port: Int, private val key
         outputStream.write(message.toByteArray())
         outputStream.flush()
         Log.d(TAG, "write ${message.toStringShort()}")
+    }
+
+    /**
+     * 授权阶段的读：这里超时意味着 adbd 正在等设备上的人点「允许」，
+     * 或者密钥需要重新配对——归类为 [AdbAuthPendingException] 交给上层提示。
+     */
+    private fun readAuthReply(): AdbMessage = try {
+        read()
+    } catch (e: SocketTimeoutException) {
+        throw AdbAuthPendingException()
     }
 
     private fun read(): AdbMessage {

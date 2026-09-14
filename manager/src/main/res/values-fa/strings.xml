@@ -201,7 +201,6 @@
     <string name="setup_disclaimer_agree">موارد بالا را خوانده‌ام و می‌پذیرم</string>
     <string name="setup_language_title">انتخاب زبان</string>
     <string name="setup_language_subtitle">بعداً می‌توانید آن را در تنظیمات تغییر دهید.</string>
-    <string name="setup_mode_subtitle">ظاهر Shizako را انتخاب کنید. بعداً می‌توانید آن را در تنظیمات تغییر دهید.</string>
     <string name="setup_mode_follow_system">هماهنگ با سیستم</string>
     <string name="setup_mode_light">روشن</string>
     <string name="setup_mode_dark">تاریک</string>
@@ -216,5 +215,4 @@
     <string name="setup_back">بازگشت</string>
     <string name="setup_next">بعدی</string>
     <string name="setup_get_started">شروع</string>
-    <string name="setup_skip">رد کردن</string>
 </resources>

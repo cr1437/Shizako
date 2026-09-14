@@ -17,6 +17,10 @@
         <!-- MD3（标准模式）：页面用不透明主题底色，和改动前完全一致 -->
         <item name="ksuPageBackground">?android:colorBackground</item>
         <item name="ksuAppBarBackground">?attr/colorSurface</item>
+        <!-- 分段切换条 / 强调按钮 / 引导页卡片：MD3 用标准 Material 观感 -->
+        <item name="ksuSegmentedStyle">@style/Widget.Ksu.TabLayout</item>
+        <item name="ksuActionButtonStyle">@style/Widget.Ksu.Button.Primary</item>
+        <item name="ksuSetupCardStyle">@style/Widget.Ksu.Card.Setup</item>
 
         <!-- 对话框：用 Material 3 官方组件默认动效，不再自己挂补间 -->
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
@@ -44,6 +48,10 @@
         <!-- MD3（标准模式）：页面用不透明主题底色，和改动前完全一致 -->
         <item name="ksuPageBackground">?android:colorBackground</item>
         <item name="ksuAppBarBackground">?attr/colorSurface</item>
+        <!-- 分段切换条 / 强调按钮 / 引导页卡片：MD3 用标准 Material 观感 -->
+        <item name="ksuSegmentedStyle">@style/Widget.Ksu.TabLayout</item>
+        <item name="ksuActionButtonStyle">@style/Widget.Ksu.Button.Primary</item>
+        <item name="ksuSetupCardStyle">@style/Widget.Ksu.Card.Setup</item>
 
         <!-- 对话框：用 Material 3 官方组件默认动效 -->
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
@@ -85,6 +93,12 @@
         <item name="buttonBarPositiveButtonStyle">@style/Widget.Ksu.Button.Text.Glass</item>
         <item name="buttonBarNegativeButtonStyle">@style/Widget.Ksu.Button.Text.Glass</item>
         <item name="buttonBarNeutralButtonStyle">@style/Widget.Ksu.Button.Text.Glass</item>
+        <!-- 分段切换条（应用页两个 Tab）：整块玻璃底 + 强调色指示器 -->
+        <item name="ksuSegmentedStyle">@style/Widget.Ksu.TabLayout.Glass</item>
+        <!-- 强调动作按钮：玻璃底 + 强调色文字 -->
+        <item name="ksuActionButtonStyle">@style/Widget.Ksu.Button.Primary.Glass</item>
+        <!-- 引导页卡片：玻璃底 -->
+        <item name="ksuSetupCardStyle">@style/Widget.Ksu.Card.Glass</item>
     </style>
 
     <style name="ThemeOverlay.Glass.MaterialAlertDialog" parent="ThemeOverlay.App.MaterialAlertDialog">

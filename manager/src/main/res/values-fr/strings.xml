@@ -184,7 +184,6 @@ Vous devrez sûrement redémarrer Shizako pour que l'opération prenne effet."</
     <string name="setup_disclaimer_agree">J\'ai lu et j\'accepte ce qui précède</string>
     <string name="setup_language_title">Choisir la langue</string>
     <string name="setup_language_subtitle">Modifiable plus tard dans les paramètres.</string>
-    <string name="setup_mode_subtitle">Choisissez l’apparence de Shizako. Modifiable plus tard dans les paramètres.</string>
     <string name="setup_mode_follow_system">Suivre le système</string>
     <string name="setup_mode_light">Clair</string>
     <string name="setup_mode_dark">Sombre</string>
@@ -199,5 +198,4 @@ Vous devrez sûrement redémarrer Shizako pour que l'opération prenne effet."</
     <string name="setup_back">Retour</string>
     <string name="setup_next">Suivant</string>
     <string name="setup_get_started">Commencer</string>
-    <string name="setup_skip">Ignorer</string>
 </resources>

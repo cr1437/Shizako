@@ -29,6 +29,8 @@ def gitCommitId = 'git rev-parse --short HEAD'.execute([], project.rootDir).text
 def gitCommitCount = Integer.parseInt('git rev-list --count HEAD'.execute([], project.rootDir).text.trim())
 def baseVersionName = "${api_version_major}.6.0"
 ext {
-    versionCode = gitCommitCount
-    versionName = "zako2.12"
+    // versionCode 跟 versionName 走（不是 git 提交数）：3.01 → 301，
+    // 这样每次发版只要改 versionName，升级判断自然成立
+    versionCode = 301
+    versionName = "zako3.01-hp"
 }

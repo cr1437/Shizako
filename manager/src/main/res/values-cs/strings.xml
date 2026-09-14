@@ -190,7 +190,6 @@ Funkce exportu používá SAF (Storage Access Framework - \"Rámcový přístup 
     <string name="setup_disclaimer_agree">Přečetl jsem si to a souhlasím</string>
     <string name="setup_language_title">Vyberte jazyk</string>
     <string name="setup_language_subtitle">Později jej můžete změnit v nastavení.</string>
-    <string name="setup_mode_subtitle">Vyberte, jak bude Shizako vypadat. Později lze změnit v nastavení.</string>
     <string name="setup_mode_follow_system">Podle systému</string>
     <string name="setup_mode_light">Světlý</string>
     <string name="setup_mode_dark">Tmavý</string>
@@ -205,5 +204,4 @@ Funkce exportu používá SAF (Storage Access Framework - \"Rámcový přístup 
     <string name="setup_back">Zpět</string>
     <string name="setup_next">Další</string>
     <string name="setup_get_started">Začít</string>
-    <string name="setup_skip">Přeskočit</string>
 </resources>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string name="accessibility_manager_title">無障礙管理器</string>
+<string name="accessibility_manager_services_group">已安裝的服務（%1$d）</string>
+<string name="accessibility_daemon_notification_title">無障礙常駐</string>
+<string name="accessibility_manager_keep_alive_title">保持無障礙服務常駐</string>
+<string name="accessibility_manager_pin">固定</string>
+<string name="accessibility_manager_auto_boot_summary">設備重啟後自動拉起守護進程。</string>
+<string name="accessibility_manager_write_failed_title">無法修改該服務</string>
+<string name="accessibility_manager_shizuku_required">Shizuku 未運行。啟用或禁用服務需要由 Shizuku 授予的 WRITE_SECURE_SETTINGS 權限。</string>
+<string name="accessibility_manager_keep_alive_summary">以後台守護進程運行：已被系統關閉的「已固定」無障礙服務會被自動重新啟用。需要 Shizuku。</string>
+<string name="accessibility_manager_write_failed">寫入「已啟用無障礙服務」列表失敗。請確認 Shizuku 正在運行，且本應用仍持有 WRITE_SECURE_SETTINGS 權限。</string>
+<string name="accessibility_manager_unpin">取消固定</string>
+<string name="accessibility_daemon_notification_text">正在保持已固定的無障礙服務處於啟用狀態</string>
+<string name="accessibility_manager_not_pinned">未固定</string>
+<string name="accessibility_manager_service_no_description">該服務沒有提供說明。</string>
+<string name="accessibility_manager_pinned">已固定 —— 由守護進程保持啟用</string>
+<string name="accessibility_manager_keep_alive_group">常駐</string>
+<string name="accessibility_manager_services_empty">這台設備上沒有安裝任何無障礙服務。</string>
+<string name="accessibility_daemon_channel_name">無障礙常駐</string>
+<string name="accessibility_manager_open_system_settings">打開系統無障礙設置</string>
+<string name="accessibility_manager_auto_boot_title">開機自啟</string>
+</resources>

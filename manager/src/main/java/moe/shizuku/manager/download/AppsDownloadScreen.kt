@@ -77,7 +77,7 @@ fun AppsDownloadScreen(
         modifier = modifier,
     ) {
         item {
-            Box(modifier = Modifier.animateItem().itemEntrance(0)) {
+            Box(modifier = Modifier.itemEntrance(0)) {
                 HintNote(
                     palette = palette,
                     iconRes = R.drawable.ic_help_outline_24dp,
@@ -88,7 +88,7 @@ fun AppsDownloadScreen(
         }
 
         itemsIndexed(RecommendedApps.ALL) { index, app ->
-            Box(modifier = Modifier.animateItem().itemEntrance(1 + index)) {
+            Box(modifier = Modifier.itemEntrance(1 + index)) {
                 RecommendedAppCard(
                     app = app,
                     installed = app.packageName in installedPackages,
@@ -100,7 +100,7 @@ fun AppsDownloadScreen(
         }
 
         item {
-            Box(modifier = Modifier.animateItem().itemEntrance(6)) {
+            Box(modifier = Modifier.itemEntrance(6)) {
                 HintCard(palette = palette) {
                     Text(
                         text = stringResource(R.string.download_how_title),

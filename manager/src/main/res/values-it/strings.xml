@@ -189,7 +189,6 @@ Potrebbe essere necessario riavviare Shizako per rendere effettiva l'operazione.
     <string name="setup_disclaimer_agree">Ho letto e accetto quanto sopra</string>
     <string name="setup_language_title">Scegli la lingua</string>
     <string name="setup_language_subtitle">Potrai cambiarla in seguito nelle impostazioni.</string>
-    <string name="setup_mode_subtitle">Scegli l’aspetto di Shizako. Potrai cambiarlo in seguito nelle impostazioni.</string>
     <string name="setup_mode_follow_system">Segui il sistema</string>
     <string name="setup_mode_light">Chiaro</string>
     <string name="setup_mode_dark">Scuro</string>
@@ -204,5 +203,4 @@ Potrebbe essere necessario riavviare Shizako per rendere effettiva l'operazione.
     <string name="setup_back">Indietro</string>
     <string name="setup_next">Avanti</string>
     <string name="setup_get_started">Inizia</string>
-    <string name="setup_skip">Salta</string>
 </resources>

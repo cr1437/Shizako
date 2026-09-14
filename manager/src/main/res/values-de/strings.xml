@@ -188,7 +188,6 @@ Eventuell müssen Sie Shizako neustarten, damit die Änderungen angewandt werden
     <string name="setup_disclaimer_agree">Ich habe das oben Genannte gelesen und stimme zu</string>
     <string name="setup_language_title">Sprache wählen</string>
     <string name="setup_language_subtitle">Dies lässt sich später in den Einstellungen ändern.</string>
-    <string name="setup_mode_subtitle">Wählen Sie, wie Shizako aussieht. Später in den Einstellungen änderbar.</string>
     <string name="setup_mode_follow_system">System folgen</string>
     <string name="setup_mode_light">Hell</string>
     <string name="setup_mode_dark">Dunkel</string>
@@ -203,5 +202,4 @@ Eventuell müssen Sie Shizako neustarten, damit die Änderungen angewandt werden
     <string name="setup_back">Zurück</string>
     <string name="setup_next">Weiter</string>
     <string name="setup_get_started">Loslegen</string>
-    <string name="setup_skip">Überspringen</string>
 </resources>

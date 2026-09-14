@@ -22,7 +22,7 @@ import java.util.Locale
 
 object UpdateChecker {
 
-    private const val GITHUB_API = "https://api.github.com/repos/xm1437/Shizako/releases/latest"
+    private const val GITHUB_API = "https://api.github.com/repos/cr1437/Shizako/releases/latest"
     private const val CHANNEL_ID = "shizako_update"
     private const val DOWNLOAD_CHANNEL_ID = "shizako_download"
     private const val NOTIFY_ID = 1001

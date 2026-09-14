@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 后退转场 · 旧页面：向右滑出 + 淡出 -->
+<!-- 后退转场 · 旧页面：向右滑出 + 淡出
+     数字与 ui/motion/PageMotion.kt 一一对应：滑入 200ms / 滑出 140ms，距离 1/4 页宽。
+     （改一个就要一起改另一个，别只改一半） -->
 <set xmlns:android="http://schemas.android.com/apk/res/android"
     android:shareInterpolator="false">
 
     <translate
-        android:duration="220"
+        android:duration="200"
         android:fromXDelta="0"
-        android:interpolator="@android:interpolator/fast_out_linear_in"
-        android:toXDelta="10%p" />
+        android:interpolator="@android:interpolator/fast_out_slow_in"
+        android:toXDelta="25%p" />
 
     <alpha
-        android:duration="180"
+        android:duration="140"
         android:fromAlpha="1.0"
         android:interpolator="@android:interpolator/linear"
         android:toAlpha="0.0" />

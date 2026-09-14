@@ -23,7 +23,7 @@
     <string name="comput_toolbar_stop">Stop</string>
     <string name="comput_toolbar_copy">Copy output</string>
     <string name="comput_toolbar_ai">Explain</string>
-    <string name="comput_toolbar_ai_desc">Explain the command and its output with Gemini</string>
+    <string name="comput_toolbar_ai_desc">Explain the command and its output with AI</string>
 
     <!-- Output -->
     <string name="comput_output_title">Output</string>
@@ -61,20 +61,20 @@
 
     <!-- AI explanation -->
     <string name="comput_ai_title">AI explanation</string>
-    <string name="comput_ai_explain">Explain with Gemini</string>
-    <string name="comput_ai_explaining">Asking Gemini\u2026</string>
-    <string name="comput_ai_key_missing">No Gemini API key configured. Add one below, then the Explain button turns on.</string>
-    <string name="comput_ai_key_label">Gemini API key</string>
+    <string name="comput_ai_explain">Explain with AI</string>
+    <string name="comput_ai_explaining">Asking the AI\u2026</string>
+    <string name="comput_ai_key_missing">No API key configured. Add one below, then the Explain button turns on.</string>
+    <string name="comput_ai_key_label">API key</string>
     <string name="comput_ai_key_hint">Stored encrypted with the Android Keystore. Get a key at aistudio.google.com.</string>
     <string name="comput_ai_key_save">Save key</string>
     <string name="comput_ai_key_saved">API key saved.</string>
     <string name="comput_ai_key_clear">Remove</string>
     <string name="comput_ai_key_present">A key is configured.</string>
-    <string name="comput_ai_no_key_error">No Gemini API key configured.</string>
-    <string name="comput_ai_error_network">Could not reach Gemini: %1$s</string>
-    <string name="comput_ai_error_http">Gemini returned HTTP %1$d: %2$s</string>
-    <string name="comput_ai_error_empty">Gemini returned an empty answer.</string>
-    <string name="comput_ai_no_command">Run a command first, then ask Gemini to explain it.</string>
+    <string name="comput_ai_no_key_error">No API key configured.</string>
+    <string name="comput_ai_error_network">Could not reach the API: %1$s</string>
+    <string name="comput_ai_error_http">The API returned HTTP %1$d: %2$s</string>
+    <string name="comput_ai_error_empty">The API returned an empty answer.</string>
+    <string name="comput_ai_no_command">Run a command first, then ask the AI to explain it.</string>
 
     <!-- Clipboard -->
     <string name="comput_copied_output">Output copied.</string>

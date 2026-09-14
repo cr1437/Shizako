@@ -14,7 +14,6 @@
     <string name="setup_disclaimer_agree">Saya telah membaca dan bersetuju dengan yang tersebut di atas</string>
     <string name="setup_language_title">Pilih bahasa</string>
     <string name="setup_language_subtitle">Anda boleh mengubahnya kemudian dalam Tetapan.</string>
-    <string name="setup_mode_subtitle">Pilih rupa bentuk Shizako. Anda boleh mengubahnya kemudian dalam Tetapan.</string>
     <string name="setup_mode_follow_system">Ikut sistem</string>
     <string name="setup_mode_light">Cerah</string>
     <string name="setup_mode_dark">Gelap</string>
@@ -29,6 +28,5 @@
     <string name="setup_back">Kembali</string>
     <string name="setup_next">Seterusnya</string>
     <string name="setup_get_started">Mula</string>
-    <string name="setup_skip">Langkau</string>
 <string name="activation_back">Kembali</string>
 </resources>

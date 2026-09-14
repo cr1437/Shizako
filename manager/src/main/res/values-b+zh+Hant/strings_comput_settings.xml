@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string name="comput_settings">控制台設置</string>
+<string name="comput_ai_base_url">Base URL（留空用預設）</string>
+<string name="comput_settings_ai">AI 解釋</string>
+<string name="comput_settings_model_fetch">從 API 獲取模型列表</string>
+<string name="comput_settings_model_pick">選擇模型</string>
+<string name="comput_settings_model_fetch_empty">這個 key / 地址沒返回任何模型</string>
+<string name="comput_settings_change">更換</string>
+<string name="comput_settings_model_picked">已切換模型：%1$s</string>
+<string name="comput_settings_macros_cleared">宏已清空</string>
+<string name="comput_settings_model">模型</string>
+<string name="comput_settings_save">保存</string>
+<string name="comput_ai_provider">模型提供商</string>
+<string name="comput_settings_macros_count">已保存 %1$d 條宏</string>
+<string name="comput_settings_macros_clear">清空所有宏</string>
+<string name="comput_settings_model_fetching">正在獲取模型…</string>
+<string name="comput_settings_model_fetch_failed">獲取失敗：%1$s</string>
+<string name="comput_settings_saved">已保存</string>
+<string name="comput_settings_key_note">key 用 Android Keystore 加密保存，只用於解釋命令。</string>
+<string name="comput_settings_macros">宏</string>
+</resources>

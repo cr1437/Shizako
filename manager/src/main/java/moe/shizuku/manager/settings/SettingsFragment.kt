@@ -130,6 +130,7 @@ class SettingsFragment : Fragment() {
                     onAutoDisableUsbDebugging = ::setAutoDisableUsbDebugging,
                     onStartOnBoot = ::setStartOnBoot,
                     onWatchdog = ::setWatchdog,
+                    onTcpMode = ::setTcpMode,
                     onAutoUpdate = ::setAutoUpdate,
                     onApiLogEnabled = ::setApiLogEnabled,
                     onApiLogClear = ::clearApiLog,
@@ -144,6 +145,10 @@ class SettingsFragment : Fragment() {
                         )
                     },
                     onUnlockDebug = ::unlockDebugItems,
+                    // 关于页「给项目点个 Star」：系统浏览器打开项目主页
+                    onOpenStar = {
+                        moe.shizuku.manager.utils.StarPrompt.openRepo(requireContext())
+                    },
                     onPickBackground = { pickImage.launch("image/*") },
                     onCropBackground = { cropPending = true },
                     onClearBackground = ::clearBackground,
@@ -371,6 +376,7 @@ class SettingsFragment : Fragment() {
             debugUnlocked = ShizukuSettings.getPreferences()
                 .getBoolean(KEY_DEBUG_UNLOCKED, false),
             autoDisableUsbDebugging = ShizukuSettings.getAutoDisableUsbDebugging(),
+            tcpMode = ShizukuSettings.isTcpMode(),
             hasCustomBackground = BackgroundHelper.isEnabled(context),
             hasBackgroundOriginal = BackgroundHelper.hasOriginal(context),
             bgBlur = BackgroundHelper.blur(context).toFloat(),
@@ -463,6 +469,12 @@ class SettingsFragment : Fragment() {
         refreshState()
     }
 
+    /** 持久 TCP 模式（照搬 Shevery）：开关只负责写偏好；真正切端口在下次启动服务 / 激活页提示里做。 */
+    private fun setTcpMode(enabled: Boolean) {
+        ShizukuSettings.setTcpMode(enabled)
+        uiState = uiState.copy(tcpMode = enabled)
+    }
+
     private fun setAutoUpdate(enabled: Boolean) {
         val context = requireContext()
         ShizukuSettings.getPreferences().edit().putBoolean(AUTO_UPDATE, enabled).apply()
@@ -545,11 +557,15 @@ class SettingsFragment : Fragment() {
             }
             // 语言列表用**该语言自己的本土名称**（Deutsch / 日本語 / Русский…），
             // 而不是把外语名翻译成当前语言 —— 看不懂当前语言的人才找得到自己的语言。
-            val locale = Locale.forLanguageTag(displayLocale.toString())
-            labels.add(locale.getDisplayName(locale))
+            // 中文这两种特别处理：写全「简体中文」「繁體中文」，不写 zh-CN / zh-TW
+            labels.add(
+                moe.shizuku.manager.utils.LanguageNames.display(context, displayLocale.toString()),
+            )
         }
 
-        val currentTag = ShizukuSettings.getPreferences().getString("language", "SYSTEM")
+        val currentTag = moe.shizuku.manager.utils.LanguageNames.normalize(
+            ShizukuSettings.getPreferences().getString("language", "SYSTEM"),
+        )
         MaterialAlertDialogBuilder(context)
             .setTitle(R.string.settings_language)
             .setSingleChoiceItems(labels.toTypedArray(), localeTags.indexOf(currentTag)) { dialog, which ->
@@ -725,9 +741,8 @@ class SettingsFragment : Fragment() {
     private fun currentLanguageLabel(): String {
         val tag = ShizukuSettings.getPreferences().getString("language", "SYSTEM") ?: "SYSTEM"
         if (tag == "SYSTEM") return getString(R.string.follow_system)
-        // 一级菜单里也显示本土语言名，保持一致
-        val locale = Locale.forLanguageTag(tag)
-        return locale.getDisplayName(locale)
+        // 一级菜单里也显示本土语言名，保持一致；中文写全（简体中文 / 繁體中文）
+        return moe.shizuku.manager.utils.LanguageNames.display(requireContext(), tag)
     }
 
     private fun currentThemeColorLabel(): String {

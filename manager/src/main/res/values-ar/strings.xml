@@ -193,7 +193,6 @@
     <string name="setup_disclaimer_agree">لقد قرأت ما سبق وأوافق عليه</string>
     <string name="setup_language_title">اختر اللغة</string>
     <string name="setup_language_subtitle">يمكنك تغييرها لاحقًا من الإعدادات.</string>
-    <string name="setup_mode_subtitle">اختر مظهر Shizako. يمكنك تغييره لاحقًا من الإعدادات.</string>
     <string name="setup_mode_follow_system">اتبع النظام</string>
     <string name="setup_mode_light">فاتح</string>
     <string name="setup_mode_dark">داكن</string>
@@ -208,5 +207,4 @@
     <string name="setup_back">رجوع</string>
     <string name="setup_next">التالي</string>
     <string name="setup_get_started">ابدأ</string>
-    <string name="setup_skip">تخطي</string>
 </resources>

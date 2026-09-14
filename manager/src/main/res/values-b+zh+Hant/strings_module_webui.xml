@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string name="module_webui_unavailable">這個模塊沒有 WebUI。</string>
+<string name="module_webui_close">關閉</string>
+<string name="module_webui_blocked">當前訪問策略不允許打開這個 WebUI。</string>
+<string name="module_webui_download_started">正在下載…</string>
+<string name="module_webui_command_message">%1$s 想執行：</string>
+<string name="module_webui_external_blocked">WebView 聯網沒開，外鏈已攔截。</string>
+<string name="module_webui_deny">取消</string>
+<string name="module_webui_download_saved">已保存到 %1$s</string>
+<string name="module_webui_allow">執行</string>
+<string name="module_webui_download_blocked">當前訪問策略不允許 WebUI 下載。</string>
+<string name="module_webui_download_failed">下載失敗：%1$s</string>
+<string name="module_webui_command_title">要執行這條命令嗎？</string>
+</resources>

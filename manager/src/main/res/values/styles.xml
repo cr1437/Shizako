@@ -206,6 +206,61 @@
         <item name="android:paddingEnd">20dp</item>
     </style>
 
+    <!-- ══════════ 强调动作按钮（?ksuActionButtonStyle）══════════
+         首页「开始激活」/ 应用页「去激活」/ 引导页底部按钮统一用这个：
+         MD3 = 标准 M3 实心按钮；玻璃 = 半透明玻璃底 + 强调色文字（和卡片同一套 token）。
+         以前这些按钮直接吃主题的 materialButtonStyle，玻璃风格下是实心主色块，
+         跟旁边的玻璃卡不是一套东西。 -->
+    <style name="Widget.Ksu.Button.Primary" parent="Widget.Material3.Button" />
+
+    <style name="Widget.Ksu.Button.Primary.Glass" parent="Widget.Material3.Button">
+        <item name="cornerRadius">24dp</item>
+        <item name="backgroundTint">@color/glass_button_fill</item>
+        <item name="strokeColor">@color/glass_card_stroke</item>
+        <item name="strokeWidth">0.8dp</item>
+        <item name="android:textColor">?attr/appColorPrimary</item>
+        <item name="iconTint">?attr/appColorPrimary</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:paddingStart">24dp</item>
+        <item name="android:paddingEnd">24dp</item>
+    </style>
+
+    <!-- ══════════ 分段切换条（?ksuSegmentedStyle）══════════
+         应用页顶部「Shizako 授权 / Dhizuku 授权」两个 Tab。
+         MD3 = 次级容器胶囊底；玻璃 = 整块玻璃底 + 强调色指示器。
+         应用页顶部已改用 Compose 滑块（AppsFragment.setupSegmentedHeader：玻璃 = GlassOptionSlider，
+         MD3 = M3 分段按钮，与设置里「界面风格」同款）。本样式与配套 drawable 暂时保留、当前无引用。 -->
+    <style name="Widget.Ksu.TabLayout" parent="Widget.Material3.TabLayout">
+        <item name="android:background">@drawable/bg_segmented_md3</item>
+        <item name="tabIndicator">@drawable/bg_segmented_indicator_md3</item>
+        <item name="tabIndicatorGravity">stretch</item>
+        <item name="tabIndicatorAnimationMode">elastic</item>
+        <item name="tabTextColor">@color/segmented_tab_text_color</item>
+        <item name="tabSelectedTextColor">@color/segmented_tab_selected</item>
+        <item name="tabRippleColor">@null</item>
+        <item name="tabMinWidth">0dp</item>
+        <item name="tabMaxWidth">10000dp</item>
+    </style>
+
+    <style name="Widget.Ksu.TabLayout.Glass" parent="Widget.Material3.TabLayout">
+        <item name="android:background">@drawable/bg_glass_card</item>
+        <item name="tabIndicator">@drawable/bg_segmented_indicator_glass</item>
+        <item name="tabIndicatorGravity">stretch</item>
+        <item name="tabIndicatorAnimationMode">elastic</item>
+        <item name="tabTextColor">@color/segmented_tab_text_color</item>
+        <item name="tabSelectedTextColor">@color/segmented_tab_selected</item>
+        <item name="tabRippleColor">@null</item>
+        <item name="tabMinWidth">0dp</item>
+        <item name="tabMaxWidth">10000dp</item>
+    </style>
+
+    <!-- 引导页每步的卡片容器（?ksuSetupCardStyle）：
+         MD3 = 标准填充卡；玻璃 = 玻璃卡（ThemeOverlay.Glass 里指向 Widget.Ksu.Card.Glass）。 -->
+    <style name="Widget.Ksu.Card.Setup" parent="Widget.Material3.CardView.Filled">
+        <item name="cardBackgroundColor">?colorSurfaceContainer</item>
+        <item name="cardElevation">0dp</item>
+    </style>
+
     <!-- 底栏 tab 标签（Figma「Home - Bottom」设计稿：10sp） -->
     <style name="TextAppearance.Ksu.NavLabel" parent="TextAppearance.Material3.LabelSmall">
         <item name="android:textSize">10sp</item>

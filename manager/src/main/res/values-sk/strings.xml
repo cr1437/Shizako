@@ -188,7 +188,6 @@ bolo skopírované do schránky.</string>
     <string name="setup_disclaimer_agree">Prečítal som si vyššie uvedené a súhlasím</string>
     <string name="setup_language_title">Vyberte jazyk</string>
     <string name="setup_language_subtitle">Neskôr ho môžete zmeniť v nastaveniach.</string>
-    <string name="setup_mode_subtitle">Vyberte, ako bude Shizako vyzerať. Neskôr to môžete zmeniť v nastaveniach.</string>
     <string name="setup_mode_follow_system">Podľa systému</string>
     <string name="setup_mode_light">Svetlý</string>
     <string name="setup_mode_dark">Tmavý</string>
@@ -203,5 +202,4 @@ bolo skopírované do schránky.</string>
     <string name="setup_back">Späť</string>
     <string name="setup_next">Ďalej</string>
     <string name="setup_get_started">Začať</string>
-    <string name="setup_skip">Preskočiť</string>
 </resources>

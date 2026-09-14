@@ -188,7 +188,6 @@ Tandaan, huwag patayin ang \"Mga opsyon ng developer\" o \"Pag-debug ng USB\", m
     <string name="setup_disclaimer_agree">Nabasa ko na at sumasang-ayon ako sa nasa itaas</string>
     <string name="setup_language_title">Pumili ng wika</string>
     <string name="setup_language_subtitle">Mababago mo ito pagkatapos sa Mga Setting.</string>
-    <string name="setup_mode_subtitle">Piliin ang hitsura ng Shizako. Mababago mo ito pagkatapos sa Mga Setting.</string>
     <string name="setup_mode_follow_system">Sundin ang sistema</string>
     <string name="setup_mode_light">Maliwanag</string>
     <string name="setup_mode_dark">Madilim</string>
@@ -203,5 +202,4 @@ Tandaan, huwag patayin ang \"Mga opsyon ng developer\" o \"Pag-debug ng USB\", m
     <string name="setup_back">Bumalik</string>
     <string name="setup_next">Susunod</string>
     <string name="setup_get_started">Simulan</string>
-    <string name="setup_skip">Laktawan</string>
 </resources>
