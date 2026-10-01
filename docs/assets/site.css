@@ -1,0 +1,214 @@
+/* Shizako 官网样式 —— 玻璃拟态 / 深色，与应用内的玻璃风格保持一致。
+   无外部依赖（不引 CDN、不引字体服务），断网/被墙也能正常显示。 */
+
+:root {
+  --bg: #0b0d12;
+  --bg-soft: #12151d;
+  --fg: #e9ecf3;
+  --fg-dim: #a7adbe;
+  --fg-faint: #767d90;
+  --line: rgba(255, 255, 255, .10);
+  --line-strong: rgba(255, 255, 255, .18);
+  --glass: rgba(255, 255, 255, .05);
+  --glass-hi: rgba(255, 255, 255, .08);
+  --accent: #8b7bf0;
+  --accent-2: #5cc8ff;
+  --green: #2ea44f;
+  --gold: #ffd700;
+  --radius: 18px;
+  --maxw: 1080px;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* 背景光斑：纯 CSS，不用图片 */
+body::before {
+  content: "";
+  position: fixed;
+  inset: -20% -10% auto -10%;
+  height: 90vh;
+  background:
+    radial-gradient(45% 45% at 20% 10%, rgba(139, 123, 240, .22), transparent 70%),
+    radial-gradient(40% 40% at 85% 5%, rgba(92, 200, 255, .16), transparent 70%),
+    radial-gradient(35% 35% at 55% 30%, rgba(255, 215, 0, .06), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+a { color: var(--accent-2); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+img { max-width: 100%; height: auto; }
+
+/* ── 顶栏 ───────────────────────────────────────────── */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 10px max(16px, calc((100% - var(--maxw)) / 2));
+  background: rgba(11, 13, 18, .72);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border-bottom: 1px solid transparent;
+  transition: border-color .25s, background .25s;
+}
+.nav.scrolled { border-bottom-color: var(--line); background: rgba(11, 13, 18, .88); }
+
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--fg); }
+.brand img { border-radius: 9px; }
+.brand:hover { text-decoration: none; }
+
+.nav-links { display: flex; gap: 18px; margin-left: 8px; }
+.nav-links a { color: var(--fg-dim); font-size: 14px; }
+.nav-links a:hover { color: var(--fg); text-decoration: none; }
+
+.nav-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+
+/* ── 按钮 ───────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--fg);
+  background: var(--glass);
+  cursor: pointer;
+  transition: transform .15s, background .2s, border-color .2s;
+}
+.btn:hover { text-decoration: none; transform: translateY(-1px); background: var(--glass-hi); }
+.btn.primary {
+  background: linear-gradient(135deg, var(--accent), #6f5fe0);
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(139, 123, 240, .28);
+}
+.btn.ghost { background: var(--glass); }
+.btn.star { border-color: rgba(255, 215, 0, .45); color: var(--gold); }
+.btn.small { padding: 8px 16px; font-size: 13px; }
+
+/* ── 首屏 ───────────────────────────────────────────── */
+.hero { position: relative; padding: 54px 16px 64px; }
+.hero-inner { position: relative; z-index: 1; max-width: var(--maxw); margin: 0 auto; text-align: center; }
+.hero-banner { width: min(100%, 820px); border-radius: var(--radius); border: 1px solid var(--line); }
+.hero h1 {
+  margin: 22px 0 6px;
+  font-size: clamp(34px, 7vw, 56px);
+  letter-spacing: .5px;
+  background: linear-gradient(120deg, #fff, #cfc7ff 45%, #9fe6ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.tagline { margin: 0 auto 10px; font-size: clamp(16px, 3.4vw, 21px); color: var(--fg); font-weight: 600; }
+.sub { margin: 0 auto; max-width: 660px; color: var(--fg-dim); font-size: 15px; }
+.badges { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 22px 0 8px; }
+.badges img { height: 20px; }
+.cta { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin: 22px 0 8px; }
+.hint { color: var(--fg-faint); font-size: 13px; margin-top: 14px; }
+
+/* ── 区块 ───────────────────────────────────────────── */
+.section { position: relative; z-index: 1; max-width: var(--maxw); margin: 0 auto; padding: 56px 16px; }
+.section h2 { font-size: clamp(24px, 4.6vw, 32px); margin: 0 0 8px; }
+.section .lead { color: var(--fg-dim); margin: 0 0 26px; }
+
+.grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(268px, 1fr)); }
+.grid.two { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+
+.card {
+  position: relative;
+  padding: 20px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, var(--glass-hi), var(--glass));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: transform .18s, border-color .2s;
+}
+.card:hover { transform: translateY(-3px); border-color: var(--line-strong); }
+.card h3 { margin: 0 0 6px; font-size: 17px; }
+.card p { margin: 0; color: var(--fg-dim); font-size: 14.5px; }
+.card.warn { border-color: rgba(255, 120, 120, .35); }
+.card.warn h3 { color: #ff9d9d; }
+
+.pill {
+  display: inline-block;
+  margin-bottom: 8px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  color: #0b0d12;
+  background: var(--gold);
+  font-weight: 700;
+}
+
+/* ── 截图 ───────────────────────────────────────────── */
+.shots { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
+.shots figure { margin: 0; text-align: center; }
+.shots img {
+  width: min(280px, 74vw);
+  border-radius: 22px;
+  border: 1px solid var(--line-strong);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, .5);
+}
+.shots figcaption { margin-top: 10px; color: var(--fg-faint); font-size: 13px; }
+
+/* ── FAQ ────────────────────────────────────────────── */
+.faq { display: grid; gap: 10px; }
+.faq details {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--glass);
+  padding: 14px 18px;
+}
+.faq summary { cursor: pointer; font-weight: 600; font-size: 15.5px; }
+.faq summary::marker { color: var(--accent); }
+.faq p { margin: 10px 0 0; color: var(--fg-dim); font-size: 14.5px; }
+
+.cta-final { text-align: center; padding-bottom: 72px; }
+
+/* ── 页脚 ───────────────────────────────────────────── */
+.footer {
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid var(--line);
+  background: var(--bg-soft);
+  padding: 40px 16px 28px;
+}
+.footer-cols {
+  display: grid;
+  gap: 22px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  max-width: var(--maxw);
+  margin: 0 auto;
+}
+.footer h4 { margin: 0 0 8px; font-size: 14px; color: var(--fg); }
+.footer p, .footer li { color: var(--fg-faint); font-size: 13.5px; }
+.footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.footer-bottom { text-align: center; color: var(--fg-faint); font-size: 13px; margin: 28px 0 0; }
+
+/* ── 小屏 ───────────────────────────────────────────── */
+@media (max-width: 720px) {
+  .nav-links { display: none; }
+  .section { padding: 40px 16px; }
+  .hero { padding-top: 34px; }
+}

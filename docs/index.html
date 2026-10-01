@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shizako — 不 Root 也能用系统特权 API</title>
+<meta name="description" content="Shizako 是一个安卓系统权限助手：通过 Root / 无线调试 / 电脑 ADB / Dhizuku 获得特权，并把特权借给你信任的应用。兼容 Shizuku-API 生态，官方 SDK 应用零改动直连。">
+<meta name="theme-color" content="#0b0d12">
+<meta property="og:title" content="Shizako — 不 Root 也能用系统特权 API">
+<meta property="og:description" content="猫耳看板娘的系统权限助手。兼容 Shizuku-API 生态，官方 SDK 应用零改动直连。">
+<meta property="og:image" content="banner.jpg">
+<link rel="icon" href="assets/icon.png">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <a class="brand" href="#top">
+    <img src="assets/icon.png" alt="Shizako" width="32" height="32">
+    <span>Shizako</span>
+  </a>
+  <nav class="nav-links">
+    <a href="#features" data-i18n="nav.features">功能</a>
+    <a href="#activate" data-i18n="nav.activate">激活</a>
+    <a href="#compat" data-i18n="nav.compat">兼容</a>
+    <a href="#faq" data-i18n="nav.faq">FAQ</a>
+    <a href="API.md" data-i18n="nav.api">开发文档</a>
+  </nav>
+  <div class="nav-right">
+    <button id="langBtn" class="btn ghost small" type="button" aria-label="切换语言">EN</button>
+    <a class="btn primary small" href="https://github.com/cr1437/Shizako/releases/latest" data-i18n="nav.download">下载</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-inner">
+      <img class="hero-banner" src="banner.jpg" alt="Shizako 看板娘横幅">
+      <h1>Shizako</h1>
+      <p class="tagline" data-i18n="hero.tagline">让猫耳看板娘替你「借」系统权限 —— 不 Root、不刷机</p>
+      <p class="sub" data-i18n="hero.sub">用 Root / 无线调试 / 电脑 ADB / Dhizuku 唤醒一个特权小进程，再把特权借给你信得过的应用。每个应用都要你亲自点头，随时收回。</p>
+      <div class="badges">
+        <img src="badge-version.svg" alt="version">
+        <img src="badge-downloads.svg" alt="downloads">
+        <img src="badge-star.svg" alt="star">
+        <img src="badge-platform.svg" alt="platform">
+        <img src="badge-license.svg" alt="license">
+      </div>
+      <div class="cta">
+        <a class="btn primary" href="https://github.com/cr1437/Shizako/releases/latest" data-i18n="hero.download">下载最新版</a>
+        <a class="btn ghost" href="https://github.com/cr1437/Shizako" data-i18n="hero.github">GitHub 仓库</a>
+      </div>
+      <p class="hint" data-i18n="hero.hint">Android 7.0+ · 无线调试激活需 Android 11+ · Apache-2.0</p>
+    </div>
+  </section>
+
+  <section id="features" class="section">
+    <h2 data-i18n="features.title">她能做到的事</h2>
+    <p class="lead" data-i18n="features.lead">核心是一句话：把系统特权「借」给你信任的应用，而不是 Root 整台手机。</p>
+    <div class="grid">
+      <article class="card">
+        <h3 data-i18n="f1.t">免 Root 特权</h3>
+        <p data-i18n="f1.d">通过 ADB / 无线调试获得接近 Root 的能力 —— 不拆机、不刷机、不影响保修。</p>
+      </article>
+      <article class="card">
+        <h3 data-i18n="f2.t">通行证制度</h3>
+        <p data-i18n="f2.d">每个应用第一次连接都要你亲自授权，白名单本地记录，想收回随时收回。</p>
+      </article>
+      <article class="card">
+        <h3 data-i18n="f3.t">官方生态直连</h3>
+        <p data-i18n="f3.d">用官方 Shizuku-API 写的应用一行代码都不用改就能连上她。</p>
+      </article>
+      <article class="card">
+        <h3 data-i18n="f4.t">Dhizuku 模式</h3>
+        <p data-i18n="f4.d">一键成为「设备所有者」，特权常驻、免 Root 免无线调试；Dhizuku-API 应用直接借用。</p>
+      </article>
+      <article class="card">
+        <h3 data-i18n="f5.t">四种激活方式</h3>
+        <p data-i18n="f5.d">Root / 无线调试 / 电脑 ADB / Dhizuku 一页搞定，已配对可一键启动。</p>
+      </article>
+      <article class="card">
+        <h3 data-i18n="f6.t">自动检查更新</h3>
+        <p data-i18n="f6.d">每次打开应用自动检查新版本，发现更新就地弹出可下载的对话框；网络拦截 GitHub 时自动切换可用源。</p>
+      </article>
+      <article class="card">
+        <h3 data-i18n="f7.t">工具箱</h3>
+        <p data-i18n="f7.d">模块管理、Shell 控制台、无障碍管理器、一键注入、任务自动化广播。</p>
+      </article>
+      <article class="card">
+        <h3 data-i18n="f8.t">双风格界面</h3>
+        <p data-i18n="f8.d">玻璃拟态 / Material 3 两套风格一键切换，深浅色与动态取色全适配。</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="activate" class="section">
+    <h2 data-i18n="activate.title">怎么唤醒她</h2>
+    <p class="lead" data-i18n="activate.lead">装好之后任选一种方式激活，之后就能开始给应用发通行证了。</p>
+    <div class="grid">
+      <article class="card">
+        <span class="pill" data-i18n="a1.pill">推荐</span>
+        <h3 data-i18n="a1.t">无线调试</h3>
+        <p data-i18n="a1.d">Android 11+ 打开「无线调试」，在应用内扫码或配对即可。已配对过的话，重启后一键就能启动。</p>
+      </article>
+      <article class="card">
+        <h3 data-i18n="a2.t">电脑 ADB</h3>
+        <p data-i18n="a2.d">手边有电脑就行：把应用内给出的那条 adb 命令复制到电脑执行一次，没有版本限制。</p>
+      </article>
+      <article class="card">
+        <h3 data-i18n="a3.t">Root</h3>
+        <p data-i18n="a3.d">已有 Root 环境（KernelSU / Magisk 等）直接唤醒，最省事的一条路。</p>
+      </article>
+      <article class="card">
+        <h3 data-i18n="a4.t">Dhizuku（设备所有者）</h3>
+        <p data-i18n="a4.d">在电脑执行一次 dpm set-device-owner 命令（设备上不能有账户），之后免 Root、免无线调试、特权和开机一起就位。</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="shots" class="section">
+    <h2 data-i18n="shots.title">长这样</h2>
+    <p class="lead" data-i18n="shots.lead">真机截图（vivo V2417A / Android 16，深色 + 玻璃风格）。</p>
+    <div class="shots">
+      <figure>
+        <img src="shots/home.png" alt="Shizako 首页" loading="lazy">
+        <figcaption data-i18n="shots.cap1">首页：服务状态、版本、激活方式一目了然</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="compat" class="section">
+    <h2 data-i18n="compat.title">生态兼容</h2>
+    <div class="grid two">
+      <article class="card">
+        <h3 data-i18n="c1.t">Shizuku-API 应用零改动直连</h3>
+        <p data-i18n="c1.d">官方 dev.rikka.shizuku:api 写的应用（MT 管理器、冰箱、SystemUI Tuner 等）装好就能连：服务端只校验「是否请求了权限」，首次连接照样弹授权框。</p>
+      </article>
+      <article class="card">
+        <h3 data-i18n="c2.t">自己的设备所有者</h3>
+        <p data-i18n="c2.d">被设为 Device Owner 后，Dhizuku-API 应用把 Shizako 当 Dhizuku 用；特权转发全部在 Shizako 进程内完成，不给第三方开系统 binder 后门。</p>
+      </article>
+      <article class="card">
+        <h3 data-i18n="c3.t">为什么包名不一样</h3>
+        <p data-i18n="c3.d">按上游 Shizuku 的许可要求，本项目不使用上游的应用 ID 与权限名，改用 com.churan.shizako.permission.*。</p>
+      </article>
+      <article class="card warn">
+        <h3 data-i18n="c4.t">不能与官方 Shizuku 共存</h3>
+        <p data-i18n="c4.d">内置兼容桥占用了官方 provider authority，因此两者同时安装会冲突。二选一即可。</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="faq" class="section">
+    <h2 data-i18n="faq.title">常见问题</h2>
+    <div class="faq">
+      <details><summary data-i18n="q1">要 Root 吗？</summary><p data-i18n="q1a">不需要。无线调试或 USB 就能激活；有 Root 也可以，只是姿势更多。</p></details>
+      <details><summary data-i18n="q2">跟 Shizuku 是什么关系？</summary><p data-i18n="q2a">兼容 Shizuku-API 生态 —— 用官方 SDK 写的应用零改动直连。按上游许可要求使用自己的包名与权限名，因此不能与官方版本共存。</p></details>
+      <details><summary data-i18n="q3">授权给应用安全吗？</summary><p data-i18n="q3a">每个应用都要你亲自点头才拿得到通行证，白名单本地记录、随时可收回；Dhizuku 特权转发也只在 Shizako 进程内完成。</p></details>
+      <details><summary data-i18n="q4">支持哪些系统？</summary><p data-i18n="q4a">Android 7.0 及以上；无线调试激活需要 Android 11+。</p></details>
+      <details><summary data-i18n="q5">会收集我的数据吗？</summary><p data-i18n="q5a">不收集。应用不上报任何使用数据；自动检查更新只请求 GitHub 的公开 release 接口，用来判断有没有新版本。</p></details>
+      <details><summary data-i18n="q6">开源吗？我能自己编译吗？</summary><p data-i18n="q6a">开源，Apache-2.0。克隆仓库后执行 ./gradlew :manager:assembleRelease 即可，需要 JDK 17+ 与 Android SDK 36。</p></details>
+    </div>
+  </section>
+
+  <section class="section cta-final">
+    <h2 data-i18n="final.title">把她带回家</h2>
+    <p class="lead" data-i18n="final.lead">下载安装，选一种姿势唤醒她 —— 然后就能开始给应用发通行证了。</p>
+    <div class="cta">
+      <a class="btn primary" href="https://github.com/cr1437/Shizako/releases/latest" data-i18n="hero.download">下载最新版</a>
+      <a class="btn ghost star" href="https://github.com/cr1437/Shizako" data-i18n="final.star">⭐ 点个 Star 喂猫</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-cols">
+    <div>
+      <h4>Shizako</h4>
+      <p data-i18n="footer.desc">猫耳看板娘的系统权限助手。开源、免费、无广告。</p>
+    </div>
+    <div>
+      <h4 data-i18n="footer.links">链接</h4>
+      <ul>
+        <li><a href="https://github.com/cr1437/Shizako" data-i18n="footer.repo">GitHub 仓库</a></li>
+        <li><a href="https://github.com/cr1437/Shizako/releases" data-i18n="footer.releases">版本发布</a></li>
+        <li><a href="https://github.com/cr1437/Shizako/issues" data-i18n="footer.issues">问题反馈</a></li>
+        <li><a href="API.md" data-i18n="footer.api">开发者 API 文档</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 data-i18n="footer.community">交流</h4>
+      <ul>
+        <li><a href="https://qm.qq.com/cgi-bin/qm/qr?k=891276089">QQ 891276089</a></li>
+        <li><a href="https://qm.qq.com/cgi-bin/qm/qr?k=1104445003">QQ 群 1104445003</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 data-i18n="footer.license">许可</h4>
+      <p data-i18n="footer.licenseText">Apache License 2.0。上游版权归 RikkaApps，修改部分版权归 初然。</p>
+    </div>
+  </div>
+  <p class="footer-bottom" data-i18n="footer.bottom">为爱发电 · 用爱发电的她不会咬人 (ˊᗜˋ*)</p>
+</footer>
+
+<script src="assets/site.js"></script>
+</body>
+</html>
