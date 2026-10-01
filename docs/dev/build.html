@@ -9,7 +9,9 @@
 <link rel="icon" href="../assets/icon.png">
 <link rel="stylesheet" href="../assets/site.css">
 </head>
-<body class="doc-body">
+<body>
+
+<div class="doc-progress"><span id="docProgress"></span></div>
 
 <header class="nav" id="nav">
   <a class="brand" href="../index.html">
@@ -28,48 +30,57 @@
   </div>
 </header>
 
-<div class="doc-layout">
-  <aside class="doc-side">
-    <a class="doc-back" href="index.html">← 开发文档总览</a>
-    <nav class="doc-toc">
-      <p class="doc-toc-title">本页目录</p>
-      <a href="#环境要求">环境要求</a>
-      <a href="#克隆与编译">克隆与编译</a>
-      <a href="#关于签名重要">关于签名（重要）</a>
-      <a href="#代码结构">代码结构</a>
-      <a href="#常用维护脚本">常用维护脚本</a>
-      <a href="#国内网络">国内网络</a>
-      <a href="#提交改动">提交改动</a>
+<div class="doc-shell">
+
+  <aside class="doc-nav">
+    <p class="doc-nav-title">开发文档</p>
+    <nav>
+<a href="api.html">API 使用指南</a>
+      <a href="build.html" class="active">编译与参与开发</a>
+      <a href="changes.html">对 Shizuku-API 的本地修改</a>
+      <a href="upstream-api.html">Shizuku-API 上游文档</a>
+      <a href="rish.html">rish 命令行</a>
+      <a href="changelog.html">更新日志</a>
     </nav>
+    <a class="doc-nav-back" href="index.html">全部文档 →</a>
   </aside>
 
   <main class="doc-main">
+    <nav class="doc-crumb">
+      <a href="../index.html">首页</a><span>/</span><a href="index.html">开发文档</a><span>/</span><em>编译与参与开发</em>
+    </nav>
+
+    <header class="doc-head">
+      <h1>编译与参与开发</h1>
+      <p class="doc-desc">环境要求、编译命令、签名注意事项与代码结构</p>
+    </header>
+
     <article class="doc-article">
-<blockquote>这份文档同时是官网「自己编译」页的源文件（由 <code>tools/md2html.py</code> 生成）。</blockquote>
-<h2 id="环境要求">环境要求</h2>
+<div class="doc-note"><span class="doc-note-icon">💡</span><p>这份文档同时是官网「自己编译」页的源文件（由 <code>tools/md2html.py</code> 生成）。</p></div>
+<h2 id="环境要求">环境要求<a class="doc-anchor" href="#环境要求" aria-label="链接到此节">#</a></h2>
 <div class="doc-table-wrap"><table><thead><tr><th>依赖</th><th>版本</th><th>说明</th></tr></thead><tbody><tr><td>JDK</td><td><strong>17 及以上</strong></td><td>构建脚本与 AGP 需要；JDK 21 亦可</td></tr><tr><td>Android SDK</td><td><strong>compileSdk 36</strong></td><td>需要 <code>platforms;android-36</code> 与 <code>build-tools;36.0.0</code></td></tr><tr><td>NDK</td><td><strong>29.0.13113456</strong></td><td><code>manager</code> / <code>rish</code> 里含 JNI 代码，缺了会在 CMake 阶段失败</td></tr><tr><td>Gradle</td><td>随仓库的 wrapper</td><td>不要用系统里的旧 Gradle</td></tr></tbody></table></div>
-<h2 id="克隆与编译">克隆与编译</h2>
-<pre class="lang-bash"><code>git clone https://github.com/cr1437/Shizako.git
+<h2 id="克隆与编译">克隆与编译<a class="doc-anchor" href="#克隆与编译" aria-label="链接到此节">#</a></h2>
+<div class="code"><div class="code-head"><span class="code-lang">bash</span><button class="code-copy" type="button">复制</button></div><pre><code>git clone https://github.com/cr1437/Shizako.git
 cd Shizako
 
-# 只编译管理器应用（最常用）
+<span class="tok-c"># 只编译管理器应用（最常用）</span>
 ./gradlew :manager:assembleRelease
 
-# 调试包（启动更快、带启动耗时打点）
-./gradlew :manager:assembleDebug</code></pre>
+<span class="tok-c"># 调试包（启动更快、带启动耗时打点）</span>
+./gradlew :manager:assembleDebug</code></pre></div>
 <p>产物位置：</p>
-<pre><code>manager/build/outputs/apk/release/shizako-&lt;版本&gt;-release.apk
-manager/build/outputs/apk/debug/shizako-&lt;版本&gt;-debug.apk</code></pre>
-<h2 id="关于签名重要">关于签名（重要）</h2>
+<div class="code"><div class="code-head"><span class="code-lang">text</span><button class="code-copy" type="button">复制</button></div><pre><code>manager/build/outputs/apk/release/shizako-&lt;版本&gt;-release.apk
+manager/build/outputs/apk/debug/shizako-&lt;版本&gt;-debug.apk</code></pre></div>
+<h2 id="关于签名重要">关于签名（重要）<a class="doc-anchor" href="#关于签名重要" aria-label="链接到此节">#</a></h2>
 <p>仓库里的 <code>signing.gradle</code> 会读取<strong>根目录的 <code>signing.properties</code></strong>（该文件不入库）：</p>
-<pre class="lang-properties"><code>KEYSTORE_FILE=../shizako.jks
+<div class="code"><div class="code-head"><span class="code-lang">properties</span><button class="code-copy" type="button">复制</button></div><pre><code>KEYSTORE_FILE=../shizako.jks
 KEYSTORE_PASSWORD=你的口令
 KEYSTORE_ALIAS=shizako
-KEYSTORE_ALIAS_PASSWORD=你的口令</code></pre>
+KEYSTORE_ALIAS_PASSWORD=你的口令</code></pre></div>
 <ul><li><strong>没有这个文件时会自动回退到 debug 签名</strong>，自己玩足够；</li><li>但<strong>发布版必须使用项目签名</strong>，否则用户无法覆盖升级（必须卸载重装、数据丢失）。</li><li>也就是说：想给别人安装的包，请务必配上 <code>signing.properties</code>。</li></ul>
-<h2 id="代码结构">代码结构</h2>
-<pre><code>Shizako/
-├── manager/    Android 应用本体（Kotlin + Jetpack Compose，176 个源文件）
+<h2 id="代码结构">代码结构<a class="doc-anchor" href="#代码结构" aria-label="链接到此节">#</a></h2>
+<div class="code"><div class="code-head"><span class="code-lang">text</span><button class="code-copy" type="button">复制</button></div><pre><code>Shizako/
+├── manager/    Android 应用本体（Kotlin + Jetpack Compose，<span class="tok-n">176</span> 个源文件）
 ├── server/     特权服务进程（Java，跑在 shell / root 身份下）
 ├── starter/    服务启动器（负责拉起 server 并校验）
 ├── shell/      预编译的 shell 工具
@@ -77,30 +88,93 @@ KEYSTORE_ALIAS_PASSWORD=你的口令</code></pre>
 ├── common/     共享模块
 ├── api/        Shizuku-API 客户端库源码（MIT，vendored 进本仓库）
 ├── docs/       文档、官网与物料（GitHub Pages 直接服务此目录）
-└── tools/      维护脚本：徽章/数据刷新、Markdown 转网页、站点部署</code></pre>
-<h2 id="常用维护脚本">常用维护脚本</h2>
+└── tools/      维护脚本：徽章/数据刷新、Markdown 转网页、站点部署</code></pre></div>
+<h2 id="常用维护脚本">常用维护脚本<a class="doc-anchor" href="#常用维护脚本" aria-label="链接到此节">#</a></h2>
 <div class="doc-table-wrap"><table><thead><tr><th>脚本</th><th>作用</th></tr></thead><tbody><tr><td><code>tools/update_badges.py</code></td><td>拉取真实数据，重新生成 <code>docs/badge-*.svg</code> 与 <code>docs/stats.json</code>（官网数据卡片的数据源）</td></tr><tr><td><code>tools/md2html.py</code></td><td>把 Markdown 文档渲染成官网上的网页（<code>docs/dev/*.html</code>）</td></tr><tr><td><code>tools/deploy-site.sh</code></td><td>把 <code>docs/</code> 静态站点部署到自己的服务器（也可忽略，改用 GitHub Pages）</td></tr></tbody></table></div>
-<h2 id="国内网络">国内网络</h2>
+<h2 id="国内网络">国内网络<a class="doc-anchor" href="#国内网络" aria-label="链接到此节">#</a></h2>
 <ul><li>仓库已配置阿里云 Maven 镜像，一般不需要额外代理；</li><li>但 <code>api.github.com</code> 在部分网络下会被 DNS 拦掉（本项目官网的数据更新也因此改用同源的</li></ul>
 <p><code>stats.json</code>，而不是让浏览器直连 GitHub API）。</p>
-<h2 id="提交改动">提交改动</h2>
+<h2 id="提交改动">提交改动<a class="doc-anchor" href="#提交改动" aria-label="链接到此节">#</a></h2>
 <ol><li>尽量一次只做一件事，提交信息写清「改了什么、为什么」；</li><li>改了 <code>docs/<em>.md</code> 或 <code>api/</em>.md</code> 之后，跑一次 <code>python3 tools/md2html.py</code> 重新生成网页；</li><li>涉及签名、权限、包名的改动请<strong>不要</strong>提交 <code>signing.properties</code>、<code>*.jks</code> 等敏感文件</li></ol>
 <p>（<code>.gitignore</code> 已拦住，别用 <code>-f</code> 绕过）。</p>
     </article>
+
+    <nav class="doc-pager">
+<a class="doc-pager-item prev" href="api.html"><span>← 上一篇</span><strong>API 使用指南</strong></a>      <a class="doc-pager-item next" href="changes.html"><span>下一篇 →</span><strong>对 Shizuku-API 的本地修改</strong></a>
+    </nav>
+
     <footer class="doc-foot">
       <p>本页由 <code>tools/md2html.py</code> 从 <code>docs/BUILD.md</code> 生成，请勿直接编辑 HTML。</p>
-      <p><a href="../index.html">← 返回官网</a> · <a href="https://github.com/cr1437/Shizako">GitHub</a> ·
-         <a href="../BUILD.md">查看本文源文件</a></p>
+      <p><a href="../BUILD.md">查看本文源文件</a> · <a href="index.html">开发文档总览</a> · <a href="https://github.com/cr1437/Shizako">GitHub</a></p>
     </footer>
   </main>
+
+  <aside class="doc-side">
+    <p class="doc-toc-title">本页目录</p>
+    <nav class="doc-toc" id="docToc">
+      <a href="#环境要求">环境要求</a>
+        <a href="#克隆与编译">克隆与编译</a>
+        <a href="#关于签名重要">关于签名（重要）</a>
+        <a href="#代码结构">代码结构</a>
+        <a href="#常用维护脚本">常用维护脚本</a>
+        <a href="#国内网络">国内网络</a>
+        <a href="#提交改动">提交改动</a>
+    </nav>
+  </aside>
+
 </div>
 
 <script>
-// 顶栏滚动态（与首页同一效果，文档页不加载 site.js 以免误伤语言切换）
 (function () {
+  // 顶栏 + 阅读进度
   var nav = document.getElementById('nav');
-  function onScroll() { if (nav) nav.classList.toggle('scrolled', window.scrollY > 8); }
+  var bar = document.getElementById('docProgress');
+  function onScroll() {
+    if (nav) nav.classList.toggle('scrolled', window.scrollY > 8);
+    if (bar) {
+      var h = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = (h > 0 ? Math.min(100, (window.scrollY / h) * 100) : 0) + '%';
+    }
+    spy();
+  }
   window.addEventListener('scroll', onScroll, { passive: true });
+
+  // 本页目录高亮：取当前视口内最后一个已滚过的标题
+  var links = [].slice.call(document.querySelectorAll('#docToc a'));
+  var heads = links.map(function (a) {
+    var id = decodeURIComponent(a.getAttribute('href').slice(1));
+    return document.getElementById(id) || document.getElementById(a.getAttribute('href').slice(1));
+  });
+  function spy() {
+    if (!links.length) return;
+    var idx = 0;
+    for (var i = 0; i < heads.length; i++) {
+      if (heads[i] && heads[i].getBoundingClientRect().top <= 120) idx = i;
+    }
+    links.forEach(function (a, i) { a.classList.toggle('active', i === idx); });
+  }
+
+  // 代码块：加「复制」按钮（语言标签由生成器写在 HTML 里）
+  [].slice.call(document.querySelectorAll('.code')).forEach(function (box) {
+    var btn = box.querySelector('.code-copy');
+    var pre = box.querySelector('pre');
+    if (!btn || !pre) return;
+    btn.addEventListener('click', function () {
+      var text = pre.innerText;
+      function done() { btn.textContent = '已复制'; setTimeout(function () { btn.textContent = '复制'; }, 1400); }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, function () { fallback(text, done); });
+      } else { fallback(text, done); }
+    });
+  });
+  function fallback(text, done) {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); done(); } catch (e) {}
+    document.body.removeChild(ta);
+  }
+
   onScroll();
 })();
 </script>

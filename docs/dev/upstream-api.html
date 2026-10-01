@@ -9,7 +9,9 @@
 <link rel="icon" href="../assets/icon.png">
 <link rel="stylesheet" href="../assets/site.css">
 </head>
-<body class="doc-body">
+<body>
+
+<div class="doc-progress"><span id="docProgress"></span></div>
 
 <header class="nav" id="nav">
   <a class="brand" href="../index.html">
@@ -28,134 +30,124 @@
   </div>
 </header>
 
-<div class="doc-layout">
-  <aside class="doc-side">
-    <a class="doc-back" href="index.html">← 开发文档总览</a>
-    <nav class="doc-toc">
-      <p class="doc-toc-title">本页目录</p>
-      <a href="#requirements">Requirements</a>
-      <a href="#shizuku" class="lvl3">Shizuku</a>
-      <a href="#sui" class="lvl3">Sui</a>
-      <a href="#demo">Demo</a>
-      <a href="#guide">Guide</a>
-      <a href="#add-dependency" class="lvl3">Add dependency</a>
-      <a href="#acquire-the-binder" class="lvl3">Acquire the Binder</a>
-      <a href="#request-permission" class="lvl3">Request permission</a>
-      <a href="#differents-of-the-privilege-betweent-adb-and-root" class="lvl3">Differents of the privilege betweent ADB and ROOT</a>
-      <a href="#remote-binder-call" class="lvl3">Remote binder call</a>
-      <a href="#userservice" class="lvl3">UserService</a>
-      <a href="#the-use-of-non-sdk-interfaces" class="lvl3">The use of non-SDK interfaces</a>
-      <a href="#changelog">Changelog</a>
-      <a href="#1315" class="lvl3">13.1.5</a>
-      <a href="#1314" class="lvl3">13.1.4</a>
-      <a href="#1313" class="lvl3">13.1.3</a>
-      <a href="#1312" class="lvl3">13.1.2</a>
-      <a href="#1311" class="lvl3">13.1.1</a>
-      <a href="#1310" class="lvl3">13.1.0</a>
-      <a href="#1300" class="lvl3">13.0.0</a>
-      <a href="#1220" class="lvl3">12.2.0</a>
-      <a href="#1210" class="lvl3">12.1.0</a>
-      <a href="#1200" class="lvl3">12.0.0</a>
-      <a href="#migration-guide-for-existing-applications-use-shizuku-pre-v11">Migration guide for existing applications use Shizuku pre-v11</a>
-      <a href="#changes" class="lvl3">Changes</a>
-      <a href="#add-support-for-sui" class="lvl3">Add support for Sui</a>
+<div class="doc-shell">
+
+  <aside class="doc-nav">
+    <p class="doc-nav-title">开发文档</p>
+    <nav>
+<a href="api.html">API 使用指南</a>
+      <a href="build.html">编译与参与开发</a>
+      <a href="changes.html">对 Shizuku-API 的本地修改</a>
+      <a href="upstream-api.html" class="active">Shizuku-API 上游文档</a>
+      <a href="rish.html">rish 命令行</a>
+      <a href="changelog.html">更新日志</a>
     </nav>
+    <a class="doc-nav-back" href="index.html">全部文档 →</a>
   </aside>
 
   <main class="doc-main">
+    <nav class="doc-crumb">
+      <a href="../index.html">首页</a><span>/</span><a href="index.html">开发文档</a><span>/</span><em>Shizuku-API 上游文档</em>
+    </nav>
+
+    <header class="doc-head">
+      <h1>Shizuku-API 上游文档</h1>
+      <p class="doc-desc">官方客户端库的原始说明（英文）</p>
+    </header>
+
     <article class="doc-article">
 <p>Shizuku API is the API provided by <a href="https://github.com/RikkaApps/Shizuku">Shizuku</a> and <a href="https://github.com/RikkaApps/Sui">Sui</a>. With Shizuku API, you can call your Java/JNI code with root/shell (ADB) identity.</p>
-<h2 id="requirements">Requirements</h2>
+<h2 id="requirements">Requirements<a class="doc-anchor" href="#requirements" aria-label="链接到此节">#</a></h2>
 <p>To use Shizuku APIs, you need to guide the user to install Shizuku or Sui first. Both of them require Android 6.0+.</p>
-<h3 id="shizuku">Shizuku</h3>
+<h3 id="shizuku">Shizuku<a class="doc-anchor" href="#shizuku" aria-label="链接到此节">#</a></h3>
 <p>Shizuku is a standard Android application. You can guide the users to download Shizuku from https://shizuku.rikka.app/download/. Shizuku works for both rooted and non-rooted devices.</p>
 <p>On non-rooted devices, Shizuku needs to be manually restarted with adb every time on boot. Before Android 11, a computer is required to run adb. Android 11 and above have built-in wireless debugging support, and users can start Shizuku directly on the device.</p>
-<h3 id="sui">Sui</h3>
+<h3 id="sui">Sui<a class="doc-anchor" href="#sui" aria-label="链接到此节">#</a></h3>
 <p>Sui is a <a href="https://github.com/topjohnwu/Magisk">Magisk</a> module. Magisk requires an unlocked bootloader.</p>
 <p>No additional setup is required except for the installation. You can guide the rooted users (searching <code>su</code> in <code>PATH</code> is enough) to download Sui from Magisk or https://github.com/RikkaApps/Sui.</p>
-<h2 id="demo">Demo</h2>
+<h2 id="demo">Demo<a class="doc-anchor" href="#demo" aria-label="链接到此节">#</a></h2>
 <p>A demo project is provided. See <a href="https://github.com/RikkaApps/Shizuku-API/tree/master/demo">demo</a> for more.</p>
-<h2 id="guide">Guide</h2>
+<h2 id="guide">Guide<a class="doc-anchor" href="#guide" aria-label="链接到此节">#</a></h2>
 <p>I'll say the difficult words first, using Shizuku APIs is similar to framework or system app development, some experience in developing common applications may not be enough. You have to get used to digging into Android source code to find out how things work, <a href="https://cs.android.com">cs.android.com</a> and AndroidXref sites will be your best friend.</p>
-<h3 id="add-dependency">Add dependency</h3>
+<h3 id="add-dependency">Add dependency<a class="doc-anchor" href="#add-dependency" aria-label="链接到此节">#</a></h3>
 <p>!<a href="https://img.shields.io/maven-central/v/dev.rikka.shizuku/api">Maven Central</a></p>
-<pre class="lang-groovy"><code>def shizuku_version = (the version above)
-implementation &quot;dev.rikka.shizuku:api:$shizuku_version&quot;
+<div class="code"><div class="code-head"><span class="code-lang">groovy</span><button class="code-copy" type="button">复制</button></div><pre><code>def shizuku_version = (the version above)
+implementation <span class="tok-s">&quot;dev.rikka.shizuku:api:$shizuku_version&quot;</span>
 
-// Add this line if you want to support Shizuku
-implementation &quot;dev.rikka.shizuku:provider:$shizuku_version&quot;</code></pre>
-<h3 id="acquire-the-binder">Acquire the Binder</h3>
+<span class="tok-c">// Add this line if you want to support Shizuku</span>
+implementation <span class="tok-s">&quot;dev.rikka.shizuku:provider:$shizuku_version&quot;</span></code></pre></div>
+<h3 id="acquire-the-binder">Acquire the Binder<a class="doc-anchor" href="#acquire-the-binder" aria-label="链接到此节">#</a></h3>
 <p>The first step is to acquire the Binder from Shizuku or Sui.</p>
 <p><code>Shizuku</code> class provides listeners, <code>Shizuku#addBinderReceivedListener()</code> and <code>Shizuku.addBinderDeadListener()</code>, that allows you to track the life of the binder. You should call methods in <code>Shizuku</code> class when the binder is alive or you will get an <code>IllegalStateException</code>.</p>
 <p>The steps to get a Binder from Sui and Shizuku are different.</p>
-<h4 id="sui">Sui</h4>
+<h4 id="sui">Sui<a class="doc-anchor" href="#sui" aria-label="链接到此节">#</a></h4>
 <p>Call <code>Sui.init(packageName)</code> before using <code>Shizuku</code> class. This method only needs to be called once. If this method returns true, means Sui is installed and available.</p>
 <p>For multi-process applications, call this method in every process that needs to use Shizuku API.</p>
 <p>Note, request the binder for Sui only requires two times of binder IPC, this is significantly cheaper than initialize Shizuku which uses <code>ContentProvider</code>. <code>Sui.init(packageName)</code> can be used in main thread, you don't need to worry about performance.</p>
-<h4 id="shizuku">Shizuku</h4>
+<h4 id="shizuku">Shizuku<a class="doc-anchor" href="#shizuku" aria-label="链接到此节">#</a></h4>
 <p>Add <code>ShizukuProvider</code> to <code>AndroidManifest.xml</code>.</p>
-<pre class="lang-xml"><code>&lt;provider
-    android:name=&quot;rikka.shizuku.ShizukuProvider&quot;
-    android:authorities=&quot;${applicationId}.shizuku&quot;
-    android:multiprocess=&quot;false&quot;
-    android:enabled=&quot;true&quot;
-    android:exported=&quot;true&quot;
-    android:permission=&quot;android.permission.INTERACT_ACROSS_USERS_FULL&quot; /&gt;
+<div class="code"><div class="code-head"><span class="code-lang">xml</span><button class="code-copy" type="button">复制</button></div><pre><code>&lt;provider
+    android:name=<span class="tok-s">&quot;rikka.shizuku.ShizukuProvider&quot;</span>
+    android:authorities=<span class="tok-s">&quot;${applicationId}.shizuku&quot;</span>
+    android:multiprocess=<span class="tok-s">&quot;false&quot;</span>
+    android:enabled=<span class="tok-s">&quot;true&quot;</span>
+    android:exported=<span class="tok-s">&quot;true&quot;</span>
+    android:permission=<span class="tok-s">&quot;android.permission.INTERACT_ACROSS_USERS_FULL&quot;</span> /&gt;
 
-&lt;!-- android:permission=&quot;android.permission.INTERACT_ACROSS_USERS_FULL&quot; is to protect this provider from accessing by normal apps --&gt;</code></pre>
+<span class="tok-c">&lt;!-- android:permission=&quot;android.permission.INTERACT_ACROSS_USERS_FULL&quot; is to protect this provider from accessing by normal apps --&gt;</span></code></pre></div>
 <p>For multi-process applications, you need to call <code>ShizukuProvider.enableMultiProcessSupport()</code> in every process which needs to use Shizuku API.</p>
 <p>Starting from v12.1.0, Sui is initialized automatically in <code>ShizukuProvider</code>. You can opt-out this behavior by calling <code>ShizukuProvider#disableAutomaticSuiInitialization()</code> before <code>ShizukuProvider#onCreate()</code> is called. Unless there are special reasons, apps that support Shizuku should also support Sui, otherwise it will cause user confusion.</p>
-<h3 id="request-permission">Request permission</h3>
+<h3 id="request-permission">Request permission<a class="doc-anchor" href="#request-permission" aria-label="链接到此节">#</a></h3>
 <p>Requesting permission is similar to <a href="https://developer.android.com/training/permissions/requesting">requesting runtime permissions</a>.</p>
 <p>A simple example of requesting permission:</p>
-<pre class="lang-java"><code>private void onRequestPermissionsResult(int requestCode, int grantResult) {
-    boolean granted = grantResult == PackageManager.PERMISSION_GRANTED;
-    // Do stuff based on the result and the request code
+<div class="code"><div class="code-head"><span class="code-lang">java</span><button class="code-copy" type="button">复制</button></div><pre><code><span class="tok-k">private</span> <span class="tok-k">void</span> onRequestPermissionsResult(<span class="tok-k">int</span> requestCode, <span class="tok-k">int</span> grantResult) {
+    <span class="tok-k">boolean</span> granted = grantResult == PackageManager.PERMISSION_GRANTED;
+    <span class="tok-c">// Do stuff based on the result and the request code</span>
 }
 
-private final Shizuku.OnRequestPermissionResultListener REQUEST_PERMISSION_RESULT_LISTENER = this::onRequestPermissionsResult;
+<span class="tok-k">private</span> <span class="tok-k">final</span> Shizuku.OnRequestPermissionResultListener REQUEST_PERMISSION_RESULT_LISTENER = <span class="tok-k">this</span>::onRequestPermissionsResult;
 
 @Override
-protected void onCreate(Bundle savedInstanceState) {
-    // ...
+<span class="tok-k">protected</span> <span class="tok-k">void</span> onCreate(Bundle savedInstanceState) {
+    <span class="tok-c">// ...</span>
     Shizuku.addRequestPermissionResultListener(REQUEST_PERMISSION_RESULT_LISTENER);
-    // ...
+    <span class="tok-c">// ...</span>
 }
 
 @Override
-protected void onDestroy() {
-    // ...
+<span class="tok-k">protected</span> <span class="tok-k">void</span> onDestroy() {
+    <span class="tok-c">// ...</span>
     Shizuku.removeRequestPermissionResultListener(REQUEST_PERMISSION_RESULT_LISTENER);
-    // ...
+    <span class="tok-c">// ...</span>
 }
 
-private boolean checkPermission(int code) {
-  if (Shizuku.isPreV11()) {
-    // Pre-v11 is unsupported
-    return false;
+<span class="tok-k">private</span> <span class="tok-k">boolean</span> checkPermission(<span class="tok-k">int</span> code) {
+  <span class="tok-k">if</span> (Shizuku.isPreV11()) {
+    <span class="tok-c">// Pre-v11 is unsupported</span>
+    <span class="tok-k">return</span> <span class="tok-k">false</span>;
   }
 
-  if (Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED) {
-    // Granted
-    return true;
-  } else if (Shizuku.shouldShowRequestPermissionRationale()) {
-    // Users choose &quot;Deny and don&#x27;t ask again&quot;
-    return false;
-  } else {
-    // Request the permission
+  <span class="tok-k">if</span> (Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED) {
+    <span class="tok-c">// Granted</span>
+    <span class="tok-k">return</span> <span class="tok-k">true</span>;
+  } <span class="tok-k">else</span> <span class="tok-k">if</span> (Shizuku.shouldShowRequestPermissionRationale()) {
+    <span class="tok-c">// Users choose &quot;Deny and don&#x27;t ask again&quot;</span>
+    <span class="tok-k">return</span> <span class="tok-k">false</span>;
+  } <span class="tok-k">else</span> {
+    <span class="tok-c">// Request the permission</span>
     Shizuku.requestPermission(code);
-    return false;
+    <span class="tok-k">return</span> <span class="tok-k">false</span>;
   }
-}</code></pre>
-<h3 id="differents-of-the-privilege-betweent-adb-and-root">Differents of the privilege betweent ADB and ROOT</h3>
+}</code></pre></div>
+<h3 id="differents-of-the-privilege-betweent-adb-and-root">Differents of the privilege betweent ADB and ROOT<a class="doc-anchor" href="#differents-of-the-privilege-betweent-adb-and-root" aria-label="链接到此节">#</a></h3>
 <p>Shizuku can be started with ADB or ROOT, and Sui is a Magisk module, so the privilege could be ADB or ROOT. You can use <code>Shizuku#getUid()</code> to check your privilege, for ROOT it returns <code>0</code>, for ADB is <code>2000</code>.</p>
 <p>What ADB can do is significantly different from ROOT:</p>
 <ul><li>In the Android world, the privilege is determined by Android permissions. See <a href="https://cs.android.com/android/platform/superproject/+/master:frameworks/base/packages/Shell/AndroidManifest.xml">AndroidManifest of Shell</a>, all the permission granted to Shell (ADB) are listed here. Be aware, the permission changes under different Android versions.</li></ul>
 <ul><li>In Linux world, the privilege is determined by Shell's uid, capabilities, SELinux context, etc. For example, Shell (ADB) cannot access other apps' data files <code>/data/user/0/&lt;package&gt;</code>.</li></ul>
-<h3 id="remote-binder-call">Remote binder call</h3>
+<h3 id="remote-binder-call">Remote binder call<a class="doc-anchor" href="#remote-binder-call" aria-label="链接到此节">#</a></h3>
 <p>This is a relatively simple way, but what you can do is limited to Binder calls. Therefore, this is only suitable for simple applications.</p>
 <p>Shizuku API provides <code>rikka.shizuku.ShizukuBinderWrapper</code> class which forward Binder calls to Shizuku service which has ADB or ROOT privilege.</p>
-<h3 id="userservice">UserService</h3>
+<h3 id="userservice">UserService<a class="doc-anchor" href="#userservice" aria-label="链接到此节">#</a></h3>
 <p>User Service is like <a href="https://developer.android.com/guide/components/bound-services">Bound services</a> which allows you to run Java or native codes (through JNI). The difference is that the service runs in a different process and as the identity (Linux UID) of root (UID 0) or shell (UID 2000, if the backend is Shizuku and user starts Shizuku with adb).</p>
 <p>There are no restrictions on non-SDK APIs in the user service process. However, the User Service process is not a valid Android application process. Therefore, even if you can acquire a <code>Context</code> instance, many APIs, such as <code>Context#registerReceiver</code> and <code>Context#getContentResolver</code> will not work. You will need to dig into Android source code to find out how things work.</p>
 <p>Be aware that, to let the service to use the latest code, "Run/Debug configurations" - "Always install with package manager" in Android Studio should be checked.</p>
@@ -168,19 +160,19 @@ private boolean checkPermission(int code) {
 <p>Shizuku uses <code>tag</code> from <code>UserServiceArgs</code> to determine if the User Service is same. If <code>tag</code> is not set, class name will be uses, but class name is unstable after ProGuard/R8. If <code>version</code> from <code>UserServiceArgs</code> mismatches, a new User Service will be start and "destroy" method (see below) will be called for the old.</p>
 <ul><li>Stop the User Service</li></ul>
 <p>Use <code>unbindUserService</code> method. However, the user service process will <strong>NOT</strong> be killed automatically. You need to implement a "destroy" method in your service. The transaction code for that method is <code>16777115</code> (use <code>16777114</code> in aidl). In this method, you can do some cleanup jobs and call <code>System.exit()</code> in the end.</p>
-<h3 id="the-use-of-non-sdk-interfaces">The use of non-SDK interfaces</h3>
+<h3 id="the-use-of-non-sdk-interfaces">The use of non-SDK interfaces<a class="doc-anchor" href="#the-use-of-non-sdk-interfaces" aria-label="链接到此节">#</a></h3>
 <p>For "Remote binder call", as the APIs are accessed from the app's process, you may need to use <a href="https://github.com/LSPosed/AndroidHiddenApiBypass">AndroidHiddenApiBypass</a> or any ways you want to bypass restrictions on non-SDK interfaces.</p>
 <p>We also provides <a href="https://github.com/RikkaApps/HiddenApiRefinePlugin">HiddenApiRefinePlugin</a> to help you to programing with hidden APIs conveniently.</p>
-<h2 id="changelog">Changelog</h2>
-<h3 id="1315">13.1.5</h3>
+<h2 id="changelog">Changelog<a class="doc-anchor" href="#changelog" aria-label="链接到此节">#</a></h2>
+<h3 id="1315">13.1.5<a class="doc-anchor" href="#1315" aria-label="链接到此节">#</a></h3>
 <ul><li>Fix <code>ShizukuProvider#requestBinderForNonProviderProcess</code> crash on Android 14 (for apps targeting Android 14)</li></ul>
-<h3 id="1314">13.1.4</h3>
+<h3 id="1314">13.1.4<a class="doc-anchor" href="#1314" aria-label="链接到此节">#</a></h3>
 <ul><li>Ask the server to remove <code>ShizukuServiceConnection</code> if the server is new enough</li></ul>
-<h3 id="1313">13.1.3</h3>
+<h3 id="1313">13.1.3<a class="doc-anchor" href="#1313" aria-label="链接到此节">#</a></h3>
 <ul><li>Fix the problem that <code>Shizuku#unbindUserService(remove=false)</code> does not actually remove the callback</li></ul>
-<h3 id="1312">13.1.2</h3>
+<h3 id="1312">13.1.2<a class="doc-anchor" href="#1312" aria-label="链接到此节">#</a></h3>
 <ul><li>Avoid the use of <code>CopyOnWriteArrayList#removeIf</code>, as using it with <code>coreLibraryDesugaring</code> enabled will crash on Android 8+</li></ul>
-<h3 id="1311">13.1.1</h3>
+<h3 id="1311">13.1.1<a class="doc-anchor" href="#1311" aria-label="链接到此节">#</a></h3>
 <ul><li>Fix <code>Shizuku#removeXXXListener</code> will crash on Android 7.1 and earlier versions</li></ul>
 <p>This is caused by <code>CopyOnWriteArrayList#removeIf</code> is not supported (throw an <code>UnsupportedOperationException</code>) before Android 8.0. Please note, using <code>coreLibraryDesugaring</code> will NOT fix this issue at least in version <code>2.0.3</code>.</p>
 <ul><li>Prepare to remove <code>Shizuku#newProcess</code>, developers should have to use <code>UserService</code> instead</li></ul>
@@ -188,42 +180,124 @@ private boolean checkPermission(int code) {
 <p>For those who don't understand, <code>UserService</code> gives the developer the ability to run their own codes in a different process with root or shell privilege. This is much more powerful than just executing a command. <code>UserService</code> can replace <code>newProcess</code> in all cases.</p>
 <p>Also, <code>newProcess</code> uses texts to communicate , which is not efficient and unreliable. If there are apps that only uses <code>newProcess</code> to implement its functions, it loses most of the advantage of using Shizuku.</p>
 <p>Finally, <code>newProcess</code> lacks tty support, it is not possible to implement an interactive shell with it. And we already has <code>rish</code> that allows users to run an interactive shell with privilege in any terminal app they like.</p>
-<h3 id="1310">13.1.0</h3>
+<h3 id="1310">13.1.0<a class="doc-anchor" href="#1310" aria-label="链接到此节">#</a></h3>
 <ul><li>Breaking change: <a href="https://developer.android.com/studio/write/java8-support#library-desugaring">desugaring</a> is required if min API of your app is 23</li><li>Listeners now has an optional <code>Handler</code> parameter that determines which thread will the listener be called from</li></ul>
-<h3 id="1300">13.0.0</h3>
+<h3 id="1300">13.0.0<a class="doc-anchor" href="#1300" aria-label="链接到此节">#</a></h3>
 <ul><li>The constructor of <code>UserService</code> can have a <code>Context</code> parameter which value is the <code>Context</code> used to create the instance of <code>UserService</code></li></ul>
-<h3 id="1220">12.2.0</h3>
+<h3 id="1220">12.2.0<a class="doc-anchor" href="#1220" aria-label="链接到此节">#</a></h3>
 <ul><li>Fix <code>onServiceDisconnected</code> is not called if the UserService is stopped by <code>Shizuku#unbindUserService</code></li></ul>
-<h3 id="1210">12.1.0</h3>
+<h3 id="1210">12.1.0<a class="doc-anchor" href="#1210" aria-label="链接到此节">#</a></h3>
 <ul><li>Automatically initialize Sui if you are using Shizuku</li></ul>
 <p>You can opt-out this behavior by calling <code>ShizukuProvider#disableAutomaticSuiInitialization()</code> before <code>ShizukuProvider#onCreate()</code> is called</p>
 <ul><li>Added a lot more detailed document for most APIs</li><li>Drop pre-v11 support</li></ul>
 <p>You don't need to worry about this problem, just show a "not supported" message if the user really uses pre-v11.</p>
 <ul><li>Sui was born after API v11, Sui users are not affected at all.</li><li>For Shizuku, according to Google Play statistics, more than 95% of users are on v11+. Shizuku drops Android 5 support from v5, many of the remaining 5% are such people who are stuck at super old versions.</li><li>A useful API, UserService, is added from v11 and stable on v12. I believe that many Shizuku apps already have a "version &gt; 11" check.</li><li>I really want to drop pre-v11 support since <a href="https://github.com/RikkaApps/Shizuku/issues/83">a possible system issue that may cause system soft reboot (system server crash) on uninstalling Shizuku</a>.</li></ul>
-<h3 id="1200">12.0.0</h3>
+<h3 id="1200">12.0.0<a class="doc-anchor" href="#1200" aria-label="链接到此节">#</a></h3>
 <ul><li>Add <code>Shizuku#peekUserService</code> that allows you to check if a specific user service is running</li><li>Add <code>Shizuku.UserServiceArgs#daemon</code> that allows you to control if the user service should be run in the "Daemon mode"</li></ul>
-<h2 id="migration-guide-for-existing-applications-use-shizuku-pre-v11">Migration guide for existing applications use Shizuku pre-v11</h2>
+<h2 id="migration-guide-for-existing-applications-use-shizuku-pre-v11">Migration guide for existing applications use Shizuku pre-v11<a class="doc-anchor" href="#migration-guide-for-existing-applications-use-shizuku-pre-v11" aria-label="链接到此节">#</a></h2>
 <p>&lt;details&gt; &lt;summary&gt;Click to expand&lt;/summary&gt;</p>
-<h3 id="changes">Changes</h3>
+<h3 id="changes">Changes<a class="doc-anchor" href="#changes" aria-label="链接到此节">#</a></h3>
 <ul><li>Dependency changed (see Guide below)</li><li>Self-implemented permission is used from v11, the API is the same to runtime permission (see the demo, and existing runtime permission still works)</li><li>Package name was renamed to <code>rikka.shizuku</code> (replace all <code>moe.shizuku.api.</code> to <code>rikka.shizuku.</code>)</li><li><code>ShizukuService</code> class is renamed to <code>Shizuku</code></li><li>Methods in <code>Shizuku</code> class now throw <code>RuntimeException</code> on failure rather than <code>RemoteException</code> like other Android APIs</li><li>Listeners are moved from <code>ShizukuProvider</code> class to <code>Shizuku</code> class</li></ul>
-<h3 id="add-support-for-sui">Add support for Sui</h3>
+<h3 id="add-support-for-sui">Add support for Sui<a class="doc-anchor" href="#add-support-for-sui" aria-label="链接到此节">#</a></h3>
 <ul><li>Call <code>Sui#init()</code></li><li>It's better to use check Sui with <code>Sui#isSui</code> before using Shizuku only methods in <code>ShizukuProvider</code></li></ul>
 <p>&lt;/details&gt;</p>
     </article>
+
+    <nav class="doc-pager">
+<a class="doc-pager-item prev" href="changes.html"><span>← 上一篇</span><strong>对 Shizuku-API 的本地修改</strong></a>      <a class="doc-pager-item next" href="rish.html"><span>下一篇 →</span><strong>rish 命令行</strong></a>
+    </nav>
+
     <footer class="doc-foot">
       <p>本页由 <code>tools/md2html.py</code> 从 <code>api/README.md</code> 生成，请勿直接编辑 HTML。</p>
-      <p><a href="../index.html">← 返回官网</a> · <a href="https://github.com/cr1437/Shizako">GitHub</a> ·
-         <a href="https://github.com/cr1437/Shizako/blob/main/api/README.md">查看本文源文件</a></p>
+      <p><a href="https://github.com/cr1437/Shizako/blob/main/api/README.md">查看本文源文件</a> · <a href="index.html">开发文档总览</a> · <a href="https://github.com/cr1437/Shizako">GitHub</a></p>
     </footer>
   </main>
+
+  <aside class="doc-side">
+    <p class="doc-toc-title">本页目录</p>
+    <nav class="doc-toc" id="docToc">
+      <a href="#requirements">Requirements</a>
+        <a href="#shizuku" class="lvl3">Shizuku</a>
+        <a href="#sui" class="lvl3">Sui</a>
+        <a href="#demo">Demo</a>
+        <a href="#guide">Guide</a>
+        <a href="#add-dependency" class="lvl3">Add dependency</a>
+        <a href="#acquire-the-binder" class="lvl3">Acquire the Binder</a>
+        <a href="#request-permission" class="lvl3">Request permission</a>
+        <a href="#differents-of-the-privilege-betweent-adb-and-root" class="lvl3">Differents of the privilege betweent ADB and ROOT</a>
+        <a href="#remote-binder-call" class="lvl3">Remote binder call</a>
+        <a href="#userservice" class="lvl3">UserService</a>
+        <a href="#the-use-of-non-sdk-interfaces" class="lvl3">The use of non-SDK interfaces</a>
+        <a href="#changelog">Changelog</a>
+        <a href="#1315" class="lvl3">13.1.5</a>
+        <a href="#1314" class="lvl3">13.1.4</a>
+        <a href="#1313" class="lvl3">13.1.3</a>
+        <a href="#1312" class="lvl3">13.1.2</a>
+        <a href="#1311" class="lvl3">13.1.1</a>
+        <a href="#1310" class="lvl3">13.1.0</a>
+        <a href="#1300" class="lvl3">13.0.0</a>
+        <a href="#1220" class="lvl3">12.2.0</a>
+        <a href="#1210" class="lvl3">12.1.0</a>
+        <a href="#1200" class="lvl3">12.0.0</a>
+        <a href="#migration-guide-for-existing-applications-use-shizuku-pre-v11">Migration guide for existing applications use Shizuku pre-v11</a>
+        <a href="#changes" class="lvl3">Changes</a>
+        <a href="#add-support-for-sui" class="lvl3">Add support for Sui</a>
+    </nav>
+  </aside>
+
 </div>
 
 <script>
-// 顶栏滚动态（与首页同一效果，文档页不加载 site.js 以免误伤语言切换）
 (function () {
+  // 顶栏 + 阅读进度
   var nav = document.getElementById('nav');
-  function onScroll() { if (nav) nav.classList.toggle('scrolled', window.scrollY > 8); }
+  var bar = document.getElementById('docProgress');
+  function onScroll() {
+    if (nav) nav.classList.toggle('scrolled', window.scrollY > 8);
+    if (bar) {
+      var h = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = (h > 0 ? Math.min(100, (window.scrollY / h) * 100) : 0) + '%';
+    }
+    spy();
+  }
   window.addEventListener('scroll', onScroll, { passive: true });
+
+  // 本页目录高亮：取当前视口内最后一个已滚过的标题
+  var links = [].slice.call(document.querySelectorAll('#docToc a'));
+  var heads = links.map(function (a) {
+    var id = decodeURIComponent(a.getAttribute('href').slice(1));
+    return document.getElementById(id) || document.getElementById(a.getAttribute('href').slice(1));
+  });
+  function spy() {
+    if (!links.length) return;
+    var idx = 0;
+    for (var i = 0; i < heads.length; i++) {
+      if (heads[i] && heads[i].getBoundingClientRect().top <= 120) idx = i;
+    }
+    links.forEach(function (a, i) { a.classList.toggle('active', i === idx); });
+  }
+
+  // 代码块：加「复制」按钮（语言标签由生成器写在 HTML 里）
+  [].slice.call(document.querySelectorAll('.code')).forEach(function (box) {
+    var btn = box.querySelector('.code-copy');
+    var pre = box.querySelector('pre');
+    if (!btn || !pre) return;
+    btn.addEventListener('click', function () {
+      var text = pre.innerText;
+      function done() { btn.textContent = '已复制'; setTimeout(function () { btn.textContent = '复制'; }, 1400); }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, function () { fallback(text, done); });
+      } else { fallback(text, done); }
+    });
+  });
+  function fallback(text, done) {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); done(); } catch (e) {}
+    document.body.removeChild(ta);
+  }
+
   onScroll();
 })();
 </script>

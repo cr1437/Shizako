@@ -9,7 +9,9 @@
 <link rel="icon" href="../assets/icon.png">
 <link rel="stylesheet" href="../assets/site.css">
 </head>
-<body class="doc-body">
+<body>
+
+<div class="doc-progress"><span id="docProgress"></span></div>
 
 <header class="nav" id="nav">
   <a class="brand" href="../index.html">
@@ -28,42 +30,114 @@
   </div>
 </header>
 
-<div class="doc-layout">
-  <aside class="doc-side">
-    <a class="doc-back" href="index.html">← 开发文档总览</a>
-    <nav class="doc-toc">
-      <p class="doc-toc-title">本页目录</p>
-      <a href="#为什么不直接声明官方权限让官方-api-应用直连">为什么不直接声明官方权限让官方 API 应用直连？</a>
-      <a href="#与上游同步">与上游同步</a>
+<div class="doc-shell">
+
+  <aside class="doc-nav">
+    <p class="doc-nav-title">开发文档</p>
+    <nav>
+<a href="api.html">API 使用指南</a>
+      <a href="build.html">编译与参与开发</a>
+      <a href="changes.html" class="active">对 Shizuku-API 的本地修改</a>
+      <a href="upstream-api.html">Shizuku-API 上游文档</a>
+      <a href="rish.html">rish 命令行</a>
+      <a href="changelog.html">更新日志</a>
     </nav>
+    <a class="doc-nav-back" href="index.html">全部文档 →</a>
   </aside>
 
   <main class="doc-main">
+    <nav class="doc-crumb">
+      <a href="../index.html">首页</a><span>/</span><a href="index.html">开发文档</a><span>/</span><em>对 Shizuku-API 的本地修改</em>
+    </nav>
+
+    <header class="doc-head">
+      <h1>对 Shizuku-API 的本地修改</h1>
+      <p class="doc-desc">为什么权限名不同、如何与上游同步</p>
+    </header>
+
     <article class="doc-article">
 <p>本目录源自 <a href="https://github.com/RikkaApps/Shizuku-API">RikkaApps/Shizuku-API</a>（MIT License）， 自 zako2.1 起由 git 子模块改为直接内置，便于随本仓库一起分发与修改。</p>
 <p>上游代码保持原样，仅做了以下改动：</p>
 <div class="doc-table-wrap"><table><thead><tr><th>文件</th><th>改动</th><th>原因</th></tr></thead><tbody><tr><td><code>provider/src/main/AndroidManifest.xml</code></td><td>追加声明 <code>&lt;uses-permission android:name="com.churan.shizako.permission.API_V23"/&gt;</code></td><td>双管理器支持：使用本库的应用同时请求官方 Shizuku 与 Shizako 两个权限，两台服务器各自只推送、只授予自己定义的权限，因此同一份应用可连接任一管理器</td></tr><tr><td><code>shared/src/main/java/rikka/shizuku/ShizukuApiConstants.java</code></td><td>服务端版本常量与 Shizako 版本体系对齐</td><td>避免"激活后仍显示上游 13.6 版本号"</td></tr></tbody></table></div>
-<h2 id="为什么不直接声明官方权限让官方-api-应用直连">为什么不直接声明官方权限让官方 API 应用直连？</h2>
+<h2 id="为什么不直接声明官方权限让官方-api-应用直连">为什么不直接声明官方权限让官方 API 应用直连？<a class="doc-anchor" href="#为什么不直接声明官方权限让官方-api-应用直连" aria-label="链接到此节">#</a></h2>
 <p>上游 Shizuku 的许可（Apache 2.0 附加条款）明确禁止 fork 声明 <code>moe.shizuku.manager.permission.*</code> 权限；技术上，重复定义同名 runtime 权限也会在 与官方 Shizuku 并存安装时产生"定义归属取决于安装顺序、卸载即失效"的冲突。 因此本库选择"双权限请求"路线：<strong>换用本库编译的应用</strong>可同时兼容两个生态， 未改动的官方 <code>dev.rikka.shizuku:api</code> 应用仍按原样连接官方 Shizuku。</p>
-<h2 id="与上游同步">与上游同步</h2>
-<pre class="lang-bash"><code>git remote add shizuku-api https://github.com/RikkaApps/Shizuku-API.git
+<h2 id="与上游同步">与上游同步<a class="doc-anchor" href="#与上游同步" aria-label="链接到此节">#</a></h2>
+<div class="code"><div class="code-head"><span class="code-lang">bash</span><button class="code-copy" type="button">复制</button></div><pre><code>git remote add shizuku-api https://github.com/RikkaApps/Shizuku-API.git
 git fetch shizuku-api
-git diff HEAD shizuku-api/master -- api/   # 人工核对后合并，保留上述两处改动</code></pre>
+git diff HEAD shizuku-api/master -- api/   <span class="tok-c"># 人工核对后合并，保留上述两处改动</span></code></pre></div>
     </article>
+
+    <nav class="doc-pager">
+<a class="doc-pager-item prev" href="build.html"><span>← 上一篇</span><strong>编译与参与开发</strong></a>      <a class="doc-pager-item next" href="upstream-api.html"><span>下一篇 →</span><strong>Shizuku-API 上游文档</strong></a>
+    </nav>
+
     <footer class="doc-foot">
       <p>本页由 <code>tools/md2html.py</code> 从 <code>api/SHIZAKO-CHANGES.md</code> 生成，请勿直接编辑 HTML。</p>
-      <p><a href="../index.html">← 返回官网</a> · <a href="https://github.com/cr1437/Shizako">GitHub</a> ·
-         <a href="https://github.com/cr1437/Shizako/blob/main/api/SHIZAKO-CHANGES.md">查看本文源文件</a></p>
+      <p><a href="https://github.com/cr1437/Shizako/blob/main/api/SHIZAKO-CHANGES.md">查看本文源文件</a> · <a href="index.html">开发文档总览</a> · <a href="https://github.com/cr1437/Shizako">GitHub</a></p>
     </footer>
   </main>
+
+  <aside class="doc-side">
+    <p class="doc-toc-title">本页目录</p>
+    <nav class="doc-toc" id="docToc">
+      <a href="#为什么不直接声明官方权限让官方-api-应用直连">为什么不直接声明官方权限让官方 API 应用直连？</a>
+        <a href="#与上游同步">与上游同步</a>
+    </nav>
+  </aside>
+
 </div>
 
 <script>
-// 顶栏滚动态（与首页同一效果，文档页不加载 site.js 以免误伤语言切换）
 (function () {
+  // 顶栏 + 阅读进度
   var nav = document.getElementById('nav');
-  function onScroll() { if (nav) nav.classList.toggle('scrolled', window.scrollY > 8); }
+  var bar = document.getElementById('docProgress');
+  function onScroll() {
+    if (nav) nav.classList.toggle('scrolled', window.scrollY > 8);
+    if (bar) {
+      var h = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = (h > 0 ? Math.min(100, (window.scrollY / h) * 100) : 0) + '%';
+    }
+    spy();
+  }
   window.addEventListener('scroll', onScroll, { passive: true });
+
+  // 本页目录高亮：取当前视口内最后一个已滚过的标题
+  var links = [].slice.call(document.querySelectorAll('#docToc a'));
+  var heads = links.map(function (a) {
+    var id = decodeURIComponent(a.getAttribute('href').slice(1));
+    return document.getElementById(id) || document.getElementById(a.getAttribute('href').slice(1));
+  });
+  function spy() {
+    if (!links.length) return;
+    var idx = 0;
+    for (var i = 0; i < heads.length; i++) {
+      if (heads[i] && heads[i].getBoundingClientRect().top <= 120) idx = i;
+    }
+    links.forEach(function (a, i) { a.classList.toggle('active', i === idx); });
+  }
+
+  // 代码块：加「复制」按钮（语言标签由生成器写在 HTML 里）
+  [].slice.call(document.querySelectorAll('.code')).forEach(function (box) {
+    var btn = box.querySelector('.code-copy');
+    var pre = box.querySelector('pre');
+    if (!btn || !pre) return;
+    btn.addEventListener('click', function () {
+      var text = pre.innerText;
+      function done() { btn.textContent = '已复制'; setTimeout(function () { btn.textContent = '复制'; }, 1400); }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, function () { fallback(text, done); });
+      } else { fallback(text, done); }
+    });
+  });
+  function fallback(text, done) {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); done(); } catch (e) {}
+    document.body.removeChild(ta);
+  }
+
   onScroll();
 })();
 </script>

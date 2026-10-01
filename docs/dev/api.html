@@ -9,7 +9,9 @@
 <link rel="icon" href="../assets/icon.png">
 <link rel="stylesheet" href="../assets/site.css">
 </head>
-<body class="doc-body">
+<body>
+
+<div class="doc-progress"><span id="docProgress"></span></div>
 
 <header class="nav" id="nav">
   <a class="brand" href="../index.html">
@@ -28,252 +30,324 @@
   </div>
 </header>
 
-<div class="doc-layout">
-  <aside class="doc-side">
-    <a class="doc-back" href="index.html">← 开发文档总览</a>
-    <nav class="doc-toc">
-      <p class="doc-toc-title">本页目录</p>
-      <a href="#目录">目录</a>
-      <a href="#两条接入路线">两条接入路线</a>
-      <a href="#依赖配置">依赖配置</a>
-      <a href="#路线-a官方-maven-依赖" class="lvl3">路线 A：官方 Maven 依赖</a>
-      <a href="#路线-b本仓库源码依赖" class="lvl3">路线 B：本仓库源码依赖</a>
-      <a href="#manifest-配置">Manifest 配置</a>
-      <a href="#binder-生命周期">binder 生命周期</a>
-      <a href="#权限申请流程">权限申请流程</a>
-      <a href="#aidl-用户服务重点">AIDL 用户服务（重点）</a>
-      <a href="#第-1-步定义-aidl" class="lvl3">第 1 步：定义 AIDL</a>
-      <a href="#第-2-步实现服务类" class="lvl3">第 2 步：实现服务类</a>
-      <a href="#第-3-步绑定与解绑" class="lvl3">第 3 步：绑定与解绑</a>
-      <a href="#userserviceargs-参数详解">UserServiceArgs 参数详解</a>
-      <a href="#能力与状态查询-api">能力与状态查询 API</a>
-      <a href="#完整示例带权限检查的连接流程">完整示例：带权限检查的连接流程</a>
-      <a href="#常见坑">常见坑</a>
-      <a href="#附接口与实现的边界">附：接口与实现的边界</a>
+<div class="doc-shell">
+
+  <aside class="doc-nav">
+    <p class="doc-nav-title">开发文档</p>
+    <nav>
+<a href="api.html" class="active">API 使用指南</a>
+      <a href="build.html">编译与参与开发</a>
+      <a href="changes.html">对 Shizuku-API 的本地修改</a>
+      <a href="upstream-api.html">Shizuku-API 上游文档</a>
+      <a href="rish.html">rish 命令行</a>
+      <a href="changelog.html">更新日志</a>
     </nav>
+    <a class="doc-nav-back" href="index.html">全部文档 →</a>
   </aside>
 
   <main class="doc-main">
+    <nav class="doc-crumb">
+      <a href="../index.html">首页</a><span>/</span><a href="index.html">开发文档</a><span>/</span><em>API 使用指南</em>
+    </nav>
+
+    <header class="doc-head">
+      <h1>API 使用指南</h1>
+      <p class="doc-desc">接入路线、binder 生命周期、AIDL 用户服务与常见坑</p>
+    </header>
+
     <article class="doc-article">
-<blockquote>「想把我也接进你的应用里吗？这篇就是给你的驯服手册喵 (ฅ'ω'ฅ)」—— Shizako酱</blockquote>
+<div class="doc-note"><span class="doc-note-icon">💡</span><p>「想把我也接进你的应用里吗？这篇就是给你的驯服手册喵 (ฅ'ω'ฅ)」—— Shizako酱</p></div>
 <p>本文面向<strong>想把 Shizako（或 Shizuku）能力接入自己应用的开发者</strong>，覆盖依赖配置、权限申请、binder 生命周期、AIDL 用户服务全流程。所有示例均基于本仓库 <code>api/</code> 目录的源码（对应上游 Shizuku API v13）编写，并在 Shizako zako2.6 上验证过接口签名。</p>
 <hr>
-<h2 id="目录">目录</h2>
+<h2 id="目录">目录<a class="doc-anchor" href="#目录" aria-label="链接到此节">#</a></h2>
 <ol><li><a href="#两条接入路线">两条接入路线</a></li><li><a href="#依赖配置">依赖配置</a></li><li><a href="#manifest-配置">Manifest 配置</a></li><li><a href="#binder-生命周期">binder 生命周期</a></li><li><a href="#权限申请流程">权限申请流程</a></li><li><a href="#aidl-用户服务重点">AIDL 用户服务（重点）</a></li><li><a href="#userserviceargs-参数详解"><code>UserServiceArgs</code> 参数详解</a></li><li><a href="#能力与状态查询-api">能力与状态查询 API</a></li><li><a href="#完整示例带权限检查的连接流程">完整示例：带权限检查的连接流程</a></li><li><a href="#常见坑">常见坑</a></li></ol>
 <hr>
-<h2 id="两条接入路线">两条接入路线</h2>
+<h2 id="两条接入路线">两条接入路线<a class="doc-anchor" href="#两条接入路线" aria-label="链接到此节">#</a></h2>
 <div class="doc-table-wrap"><table><thead><tr><th>路线</th><th>做法</th><th>能连什么</th></tr></thead><tbody><tr><td><strong>A. 官方 Maven 依赖</strong></td><td><code>dev.rikka.shizuku:api</code> + <code>dev.rikka.shizuku:provider</code></td><td>Shizako 对官方 API 应用是<strong>免改码直连</strong>的，官方 Shizuku 自然也能连</td></tr><tr><td><strong>B. 本仓库 <code>api/</code> 源码依赖</strong></td><td>把 <code>api/</code> 目录作为源码模块引入</td><td>同上，且应用会<strong>同时声明两个权限</strong>，在两台管理器并存时都能正常授权</td></tr></tbody></table></div>
 <p>怎么选：只想用 Shizuku 能力、不在乎管理器是谁 → 选 A；希望明确兼容 Shizako 生态（比如做 Shizako 专属功能、参与双管理器测试）→ 选 B。</p>
 <p>两条路线的<strong>代码写法完全一致</strong>，都从 <code>rikka.shizuku.Shizuku</code> 这个入口开始。</p>
-<h2 id="依赖配置">依赖配置</h2>
-<h3 id="路线-a官方-maven-依赖">路线 A：官方 Maven 依赖</h3>
-<pre class="lang-gradle"><code>dependencies {
-    implementation &quot;dev.rikka.shizuku:api:13.1.5&quot;
-    implementation &quot;dev.rikka.shizuku:provider:13.1.5&quot;
-}</code></pre>
+<h2 id="依赖配置">依赖配置<a class="doc-anchor" href="#依赖配置" aria-label="链接到此节">#</a></h2>
+<h3 id="路线-a官方-maven-依赖">路线 A：官方 Maven 依赖<a class="doc-anchor" href="#路线-a官方-maven-依赖" aria-label="链接到此节">#</a></h3>
+<div class="code"><div class="code-head"><span class="code-lang">gradle</span><button class="code-copy" type="button">复制</button></div><pre><code>dependencies {
+    implementation <span class="tok-s">&quot;dev.rikka.shizuku:api:13.1.5&quot;</span>
+    implementation <span class="tok-s">&quot;dev.rikka.shizuku:provider:13.1.5&quot;</span>
+}</code></pre></div>
 <p>（版本号为撰写时的 13.x 最新版，任何 13.x 均可；Shizako 服务端实现的协议就是 v13。）</p>
-<h3 id="路线-b本仓库源码依赖">路线 B：本仓库源码依赖</h3>
-<pre class="lang-gradle"><code>// settings.gradle
-include &#x27;:aidl&#x27;, &#x27;:shared&#x27;, &#x27;:api&#x27;, &#x27;:provider&#x27;
-project(&#x27;:aidl&#x27;).projectDir = file(&#x27;api/aidl&#x27;)
-project(&#x27;:shared&#x27;).projectDir = file(&#x27;api/shared&#x27;)
-project(&#x27;:api&#x27;).projectDir = file(&#x27;api/api&#x27;)
-project(&#x27;:provider&#x27;).projectDir = file(&#x27;api/provider&#x27;)
+<h3 id="路线-b本仓库源码依赖">路线 B：本仓库源码依赖<a class="doc-anchor" href="#路线-b本仓库源码依赖" aria-label="链接到此节">#</a></h3>
+<div class="code"><div class="code-head"><span class="code-lang">gradle</span><button class="code-copy" type="button">复制</button></div><pre><code><span class="tok-c">// settings.gradle</span>
+include <span class="tok-s">&#x27;:aidl&#x27;</span>, <span class="tok-s">&#x27;:shared&#x27;</span>, <span class="tok-s">&#x27;:api&#x27;</span>, <span class="tok-s">&#x27;:provider&#x27;</span>
+project(<span class="tok-s">&#x27;:aidl&#x27;</span>).projectDir = file(<span class="tok-s">&#x27;api/aidl&#x27;</span>)
+project(<span class="tok-s">&#x27;:shared&#x27;</span>).projectDir = file(<span class="tok-s">&#x27;api/shared&#x27;</span>)
+project(<span class="tok-s">&#x27;:api&#x27;</span>).projectDir = file(<span class="tok-s">&#x27;api/api&#x27;</span>)
+project(<span class="tok-s">&#x27;:provider&#x27;</span>).projectDir = file(<span class="tok-s">&#x27;api/provider&#x27;</span>)
 
-// app/build.gradle
+<span class="tok-c">// app/build.gradle</span>
 dependencies {
-    implementation project(&#x27;:api&#x27;)
-    implementation project(&#x27;:provider&#x27;)
-}</code></pre>
+    implementation project(<span class="tok-s">&#x27;:api&#x27;</span>)
+    implementation project(<span class="tok-s">&#x27;:provider&#x27;</span>)
+}</code></pre></div>
 <p>源码路线的区别在 <code>api/provider/src/main/AndroidManifest.xml</code>：它同时声明了官方权限 <code>moe.shizuku.manager.permission.API_V23</code> 和 Shizako 权限 <code>com.churan.shizako.permission.API_V23</code>。每个管理器只授予自己定义的那个权限，所以同一份 APK 装在只有官方 Shizuku、只有 Shizako、或两者并存的设备上都能工作。</p>
-<h2 id="manifest-配置">Manifest 配置</h2>
+<h2 id="manifest-配置">Manifest 配置<a class="doc-anchor" href="#manifest-配置" aria-label="链接到此节">#</a></h2>
 <p>无论哪条路线，<strong>你自己的应用</strong>都要在 <code>AndroidManifest.xml</code> 里声明接收 binder 的 provider：</p>
-<pre class="lang-xml"><code>&lt;application ...&gt;
+<div class="code"><div class="code-head"><span class="code-lang">xml</span><button class="code-copy" type="button">复制</button></div><pre><code>&lt;application ...&gt;
 
     &lt;provider
-        android:name=&quot;rikka.shizuku.ShizukuProvider&quot;
-        android:authorities=&quot;${applicationId}.shizuku&quot;
-        android:multiprocess=&quot;false&quot;
-        android:exported=&quot;true&quot;
-        android:permission=&quot;android.permission.INTERACT_ACROSS_USERS_FULL&quot; /&gt;
+        android:name=<span class="tok-s">&quot;rikka.shizuku.ShizukuProvider&quot;</span>
+        android:authorities=<span class="tok-s">&quot;${applicationId}.shizuku&quot;</span>
+        android:multiprocess=<span class="tok-s">&quot;false&quot;</span>
+        android:exported=<span class="tok-s">&quot;true&quot;</span>
+        android:permission=<span class="tok-s">&quot;android.permission.INTERACT_ACROSS_USERS_FULL&quot;</span> /&gt;
 
-&lt;/application&gt;</code></pre>
+&lt;/application&gt;</code></pre></div>
 <p>四个属性都有讲究：</p>
 <div class="doc-table-wrap"><table><thead><tr><th>属性</th><th>值</th><th>原因</th></tr></thead><tbody><tr><td><code>authorities</code></td><td><code>${applicationId}.shizuku</code></td><td>服务端按“包名 + <code>.shizuku</code>”拼出 authority 来推送 binder</td></tr><tr><td><code>exported</code></td><td><code>true</code></td><td>服务端跑在 adb/root 身份下，必须能跨进程访问此 provider</td></tr><tr><td><code>multiprocess</code></td><td><code>false</code></td><td>服务端只在应用进程启动时投递一次，多进程会导致其他进程拿不到</td></tr><tr><td><code>permission</code></td><td><code>INTERACT_ACROSS_USERS_FULL</code></td><td>普通 App 没有此权限，只有 shell/root 能调 —— 防止别人伪造投递</td></tr></tbody></table></div>
-<h2 id="binder-生命周期">binder 生命周期</h2>
+<h2 id="binder-生命周期">binder 生命周期<a class="doc-anchor" href="#binder-生命周期" aria-label="链接到此节">#</a></h2>
 <p>Shizako 服务端会在你的应用进程启动时把 binder 塞进 <code>ShizukuProvider</code>。你的代码要做的是监听“收到 / 死亡”两个事件：</p>
-<pre class="lang-java"><code>// 收到 binder（sticky：注册时若 binder 已在，会立刻回调一次）
+<div class="code"><div class="code-head"><span class="code-lang">java</span><button class="code-copy" type="button">复制</button></div><pre><code><span class="tok-c">// 收到 binder（sticky：注册时若 binder 已在，会立刻回调一次）</span>
 Shizuku.addBinderReceivedListenerSticky(() -&gt; {
-    // binder 可用，可以开始 checkSelfPermission / bindUserService 了
+    <span class="tok-c">// binder 可用，可以开始 checkSelfPermission / bindUserService 了</span>
 });
 
-// binder 死亡（用户停掉了 Shizako 服务、设备重启等）
+<span class="tok-c">// binder 死亡（用户停掉了 Shizako 服务、设备重启等）</span>
 Shizuku.addBinderDeadListener(() -&gt; {
-    // 提示用户重新启动服务，禁用相关功能入口
-});</code></pre>
-<blockquote><code>Sticky</code> 版本和普通版本的区别：sticky 在注册当下如果 binder 已经收到过，立即触发回调，适合在 <code>onCreate</code> 里注册；普通版只在状态<strong>变化</strong>时回调。带 <code>Handler</code> 参数的重载可以指定回调线程。</blockquote>
+    <span class="tok-c">// 提示用户重新启动服务，禁用相关功能入口</span>
+});</code></pre></div>
+<div class="doc-note"><span class="doc-note-icon">💡</span><p><code>Sticky</code> 版本和普通版本的区别：sticky 在注册当下如果 binder 已经收到过，立即触发回调，适合在 <code>onCreate</code> 里注册；普通版只在状态<strong>变化</strong>时回调。带 <code>Handler</code> 参数的重载可以指定回调线程。</p></div>
 <p>主动检查用：</p>
-<pre class="lang-java"><code>if (Shizuku.pingBinder()) {   // 轻量探测，binder 存活且可用
+<div class="code"><div class="code-head"><span class="code-lang">java</span><button class="code-copy" type="button">复制</button></div><pre><code><span class="tok-k">if</span> (Shizuku.pingBinder()) {   <span class="tok-c">// 轻量探测，binder 存活且可用</span>
     ...
 }
-IBinder b = Shizuku.getBinder(); // 拿原始 binder（transactRemote 高级用法才需要）</code></pre>
-<h2 id="权限申请流程">权限申请流程</h2>
+IBinder b = Shizuku.getBinder(); <span class="tok-c">// 拿原始 binder（transactRemote 高级用法才需要）</span></code></pre></div>
+<h2 id="权限申请流程">权限申请流程<a class="doc-anchor" href="#权限申请流程" aria-label="链接到此节">#</a></h2>
 <p>权限模型和 Android runtime permission 类似：<strong>先查，没有再申请，结果走回调</strong>。</p>
-<pre class="lang-java"><code>if (Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED) {
-    // 已授权，直接干活
-} else if (Shizuku.shouldShowRequestPermissionRationale()) {
-    // 用户之前拒绝过，先解释一下你要用特权干嘛
-} else {
-    Shizuku.requestPermission(requestCode); // 弹出 Shizako 的授权对话框
-}</code></pre>
+<div class="code"><div class="code-head"><span class="code-lang">java</span><button class="code-copy" type="button">复制</button></div><pre><code><span class="tok-k">if</span> (Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED) {
+    <span class="tok-c">// 已授权，直接干活</span>
+} <span class="tok-k">else</span> <span class="tok-k">if</span> (Shizuku.shouldShowRequestPermissionRationale()) {
+    <span class="tok-c">// 用户之前拒绝过，先解释一下你要用特权干嘛</span>
+} <span class="tok-k">else</span> {
+    Shizuku.requestPermission(requestCode); <span class="tok-c">// 弹出 Shizako 的授权对话框</span>
+}</code></pre></div>
 <p>结果回调：</p>
-<pre class="lang-java"><code>Shizuku.addRequestPermissionResultListener((requestCode, result) -&gt; {
-    if (resultCode == PackageManager.PERMISSION_GRANTED) { ... }
-});</code></pre>
-<blockquote>⚠️ 在官方 Shizuku 上授权过 ≠ 在 Shizako 上授权过。两个管理器各自维护授权表，切换管理器后第一次使用会重新弹窗 —— 这是设计使然，不是 bug。</blockquote>
-<h2 id="aidl-用户服务重点">AIDL 用户服务（重点）</h2>
+<div class="code"><div class="code-head"><span class="code-lang">java</span><button class="code-copy" type="button">复制</button></div><pre><code>Shizuku.addRequestPermissionResultListener((requestCode, result) -&gt; {
+    <span class="tok-k">if</span> (resultCode == PackageManager.PERMISSION_GRANTED) { ... }
+});</code></pre></div>
+<div class="doc-note"><span class="doc-note-icon">💡</span><p>⚠️ 在官方 Shizuku 上授权过 ≠ 在 Shizako 上授权过。两个管理器各自维护授权表，切换管理器后第一次使用会重新弹窗 —— 这是设计使然，不是 bug。</p></div>
+<h2 id="aidl-用户服务重点">AIDL 用户服务（重点）<a class="doc-anchor" href="#aidl-用户服务重点" aria-label="链接到此节">#</a></h2>
 <p>用户服务（UserService）是这套 API 最强大的部分：<strong>你写一个 AIDL 接口 + 实现类，Shizako 会把它的副本放进特权进程里运行</strong>，从此你拥有一个以 shell/root 身份常驻的服务端。</p>
-<h3 id="第-1-步定义-aidl">第 1 步：定义 AIDL</h3>
+<h3 id="第-1-步定义-aidl">第 1 步：定义 AIDL<a class="doc-anchor" href="#第-1-步定义-aidl" aria-label="链接到此节">#</a></h3>
 <p><code>app/src/main/aidl/com/example/myapp/IHelperService.aidl</code>：</p>
-<pre class="lang-aidl"><code>package com.example.myapp;
+<div class="code"><div class="code-head"><span class="code-lang">aidl</span><button class="code-copy" type="button">复制</button></div><pre><code><span class="tok-k">package</span> com.example.myapp;
 
-interface IHelperService {
+<span class="tok-k">interface</span> IHelperService {
 
-    // Shizuku 服务端保留的销毁方法，事务码必须一致
-    void destroy() = 16777114;
+    <span class="tok-c">// Shizuku 服务端保留的销毁方法，事务码必须一致</span>
+    <span class="tok-k">void</span> destroy() = <span class="tok-n">16777114</span>;
 
-    // 以下是你自己的方法，事务码从 1 开始编号
-    String whoami() = 1;
-    int installApk(String apkPath) = 2;
-}</code></pre>
+    <span class="tok-c">// 以下是你自己的方法，事务码从 1 开始编号</span>
+    <span class="tok-k">String</span> whoami() = <span class="tok-n">1</span>;
+    <span class="tok-k">int</span> installApk(<span class="tok-k">String</span> apkPath) = <span class="tok-n">2</span>;
+}</code></pre></div>
 <p>要点：</p>
 <ul><li><code>destroy()</code> 的事务码 <code>16777114</code> 是服务端约定，用于进程退出，<strong>别改</strong></li><li>自定义方法的事务码从 <code>1</code> 递增，接口一旦发布就不要复用旧码（兼容性）</li></ul>
-<h3 id="第-2-步实现服务类">第 2 步：实现服务类</h3>
-<pre class="lang-java"><code>package com.example.myapp;
+<h3 id="第-2-步实现服务类">第 2 步：实现服务类<a class="doc-anchor" href="#第-2-步实现服务类" aria-label="链接到此节">#</a></h3>
+<div class="code"><div class="code-head"><span class="code-lang">java</span><button class="code-copy" type="button">复制</button></div><pre><code><span class="tok-k">package</span> com.example.myapp;
 
-import android.content.Context;
-import android.os.RemoteException;
-import android.system.Os;
+<span class="tok-k">import</span> android.content.Context;
+<span class="tok-k">import</span> android.os.RemoteException;
+<span class="tok-k">import</span> android.system.Os;
 
-import androidx.annotation.Keep;
+<span class="tok-k">import</span> androidx.annotation.Keep;
 
-public class HelperService extends IHelperService.Stub {
+<span class="tok-k">public</span> <span class="tok-k">class</span> HelperService <span class="tok-k">extends</span> IHelperService.Stub {
 
-    // 必须保留无参构造器
-    public HelperService() {}
+    <span class="tok-c">// 必须保留无参构造器</span>
+    <span class="tok-k">public</span> HelperService() {}
 
-    // API v13 起支持带 Context 的构造器（需 @Keep 防 ProGuard 混淆删除）
+    <span class="tok-c">// API v13 起支持带 Context 的构造器（需 @Keep 防 ProGuard 混淆删除）</span>
     @Keep
-    public HelperService(Context context) {
-        // 这个 context 是以特权身份 createPackageContextAsUser 出来的
+    <span class="tok-k">public</span> HelperService(Context context) {
+        <span class="tok-c">// 这个 context 是以特权身份 createPackageContextAsUser 出来的</span>
     }
 
     @Override
-    public void destroy() {
-        System.exit(0); // 服务端要求：destroy 即退出进程
+    <span class="tok-k">public</span> <span class="tok-k">void</span> destroy() {
+        System.exit(<span class="tok-n">0</span>); <span class="tok-c">// 服务端要求：destroy 即退出进程</span>
     }
 
     @Override
-    public String whoami() throws RemoteException {
-        // 在特权进程里执行！uid 是 2000(adb) 或 0(root)
-        return &quot;uid=&quot; + Os.getuid() + &quot;, pid=&quot; + Os.getpid();
+    <span class="tok-k">public</span> <span class="tok-k">String</span> whoami() <span class="tok-k">throws</span> RemoteException {
+        <span class="tok-c">// 在特权进程里执行！uid 是 2000(adb) 或 0(root)</span>
+        <span class="tok-k">return</span> <span class="tok-s">&quot;uid=&quot;</span> + Os.getuid() + <span class="tok-s">&quot;, pid=&quot;</span> + Os.getpid();
     }
 
     @Override
-    public int installApk(String apkPath) throws RemoteException {
-        // 这里跑的是特权代码：pm install、am、settings……
+    <span class="tok-k">public</span> <span class="tok-k">int</span> installApk(<span class="tok-k">String</span> apkPath) <span class="tok-k">throws</span> RemoteException {
+        <span class="tok-c">// 这里跑的是特权代码：pm install、am、settings……</span>
         Process p;
-        try {
-            p = Runtime.getRuntime().exec(new String[]{&quot;pm&quot;, &quot;install&quot;, &quot;-r&quot;, apkPath});
-            return p.waitFor();
-        } catch (Exception e) {
-            throw new RemoteException(e.toString());
+        <span class="tok-k">try</span> {
+            p = Runtime.getRuntime().exec(<span class="tok-k">new</span> <span class="tok-k">String</span>[]{<span class="tok-s">&quot;pm&quot;</span>, <span class="tok-s">&quot;install&quot;</span>, <span class="tok-s">&quot;-r&quot;</span>, apkPath});
+            <span class="tok-k">return</span> p.waitFor();
+        } <span class="tok-k">catch</span> (Exception e) {
+            throw <span class="tok-k">new</span> RemoteException(e.toString());
         }
     }
-}</code></pre>
+}</code></pre></div>
 <p><strong>这个类会被加载进 Shizako 的特权进程运行</strong>，注意：</p>
 <ul><li>类和构造器都要 <code>@Keep</code>（或加入 ProGuard 白名单）</li><li>不要引用你应用的 <code>Activity</code>、UI、单例状态 —— 特权进程里没有这些</li><li>需要执行命令就在这个类里 <code>Runtime.exec</code> / <code>ProcessBuilder</code>，API 没有公开独立的"远程执行命令"入口</li></ul>
-<h3 id="第-3-步绑定与解绑">第 3 步：绑定与解绑</h3>
-<pre class="lang-java"><code>private final UserServiceArgs serviceArgs = new Shizuku.UserServiceArgs(
-        new ComponentName(&quot;com.example.myapp&quot;, &quot;com.example.myapp.HelperService&quot;))
-        .processNameSuffix(&quot;helper&quot;)   // 进程名变成 com.example.myapp:helper
-        .version(BuildConfig.VERSION_CODE) // 服务代码变了就换个号，服务端会重建进程
+<h3 id="第-3-步绑定与解绑">第 3 步：绑定与解绑<a class="doc-anchor" href="#第-3-步绑定与解绑" aria-label="链接到此节">#</a></h3>
+<div class="code"><div class="code-head"><span class="code-lang">java</span><button class="code-copy" type="button">复制</button></div><pre><code><span class="tok-k">private</span> <span class="tok-k">final</span> UserServiceArgs serviceArgs = <span class="tok-k">new</span> Shizuku.UserServiceArgs(
+        <span class="tok-k">new</span> ComponentName(<span class="tok-s">&quot;com.example.myapp&quot;</span>, <span class="tok-s">&quot;com.example.myapp.HelperService&quot;</span>))
+        .processNameSuffix(<span class="tok-s">&quot;helper&quot;</span>)   <span class="tok-c">// 进程名变成 com.example.myapp:helper</span>
+        .version(BuildConfig.VERSION_CODE) <span class="tok-c">// 服务代码变了就换个号，服务端会重建进程</span>
         .debuggable(BuildConfig.DEBUG)
-        .daemon(true);                     // 见下文
+        .daemon(<span class="tok-k">true</span>);                     <span class="tok-c">// 见下文</span>
 
-private final ServiceConnection serviceConnection = new ServiceConnection() {
+<span class="tok-k">private</span> <span class="tok-k">final</span> ServiceConnection serviceConnection = <span class="tok-k">new</span> ServiceConnection() {
     @Override
-    public void onServiceConnected(ComponentName name, IBinder service) {
+    <span class="tok-k">public</span> <span class="tok-k">void</span> onServiceConnected(ComponentName name, IBinder service) {
         IHelperService helper = IHelperService.Stub.asInterface(service);
-        // 现在可以跨进程调特权方法了
-        String s = helper.whoami();
+        <span class="tok-c">// 现在可以跨进程调特权方法了</span>
+        <span class="tok-k">String</span> s = helper.whoami();
     }
 
     @Override
-    public void onServiceDisconnected(ComponentName name) {
-        // 特权进程死了（stopService / 服务端被杀）
+    <span class="tok-k">public</span> <span class="tok-k">void</span> onServiceDisconnected(ComponentName name) {
+        <span class="tok-c">// 特权进程死了（stopService / 服务端被杀）</span>
     }
 };
 
-// 绑定（内部会先检查权限，未授权会抛 SecurityException）
+<span class="tok-c">// 绑定（内部会先检查权限，未授权会抛 SecurityException）</span>
 Shizuku.bindUserService(serviceArgs, serviceConnection);
 
-// 解绑；第三个参数 true 表示同时让服务端销毁这个特权进程
-Shizuku.unbindUserService(serviceArgs, serviceConnection, true);
+<span class="tok-c">// 解绑；第三个参数 true 表示同时让服务端销毁这个特权进程</span>
+Shizuku.unbindUserService(serviceArgs, serviceConnection, <span class="tok-k">true</span>);
 
-// 只探测服务是否已在运行，不创建：返回 code 见 UserService 泛型常量
-int code = Shizuku.peekUserService(serviceArgs, serviceConnection);</code></pre>
-<h2 id="userserviceargs-参数详解"><code>UserServiceArgs</code> 参数详解</h2>
+<span class="tok-c">// 只探测服务是否已在运行，不创建：返回 code 见 UserService 泛型常量</span>
+<span class="tok-k">int</span> code = Shizuku.peekUserService(serviceArgs, serviceConnection);</code></pre></div>
+<h2 id="userserviceargs-参数详解"><code>UserServiceArgs</code> 参数详解<a class="doc-anchor" href="#userserviceargs-参数详解" aria-label="链接到此节">#</a></h2>
 <div class="doc-table-wrap"><table><thead><tr><th>方法</th><th>默认值</th><th>说明</th></tr></thead><tbody><tr><td><code>daemon(boolean)</code></td><td><code>true</code></td><td><strong>daemon 模式下特权进程常驻</strong>，直到你 <code>unbindUserService(..., true)</code>；<code>false</code> 时你的应用进程一死，特权进程跟着死。做后台工具选 <code>true</code>，做一次性操作选 <code>false</code> 更省心</td></tr><tr><td><code>version(int)</code></td><td><code>1</code></td><td>用来区分服务版本。<strong>改了服务实现就 +1</strong>，服务端会自动销毁旧进程、用新代码重建</td></tr><tr><td><code>tag(String)</code></td><td>无</td><td>同一应用多个不同服务时的区分标记；混淆了服务类名的话必须设一个稳定 tag</td></tr><tr><td><code>processNameSuffix(String)</code></td><td>必填</td><td>最终进程名 = <code>你的包名:后缀</code></td></tr><tr><td><code>debuggable(boolean)</code></td><td><code>false</code></td><td><code>true</code> 时在"显示所有进程"里可见，便于调试</td></tr><tr><td><code>use32BitAppProcess(boolean)</code></td><td><code>false</code></td><td>64 位设备强制用 32 位 <code>app_process</code>。除非你明确知道为什么需要，否则别碰（API 里就是 private 的）</td></tr></tbody></table></div>
-<h2 id="能力与状态查询-api">能力与状态查询 API</h2>
+<h2 id="能力与状态查询-api">能力与状态查询 API<a class="doc-anchor" href="#能力与状态查询-api" aria-label="链接到此节">#</a></h2>
 <div class="doc-table-wrap"><table><thead><tr><th>方法</th><th>返回</th><th>用途</th></tr></thead><tbody><tr><td><code>Shizuku.pingBinder()</code></td><td><code>boolean</code></td><td>binder 是否存活</td></tr><tr><td><code>Shizuku.getUid()</code></td><td><code>int</code></td><td>服务端 uid：<code>2000</code> = adb 激活，<code>0</code> = root 激活。<strong>据此判断能力上限</strong>（root 能做的比 adb 多）</td></tr><tr><td><code>Shizuku.getVersion()</code></td><td><code>int</code></td><td>协议版本，Shizako 恒返回 <code>13</code>。做能力分支用，比如用户服务要求 <code>&gt;= 10</code></td></tr><tr><td><code>Shizuku.getServerPatchVersion()</code></td><td><code>int</code></td><td>协议补丁版本（Shizako 当前为 <code>6</code>）</td></tr><tr><td><code>Shizuku.getSELinuxContext()</code></td><td><code>String</code></td><td>服务端 SELinux 上下文（进阶诊断用）</td></tr><tr><td><code>Shizuku.checkRemotePermission(String)</code></td><td><code>int</code></td><td>以服务端身份检查某个系统权限</td></tr><tr><td><code>Shizuku.exit()</code></td><td><code>void</code></td><td>让 Shizako 服务端自己退出（一般只在调试工具里用）</td></tr></tbody></table></div>
-<h2 id="完整示例带权限检查的连接流程">完整示例：带权限检查的连接流程</h2>
-<pre class="lang-java"><code>public class ShizakoHelper {
+<h2 id="完整示例带权限检查的连接流程">完整示例：带权限检查的连接流程<a class="doc-anchor" href="#完整示例带权限检查的连接流程" aria-label="链接到此节">#</a></h2>
+<div class="code"><div class="code-head"><span class="code-lang">java</span><button class="code-copy" type="button">复制</button></div><pre><code><span class="tok-k">public</span> <span class="tok-k">class</span> ShizakoHelper {
 
-    public interface Callback {
-        void onReady();
-        void onNeedUser(String reason); // 引导用户去启动/授权
+    <span class="tok-k">public</span> <span class="tok-k">interface</span> Callback {
+        <span class="tok-k">void</span> onReady();
+        <span class="tok-k">void</span> onNeedUser(<span class="tok-k">String</span> reason); <span class="tok-c">// 引导用户去启动/授权</span>
     }
 
-    public static void connect(Context context, Callback cb) {
+    <span class="tok-k">public</span> <span class="tok-k">static</span> <span class="tok-k">void</span> connect(Context context, Callback cb) {
         Shizuku.addBinderReceivedListenerSticky(() -&gt; {
-            if (Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED) {
+            <span class="tok-k">if</span> (Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED) {
                 cb.onReady();
-            } else {
+            } <span class="tok-k">else</span> {
                 Shizuku.addRequestPermissionResultListener((requestCode, result) -&gt; {
-                    if (result == PackageManager.PERMISSION_GRANTED) cb.onReady();
-                    else cb.onNeedUser(&quot;授权被拒绝&quot;);
+                    <span class="tok-k">if</span> (result == PackageManager.PERMISSION_GRANTED) cb.onReady();
+                    <span class="tok-k">else</span> cb.onNeedUser(<span class="tok-s">&quot;授权被拒绝&quot;</span>);
                 });
-                Shizuku.requestPermission(101);
+                Shizuku.requestPermission(<span class="tok-n">101</span>);
             }
         });
 
         Shizuku.addBinderDeadListener(() -&gt;
-                cb.onNeedUser(&quot;Shizako 服务未运行&quot;));
+                cb.onNeedUser(<span class="tok-s">&quot;Shizako 服务未运行&quot;</span>));
     }
-}</code></pre>
+}</code></pre></div>
 <p>配套的用户引导建议：<code>onNeedUser</code> 时跳转 Shizako（<code>com.churan.shizako</code>）主页，或至少给出 GitHub Releases 下载链接。</p>
-<h2 id="常见坑">常见坑</h2>
+<h2 id="常见坑">常见坑<a class="doc-anchor" href="#常见坑" aria-label="链接到此节">#</a></h2>
 <ol><li><strong>绑定时报 SecurityException</strong>：权限没批。<code>bindUserService</code> 不会帮你弹授权框，先 <code>checkSelfPermission</code>，未授权走 <code>requestPermission</code>。</li><li><strong>改了服务代码不生效</strong>：忘了升 <code>version()</code>。服务端看到同版本号就复用旧进程，改完代码务必 +1。</li><li><strong>ProGuard 混淆后绑定失败</strong>：服务类、无参构造器、带 Context 构造器都要 <code>@Keep</code>；混淆场景下记得设 <code>tag()</code>。</li><li><strong><code>multiprocess="true"</code> 导致拿不到 binder</strong>：改成 <code>false</code>。服务端只在应用主进程启动事件时投递。</li><li><strong>应用杀掉后特权进程还在</strong>：<code>daemon(true)</code> 的正常行为。想让它跟着死，用 <code>daemon(false)</code> 或在 <code>onDestroy</code> 里 <code>unbindUserService(args, conn, true)</code>。</li><li><strong>在 Shizako 上弹了两次授权</strong>：检查你是否同时注册了两个 <code>addRequestPermissionResultListener</code>，或 sticky binder listener 里重复调了 <code>requestPermission</code>。</li><li><strong>多用户（分身/应用双开）</strong>：用户服务按"包名 + tag + 版本"在服务端建记录，分身空间里的实例是独立的；开发期不必处理，但诊断日志里看到别的 userId 的记录不要奇怪。</li></ol>
 <hr>
-<h2 id="附接口与实现的边界">附：接口与实现的边界</h2>
+<h2 id="附接口与实现的边界">附：接口与实现的边界<a class="doc-anchor" href="#附接口与实现的边界" aria-label="链接到此节">#</a></h2>
 <ul><li>本文档只覆盖<strong>客户端库</strong>（<code>api/</code> 目录）的用法；服务端行为（binder 推送、授权存储、用户服务进程管理）由 Shizako 的 <code>server/</code> 模块实现，协议细节见上游 <a href="https://github.com/RikkaApps/Shizuku-API">Shizuku-API</a> 文档。</li><li>对 Shizako 本地修改的完整清单见 <a href="../api/SHIZAKO-CHANGES.md">api/SHIZAKO-CHANGES.md</a>。</li><li>可运行的完整 demo 在 <code>api/demo/</code>（上游原样保留），其中 <code>DemoActivity.java</code> 覆盖了本文所有 API 的调用示例。</li></ul>
 <p>有问题？开 <a href="https://github.com/xm1437/Shizako/issues">Issue</a> 或 README 里的 QQ 群找我们喵～</p>
     </article>
+
+    <nav class="doc-pager">
+<span></span>      <a class="doc-pager-item next" href="build.html"><span>下一篇 →</span><strong>编译与参与开发</strong></a>
+    </nav>
+
     <footer class="doc-foot">
       <p>本页由 <code>tools/md2html.py</code> 从 <code>docs/API.md</code> 生成，请勿直接编辑 HTML。</p>
-      <p><a href="../index.html">← 返回官网</a> · <a href="https://github.com/cr1437/Shizako">GitHub</a> ·
-         <a href="../API.md">查看本文源文件</a></p>
+      <p><a href="../API.md">查看本文源文件</a> · <a href="index.html">开发文档总览</a> · <a href="https://github.com/cr1437/Shizako">GitHub</a></p>
     </footer>
   </main>
+
+  <aside class="doc-side">
+    <p class="doc-toc-title">本页目录</p>
+    <nav class="doc-toc" id="docToc">
+      <a href="#目录">目录</a>
+        <a href="#两条接入路线">两条接入路线</a>
+        <a href="#依赖配置">依赖配置</a>
+        <a href="#路线-a官方-maven-依赖" class="lvl3">路线 A：官方 Maven 依赖</a>
+        <a href="#路线-b本仓库源码依赖" class="lvl3">路线 B：本仓库源码依赖</a>
+        <a href="#manifest-配置">Manifest 配置</a>
+        <a href="#binder-生命周期">binder 生命周期</a>
+        <a href="#权限申请流程">权限申请流程</a>
+        <a href="#aidl-用户服务重点">AIDL 用户服务（重点）</a>
+        <a href="#第-1-步定义-aidl" class="lvl3">第 1 步：定义 AIDL</a>
+        <a href="#第-2-步实现服务类" class="lvl3">第 2 步：实现服务类</a>
+        <a href="#第-3-步绑定与解绑" class="lvl3">第 3 步：绑定与解绑</a>
+        <a href="#userserviceargs-参数详解">UserServiceArgs 参数详解</a>
+        <a href="#能力与状态查询-api">能力与状态查询 API</a>
+        <a href="#完整示例带权限检查的连接流程">完整示例：带权限检查的连接流程</a>
+        <a href="#常见坑">常见坑</a>
+        <a href="#附接口与实现的边界">附：接口与实现的边界</a>
+    </nav>
+  </aside>
+
 </div>
 
 <script>
-// 顶栏滚动态（与首页同一效果，文档页不加载 site.js 以免误伤语言切换）
 (function () {
+  // 顶栏 + 阅读进度
   var nav = document.getElementById('nav');
-  function onScroll() { if (nav) nav.classList.toggle('scrolled', window.scrollY > 8); }
+  var bar = document.getElementById('docProgress');
+  function onScroll() {
+    if (nav) nav.classList.toggle('scrolled', window.scrollY > 8);
+    if (bar) {
+      var h = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = (h > 0 ? Math.min(100, (window.scrollY / h) * 100) : 0) + '%';
+    }
+    spy();
+  }
   window.addEventListener('scroll', onScroll, { passive: true });
+
+  // 本页目录高亮：取当前视口内最后一个已滚过的标题
+  var links = [].slice.call(document.querySelectorAll('#docToc a'));
+  var heads = links.map(function (a) {
+    var id = decodeURIComponent(a.getAttribute('href').slice(1));
+    return document.getElementById(id) || document.getElementById(a.getAttribute('href').slice(1));
+  });
+  function spy() {
+    if (!links.length) return;
+    var idx = 0;
+    for (var i = 0; i < heads.length; i++) {
+      if (heads[i] && heads[i].getBoundingClientRect().top <= 120) idx = i;
+    }
+    links.forEach(function (a, i) { a.classList.toggle('active', i === idx); });
+  }
+
+  // 代码块：加「复制」按钮（语言标签由生成器写在 HTML 里）
+  [].slice.call(document.querySelectorAll('.code')).forEach(function (box) {
+    var btn = box.querySelector('.code-copy');
+    var pre = box.querySelector('pre');
+    if (!btn || !pre) return;
+    btn.addEventListener('click', function () {
+      var text = pre.innerText;
+      function done() { btn.textContent = '已复制'; setTimeout(function () { btn.textContent = '复制'; }, 1400); }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, function () { fallback(text, done); });
+      } else { fallback(text, done); }
+    });
+  });
+  function fallback(text, done) {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); done(); } catch (e) {}
+    document.body.removeChild(ta);
+  }
+
   onScroll();
 })();
 </script>

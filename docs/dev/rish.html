@@ -9,7 +9,9 @@
 <link rel="icon" href="../assets/icon.png">
 <link rel="stylesheet" href="../assets/site.css">
 </head>
-<body class="doc-body">
+<body>
+
+<div class="doc-progress"><span id="docProgress"></span></div>
 
 <header class="nav" id="nav">
   <a class="brand" href="../index.html">
@@ -28,54 +30,126 @@
   </div>
 </header>
 
-<div class="doc-layout">
-  <aside class="doc-side">
-    <a class="doc-back" href="index.html">← 开发文档总览</a>
-    <nav class="doc-toc">
-      <p class="doc-toc-title">本页目录</p>
-      <a href="#description">Description</a>
-      <a href="#usage">Usage</a>
-      <a href="#options">Options</a>
-      <a href="#rish_preserve_env" class="lvl3">RISH_PRESERVE_ENV</a>
+<div class="doc-shell">
+
+  <aside class="doc-nav">
+    <p class="doc-nav-title">开发文档</p>
+    <nav>
+<a href="api.html">API 使用指南</a>
+      <a href="build.html">编译与参与开发</a>
+      <a href="changes.html">对 Shizuku-API 的本地修改</a>
+      <a href="upstream-api.html">Shizuku-API 上游文档</a>
+      <a href="rish.html" class="active">rish 命令行</a>
+      <a href="changelog.html">更新日志</a>
     </nav>
+    <a class="doc-nav-back" href="index.html">全部文档 →</a>
   </aside>
 
   <main class="doc-main">
+    <nav class="doc-crumb">
+      <a href="../index.html">首页</a><span>/</span><a href="index.html">开发文档</a><span>/</span><em>rish 命令行</em>
+    </nav>
+
+    <header class="doc-head">
+      <h1>rish 命令行</h1>
+      <p class="doc-desc">在终端里调用特权 API 的 CLI 工具</p>
+    </header>
+
     <article class="doc-article">
 <p>&lt;del&gt;Rish is an Interactive SHell for android&lt;/del&gt;</p>
-<h2 id="description">Description</h2>
+<h2 id="description">Description<a class="doc-anchor" href="#description" aria-label="链接到此节">#</a></h2>
 <p><code>rish</code> is an Android program for interacting with a shell that runs on a high-privileged daemon process.</p>
 <p>Currently, Shizuku and Sui are two available backends.</p>
-<h2 id="usage">Usage</h2>
+<h2 id="usage">Usage<a class="doc-anchor" href="#usage" aria-label="链接到此节">#</a></h2>
 <p>First of all, follow the guide from Shizuku or Sui to create the files of <code>rish</code>.</p>
 <p>The remain is very simple, you only need to replace <code>sh</code> with <code>rish</code> in the command you want to run, <code>rish</code> will pass arguments directly to the remote shell.</p>
 <p>Here is an example.</p>
-<pre><code>rish -c &#x27;ls&#x27;</code></pre>
+<div class="code"><div class="code-head"><span class="code-lang">text</span><button class="code-copy" type="button">复制</button></div><pre><code>rish -c <span class="tok-s">&#x27;ls&#x27;</span></code></pre></div>
 <p>This is what will be executed at remote:</p>
-<pre><code>/system/bin/sh -c &#x27;ls&#x27;</code></pre>
+<div class="code"><div class="code-head"><span class="code-lang">text</span><button class="code-copy" type="button">复制</button></div><pre><code>/system/bin/sh -c <span class="tok-s">&#x27;ls&#x27;</span></code></pre></div>
 <p>If you want to use other shells rather than <code>/system/bin/sh</code>, use <code>rish exec /path/to/other/shell</code>.</p>
-<h2 id="options">Options</h2>
+<h2 id="options">Options<a class="doc-anchor" href="#options" aria-label="链接到此节">#</a></h2>
 <p>Since <code>rish</code> passes arguments directly to the remote, <code>rish</code> uses environment variable for options.</p>
-<h3 id="rish_preserve_env">RISH_PRESERVE_ENV</h3>
+<h3 id="rish_preserve_env">RISH_PRESERVE_ENV<a class="doc-anchor" href="#rish_preserve_env" aria-label="链接到此节">#</a></h3>
 <div class="doc-table-wrap"><table><thead><tr><th>Value</th><th>Description</th></tr></thead><tbody><tr><td><code>0</code></td><td>Do not change environment variables of the remote process</td></tr><tr><td><code>1</code></td><td>Replace the environment variables of the remote process with local's</td></tr></tbody></table></div>
 <p>Termux app set <code>PATH</code> and <code>LD_PRELOAD</code> to Termux's internal path. Adb (Shizuku can run under adb) does not have sufficient permissions to access such places, making users can even not using commands like <code>cd</code>.</p>
 <p>If the backend runs under adb, <code>RISH_PRESERVE_ENV</code> will be treated as <code>0</code> when not set.</p>
 <p>If the backend runs under root, <code>RISH_PRESERVE_ENV</code> will be treated as <code>1</code> when not set.</p>
     </article>
+
+    <nav class="doc-pager">
+<a class="doc-pager-item prev" href="upstream-api.html"><span>← 上一篇</span><strong>Shizuku-API 上游文档</strong></a>      <a class="doc-pager-item next" href="changelog.html"><span>下一篇 →</span><strong>更新日志</strong></a>
+    </nav>
+
     <footer class="doc-foot">
       <p>本页由 <code>tools/md2html.py</code> 从 <code>api/rish/README.md</code> 生成，请勿直接编辑 HTML。</p>
-      <p><a href="../index.html">← 返回官网</a> · <a href="https://github.com/cr1437/Shizako">GitHub</a> ·
-         <a href="https://github.com/cr1437/Shizako/blob/main/api/rish/README.md">查看本文源文件</a></p>
+      <p><a href="https://github.com/cr1437/Shizako/blob/main/api/rish/README.md">查看本文源文件</a> · <a href="index.html">开发文档总览</a> · <a href="https://github.com/cr1437/Shizako">GitHub</a></p>
     </footer>
   </main>
+
+  <aside class="doc-side">
+    <p class="doc-toc-title">本页目录</p>
+    <nav class="doc-toc" id="docToc">
+      <a href="#description">Description</a>
+        <a href="#usage">Usage</a>
+        <a href="#options">Options</a>
+        <a href="#rish_preserve_env" class="lvl3">RISH_PRESERVE_ENV</a>
+    </nav>
+  </aside>
+
 </div>
 
 <script>
-// 顶栏滚动态（与首页同一效果，文档页不加载 site.js 以免误伤语言切换）
 (function () {
+  // 顶栏 + 阅读进度
   var nav = document.getElementById('nav');
-  function onScroll() { if (nav) nav.classList.toggle('scrolled', window.scrollY > 8); }
+  var bar = document.getElementById('docProgress');
+  function onScroll() {
+    if (nav) nav.classList.toggle('scrolled', window.scrollY > 8);
+    if (bar) {
+      var h = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = (h > 0 ? Math.min(100, (window.scrollY / h) * 100) : 0) + '%';
+    }
+    spy();
+  }
   window.addEventListener('scroll', onScroll, { passive: true });
+
+  // 本页目录高亮：取当前视口内最后一个已滚过的标题
+  var links = [].slice.call(document.querySelectorAll('#docToc a'));
+  var heads = links.map(function (a) {
+    var id = decodeURIComponent(a.getAttribute('href').slice(1));
+    return document.getElementById(id) || document.getElementById(a.getAttribute('href').slice(1));
+  });
+  function spy() {
+    if (!links.length) return;
+    var idx = 0;
+    for (var i = 0; i < heads.length; i++) {
+      if (heads[i] && heads[i].getBoundingClientRect().top <= 120) idx = i;
+    }
+    links.forEach(function (a, i) { a.classList.toggle('active', i === idx); });
+  }
+
+  // 代码块：加「复制」按钮（语言标签由生成器写在 HTML 里）
+  [].slice.call(document.querySelectorAll('.code')).forEach(function (box) {
+    var btn = box.querySelector('.code-copy');
+    var pre = box.querySelector('pre');
+    if (!btn || !pre) return;
+    btn.addEventListener('click', function () {
+      var text = pre.innerText;
+      function done() { btn.textContent = '已复制'; setTimeout(function () { btn.textContent = '复制'; }, 1400); }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, function () { fallback(text, done); });
+      } else { fallback(text, done); }
+    });
+  });
+  function fallback(text, done) {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); done(); } catch (e) {}
+    document.body.removeChild(ta);
+  }
+
   onScroll();
 })();
 </script>
