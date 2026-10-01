@@ -82,7 +82,18 @@ img { max-width: 100%; height: auto; }
 .nav.scrolled { border-bottom-color: var(--line); background: rgba(11, 13, 18, .88); }
 
 .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--fg); }
-.brand img { border-radius: 50%; box-shadow: 0 0 0 1px var(--line-strong); }
+.brand img {
+  /* flex: none 很关键：img 作为 flex 子项默认可被压缩，空间紧张时（手机上）
+     会被压成椭圆，看起来就是「图标显示不对」。这里锁死尺寸并加圆角。 */
+  flex: none;
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px var(--line-strong);
+}
+.brand { min-width: 0; }
+.brand span { white-space: nowrap; }
 .brand:hover { text-decoration: none; }
 
 .nav-links { display: flex; gap: 18px; margin-left: 8px; }
