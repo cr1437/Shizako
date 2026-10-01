@@ -40,7 +40,7 @@ PAGE = """<!DOCTYPE html>
 <title>{title} — Shizako 开发文档</title>
 <meta name="description" content="{desc}">
 <meta name="theme-color" content="#0b0d12">
-<link rel="icon" href="{p}assets/icon-mark.png">
+<link rel="icon" href="{p}assets/logo.svg">
 <link rel="stylesheet" href="{p}assets/site.css?v=3">
 </head>
 <body>
@@ -49,7 +49,7 @@ PAGE = """<!DOCTYPE html>
 
 <header class="nav" id="nav">
   <a class="brand" href="{p}index.html">
-    <img src="{p}assets/icon-mark.png" alt="Shizako" width="32" height="32">
+    <img src="{p}assets/logo.svg" alt="Shizako" width="32" height="32">
     <span>Shizako</span>
   </a>
   <nav class="nav-links">
