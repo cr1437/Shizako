@@ -1137,7 +1137,9 @@ private fun AboutPage(
                     label = stringResource(R.string.about_based_on),
                     value = stringResource(
                         R.string.about_based_on_text,
-                        stringResource(R.string.app_name),
+                        // 「基于」这一行说的是上游项目。原来传的是 app_name，
+                        // 于是显示成「基于 Shizako」—— 自己基于自己。
+                        "Shizuku",
                     ),
                 )
                 if (soonUnlocked) {

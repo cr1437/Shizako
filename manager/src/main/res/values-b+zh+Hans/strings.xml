@@ -55,7 +55,7 @@
     <string name="about_author">作者</string>
     <string name="about_author_name" translatable="false">cr1437</string>
     <string name="about_based_on">基于</string>
-    <string name="about_based_on_text"><![CDATA[%s 开源项目二次开发]]></string>
+    <string name="about_based_on_text"><![CDATA[%s 开源项目]]></string>
     <string name="about_license">开源协议</string>
     <string name="about_license_text">Apache License 2.0</string>
     <string name="about_footer">Shizako — 为爱发电</string>
