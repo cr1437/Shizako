@@ -74,6 +74,8 @@ data class SettingsUiState(
     val highRefresh: Boolean = true,
     val startOnBoot: Boolean = false,
     val watchdog: Boolean = false,
+    /** 后台保活：是否已在电池优化白名单里 */
+    val keepAliveWhitelisted: Boolean = false,
     val autoUpdate: Boolean = true,
     val apiLogEnabled: Boolean = true,
     val language: String = "SYSTEM",
@@ -93,6 +95,8 @@ data class SettingsUiState(
     val autoDisableUsbDebugging: Boolean = false,
     /** 持久 TCP 模式（照搬 Shevery）：断网也能直连回来 */
     val tcpMode: Boolean = false,
+    /** Dhizuku（Device Owner）模式总开关：默认开，关掉后不再对外提供 Dhizuku 特权 */
+    val dhizukuMode: Boolean = true,
 )
 
 /** 设置页的层级：一级菜单 + 各二级页。 */
@@ -124,8 +128,10 @@ fun SettingsScreen(
     onAutoDisableUsbDebugging: (Boolean) -> Unit = {},
     onStartOnBoot: (Boolean) -> Unit,
     onWatchdog: (Boolean) -> Unit,
+    onKeepAlive: () -> Unit,
     onTcpMode: (Boolean) -> Unit,
     onAutoUpdate: (Boolean) -> Unit,
+    onDhizukuMode: (Boolean) -> Unit,
     onApiLogEnabled: (Boolean) -> Unit,
     onApiLogClear: () -> Unit,
     onOpenApiLog: () -> Unit,
@@ -300,7 +306,8 @@ fun SettingsScreen(
 
             SettingsPage.STARTUP -> StartupPage(
                 state, palette, pageListState, pageCollapsedChange, go,
-                onStartOnBoot, onWatchdog, onTcpMode, onAutoUpdate, onAutoDisableUsbDebugging,
+                onStartOnBoot, onWatchdog, onKeepAlive, onTcpMode, onAutoUpdate, onAutoDisableUsbDebugging,
+                onDhizukuMode,
             )
 
             SettingsPage.LANGUAGE -> LanguagePage(
@@ -837,9 +844,11 @@ private fun StartupPage(
     go: (SettingsPage) -> Unit,
     onStartOnBoot: (Boolean) -> Unit,
     onWatchdog: (Boolean) -> Unit,
+    onKeepAlive: () -> Unit,
     onTcpMode: (Boolean) -> Unit,
     onAutoUpdate: (Boolean) -> Unit,
     onAutoDisableUsbDebugging: (Boolean) -> Unit,
+    onDhizukuMode: (Boolean) -> Unit,
 ) {
     SubPage(palette, listState, onCollapsedChange, go, entranceKey = 1) {
         SettingSwitchRow(
@@ -856,6 +865,16 @@ private fun StartupPage(
             checked = state.watchdog,
             onChange = onWatchdog,
         )
+        // 后台保活：电池优化白名单（系统级保活的一环：划掉后不被杀）
+        SettingActionRow(
+            palette = palette,
+            title = stringResource(R.string.settings_keepalive),
+            summary = stringResource(
+                if (state.keepAliveWhitelisted) R.string.settings_keepalive_added
+                else R.string.settings_keepalive_summary
+            ),
+            onClick = onKeepAlive,
+        )
         // 持久 TCP 模式（照搬 Shevery）：切到本机 5555，断网也能直连回来
         SettingSwitchRow(
             palette = palette,
@@ -863,6 +882,15 @@ private fun StartupPage(
             summary = stringResource(R.string.settings_tcp_mode_summary),
             checked = state.tcpMode,
             onChange = onTcpMode,
+        )
+        // Dhizuku（Device Owner）模式总开关：关掉后不再对外提供特权。
+        // 文案里必须点明「不会撤销设备所有者」——那是 adb 才干得掉的事，App 撤不掉自己。
+        SettingSwitchRow(
+            palette = palette,
+            title = stringResource(R.string.settings_dhizuku_mode),
+            summary = stringResource(R.string.settings_dhizuku_mode_summary),
+            checked = state.dhizukuMode,
+            onChange = onDhizukuMode,
         )
         SettingSwitchRow(
             palette = palette,
@@ -1276,6 +1304,7 @@ private fun SubPage(
     onCollapsedChange: (Boolean) -> Unit,
     go: (SettingsPage) -> Unit,
     entranceKey: Int,
+    back: SettingsPage = SettingsPage.MAIN,
     content: @Composable () -> Unit,
 ) {
     HintPage(listState = listState, onCollapsedChange = onCollapsedChange) {
@@ -1285,7 +1314,7 @@ private fun SubPage(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clickable { go(SettingsPage.MAIN) }
+                        .clickable { go(back) }
                         .padding(vertical = 12.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {

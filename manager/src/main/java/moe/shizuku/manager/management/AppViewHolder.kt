@@ -85,7 +85,9 @@ class AppViewHolder(private val binding: AppListItemBinding) : BaseViewHolder<Pa
         val userId = UserHandleCompat.getUserId(uid)
         // 【性能】先查图标缓存：命中直接上屏，避免每次绑定都同步全量加载图标；
         // 未命中才退回占位加载（随后异步替换为正确尺寸的位图）。
-        val cachedIcon = AppIconCache.peekCachedBitmap(context, ai, ai.uid / 100000, icon.measuredWidth)
+        // 注意 peek 不再传 measuredWidth：新建的 view 还没布局时它是 0，会让缓存键与
+        // 异步加载路径对不上（详见 AppIconCache.iconSizePx）。
+        val cachedIcon = AppIconCache.peekCachedBitmap(context, ai, ai.uid / 100000)
         if (cachedIcon != null) {
             icon.setImageBitmap(cachedIcon)
         } else {

@@ -25,6 +25,16 @@ private const val kExportedKeySize = 64
 
 private const val kPairingPacketHeaderSize = 6
 
+/**
+ * 配对连接的超时（毫秒）。与 [AdbClient] 保持一致（10s 连接 / 15s 读）。
+ *
+ * 必须有：配对时用户可能停在系统「使用配对码配对设备」对话框里不动，
+ * connect / TLS 握手 / 读包任何一步永久阻塞，都会让通知一直停在「配对中」、
+ * 分屏配对对话框的按钮永远禁用，只能杀进程恢复。
+ */
+private const val CONNECT_TIMEOUT_MS = 10_000
+private const val READ_TIMEOUT_MS = 15_000
+
 private class PeerInfo(
         val type: Byte,
         data: ByteArray) {
@@ -163,11 +173,17 @@ class AdbPairingClient(private val host: String, private val port: Int, private 
     }
 
     private fun setupTlsConnection() {
-        socket = Socket(host, port)
-        socket.tcpNoDelay = true
+        // 必须带超时：配对时用户可能停在系统「使用配对码配对设备」对话框里不动，
+        // 而 connect / 握手 / 读包任何一步永久阻塞，都会让通知一直停在「配对中」、
+        // 对话框按钮永远禁用（只能杀进程恢复）。数值与 AdbClient 保持一致（10s / 15s）。
+        socket = java.net.Socket().apply {
+            tcpNoDelay = true
+            connect(java.net.InetSocketAddress(host, port), CONNECT_TIMEOUT_MS)
+        }
 
         val sslContext = key.sslContext
         val sslSocket = sslContext.socketFactory.createSocket(socket, host, port, true) as SSLSocket
+        sslSocket.soTimeout = READ_TIMEOUT_MS
         sslSocket.startHandshake()
         Log.d(TAG, "Handshake succeeded.")
 

@@ -52,7 +52,7 @@ public class ShizukuUserServiceManager extends UserServiceManager {
             public void onApkChanged() {
                 String newSourceDir = null;
 
-                for (int userId : UserManagerApis.getUserIdsNoThrow()) {
+                for (int userId : ApiCompat.getUserIdsNoThrow()) {
                     PackageInfo pi = PackageManagerApis.getPackageInfoNoThrow(packageName, 0, userId);
                     if (pi != null && pi.applicationInfo != null && pi.applicationInfo.sourceDir != null) {
                         newSourceDir = pi.applicationInfo.sourceDir;

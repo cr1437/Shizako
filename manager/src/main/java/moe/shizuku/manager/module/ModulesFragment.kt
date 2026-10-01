@@ -14,7 +14,9 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import moe.shizuku.manager.R
 import moe.shizuku.manager.databinding.FragmentModulesBinding
+import moe.shizuku.manager.toolbox.ToolPageFragment
 import moe.shizuku.manager.ui.hint.resolveHintPalette
+import moe.shizuku.manager.ui.theme.setShizakoContent
 
 /**
  * ADB 模块页（**底栏 Tab 版**）。
@@ -62,7 +64,7 @@ class ModulesFragment : Fragment() {
                     FrameLayout.LayoutParams.MATCH_PARENT,
                     FrameLayout.LayoutParams.MATCH_PARENT,
                 )
-                setContent {
+                setShizakoContent {
                     val palette = remember { resolveHintPalette(requireContext()) }
                     ModulesScreen(
                         palette = palette,
@@ -81,6 +83,20 @@ class ModulesFragment : Fragment() {
                         onOpenWebUi = { moduleId ->
                             startActivity(
                                 ModuleWebViewActivity.newIntent(requireContext(), moduleId),
+                            )
+                        },
+                        // 「模块目录」和「策略」是独立工具页：不接这两个回调的话，
+                        // ModulesScreen 里对应的两个按钮点了没有任何反应（默认是空 lambda）。
+                        onOpenCatalog = {
+                            ToolPageFragment.open(
+                                requireContext(),
+                                ToolPageFragment.TOOL_MODULE_CATALOG,
+                            )
+                        },
+                        onOpenPolicy = {
+                            ToolPageFragment.open(
+                                requireContext(),
+                                ToolPageFragment.TOOL_MODULE_POLICY,
                             )
                         },
                     )

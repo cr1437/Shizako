@@ -9,7 +9,7 @@ import moe.shizuku.manager.ShizukuSettings
  * Handles the periodic update-check alarm and re-schedules it after a reboot.
  *
  * Registered actions:
- *   com.churan.shizako.action.UPDATE_CHECK  — perform the actual check
+ *   com.churan.shizako.action.UPDATE_CHECK  — perform the actual check, then queue the next
  *   android.intent.action.BOOT_COMPLETED    — re-schedule the alarm
  */
 class UpdateCheckReceiver : BroadcastReceiver() {
@@ -21,9 +21,12 @@ class UpdateCheckReceiver : BroadcastReceiver() {
                 AutoUpdateScheduler.schedule(context)
             }
             else -> {
-                // Daily update check triggered by the alarm.
+                // 定时检查：单次闹钟触发，跑完立刻排下一次（保持 6 小时节奏）
                 if (ShizukuSettings.isAutoUpdateEnabled()) {
                     UpdateChecker.checkAndNotify(context)
+                    AutoUpdateScheduler.schedule(context)
+                } else {
+                    AutoUpdateScheduler.cancel(context)
                 }
             }
         }

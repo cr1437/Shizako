@@ -37,6 +37,9 @@ public class ShizukuSettings {
     /** 持久 TCP 模式：把 ADB 切到本机 5555，断网也能直接连回来（照搬 Shevery）。 */
     public static final String TCP_MODE = "tcp_mode";
 
+    /** Dhizuku（Device Owner）模式总开关：关掉后不再对外提供 Dhizuku 特权，相关入口也不再显示。 */
+    public static final String DHIZUKU_ENABLED = "dhizuku_enabled";
+
     /** 上次启动用的 ADB 端口（TCP 模式直连的候选）。 */
     public static final String LAST_ADB_PORT = "last_adb_port";
 
@@ -135,7 +138,23 @@ public class ShizukuSettings {
     }
 
     public static boolean isWatchdogEnabled() {
-        return getPreferences().getBoolean(WATCHDOG_ENABLED, false);
+        // 默认开启（2026-09-14 起）：后台保活 + 崩溃/被杀自动拉回，通知上有「杀后台」按钮
+        return getPreferences().getBoolean(WATCHDOG_ENABLED, true);
+    }
+
+    /**
+     * Dhizuku 模式是否启用，默认开启（保持既有行为）。
+     *
+     * 注意这是**软开关**：它只让 Dhizuku 不再对外提供特权、入口不再显示，
+     * **不会**撤销 Device Owner 身份 —— 撤销必须走 `adb shell dpm remove-active-admin`，
+     * App 即便身为 Device Owner 也不能撤销自己。文案上要说清楚。
+     */
+    public static boolean isDhizukuEnabled() {
+        return getPreferences().getBoolean(DHIZUKU_ENABLED, true);
+    }
+
+    public static void setDhizukuEnabled(boolean enabled) {
+        getPreferences().edit().putBoolean(DHIZUKU_ENABLED, enabled).apply();
     }
 
     public static boolean isAutoUpdateEnabled() {

@@ -44,7 +44,7 @@ class HomeFragment : Fragment() {
 
     private val homeModel by viewModels { HomeViewModel() }
     private val appsModel by appsViewModel()
-    private val adapter by unsafeLazy { HomeAdapter(homeModel, appsModel) }
+    private val adapter by unsafeLazy { HomeAdapter(requireContext().applicationContext, homeModel, appsModel) }
 
     private var binding: FragmentHomeBinding? = null
 
@@ -82,6 +82,9 @@ class HomeFragment : Fragment() {
 
         val recyclerView = binding.list
         recyclerView.adapter = adapter
+        // 列表尺寸不随内容变化（RecyclerView 是 match_parent）：告诉它一声，
+        // 适配器增删项时就不必再走一次 requestLayout。
+        recyclerView.setHasFixedSize(true)
         recyclerView.fixEdgeEffect()
         // 列表项增删/移动的动画时长收紧到 200ms，默认 250ms 在慢机上显得拖
         recyclerView.itemAnimator?.apply {

@@ -86,20 +86,31 @@ object AppIconCache : CoroutineScope {
     }
 
     /**
+     * 图标统一按这个尺寸解码与缓存。
+     *
+     * 【性能】以前两条路径各算各的尺寸：`peekCachedBitmap` 用调用方传进来的
+     * `icon.measuredWidth`（新建的 view 还没布局，**恒为 0** → 退到 default_app_icon_size），
+     * 而 `loadIconBitmapAsync` 用 `view.measuredWidth`（布局后等于布局里的 32dp）——
+     * 两边的缓存键永远对不上。后果是每次新建 view 绑定都缓存未命中，落到
+     * `AppViewHolder` 里那句主线程 `ai.loadIcon(pm)`（IPC + 解码），滚动时恰好卡在这一下。
+     * 现在两条路径都用同一个尺寸，缓存才真正命中。
+     */
+    private fun iconSizePx(context: Context): Int =
+        context.resources.getDimensionPixelSize(R.dimen.default_app_icon_size)
+
+    /**
      * 只读缓存查询（不触发加载、不解码）：命中就能立即上屏。
      * 用于列表绑定：先查缓存，未命中再走占位加载 —— 避免每次绑定都同步全量加载图标。
      */
-    fun peekCachedBitmap(context: Context, info: ApplicationInfo, userId: Int, viewSize: Int): Bitmap? {
-        val size = if (viewSize > 0) viewSize else context.resources.getDimensionPixelSize(R.dimen.default_app_icon_size)
-        return get(info.packageName, userId, size)
-    }
+    fun peekCachedBitmap(context: Context, info: ApplicationInfo, userId: Int): Bitmap? =
+        get(info.packageName, userId, iconSizePx(context))
 
     @JvmStatic
     fun loadIconBitmapAsync(context: Context,
                             info: ApplicationInfo, userId: Int,
                             view: ImageView): Job {
         return launch {
-            val size = view.measuredWidth.let { if (it > 0) it else context.resources.getDimensionPixelSize(R.dimen.default_app_icon_size) }
+            val size = iconSizePx(context)
             val cachedBitmap = get(info.packageName, userId, size)
             if (cachedBitmap != null) {
                 view.setImageBitmap(cachedBitmap)

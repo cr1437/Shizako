@@ -25,6 +25,7 @@ import moe.shizuku.manager.databinding.FragmentSubPageBinding
 import moe.shizuku.manager.comput.copyToClipboard
 import moe.shizuku.manager.ui.hint.HintPalette
 import moe.shizuku.manager.ui.hint.resolveHintPalette
+import moe.shizuku.manager.ui.theme.setShizakoContent
 import moe.shizuku.manager.utils.CustomTabsHelper
 import java.util.concurrent.Executors
 
@@ -117,7 +118,7 @@ class ShellTutorialFragment : Fragment() {
             )
         }
         shell.contentContainer.addView(composeView)
-        composeView.setContent {
+        composeView.setShizakoContent {
             val style = moe.shizuku.manager.ui.style.UiStyle.current
             // 风格切换直接按当前风格组合（不做交叉淡入 —— 动画统一交给官方 MD3 那套）
             val pal = androidx.compose.runtime.remember(style) { resolveHintPalette(requireContext()) }

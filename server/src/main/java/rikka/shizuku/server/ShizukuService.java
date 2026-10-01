@@ -309,7 +309,7 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
         int callingPid = Binder.getCallingPid();
         int callingUid = Binder.getCallingUid();
         boolean isManager;
-        ClientRecord clientRecord = null;
+        ClientRecord clientRecord;
 
         List<String> packages = PackageManagerApis.getPackagesForUidNoThrow(callingUid);
         if (!packages.contains(requestPackageName)) {
@@ -319,9 +319,22 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
 
         isManager = MANAGER_APPLICATION_ID.equals(requestPackageName);
 
-        if (clientManager.findClient(callingUid, callingPid) == null) {
+        // 关键：必须在 if **外面**先查一次。
+        // 原来只在「findClient == null」的分支里给 clientRecord 赋值，于是同一个 (uid, pid)
+        // 第二次 attach 时它一直是 null，走到下面 requireNonNull 直接抛 NPE →
+        // bindApplication 不送达 → 客户端 binderReady 永远 false，该应用在进程重启前彻底不可用，
+        // 而且 UI 上完全看不出来（binder 明明「在」）。
+        // 重复 attach 在真机上是常态：服务端双推（uid 回调与进程回调并发）、多进程应用重复
+        // requestBinder、以及 pid 复用都会走到这里。
+        clientRecord = clientManager.findClient(callingUid, callingPid);
+        if (clientRecord == null) {
             synchronized (this) {
-                clientRecord = clientManager.addClient(callingUid, callingPid, application, requestPackageName, apiVersion);
+                // 并发双推时两个线程可能同时走到这里：加锁后必须再查一次，
+                // 否则会为同一个 (uid, pid) 造出两条记录。
+                clientRecord = clientManager.findClient(callingUid, callingPid);
+                if (clientRecord == null) {
+                    clientRecord = clientManager.addClient(callingUid, callingPid, application, requestPackageName, apiVersion);
+                }
             }
             if (clientRecord == null) {
                 LOGGER.w("Add client failed");
@@ -346,7 +359,9 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
         reply.putString(BIND_APPLICATION_SERVER_SECONTEXT, OsUtils.getSELinuxContext());
         reply.putInt(BIND_APPLICATION_SERVER_PATCH_VERSION, ShizukuApiConstants.SERVER_PATCH_VERSION);
         if (!isManager) {
-            reply.putBoolean(BIND_APPLICATION_PERMISSION_GRANTED, Objects.requireNonNull(clientRecord).allowed);
+            // clientRecord 现在保证非 null（上面已提前查/建）；仍然写成判空形式，
+            // 是为了万一将来有人改动上面的流程也不会再炸出一个 NPE 把 bindApplication 吞掉。
+            reply.putBoolean(BIND_APPLICATION_PERMISSION_GRANTED, clientRecord != null && clientRecord.allowed);
             reply.putBoolean(BIND_APPLICATION_SHOULD_SHOW_REQUEST_PERMISSION_RATIONALE, false);
         } else {
             try {
@@ -556,13 +571,13 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
         List<PackageInfo> list = new ArrayList<>();
         List<Integer> users = new ArrayList<>();
         if (userId == -1) {
-            users.addAll(UserManagerApis.getUserIdsNoThrow());
+            users.addAll(ApiCompat.getUserIdsNoThrow());
         } else {
             users.add(userId);
         }
 
         for (int user : users) {
-            for (PackageInfo pi : PackageManagerApis.getInstalledPackagesNoThrow(PackageManager.GET_META_DATA | PackageManager.GET_PERMISSIONS, user)) {
+            for (PackageInfo pi : ApiCompat.getInstalledPackagesNoThrow(PackageManager.GET_META_DATA | PackageManager.GET_PERMISSIONS, user)) {
                 if (Objects.equals(MANAGER_APPLICATION_ID, pi.packageName)) continue;
                 if (pi.applicationInfo == null) continue;
 
@@ -605,14 +620,14 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
     }
 
     void sendBinderToClient() {
-        for (int userId : UserManagerApis.getUserIdsNoThrow()) {
+        for (int userId : ApiCompat.getUserIdsNoThrow()) {
             sendBinderToClient(this, userId);
         }
     }
 
     private static void sendBinderToClient(Binder binder, int userId) {
         try {
-            for (PackageInfo pi : PackageManagerApis.getInstalledPackagesNoThrow(PackageManager.GET_PERMISSIONS, userId)) {
+            for (PackageInfo pi : ApiCompat.getInstalledPackagesNoThrow(PackageManager.GET_PERMISSIONS, userId)) {
                 if (pi == null || pi.requestedPermissions == null)
                     continue;
 
@@ -635,7 +650,7 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
     }
 
     private static void sendBinderToManger(Binder binder) {
-        for (int userId : UserManagerApis.getUserIdsNoThrow()) {
+        for (int userId : ApiCompat.getUserIdsNoThrow()) {
             sendBinderToManger(binder, userId);
         }
     }

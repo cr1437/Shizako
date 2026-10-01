@@ -231,7 +231,7 @@
     <string name="setup_disclaimer_hint">下面的按鈕 %1$d 秒後才會亮 —— 認真讀一遍，這事真的要緊。</string>
     <string name="setup_language_title">選擇語言</string>
     <string name="setup_language_subtitle">主人想用哪種語言和 Shizako醬交流呢？稍後可以在設定中變更。</string>
-    <string name="setup_language_detail">Shizako酱 內建 50 種語言。列表第一行是系統語言，點任意一行立刻切換。</string>
+    <string name="setup_language_detail">Shizako酱 內建 50+ 種語言。列表第一行是系統語言，點任意一行立刻切換。</string>
     <string name="setup_appearance_title">選個外觀</string>
     <string name="setup_appearance_subtitle">兩種風格，隨時互換。</string>
     <string name="setup_appearance_detail">「玻璃材質」把桌布和模糊墊在磨砂卡片後面 —— 好看，但更吃 GPU。「Material 3」是素淨、輕快的那一套。</string>

@@ -42,6 +42,7 @@
     <string name="apps_tab_shizako">Shizako apps</string>
     <string name="apps_tab_dhizuku">Dhizuku apps</string>
     <string name="dhizuku_permission_warning_template"><![CDATA[Let <b>%1$s</b>%2$s borrow Shizako\'s Device Owner power?]]></string>
+    <string name="dhizuku_mode_off_toast">Dhizuku mode is off</string>
 
     <!-- Home - Wireless Adb -->
     <string name="home_wireless_adb_title"><![CDATA[Start via Wireless debugging]]></string>
@@ -231,7 +232,7 @@ The export function uses SAF (Storage Access Framework). It's reported that MIUI
     <string name="setup_welcome_feat_auto">Automation &amp; tools</string>
     <string name="setup_welcome_feat_auto_desc">Share the privilege with Tasker and friends; modules, console and the accessibility manager live in the Toolbox.</string>
     <string name="setup_disclaimer_hint">The checkbox below unlocks after %1$d s — read it, it really matters.</string>
-    <string name="setup_language_detail">Shizako ships with 50 languages. The list shows your system language first; tap any row to apply it instantly.</string>
+    <string name="setup_language_detail">Shizako ships with 50+ languages. The list shows your system language first; tap any row to apply it instantly.</string>
     <string name="setup_appearance_title">Pick your look</string>
     <string name="setup_appearance_subtitle">Two styles, one tap apart. You can switch anytime.</string>
     <string name="setup_appearance_detail">Liquid Glass puts wallpaper and blur behind frosted cards — pretty, and a bit heavier on the GPU. Material 3 is the sober, lighter one.</string>
@@ -262,6 +263,9 @@ The export function uses SAF (Storage Access Framework). It's reported that MIUI
     <string name="setup_activate_subtitle">Wake her up right here with the method you just picked — finishing this step unlocks the whole app.</string>
     <string name="setup_activate_not_running">Service not running yet</string>
     <string name="setup_activate_running">Service is running — she is awake!</string>
+    <!-- 状态行专用的短状态词：状态行的「值」槽位放不下整句，长句会把左侧名称挤成竖排 -->
+    <string name="setup_status_running">Running</string>
+    <string name="setup_status_not_running">Not running</string>
     <string name="setup_activate_hint">After starting, apps can ask Shizako for permission. You approve every app yourself and can revoke anytime.</string>
     <string name="setup_activate_hint_done">All set. Continue to finish, or activate Device Owner mode below for Dhizuku apps.</string>
     <string name="setup_activate_start_root">Start with root</string>
@@ -302,7 +306,9 @@ The export function uses SAF (Storage Access Framework). It's reported that MIUI
     <string name="setup_wadb_action_pair">Start pairing</string>
     <string name="setup_wadb_action_open_dev">Open developer options</string>
     <string name="setup_wadb_need_notification">Pairing needs notification permission — please allow Shizako to send you one notification.</string>
+    <string name="setup_wadb_need_wireless">Turn on wireless debugging first — this Android version can\'t enable it automatically.</string>
     <string name="setup_wadb_pairing_started">Pairing service is ready: enter the code in the notification (step 3).</string>
+    <string name="setup_wadb_fgs_denied">The system blocked Shizako from starting the pairing service. Allow background activity for Shizako, then tap again.</string>
     <string name="setup_activate_detail">Starting her is the only step that needs the outside world: root, wireless debugging, or a computer. Everything after this is just tapping Allow when an app asks.</string>
 
     <!-- Setup: finish step -->
@@ -388,7 +394,10 @@ The export function uses SAF (Storage Access Framework). It's reported that MIUI
 
     <string name="settings_stability">Stability &amp; automation</string>
     <string name="settings_watchdog">Watchdog</string>
-    <string name="settings_watchdog_summary">Auto-restart Shizuku if it crashes. A persistent notification will show the watchdog status.</string>
+    <string name="settings_watchdog_summary">Auto-restart &amp; revive Shizuku if it crashes or gets killed. A persistent notification shows the status (with a "Kill background" button).</string>
+    <string name="settings_keepalive">Background keep-alive</string>
+    <string name="settings_keepalive_summary">Add Shizako to the battery-optimization whitelist so it survives being swiped away from recents.</string>
+    <string name="settings_keepalive_added">Already whitelisted ✓</string>
     <string name="settings_auto_update">Auto-update</string>
     <string name="settings_auto_update_summary">Automatically check for new releases on GitHub every day and notify when an update is available</string>
 
@@ -444,6 +453,7 @@ The export function uses SAF (Storage Access Framework). It's reported that MIUI
     <string name="watchdog_notification_running">Shizako is running</string>
     <string name="watchdog_notification_waiting">Waiting for Shizako to start\u2026</string>
     <string name="watchdog_notification_crashed">Crashed %1$d times, will retry\u2026</string>
+    <string name="watchdog_action_kill">Kill background</string>
 
     <!-- Tasker / automation -->
     <string name="tasker_already_running">Shizako is already running</string>
@@ -709,9 +719,13 @@ The export function uses SAF (Storage Access Framework). It's reported that MIUI
     <!-- 持久 TCP 模式（照搬 Shevery） -->
     <string name="settings_tcp_mode">Persistent TCP Mode</string>
     <string name="settings_tcp_mode_summary">Bind ADB to local TCP port 5555 so Shizako can reconnect directly — even offline or after Wireless Debugging is turned off — until reboot.</string>
+    <!-- Dhizuku（Device Owner）模式总开关；文案须点明「不撤销设备所有者」 -->
+    <string name="settings_dhizuku_mode">Dhizuku mode</string>
+    <string name="settings_dhizuku_mode_summary">Let apps borrow Shizako\'s Device Owner privileges. Turning it off stops lending them immediately — it does not revoke Shizako\'s Device Owner status (that needs a dpm command over ADB).</string>
     <string name="tcp_prompt_dialog_title">Enable Persistent TCP Mode?</string>
     <string name="tcp_prompt_dialog_message">Shizako is running, but Persistent TCP Mode is currently off.\n\nEnabling it binds ADB to local TCP port 5555, allowing Shizako to stay running and auto-reconnect in the background — even without Wi-Fi — until your device is restarted.</string>
     <string name="tcp_prompt_dialog_enable">Enable</string>
     <string name="tcp_prompt_dialog_later">Not Now</string>
     <string name="tcp_prompt_dialog_do_not_remind">Don’t remind me again</string>
+
 </resources>

@@ -6,7 +6,11 @@ import moe.shizuku.manager.utils.UserHandleCompat
 import rikka.recyclerview.IdBasedRecyclerViewAdapter
 import rikka.recyclerview.IndexCreatorPool
 
-class HomeAdapter(private val homeModel: HomeViewModel, private val appsModel: AppsViewModel) :
+class HomeAdapter(
+    private val context: android.content.Context,
+    private val homeModel: HomeViewModel,
+    private val appsModel: AppsViewModel,
+) :
     IdBasedRecyclerViewAdapter(ArrayList()) {
 
     init {

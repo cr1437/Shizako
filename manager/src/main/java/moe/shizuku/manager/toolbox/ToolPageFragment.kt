@@ -26,6 +26,7 @@ import moe.shizuku.manager.settings.SettingsBackupHelper
 import moe.shizuku.manager.settings.SettingsPage
 import moe.shizuku.manager.settings.SettingsUiState
 import moe.shizuku.manager.ui.hint.resolveHintPalette
+import moe.shizuku.manager.ui.theme.setShizakoContent
 
 /**
  * 工具页宿主：把原来只活在「设置二级页」里的那几个 Compose 页面，
@@ -109,7 +110,7 @@ class ToolPageFragment : Fragment() {
             )
         }
         shell.contentContainer.addView(composeView)
-        composeView.setContent {
+        composeView.setShizakoContent {
             val style = moe.shizuku.manager.ui.style.UiStyle.current
             val palette = remember(style) { resolveHintPalette(requireContext()) }
             val collapsed: (Boolean) -> Unit = { expanded -> shell.appBar.setExpanded(expanded, true) }

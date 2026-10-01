@@ -108,7 +108,12 @@ class TaskerReceiver : BroadcastReceiver() {
                     }
                 }
                 ACTION_ACTIVATE_DHIZUKU -> {
-                    val active = DhizukuSettings.isDeviceOwner(context)
+                    // 模式开关关掉后不允许再由外部自动化激活，否则「关闭」只是 UI 假象
+                    if (!DhizukuSettings.isModeEnabled()) {
+                        showToast(context, R.string.dhizuku_mode_off_toast)
+                        return
+                    }
+                    val active = DhizukuSettings.isActive(context)
                     if (active) {
                         showToast(context, R.string.tasker_dhizuku_already)
                         return
@@ -120,7 +125,7 @@ class TaskerReceiver : BroadcastReceiver() {
                     Thread {
                         val result = ActivationRunner.run(DhizukuSettings.setDeviceOwnerCommand)
                         mainHandler.post {
-                            if (result.success || DhizukuSettings.isDeviceOwner(context)) {
+                            if (result.success || DhizukuSettings.isActive(context)) {
                                 showToast(context, R.string.tasker_dhizuku_success)
                             } else {
                                 showToast(context, R.string.tasker_dhizuku_failed)
@@ -131,7 +136,7 @@ class TaskerReceiver : BroadcastReceiver() {
                 ACTION_QUERY_STATUS -> {
                     val result = Bundle().apply {
                         putBoolean("running", Shizuku.pingBinder())
-                        putBoolean("dhizuku", DhizukuSettings.isDeviceOwner(context))
+                        putBoolean("dhizuku", DhizukuSettings.isActive(context))
                     }
                     resultCode = if (Shizuku.pingBinder()) 1 else 0
                     setResultExtras(result)

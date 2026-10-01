@@ -422,6 +422,8 @@ fun HintPage(
     listState: LazyListState,
     onCollapsedChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
+    /** 页面下方是否要给悬浮底栏留白。没有底栏的宿主（引导 / 更新欢迎页）传 false。 */
+    reserveNavSpace: Boolean = true,
     content: LazyListScope.() -> Unit,
 ) {
     LaunchedEffect(listState) {
@@ -469,14 +471,35 @@ fun HintPage(
                     end = 16.dp,
                     top = 8.dp,
                     // 24dp 常规留白 + 底栏高度（顶层 Tab 才有）：最后一张卡 / 控制台的
-                    // 「宏」列表要能完整滚到悬浮底栏上方，不能被盖住
-                    bottom = 24.dp + navBottomSpace(),
+                    // 「宏」列表要能完整滚到悬浮底栏上方，不能被盖住。
+                    // 没有底栏的宿主（引导页 / 更新欢迎页）把 reserveNavSpace 传 false：
+                    // NavUiState.visible 是全局状态，那边的值可能是上一个页面留下的 true。
+                    bottom = 24.dp + if (reserveNavSpace) navBottomSpace() else 0.dp,
                 ),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 content = content,
             )
         }
     }
+}
+
+/**
+ * 亚克力噪点纹理：**全应用共享一份**。
+ *
+ * 原来这个 decode 写在每张 HintCard 自己的 remember 里 —— 一屏十几张卡片就会解码十几次，
+ * 而内容是同一张小图、永远不会变，纯属浪费（解码本身 + 每份 16 KB 的位图）。
+ * 只在主线程组合期首次调用时解码一次，之后所有卡片共用同一张。
+ */
+private var sharedNoiseBitmap: androidx.compose.ui.graphics.ImageBitmap? = null
+
+private fun sharedNoiseImage(context: android.content.Context): androidx.compose.ui.graphics.ImageBitmap {
+    sharedNoiseBitmap?.let { return it }
+    val image = android.graphics.BitmapFactory.decodeResource(
+        context.resources,
+        moe.shizuku.manager.R.drawable.acrylic_noise,
+    ).asImageBitmap()
+    sharedNoiseBitmap = image
+    return image
 }
 
 /**
@@ -563,12 +586,9 @@ fun HintCard(
             // 仍在，圆角与观感和合并前完全一致。
             val fallbackSurface =
                 if (errorTone) palette.error.copy(alpha = 0.30f) else palette.glassFillTop
-            val noise = remember {
-                android.graphics.BitmapFactory.decodeResource(
-                    noiseContext.resources,
-                    moe.shizuku.manager.R.drawable.acrylic_noise,
-                ).asImageBitmap()
-            }
+            // 【性能】噪点纹理全应用共享一份：原来这行 remember 写在 HintCard 自己的组合作用域里，
+            // 于是一屏 N 张卡片就 decode 了 N 次（64×64 的小图，但解码 + 每份 16 KB 是纯浪费）。
+            val noise = remember(noiseContext) { sharedNoiseImage(noiseContext) }
             Box(
                 modifier = Modifier
                     .matchParentSize()

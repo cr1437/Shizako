@@ -42,9 +42,11 @@ import moe.shizuku.manager.ktx.toHtml
 import moe.shizuku.manager.receiver.BootCompleteReceiver
 import moe.shizuku.manager.ui.glass.GlassWindow
 import moe.shizuku.manager.ui.hint.resolveHintPalette
+import moe.shizuku.manager.ui.theme.setShizakoContent
 import moe.shizuku.manager.update.AutoUpdateScheduler
 import moe.shizuku.manager.update.DownloadProgressDialog
 import moe.shizuku.manager.update.UpdateChecker
+import moe.shizuku.manager.update.UpdatePrompt
 import moe.shizuku.manager.utils.CrashLog
 import moe.shizuku.manager.utils.CustomTabsHelper
 import moe.shizuku.manager.watchdog.WatchdogService
@@ -109,7 +111,7 @@ class SettingsFragment : Fragment() {
                 FrameLayout.LayoutParams.MATCH_PARENT,
                 FrameLayout.LayoutParams.MATCH_PARENT,
             )
-            setContent {
+            setShizakoContent {
                 val palette = androidx.compose.runtime.remember(bgVersion, uiState.hasCustomBackground) {
                     resolveHintPalette(requireContext())
                 }
@@ -130,7 +132,9 @@ class SettingsFragment : Fragment() {
                     onAutoDisableUsbDebugging = ::setAutoDisableUsbDebugging,
                     onStartOnBoot = ::setStartOnBoot,
                     onWatchdog = ::setWatchdog,
+                    onKeepAlive = ::onKeepAliveClick,
                     onTcpMode = ::setTcpMode,
+                    onDhizukuMode = ::setDhizukuMode,
                     onAutoUpdate = ::setAutoUpdate,
                     onApiLogEnabled = ::setApiLogEnabled,
                     onApiLogClear = ::clearApiLog,
@@ -364,6 +368,8 @@ class SettingsFragment : Fragment() {
             highRefresh = ShizukuSettings.isHighRefreshRateEnabled(),
             startOnBoot = context.packageManager.isComponentEnabled(componentName),
             watchdog = ShizukuSettings.isWatchdogEnabled(),
+            keepAliveWhitelisted = (context.getSystemService(Context.POWER_SERVICE) as? android.os.PowerManager)
+                ?.isIgnoringBatteryOptimizations(context.packageName) == true,
             autoUpdate = ShizukuSettings.isAutoUpdateEnabled(),
             language = ShizukuSettings.getPreferences().getString("language", "SYSTEM") ?: "SYSTEM",
             languageLabel = currentLanguageLabel(),
@@ -376,6 +382,7 @@ class SettingsFragment : Fragment() {
             debugUnlocked = ShizukuSettings.getPreferences()
                 .getBoolean(KEY_DEBUG_UNLOCKED, false),
             autoDisableUsbDebugging = ShizukuSettings.getAutoDisableUsbDebugging(),
+            dhizukuMode = ShizukuSettings.isDhizukuEnabled(),
             tcpMode = ShizukuSettings.isTcpMode(),
             hasCustomBackground = BackgroundHelper.isEnabled(context),
             hasBackgroundOriginal = BackgroundHelper.hasOriginal(context),
@@ -455,6 +462,16 @@ class SettingsFragment : Fragment() {
         uiState = uiState.copy(autoDisableUsbDebugging = enabled)
     }
 
+    /**
+     * Dhizuku 模式总开关。**只做软关闭**：关掉后 DhizukuProvider 立刻不再对外提供特权、
+     * 各处状态判定也跟着变成「未激活」，但 Device Owner 身份本身不会被撤销 ——
+     * 那个只能靠 `adb shell dpm remove-active-admin`，App 自己撤不掉。
+     */
+    private fun setDhizukuMode(enabled: Boolean) {
+        ShizukuSettings.setDhizukuEnabled(enabled)
+        uiState = uiState.copy(dhizukuMode = enabled)
+    }
+
     private fun setStartOnBoot(enabled: Boolean) {
         val context = requireContext()
         val componentName = ComponentName(context.packageName, BootCompleteReceiver::class.java.name)
@@ -465,11 +482,57 @@ class SettingsFragment : Fragment() {
     private fun setWatchdog(enabled: Boolean) {
         val context = requireContext()
         ShizukuSettings.getPreferences().edit().putBoolean(WATCHDOG_ENABLED, enabled).apply()
-        if (enabled) WatchdogService.start(context) else WatchdogService.stop(context)
+        if (enabled) {
+            // 13+ 没有通知权限的话常驻通知看不到，先要权限
+            if (Build.VERSION.SDK_INT >= 33 &&
+                androidx.core.content.ContextCompat.checkSelfPermission(
+                    context, android.Manifest.permission.POST_NOTIFICATIONS
+                ) != android.content.pm.PackageManager.PERMISSION_GRANTED
+            ) {
+                requestPermissions(arrayOf(android.Manifest.permission.POST_NOTIFICATIONS), 10086)
+            }
+            WatchdogService.start(context)
+            requestBatteryWhitelistIfNeeded(context)
+        } else {
+            WatchdogService.stop(context)
+        }
         refreshState()
     }
 
+    /** 后台保活：把 App 加进电池优化白名单（系统弹窗一键允许）。 */
+    private fun requestBatteryWhitelistIfNeeded(context: Context) {
+        val pm = context.getSystemService(Context.POWER_SERVICE) as? android.os.PowerManager ?: return
+        if (pm.isIgnoringBatteryOptimizations(context.packageName)) return
+        try {
+            context.startActivity(
+                Intent(android.provider.Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)
+                    .setData(android.net.Uri.parse("package:" + context.packageName))
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            )
+        } catch (_: Throwable) {
+            try {
+                context.startActivity(
+                    Intent(android.provider.Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                )
+            } catch (_: Throwable) {
+            }
+        }
+    }
+
+    /** 设置页「后台保活」行：查看 / 申请电池优化白名单。 */
+    private fun onKeepAliveClick() {
+        val context = requireContext()
+        val pm = context.getSystemService(Context.POWER_SERVICE) as? android.os.PowerManager
+        if (pm != null && pm.isIgnoringBatteryOptimizations(context.packageName)) {
+            Toast.makeText(context, R.string.settings_keepalive_added, Toast.LENGTH_SHORT).show()
+        } else {
+            requestBatteryWhitelistIfNeeded(context)
+        }
+    }
+
     /** 持久 TCP 模式（照搬 Shevery）：开关只负责写偏好；真正切端口在下次启动服务 / 激活页提示里做。 */
+
     private fun setTcpMode(enabled: Boolean) {
         ShizukuSettings.setTcpMode(enabled)
         uiState = uiState.copy(tcpMode = enabled)
@@ -478,7 +541,13 @@ class SettingsFragment : Fragment() {
     private fun setAutoUpdate(enabled: Boolean) {
         val context = requireContext()
         ShizukuSettings.getPreferences().edit().putBoolean(AUTO_UPDATE, enabled).apply()
-        if (enabled) AutoUpdateScheduler.schedule(context) else AutoUpdateScheduler.cancel(context)
+        if (enabled) {
+            AutoUpdateScheduler.schedule(context)
+            // 开启后立刻静默检查一次：有新版本马上就能看到通知
+            UpdateChecker.checkAndNotify(context)
+        } else {
+            AutoUpdateScheduler.cancel(context)
+        }
         refreshState()
     }
 
@@ -615,54 +684,15 @@ class SettingsFragment : Fragment() {
                 if (Build.VERSION.SDK_INT >= 33) {
                     requestPermissions(arrayOf(android.Manifest.permission.POST_NOTIFICATIONS), 10086)
                 }
-                MaterialAlertDialogBuilder(context)
-                    .setTitle(R.string.update_available_title)
-                    .setMessage(context.getString(R.string.update_dialog_message, info.tagName, info.body))
-                    .setPositiveButton(R.string.update_download) { _, _ ->
-                        startDownloadWithDialog(context, info)
-                    }
-                    .setNegativeButton(android.R.string.cancel, null)
-                    .show()
-                    .also { GlassWindow.applyIfGlass(it) }
+                // 与「每次打开 App」的自动检查共用同一个弹窗实现
+                UpdatePrompt.show(context, info)
             } else {
                 Toast.makeText(context, R.string.update_up_to_date, Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    private fun startDownloadWithDialog(context: Context, info: UpdateChecker.ReleaseInfo) {
-        val progressDialog = DownloadProgressDialog.show(
-            context,
-            title = context.getString(R.string.update_downloading),
-            version = info.tagName,
-            onCancel = { UpdateChecker.cancelDownload() },
-        )
-        progressDialog.setState(context.getString(R.string.update_connecting))
-        UpdateChecker.downloadAndInstall(context, info, object : UpdateChecker.DownloadListener {
-            override fun onProgress(downloaded: Long, total: Long, speedBps: Long) {
-                if (progressDialog.isShowing) progressDialog.update(downloaded, total, speedBps)
-            }
-
-            override fun onRetry(attempt: Int, max: Int) {
-                if (progressDialog.isShowing) {
-                    progressDialog.setState(context.getString(R.string.update_retrying, attempt, max))
-                }
-            }
-
-            override fun onComplete(apkFile: java.io.File) {
-                progressDialog.dismiss()
-            }
-
-            override fun onFailed(reason: String) {
-                progressDialog.dismiss()
-            }
-
-            override fun onCancelled() {
-                progressDialog.dismiss()
-                Toast.makeText(context, R.string.update_download_cancelled, Toast.LENGTH_SHORT).show()
-            }
-        })
-    }
+    // 提示与下载进度的实现已收口到 UpdatePrompt（设置页手动检查 / 打开 App 自动检查共用）
 
     private fun showCrashLogsDialog() {
         val context = requireContext()

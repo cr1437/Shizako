@@ -31,6 +31,7 @@ import moe.shizuku.manager.starter.Starter
 import moe.shizuku.manager.starter.StarterFragment
 import moe.shizuku.manager.ui.hint.HintPalette
 import moe.shizuku.manager.ui.hint.resolveHintPalette
+import moe.shizuku.manager.ui.theme.setShizakoContent
 import moe.shizuku.manager.utils.EnvironmentUtils
 import rikka.compatibility.DeviceCompatibility
 import rikka.core.util.ClipboardUtils
@@ -82,7 +83,7 @@ class ActivationFragment : Fragment() {
             )
         }
         shell.contentContainer.addView(composeView)
-        composeView.setContent {
+        composeView.setShizakoContent {
             val style = moe.shizuku.manager.ui.style.UiStyle.current
             // 风格切换直接按当前风格组合（不做交叉淡入 —— 动画统一交给官方 MD3 那套）
             val pal = androidx.compose.runtime.remember(style) { resolveHintPalette(requireContext()) }
@@ -138,7 +139,8 @@ class ActivationFragment : Fragment() {
                 Shizuku.getUid() == 0 -> ServiceMode.ROOT
                 else -> ServiceMode.ADB
             },
-            dhizukuActive = DhizukuSettings.isDeviceOwner(context),
+            dhizukuActive = DhizukuSettings.isActive(context),
+            dhizukuModeEnabled = DhizukuSettings.isModeEnabled(),
             rooted = EnvironmentUtils.isRooted(),
             paired = hasPairingKey(),
             canAutoAdbStart = ServiceStartHelper.canAdbAutoStart(context),
@@ -266,13 +268,18 @@ class ActivationFragment : Fragment() {
 
     private fun activateDhizuku() {
         val context = context ?: return
+        // 设置里把「Dhizuku 模式」关掉之后不允许再激活，否则那个开关只是 UI 假象
+        if (!DhizukuSettings.isModeEnabled()) {
+            Toast.makeText(context, R.string.dhizuku_mode_off_toast, Toast.LENGTH_SHORT).show()
+            return
+        }
         if (uiState.activatingDhizuku || !Shizuku.pingBinder()) return
         uiState = uiState.copy(activatingDhizuku = true)
         Thread {
             val result = ActivationRunner.run(DhizukuSettings.setDeviceOwnerCommand)
             view?.post {
                 uiState = uiState.copy(activatingDhizuku = false)
-                if (result.success || DhizukuSettings.isDeviceOwner(context)) {
+                if (result.success || DhizukuSettings.isActive(context)) {
                     Toast.makeText(context, R.string.home_dhizuku_activate_success, Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(
@@ -297,15 +304,17 @@ class ActivationFragment : Fragment() {
                 HtmlCompat.fromHtml(
                     getString(
                         R.string.home_dhizuku_dialog_view_command_message,
-                        DhizukuSettings.setDeviceOwnerCommand
+                        // 展示给用户的是**电脑端**命令（带 adb shell 前缀），
+                        // 不能用设备内那条（设备上没有 adb）
+                        DhizukuSettings.pcSetDeviceOwnerCommand
                     )
                 )
             )
             .setPositiveButton(R.string.home_adb_dialog_view_command_copy_button) { _, _ ->
-                if (ClipboardUtils.put(context, DhizukuSettings.setDeviceOwnerCommand)) {
+                if (ClipboardUtils.put(context, DhizukuSettings.pcSetDeviceOwnerCommand)) {
                     Toast.makeText(
                         context,
-                        getString(R.string.toast_copied_to_clipboard, DhizukuSettings.setDeviceOwnerCommand),
+                        getString(R.string.toast_copied_to_clipboard, DhizukuSettings.pcSetDeviceOwnerCommand),
                         Toast.LENGTH_SHORT
                     ).show()
                 }

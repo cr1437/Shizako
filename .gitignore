@@ -15,3 +15,15 @@
 manager/*.jks
 
 .kotlin/
+
+# ── 内部文档：只留在本地，不随仓库上传 ──
+AI续做交接文档.md
+DeepSeek-续做计划与提示词.md
+HANDOFF.md
+KernelSU-UI重构说明.md
+*.patch
+
+# ── 构建 / 本地环境残留 ──
+.cxx/
+*.keystore
+/captures

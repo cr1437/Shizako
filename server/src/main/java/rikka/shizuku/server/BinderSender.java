@@ -169,7 +169,10 @@ public class BinderSender {
             } else if (ArraysKt.contains(pi.requestedPermissions, PERMISSION)
                     || ArraysKt.contains(pi.requestedPermissions, PERMISSION_UPSTREAM_API)) {
                 ShizukuService.sendBinderToUserApp(sShizukuService, packageName, userId);
-                return;
+                // 注意：这里是 continue 不是 return —— 同一个 uid 下可能有多个包
+                // （共享 uid / 多进程安装的兄弟包），return 会让除第一个之外的包
+                // 永远收不到 binder。管理器那条分支用 return 是对的（只有一个管理器）。
+                continue;
             }
         }
     }

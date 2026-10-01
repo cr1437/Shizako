@@ -16,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 import moe.shizuku.manager.R
 import moe.shizuku.manager.databinding.FragmentSubPageBinding
 import moe.shizuku.manager.ui.hint.resolveHintPalette
+import moe.shizuku.manager.ui.theme.setShizakoContent
 import moe.shizuku.manager.update.DownloadProgressDialog
 import moe.shizuku.manager.update.UpdateChecker
 
@@ -49,7 +50,7 @@ class AppsDownloadFragment : Fragment() {
             )
         }
         shell.contentContainer.addView(composeView)
-        composeView.setContent {
+        composeView.setShizakoContent {
             val style = moe.shizuku.manager.ui.style.UiStyle.current
             val palette = androidx.compose.runtime.remember(style) { resolveHintPalette(requireContext()) }
             AppsDownloadScreen(

@@ -76,6 +76,15 @@ fun ComputPage(
     }
 
     fun startExecution(command: String, historyEntry: String) {
+        // 执行器是单例、控制台有 4 个入口（底栏 / 工具箱 / 工具页 / 设置）共用同一个它。
+        // 已有命令在跑时必须在**改任何状态之前**退出：否则这一轮会把 output 重写成新命令的回显、
+        // 把 isRunning 置 true，而 run() 随即返回 started=false —— 本页输出被清掉、
+        // 还永远卡在「运行中」且按钮禁用，只能离开页面重进。
+        if (ComputRunner.isRunning()) {
+            // 复用既有字符串（它已在 45 个语言里翻译好，此前一直没人引用）
+            toast(context, context.getString(R.string.comput_warning_not_running))
+            return
+        }
         val startedAt = android.os.SystemClock.elapsedRealtime()
         history.remove(historyEntry)
         history.add(0, historyEntry)
@@ -101,6 +110,12 @@ fun ComputPage(
                 exitMessage = { code -> context.getString(R.string.comput_output_exit, code) },
                 onUpdate = { text, _ -> output = text },
             )
+            // 执行器忙（上一次还没跑完）：这次压根没启动，text 是空的。
+            // 上面已经拦过一道，这里只是竞态兜底 —— 光 return 会把 isRunning 永远留在 true。
+            if (!result.started) {
+                uiState = uiState.copy(isRunning = false)
+                return@launch
+            }
             val elapsed = android.os.SystemClock.elapsedRealtime() - startedAt
             output = result.text
             uiState = uiState.copy(

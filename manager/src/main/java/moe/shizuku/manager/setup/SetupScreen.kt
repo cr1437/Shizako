@@ -1,5 +1,6 @@
 package moe.shizuku.manager.setup
 
+import android.os.SystemClock
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
@@ -13,6 +14,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -48,6 +50,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -128,6 +131,8 @@ data class SetupUiState(
     val disclaimerAgreed: Boolean = false,
     val shizukuRunning: Boolean = false,
     val dhizukuActive: Boolean = false,
+    /** 设置里的「Dhizuku 模式」总开关：关掉后引导页的 Dhizuku 按钮要置灰，不能看着能点却没反应。 */
+    val dhizukuModeEnabled: Boolean = true,
     val activatingDhizuku: Boolean = false,
     val preferredMethod: Int = ShizukuSettings.StartMethod.UNSET,
     val paired: Boolean = false,
@@ -140,6 +145,14 @@ data class SetupUiState(
 
 /** 免责声明强制阅读倒计时（秒）。 */
 private const val DISCLAIMER_SECONDS = 10
+
+/**
+ * 状态行里 `activation_status_activated` 这类字符串的**名词参数**。
+ *
+ * 约 45 种语言的译文形如「%1$s · 已激活」，这个参数就是那个 %1$s（中英文没有占位符，传了也不影响）。
+ * 不传的话，那些语言下会直接看到字面量 `%1$s`。
+ */
+private const val DHIZUKU_STATUS_NOUN = "Shizako"
 
 // ════════════════════════════════════════════════════════════════
 // 根容器：顶栏进度 + 步骤内容 + 底部按钮
@@ -425,15 +438,24 @@ private fun DisclaimerPage(
     agreed: Boolean,
     onAgreeChange: (Boolean) -> Unit,
 ) {
+    // 解锁时刻（而不是「还剩几秒」）存进 rememberSaveable：
+    // 旋转屏幕、或返回上一步再进来，都靠它算出真实剩余时间，不会重新计时。
+    // 以前用 remember + LaunchedEffect 从 10 倒数，转个屏就要重新等满 10 秒。
+    // 放在 AnimatedContent 里的好处：它按 targetState 提供 SaveableStateProvider，
+    // 所以「返回上一步再进来」也能把这一刻恢复出来。
+    var unlockAtMs by rememberSaveable {
+        mutableStateOf(SystemClock.elapsedRealtime() + DISCLAIMER_SECONDS * 1000L)
+    }
     var secondsLeft by remember { mutableIntStateOf(DISCLAIMER_SECONDS) }
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(unlockAtMs) {
         if (agreed) return@LaunchedEffect
-        for (s in DISCLAIMER_SECONDS downTo 1) {
-            secondsLeft = s
-            delay(1000)
+        while (true) {
+            val remainingMs = unlockAtMs - SystemClock.elapsedRealtime()
+            secondsLeft = ((remainingMs + 999L) / 1000L).coerceAtLeast(0L).toInt()
+            if (secondsLeft <= 0) break
+            delay(200L)
         }
-        secondsLeft = 0
     }
 
     val unlocked = secondsLeft <= 0 || agreed
@@ -558,8 +580,11 @@ private fun LanguagePage(
     val context = LocalContext.current
     val tags = ShizukuLocales.LOCALES
     val displayTags = ShizukuLocales.DISPLAY_LOCALES
-    val currentTag = ShizukuSettings.getPreferences()
-        .getString(ShizukuSettings.LANGUAGE, null) ?: "SYSTEM"
+    // 老版本存过 "zh-cn" / "zh-tw" 这种带地区的标签，必须先归一化 ——
+    // 否则列表里一行都不会是选中态（看起来像「当前语言丢了」）
+    val currentTag = LanguageNames.normalize(
+        ShizukuSettings.getPreferences().getString(ShizukuSettings.LANGUAGE, null),
+    )
     val currentLocale = ShizukuSettings.getLocale()
 
     HintPage(
@@ -773,7 +798,11 @@ private fun AppearancePage(
                     style = MaterialTheme.typography.bodySmall,
                     color = palette.variant,
                 )
-                if (state.nightMode != AppCompatDelegate.MODE_NIGHT_NO) {
+                // 只在「当前确实是深色」时才给这个开关：文案说的是「选了深色才有这一项」，
+                // 而「跟随系统 + 系统当前是白天」时把开关摆出来，点了没有任何可见效果。
+                val effectiveDark = state.nightMode == AppCompatDelegate.MODE_NIGHT_YES ||
+                    (state.nightMode == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM && isSystemInDarkTheme())
+                if (effectiveDark) {
                     SetupSwitchRow(
                         palette = palette,
                         title = stringResource(R.string.settings_black_night_theme),
@@ -924,18 +953,22 @@ private fun ActivatePage(
                 ServiceStatusRow(
                     palette = palette,
                     label = stringResource(R.string.activation_status_service),
+                    // 「值」槽位放不下整句：用短状态词，否则左侧名称会被挤成竖排
                     value = stringResource(
-                        if (state.shizukuRunning) R.string.setup_activate_running
-                        else R.string.setup_activate_not_running,
+                        if (state.shizukuRunning) R.string.setup_status_running
+                        else R.string.setup_status_not_running,
                     ),
                     running = state.shizukuRunning,
                 )
                 ServiceStatusRow(
                     palette = palette,
                     label = stringResource(R.string.activation_status_dhizuku),
+                    // 这里**必须带参数**：约 45 种语言的译文是「%1$s · 已激活」的形状，
+                    // 不带参数调用会把字面量 %1$s 直接显示出来（只有中英文没有占位符）。
                     value = stringResource(
                         if (state.dhizukuActive) R.string.activation_status_activated
                         else R.string.activation_status_not_activated,
+                        DHIZUKU_STATUS_NOUN,
                     ),
                     running = state.dhizukuActive,
                 )
@@ -990,7 +1023,9 @@ private fun ActivatePage(
                         if (state.activatingDhizuku) R.string.setup_activate_dhizuku_running
                         else R.string.setup_activate_dhizuku,
                     ),
-                    enabled = state.shizukuRunning && !state.activatingDhizuku,
+                    enabled = state.shizukuRunning &&
+                        !state.activatingDhizuku &&
+                        state.dhizukuModeEnabled,
                     onClick = onActivateDhizuku,
                 )
             }
@@ -1217,12 +1252,13 @@ private fun FinishPage(palette: HintPalette, state: SetupUiState) {
         },
     )
     val serviceText = stringResource(
-        if (state.shizukuRunning) R.string.setup_activate_running
-        else R.string.setup_activate_not_running,
+        if (state.shizukuRunning) R.string.setup_status_running
+        else R.string.setup_status_not_running,
     )
     val dhizukuText = stringResource(
         if (state.dhizukuActive) R.string.activation_status_activated
         else R.string.activation_status_not_activated,
+        DHIZUKU_STATUS_NOUN,
     )
 
     val listState = rememberLazyListState()
@@ -1372,6 +1408,9 @@ fun UpdateWelcomeScreen(
             HintPage(
                 listState = listState,
                 onCollapsedChange = {},
+                // 这一页没有底栏：NavUiState.visible 是全局状态，可能是 MainActivity 留下的 true，
+                // 不显式关掉的话底部会凭空多出约一整个底栏的空白。
+                reserveNavSpace = false,
             ) {
                 item { SetupAutoTopGap(listState, firstTopPx, lastBottomPx) }
 

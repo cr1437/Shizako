@@ -1,6 +1,5 @@
 package moe.shizuku.manager.home
 
-import android.app.admin.DevicePolicyManager
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -12,6 +11,7 @@ import android.widget.Toast
 import moe.shizuku.manager.BuildConfig
 import moe.shizuku.manager.R
 import moe.shizuku.manager.databinding.HomeInfoCardBinding
+import moe.shizuku.manager.dhizuku.DhizukuSettings
 import moe.shizuku.manager.model.ServiceStatus
 import rikka.recyclerview.BaseViewHolder
 import rikka.recyclerview.BaseViewHolder.Creator
@@ -75,12 +75,9 @@ class InfoCardViewHolder(private val binding: HomeInfoCardBinding, root: View) :
         Toast.makeText(context, R.string.home_info_copied, Toast.LENGTH_SHORT).show()
     }
 
-    private fun isDhizukuActive(context: Context): Boolean {
-        return try {
-            val dpm = context.getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager
-            dpm.isDeviceOwnerApp(context.packageName)
-        } catch (e: Exception) {
-            false
-        }
-    }
+    /**
+     * 判定收敛到 [DhizukuSettings.isActive]：模式开关打开 **且** 确实是 Device Owner。
+     * 以前这里自己写了一份裸的 isDeviceOwnerApp 判定，关掉模式开关后会与激活页打架。
+     */
+    private fun isDhizukuActive(context: Context): Boolean = DhizukuSettings.isActive(context)
 }

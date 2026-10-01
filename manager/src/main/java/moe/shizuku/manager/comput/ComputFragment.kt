@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import moe.shizuku.manager.R
 import moe.shizuku.manager.databinding.FragmentSubPageBinding
 import moe.shizuku.manager.ui.hint.resolveHintPalette
+import moe.shizuku.manager.ui.theme.setShizakoContent
 
 /**
  * Comput 控制台（**底栏 Tab 版**）。
@@ -46,7 +47,7 @@ class ComputFragment : Fragment() {
                     FrameLayout.LayoutParams.MATCH_PARENT,
                     FrameLayout.LayoutParams.MATCH_PARENT,
                 )
-                setContent {
+                setShizakoContent {
                     val style = moe.shizuku.manager.ui.style.UiStyle.current
                     val palette = remember(style) { resolveHintPalette(requireContext()) }
                     ComputPage(

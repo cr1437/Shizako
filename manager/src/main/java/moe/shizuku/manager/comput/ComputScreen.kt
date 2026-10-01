@@ -207,11 +207,21 @@ object ComputRunner {
     private val running = AtomicBoolean(false)
     private val stopRequested = AtomicBoolean(false)
 
+    /**
+     * 当前这次执行用来干掉远端进程的入口（没有命令在跑时是 null）。
+     *
+     * 只有 `stopRequested` 标志的话，`run()` 还卡在 `waitForTimeout(120s)` 里，
+     * 用户点了停止也得干等到超时 —— 所以把 destroy 的入口存一份，停止时直接调用。
+     */
+    @Volatile
+    private var currentShutdown: (() -> Unit)? = null
+
     fun isRunning(): Boolean = running.get()
 
-    /** 请求停止当前命令：销毁远端进程，读流线程会跟着退出。 */
+    /** 请求停止当前命令：置标志 + 立刻销毁远端进程，读流线程会跟着退出。 */
     fun stop() {
         stopRequested.set(true)
+        currentShutdown?.invoke()
     }
 
     /**
@@ -230,6 +240,8 @@ object ComputRunner {
         onUpdate: (String, Boolean) -> Unit,
     ): ComputResult = withContext(Dispatchers.IO) {
         if (!running.compareAndSet(false, true)) {
+            // 执行器忙：这次根本没启动。started = false 让调用方原样跳过，
+            // 不要拿这个空结果去清空屏幕上的上一次输出。
             return@withContext ComputResult(
                 text = "",
                 exitCode = -1,
@@ -237,6 +249,7 @@ object ComputRunner {
                 cancelled = false,
                 timedOut = false,
                 startedAt = SystemClock.elapsedRealtime(),
+                started = false,
             )
         }
         stopRequested.set(false)
@@ -254,7 +267,10 @@ object ComputRunner {
 
             val service = IShizukuService.Stub.asInterface(binder)
             val remote = service.newProcess(arrayOf("sh", "-c", command), null, null)
-            val shutdown = { runCatching { remote.destroy() } }
+            // 显式标成 () -> Unit：下面要把它挂到 currentShutdown（返回 Result 的函数类型赋不过去）
+            val shutdown: () -> Unit = { runCatching { remote.destroy() } }
+            // 挂上去，stop() 才能立刻 destroy，而不是等 waitForTimeout 超时
+            currentShutdown = shutdown
 
             val out = StreamFilter(MAX_OUTPUT_CHARS)
             val err = StreamFilter(MAX_OUTPUT_CHARS)
@@ -302,13 +318,16 @@ object ComputRunner {
             stderrThread.start()
 
             val finished = remote.waitForTimeout(TIMEOUT_SECONDS, java.util.concurrent.TimeUnit.SECONDS.name)
-            if (!finished) {
+            // cancelled 看的是「用户点没点过停止」，不是「进程还没结束」：
+            // stop() 已经 destroy 了远端进程，进程随后会正常结束（finished = true），
+            // 再用 !finished 去判就会把「用户取消」误报成正常退出。
+            val cancelled = stopRequested.get()
+            if (!finished || cancelled) {
                 // 超时或用户点了停止：远程进程和它的子进程一起干掉
                 shutdown()
             }
-            val cancelled = !finished && stopRequested.get()
             val timedOut = !finished && !cancelled
-            val exitCode = if (finished) remote.exitValue() else 124 // 124 = timeout(1) 的约定
+            val exitCode = if (finished && !cancelled) remote.exitValue() else 124 // 124 = timeout(1) 的约定
 
             stdoutThread.join(1500)
             stderrThread.join(1500)
@@ -326,7 +345,8 @@ object ComputRunner {
             ComputResult(
                 text = text,
                 exitCode = exitCode,
-                finished = finished,
+                // 用户取消不算「正常跑完」：上层据此把结局记成 CANCELLED
+                finished = finished && !cancelled,
                 cancelled = cancelled,
                 timedOut = timedOut,
                 startedAt = startedAt,
@@ -344,6 +364,11 @@ object ComputRunner {
                 startedAt = SystemClock.elapsedRealtime(),
             )
         } finally {
+            // 先摘钩子再补一刀：协程被取消（旋转屏幕 / 退出页面）时 run() 会直接跳到
+            // finally，这里不 destroy 的话远端进程就成孤儿了。重复 destroy 无害。
+            val pending = currentShutdown
+            currentShutdown = null
+            pending?.let { teardown -> runCatching { teardown() } }
             running.set(false)
             stopRequested.set(false)
         }
@@ -402,6 +427,8 @@ data class ComputResult(
     val startedAt: Long,
     /** 输出有没有被 64KB 上限截断（UI 拿它决定要不要显示提示） */
     val truncated: Boolean = false,
+    /** 这次调用有没有真的跑起来；false = 执行器忙被挡回来了，text 是空的，UI 应当整个忽略它 */
+    val started: Boolean = true,
 )
 
 // ============================================================================

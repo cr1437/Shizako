@@ -198,9 +198,11 @@ android.applicationVariants.configureEach { variant ->
     }
 }
 
-tasks.withType(CompileArtProfileTask.class).configureEach {
-    enabled = false
-}
+// 基线配置（baseline profile）：**不要**再全局禁用它。
+// 这里原本有一段 `tasks.withType(CompileArtProfileTask).configureEach { enabled = false }`，
+// 后果是 AGP 明明合并出了 421 KB 的 baseline-prof.txt，却从来没打进 APK
+// （实测 release APK 内没有 assets/dexopt/baseline.prof），
+// 连 Compose / Material3 / RecyclerView 自带的基线配置一起丢掉，冷启动只能靠 JIT 解释执行。
 configurations.configureEach {
     exclude group: 'androidx.appcompat', module: 'appcompat'
     exclude group: 'androidx.profileinstaller', module: 'profileinstaller'

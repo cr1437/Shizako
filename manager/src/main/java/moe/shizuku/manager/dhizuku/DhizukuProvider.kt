@@ -35,6 +35,9 @@ class DhizukuProvider : ContentProvider() {
 
     private fun isDeviceOwnerActive(): Boolean {
         val context = context ?: return false
+        // 「Dhizuku 模式」开关关掉后这里必须一起拦：本 provider 是 exported 的，
+        // 只在 UI 上隐藏入口属于「假关闭」—— 任意 Dhizuku-API 应用照样能 call 进来。
+        if (!DhizukuSettings.isModeEnabled()) return false
         val dpm = context.getSystemService(Context.DEVICE_POLICY_SERVICE) as? DevicePolicyManager
             ?: return false
         return dpm.isDeviceOwnerApp(BuildConfig.APPLICATION_ID)

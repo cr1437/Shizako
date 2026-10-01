@@ -38,6 +38,7 @@
     <string name="dhizuku_revoke_message">不再让 %1$s 借用设备所有者特权吗？</string>
     <string name="dhizuku_revoke_confirm">收回</string>
     <string name="dhizuku_permission_warning_template"><![CDATA[要让<b>%1$s</b>%2$s借用 Shizako酱 的设备所有者特权吗？]]></string>
+    <string name="dhizuku_mode_off_toast">Dhizuku 模式已关闭</string>
     <string name="dialog_legacy_not_support_title">%1$s 不支持现代 Shizako 主人抱歉</string>
     <string name="dialog_legacy_not_support_message">旧式 Shizako 已于 2019 年 3 月被弃用。此外，旧式 Shizako 无法在较新版本的 Android 系统上工作。&lt;p>请要求 &lt;b>%1$s&lt;/b> 的开发者进行更新。</string>
     <string name="dialog_requesting_legacy_title">%1$s 正在请求旧式 Shizako</string>
@@ -184,7 +185,10 @@
 
     <string name="settings_stability">稳定性与自动化</string>
     <string name="settings_watchdog">看门狗</string>
-    <string name="settings_watchdog_summary">Shizako酱 崩溃后自动重启。开启后会显示常驻通知。</string>
+    <string name="settings_watchdog_summary">Shizako酱 崩溃或被杀后自动重启 / 拉回。开启后显示常驻通知（通知上有「杀后台」按钮）。</string>
+    <string name="settings_keepalive">后台保活</string>
+    <string name="settings_keepalive_summary">把 Shizako酱加入电池优化白名单：划掉卡片后不被系统杀死，服务会被自动拉回。</string>
+    <string name="settings_keepalive_added">已在白名单 ✓</string>
     <string name="settings_auto_update">自动更新</string>
 
     <!-- API 调用日志 -->
@@ -240,6 +244,7 @@
     <string name="watchdog_notification_running">Shizako酱 正在运行中</string>
     <string name="watchdog_notification_waiting">等待 Shizako酱 启动中…</string>
     <string name="watchdog_notification_crashed">已崩溃 %1$d 次，将重试…</string>
+    <string name="watchdog_action_kill">杀后台</string>
 
     <!-- Tasker / automation -->
     <string name="tasker_already_running">Shizako酱 已在运行</string>
@@ -407,7 +412,7 @@
     <string name="setup_disclaimer_hint">下面的勾选框 %1$d 秒后才会亮 —— 认真读一遍，这事真的要紧。</string>
     <string name="setup_language_title">选择语言</string>
     <string name="setup_language_subtitle">主人想用哪种语言和 Shizako酱交流呢？稍后可以在设置中更改。</string>
-    <string name="setup_language_detail">Shizako酱 内置 50 种语言。列表第一行是系统语言，点任意一行立刻切换。</string>
+    <string name="setup_language_detail">Shizako酱 内置 50+ 种语言。列表第一行是系统语言，点任意一行立刻切换。</string>
     <string name="setup_appearance_title">选个外观</string>
     <string name="setup_appearance_subtitle">两种风格，随时互换。</string>
     <string name="setup_appearance_detail">「玻璃材质」把壁纸和模糊垫在磨砂卡片后面 —— 好看，但更吃 GPU。「Material 3」是素净、轻快的那一套。</string>
@@ -442,6 +447,9 @@
     <string name="setup_step_counter_hint">第 %1$d 步，共 %2$d 步</string>
     <string name="setup_activate_not_running">服务还没醒来</string>
     <string name="setup_activate_running">服务运行中——她已经醒啦！</string>
+    <!-- 状态行专用的短状态词：状态行的「值」槽位放不下整句，长句会把左侧名称挤成竖排 -->
+    <string name="setup_status_running">运行中</string>
+    <string name="setup_status_not_running">未运行</string>
     <string name="setup_activate_hint">启动后，应用可以向 Shizako酱 申请权限。每个应用都要你亲自点头，随时可以收回。</string>
     <string name="setup_activate_hint_done">搞定。继续前往完成页，或者点下面给 Dhizuku 应用激活设备所有者模式。</string>
     <string name="setup_activate_start_root">用 Root 启动</string>
@@ -482,7 +490,9 @@
     <string name="setup_wadb_action_pair">开始配对</string>
     <string name="setup_wadb_action_open_dev">打开开发者选项</string>
     <string name="setup_wadb_need_notification">配对需要通知权限 —— 请先允许 Shizako酱给你发一条通知。</string>
+    <string name="setup_wadb_need_wireless">请先打开无线调试 —— 这个 Android 版本上无法自动开启它。</string>
     <string name="setup_wadb_pairing_started">配对服务已就绪：按第 3 步，在通知栏输入配对码即可。</string>
+    <string name="setup_wadb_fgs_denied">系统拒绝了启动配对服务。请允许 Shizako 后台运行后重试。</string>
 
     <!-- 引导：完成步骤 -->
     <string name="setup_finish_title">一切就绪</string>
@@ -673,9 +683,13 @@
     <!-- 持久 TCP 模式（照搬 Shevery） -->
     <string name="settings_tcp_mode">持久 TCP 模式</string>
     <string name="settings_tcp_mode_summary">把 ADB 绑回本机 TCP 5555：断网、无线调试被关掉后也能直接连回来，直到设备重启</string>
+    <!-- Dhizuku（Device Owner）模式总开关；文案须点明「不撤销设备所有者」 -->
+    <string name="settings_dhizuku_mode">Dhizuku 模式</string>
+    <string name="settings_dhizuku_mode_summary">允许应用借用设备所有者特权。关闭后立即停止出借；不会撤销设备所有者身份（那需要用 ADB 执行 dpm 命令）</string>
     <string name="tcp_prompt_dialog_title">启用持久 TCP 模式？</string>
     <string name="tcp_prompt_dialog_message">Shizako 正在运行，但持久 TCP 模式还没开。\n\n开启后，ADB 会绑定本机 TCP 5555 端口——即使没有 Wi-Fi、无线调试被系统自动关闭，也能在后台自动重连，直到设备重启。</string>
     <string name="tcp_prompt_dialog_enable">启用</string>
     <string name="tcp_prompt_dialog_later">稍后再说</string>
     <string name="tcp_prompt_dialog_do_not_remind">不再提醒</string>
+
 </resources>

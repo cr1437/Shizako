@@ -45,6 +45,7 @@ import moe.shizuku.manager.ui.liquidglass.LiquidGlassNavItem
 import moe.shizuku.manager.ui.nav.Md3NavBar
 import moe.shizuku.manager.ui.nav.Md3NavColors
 import moe.shizuku.manager.ui.nav.NavUiState
+import moe.shizuku.manager.ui.theme.setShizakoContent
 import rikka.core.util.ResourceUtils
 import rikka.lifecycle.Status
 
@@ -158,6 +159,11 @@ class MainActivity : AppActivity() {
 
         // 老用户升级后的一次性「更新欢迎页」（新装用户不弹）
         checkUpdateWelcome()
+
+        // 后台保活：打开 App 时把看门狗带到岗（划掉后由它自己 / shell 小看门拉回来）
+        if (ShizukuSettings.isWatchdogEnabled() && !moe.shizuku.manager.watchdog.WatchdogService.isRunning) {
+            runCatching { moe.shizuku.manager.watchdog.WatchdogService.start(this) }
+        }
 
         val binding = ActivityMainBinding.inflate(layoutInflater)
         this.binding = binding
@@ -350,7 +356,7 @@ class MainActivity : AppActivity() {
 
     private fun setupComposeNav() {
         val binding = binding ?: return
-        binding.navCompose.setContent {
+        binding.navCompose.setShizakoContent {
             val density = LocalDensity.current
             val resources = LocalContext.current.resources
             val barHeight = with(density) { resources.getDimension(R.dimen.ksu_nav_height).toDp() }
@@ -631,6 +637,16 @@ class MainActivity : AppActivity() {
         super.onResume()
         // 主人可能在设置里改了底栏入口，回到页面时按新配置刷新一次
         applyNavVisibilityNow(findNavController()?.currentDestination?.id ?: 0, animate = false)
+        // 自动更新：**每次回到前台都静默查一次**（只留极短防抖，见 UpdateChecker）。
+        // 发现新版本时不止发通知，还就地弹「发现新版本」对话框 —— 用户正开着 App，
+        // 这里才是能立刻下载升级的地方。
+        runCatching {
+            moe.shizuku.manager.update.UpdateChecker.checkOnAppForeground(this) { info ->
+                if (!isFinishing && !isDestroyed) {
+                    moe.shizuku.manager.update.UpdatePrompt.show(this, info)
+                }
+            }
+        }
     }
 
     override fun onApplyUserThemeResource(theme: android.content.res.Resources.Theme, isDecorView: Boolean) {

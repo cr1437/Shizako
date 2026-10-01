@@ -37,6 +37,7 @@ import moe.shizuku.manager.dhizuku.loadDhizukuApps
 import moe.shizuku.manager.ui.glass.GlassOptionSlider
 import moe.shizuku.manager.ui.hint.HintStyle
 import moe.shizuku.manager.ui.hint.resolveHintPalette
+import moe.shizuku.manager.ui.theme.setShizakoContent
 import rikka.lifecycle.Status
 import rikka.recyclerview.fixEdgeEffect
 import rikka.shizuku.Shizuku
@@ -133,6 +134,9 @@ class AppsFragment : Fragment() {
 
         val recyclerView = binding.list
         recyclerView.adapter = adapter
+        // 列表尺寸不随内容变化（RecyclerView 是 match_parent）：告诉它一声，
+        // 适配器增删项时就不必再走一次 requestLayout。
+        recyclerView.setHasFixedSize(true)
         recyclerView.fixEdgeEffect()
         // 亚克力悬浮导航遮挡避让：末项可完整滚到胶囊上方
         recyclerView.updatePadding(bottom = resources.getDimensionPixelSize(R.dimen.ksu_content_bottom_padding))
@@ -220,7 +224,7 @@ class AppsFragment : Fragment() {
     private fun setupSegmentedHeader() {
         val binding = binding ?: return
 
-        binding.appsSegmented.setContent {
+        binding.appsSegmented.setShizakoContent {
             val style = moe.shizuku.manager.ui.style.UiStyle.current
             val palette = remember(style) { resolveHintPalette(requireContext()) }
             val labels = listOf(
@@ -334,7 +338,7 @@ class AppsFragment : Fragment() {
             )
         }
         binding.dhizukuContainer.addView(composeView)
-        composeView.setContent {
+        composeView.setShizakoContent {
             val style = moe.shizuku.manager.ui.style.UiStyle.current
             val palette = androidx.compose.runtime.remember(style) {
                 moe.shizuku.manager.ui.hint.resolveHintPalette(requireContext())
@@ -370,7 +374,7 @@ class AppsFragment : Fragment() {
         val seq = ++dhizukuRefreshSeq
         val appContext = context.applicationContext
         Thread {
-            val owner = DhizukuSettings.isDeviceOwner(appContext)
+            val owner = DhizukuSettings.isActive(appContext)
             val apps = loadDhizukuApps(appContext.packageManager)
             activity?.runOnUiThread {
                 // 期间又刷新过 / 页面已销毁：丢弃这次结果
@@ -400,6 +404,11 @@ class AppsFragment : Fragment() {
     /** 激活设备所有者：和激活页同一个命令、同一套反馈 */
     private fun activateDhizuku() {
         val context = context ?: return
+        // 「Dhizuku 模式」关掉后不允许再激活（否则开关只是 UI 假象）
+        if (!DhizukuSettings.isModeEnabled()) {
+            Toast.makeText(context, R.string.dhizuku_mode_off_toast, Toast.LENGTH_SHORT).show()
+            return
+        }
         if (dhizukuActivating) return
         dhizukuActivating = true
         Thread {
@@ -407,7 +416,7 @@ class AppsFragment : Fragment() {
             activity?.runOnUiThread {
                 dhizukuActivating = false
                 refreshDhizuku()
-                if (result.success || DhizukuSettings.isDeviceOwner(context)) {
+                if (result.success || DhizukuSettings.isActive(context)) {
                     Toast.makeText(context, R.string.home_dhizuku_activate_success, Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(
@@ -431,15 +440,16 @@ class AppsFragment : Fragment() {
                 rikka.html.text.HtmlCompat.fromHtml(
                     getString(
                         R.string.home_dhizuku_dialog_view_command_message,
-                        DhizukuSettings.setDeviceOwnerCommand,
+                        // 展示**电脑端**命令（带 adb shell）：设备内那条在设备上跑不了
+                        DhizukuSettings.pcSetDeviceOwnerCommand,
                     ),
                 ),
             )
             .setPositiveButton(R.string.home_adb_dialog_view_command_copy_button) { _, _ ->
-                if (rikka.core.util.ClipboardUtils.put(context, DhizukuSettings.setDeviceOwnerCommand)) {
+                if (rikka.core.util.ClipboardUtils.put(context, DhizukuSettings.pcSetDeviceOwnerCommand)) {
                     Toast.makeText(
                         context,
-                        getString(R.string.toast_copied_to_clipboard, DhizukuSettings.setDeviceOwnerCommand),
+                        getString(R.string.toast_copied_to_clipboard, DhizukuSettings.pcSetDeviceOwnerCommand),
                         Toast.LENGTH_SHORT,
                     ).show()
                 }

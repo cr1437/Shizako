@@ -67,8 +67,15 @@ object StartupTrace {
         }
     }
 
-    /** 新一轮冷启动：文件里插一条分隔线，方便读 */
+    /**
+     * 新一轮冷启动：文件里插一条分隔线，方便读。
+     *
+     * 必须和 [since] / [note] 一样做 DEBUG 门禁：这里的 append 是
+     * 「读整个文件 + 写回」（见 [append]），release 包每次冷启动都白做两次磁盘 IO，
+     * 而 release 根本不会输出任何打点，等于纯亏。
+     */
     fun newLaunch(context: Context?) {
+        if (!BuildConfig.DEBUG) return
         append(context, "---- launch ${System.currentTimeMillis()} ----")
     }
 }

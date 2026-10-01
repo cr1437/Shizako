@@ -73,6 +73,8 @@ enum class ServiceMode { NOT_RUNNING, ROOT, ADB }
 data class ActivationUiState(
     val serviceMode: ServiceMode = ServiceMode.NOT_RUNNING,
     val dhizukuActive: Boolean = false,
+    /** 设置里的「Dhizuku 模式」总开关：关掉时本页按钮要置灰（此前只有引导页做了，本页点了只弹 Toast） */
+    val dhizukuModeEnabled: Boolean = true,
     val rooted: Boolean = false,
     val activatingDhizuku: Boolean = false,
     val supportsWirelessAdb: Boolean = true,
@@ -331,7 +333,9 @@ fun ActivationScreen(
                             if (state.activatingDhizuku) R.string.activation_dhizuku_activating
                             else R.string.activation_method_action_activate
                         ),
-                        enabled = state.serviceRunning && !state.activatingDhizuku,
+                        enabled = state.serviceRunning &&
+                            !state.activatingDhizuku &&
+                            state.dhizukuModeEnabled,
                         onClick = onActivateDhizuku,
                     )
                 }
@@ -585,9 +589,12 @@ private fun StatusCard(state: ActivationUiState, palette: HintPalette) {
         )
         StatusRow(
             labelRes = R.string.activation_status_dhizuku,
+            // 必须带名词参数：约 45 种语言的译文形如「%1$s · 已激活」，
+            // 不带参数调用会把字面量 %1$s 显示出来（中英文没有占位符，传了也无影响）。
             value = stringResource(
                 if (state.dhizukuActive) R.string.activation_status_activated
-                else R.string.activation_status_not_activated
+                else R.string.activation_status_not_activated,
+                "Shizako",
             ),
             running = state.dhizukuActive,
             palette = palette,

@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.compose.ui.platform.ComposeView
 import moe.shizuku.manager.app.AppActivity
+import moe.shizuku.manager.ui.theme.setShizakoContent
 
 /**
  * 「更新欢迎页」宿主：**老用户升级后弹一次**（由 MainActivity 判断并拉起）。
@@ -29,7 +30,7 @@ class UpdateWelcomeActivity : AppActivity() {
         }
         setContentView(composeView)
 
-        composeView.setContent {
+        composeView.setShizakoContent {
             UpdateWelcomeScreen(
                 versionName = versionName,
                 onStart = { finish() },

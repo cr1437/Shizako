@@ -275,7 +275,9 @@ object BackgroundHelper {
         val existing = windowBitmap
         if (key == windowBitmapKey && existing != null && !existing.isRecycled) return existing
 
-        val decoded = decodeSampled(file, target)
+        // 【性能】用 RGB_565 解码窗口底图：它会被大幅模糊 + 压暗后铺满全屏，
+        // 565 与 8888 在观感上没有区别，但内存直接减半（1080×2400 全屏 ≈10MB → ≈5MB）。
+        val decoded = decodeSampled(file, target, Bitmap.Config.RGB_565)
         // 旧图不 recycle：可能还被上一帧的绘制引用（让 GC 自己收），只换引用
         windowBitmapKey = key
         windowBitmap = decoded

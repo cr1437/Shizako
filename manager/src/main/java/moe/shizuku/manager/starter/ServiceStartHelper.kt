@@ -53,8 +53,15 @@ object ServiceStartHelper {
         CoroutineScope(Dispatchers.IO).launch {
             var ok = false
             if (Shell.getShell().isRoot) {
-                Shell.cmd(Starter.internalCommand).exec()
-                ok = true
+                // 只看「有没有 root shell」是不够的：starter 自己失败时退出码同样非 0。
+                // 而且**必须记下启动方式** —— 否则看门狗 / 开机自启 / 磁贴里的
+                // `when (getLastLaunchMode())` 全部落空，服务死了不会被拉回来，
+                // 用户只会看到「运行中」凭空变成「未运行」。
+                val result = runCatching { Shell.cmd(Starter.internalCommand).exec() }.getOrNull()
+                ok = result?.isSuccess == true
+                if (ok) {
+                    ShizukuSettings.setLastLaunchMode(ShizukuSettings.LaunchMethod.ROOT)
+                }
             } else {
                 Shell.getCachedShell()?.close()
             }
@@ -70,18 +77,16 @@ object ServiceStartHelper {
      * 2. 尽力打开无线调试（需要 [canAdbAutoStart]），等 mDNS 报出端口；
      * 3. 交给 [AdbStarter] 连接启动 —— TCP 模式下会顺手切到 5555 并关掉无线调试。
      *
-     * No-op below Android 13; callers should check [canAdbAutoStart] first.
+     * Android 10 及以下没有无线调试，只能走 ① TCP 直连；Android 11~12 会在 ② 让步
+     * （拿不到 WRITE_SECURE_SETTINGS 自动开无线调试），直接走「无线调试已开 + 已配对」
+     * 的 mDNS 连接 —— 所以这里**不能**按 Android 13 一刀切地 return，否则 11/12 上
+     * 用户点了「启动服务」会毫无反应。
      *
      * @param onFinished always invoked once the attempt is over (success is
      * reported separately by the binder received listeners).
      */
     @JvmStatic
     fun startAdb(context: Context, onFinished: (() -> Unit)? = null) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
-            onFinished?.invoke()
-            return
-        }
-
         val appContext = context.applicationContext
         val cr = appContext.contentResolver
         CoroutineScope(Dispatchers.IO).launch {
@@ -98,6 +103,10 @@ object ServiceStartHelper {
                         // TCP 直连失败：继续走无线调试路径兜底（比如 adbd 状态不稳的时候）
                     }
                 }
+
+                // 无线调试（mDNS `_adb-tls-connect._tcp`）是 Android 11 才有的能力，
+                // 更早的版本没有这条路，TCP 直连又没成功就只能收工。
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) return@launch
 
                 // ② 自动开无线调试需要 WRITE_SECURE_SETTINGS；没有权限时不要写系统设置
                 // （配对流程里无线调试本来就是开着的，直接连就行）

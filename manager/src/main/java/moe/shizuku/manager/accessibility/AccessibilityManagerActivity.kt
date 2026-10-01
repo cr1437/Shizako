@@ -75,6 +75,7 @@ import moe.shizuku.manager.ui.hint.HintSectionTitle
 import moe.shizuku.manager.ui.hint.HintStyle
 import moe.shizuku.manager.ui.hint.itemEntrance
 import moe.shizuku.manager.ui.hint.resolveHintPalette
+import moe.shizuku.manager.ui.theme.setShizakoContent
 import rikka.shizuku.Shizuku
 
 /**
@@ -135,7 +136,7 @@ class AccessibilityManagerActivity : AppActivity() {
         }
         setContentView(composeView)
 
-        composeView.setContent {
+        composeView.setShizakoContent {
             val context = LocalContext.current
             // Application 级 Context：守护进程 reconcile 可能跨越 Activity 生命周期
             val application = context.applicationContext

@@ -2,6 +2,7 @@ package moe.shizuku.manager.ui.nav
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
@@ -61,10 +62,13 @@ fun Md3NavBar(
         NavigationBar(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(barHeight)
+                .height(barHeight + bottomInset)
                 .align(Alignment.BottomCenter),
             containerColor = colors.container,
             tonalElevation = 0.dp,
+            // 手势条交给底栏自己处理：背景依然铺到屏幕底部，但内容区保持完整高度，
+            // 避免 M3 默认 inset 与宿主高度重复叠加把内容挤压/裁切（DPI 放大时尤其明显）。
+            windowInsets = WindowInsets(bottom = bottomInset),
         ) {
             items.forEachIndexed { index, item ->
                 NavigationBarItem(

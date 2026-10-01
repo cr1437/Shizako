@@ -32,6 +32,7 @@ import moe.shizuku.manager.settings.ModulePolicyPage
 import moe.shizuku.manager.settings.SettingsBackupHelper
 import moe.shizuku.manager.settings.SettingsUiState
 import moe.shizuku.manager.ui.hint.resolveHintPalette
+import moe.shizuku.manager.ui.theme.setShizakoContent
 
 /** 工具箱里的一页：入口列表 + 各个工具。 */
 enum class ToolboxPage(val titleRes: Int) {
@@ -100,7 +101,7 @@ class ToolboxFragment : Fragment() {
             )
         }
         binding.contentContainer.addView(composeView)
-        composeView.setContent {
+        composeView.setShizakoContent {
             val style = moe.shizuku.manager.ui.style.UiStyle.current
             val palette = remember(style) { resolveHintPalette(requireContext()) }
             val back: () -> Unit = { page = ToolboxPage.MAIN }

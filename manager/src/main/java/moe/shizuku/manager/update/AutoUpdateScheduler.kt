@@ -8,16 +8,19 @@ import android.os.Build
 import moe.shizuku.manager.ShizukuSettings
 
 /**
- * Schedules (or cancels) a daily background update check via AlarmManager.
+ * Schedules (or cancels) the periodic background update check via AlarmManager.
  *
- * The alarm fires every 24 hours (inexact, battery-friendly).  When the device
- * reboots the alarm is re-scheduled by [UpdateCheckReceiver]'s
- * `BOOT_COMPLETED` handler, so the user never needs to re-enable it.
+ * 间隔 [CHECK_INTERVAL_MS]（6 小时），用 [AlarmManager.setAndAllowWhileIdle] 单次触发：
+ * 即使在 Doze 打盹里也会按时醒来跑一次，触发后由 [UpdateCheckReceiver] 重排下一次。
+ * 设备重启后由 [UpdateCheckReceiver] 的 `BOOT_COMPLETED` 分支重新排上，用户不需要手动再开。
  */
 object AutoUpdateScheduler {
 
     private const val ACTION_CHECK = "com.churan.shizako.action.UPDATE_CHECK"
     private const val ALARM_REQUEST_CODE = 2001
+
+    /** 后台检查间隔：6 小时（从 24 小时缩短，发布的更新能更快推到用户手上）。 */
+    private const val CHECK_INTERVAL_MS = 6 * 60 * 60 * 1000L
 
     private fun pendingIntent(context: Context): PendingIntent {
         val intent = Intent(context, UpdateCheckReceiver::class.java).apply {
@@ -33,16 +36,16 @@ object AutoUpdateScheduler {
 
         val am = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager ?: return
         val pi = pendingIntent(context)
-        val triggerAt = System.currentTimeMillis() + 24 * 60 * 60 * 1000L
+        val triggerAt = System.currentTimeMillis() + CHECK_INTERVAL_MS
 
         try {
             am.cancel(pi)
-            am.setInexactRepeating(
-                AlarmManager.RTC,
-                triggerAt,
-                AlarmManager.INTERVAL_DAY,
-                pi
-            )
+            if (Build.VERSION.SDK_INT >= 23) {
+                // 单次 + 允许 Doze 触发；跑完由 Receiver 再排下一次
+                am.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerAt, pi)
+            } else {
+                am.set(AlarmManager.RTC_WAKEUP, triggerAt, pi)
+            }
         } catch (_: SecurityException) { }
     }
 

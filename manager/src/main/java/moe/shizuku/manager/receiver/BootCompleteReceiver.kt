@@ -12,6 +12,7 @@ import moe.shizuku.manager.AppConstants
 import moe.shizuku.manager.ShizukuSettings
 import moe.shizuku.manager.starter.ServiceStartHelper
 import moe.shizuku.manager.utils.UserHandleCompat
+import moe.shizuku.manager.watchdog.WatchdogService
 import rikka.shizuku.Shizuku
 
 class BootCompleteReceiver : BroadcastReceiver() {
@@ -20,6 +21,11 @@ class BootCompleteReceiver : BroadcastReceiver() {
         if (Intent.ACTION_LOCKED_BOOT_COMPLETED != intent.action
             && Intent.ACTION_BOOT_COMPLETED != intent.action) {
             return
+        }
+
+        // 后台保活：把看门狗也带到岗（用户开着看门狗的话；通知上有「杀后台」按钮）
+        if (ShizukuSettings.isWatchdogEnabled()) {
+            runCatching { WatchdogService.start(context) }
         }
 
         if (UserHandleCompat.myUserId() > 0 || Shizuku.pingBinder()) return

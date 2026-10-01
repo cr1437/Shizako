@@ -10,6 +10,8 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
     <!-- 无障碍守护：Android 14+ 前台服务要声明 specialUse -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+    <!-- 后台保活：请求加入电池优化白名单（系统弹窗一键允许） -->
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
     <uses-permission
         android:name="android.permission.WRITE_SECURE_SETTINGS"
         tools:ignore="ProtectedPermissions" />
@@ -192,7 +194,40 @@
             android:name=".watchdog.WatchdogService"
             android:enabled="true"
             android:exported="false"
-            android:foregroundServiceType="dataSync" />
+            android:stopWithTask="false"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="keep_watchdog_and_shizuku_alive" />
+        </service>
+
+        <receiver
+            android:name=".watchdog.WatchdogRestartReceiver"
+            android:enabled="true"
+            android:exported="false" />
+
+        <!-- 「用 ADB 保活」跳板（仅兜底）：Activity 会抢焦点，正常路径已改为下面的 Service。
+             两个组件都必须 exported —— shell 小看门靠 `am` 拉起它们。但裸着 exported 等于
+             任何第三方应用都能反复拉起本进程（耗电/前台服务刷屏），所以用
+             INTERACT_ACROSS_USERS_FULL 收口：这个权限 shell（com.android.shell）有、普通应用拿不到，
+             root（uid 0）本来就不受组件权限限制，保活的两条链路都不受影响。
+             项目自己的 ShizukuManagerProvider 用的也是同一个权限，属于既有约定。 -->
+        <activity
+            android:name=".watchdog.KeepAliveTrampolineActivity"
+            android:enabled="true"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:noHistory="true"
+            android:permission="android.permission.INTERACT_ACROSS_USERS_FULL"
+            android:taskAffinity=""
+            android:theme="@android:style/Theme.NoDisplay" />
+
+        <!-- 键盘安全入口：shell 小看门用 `am start-service` 拉活/唤醒（无界面、不抢焦点、不缩键盘） -->
+        <service
+            android:name=".watchdog.KeepAliveBridgeService"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.INTERACT_ACROSS_USERS_FULL" />
 
         <receiver
             android:name=".receiver.BootCompleteReceiver"

@@ -55,15 +55,33 @@ object ModuleDiscovery {
     /**
      * 搜索模块仓库。
      *
-     * @param query 关键词；空串 = 用 `topic:shizuku-module` 找官方话题下的仓库
+     * 两条查询都是实测调过的，**别再改回去**（2026-10-01 实测，`/search/repositories`）：
+     *
+     * - 空搜索用 `topic:magisk-module`。作者最早用的是自创的 `topic:shizuku-module`，
+     *   那个话题在 GitHub 上**没有任何仓库在用**（`total_count = 0`），所以空搜索永远是空列表。
+     *   也不能用 `topic:shizuku`：实测 312 个仓库，stars 前 20 里带 `module.prop` 的**是 0 个**
+     *   （那些全是 Shizuku 的客户端应用，不是模块）。`topic:magisk-module` 是 Magisk 模块的
+     *   事实标准话题：786 个仓库，stars 前 20 里有 6 个根目录带 `module.prop`，命中率最高
+     *   （`topic:magisk` 1296 个仓库里只有 4 个、`topic:kernel-su` 只有 2 个仓库）。
+     * - 关键词搜索**不能带 `filename:module.prop`**。`filename:` 是 code search
+     *   （`/search/code`）专用的限定符，用在 `/search/repositories` 上等于把所有结果滤掉
+     *   （实测 `total_count = 0`）。所以只按 name/description/readme 找，仓库到底是不是模块
+     *   由下面逐个抓 `module.prop` 的校验决定 —— 那个校验不放宽。
+     *
+     * @param query 关键词；空串 = 用 `topic:magisk-module` 找模块话题下的仓库
      */
     fun search(query: String, perPage: Int = 20): List<DiscoveredModule> {
         val q = if (query.isBlank()) {
-            "topic:shizuku-module"
+            "topic:magisk-module"
         } else {
-            "$query in:name,description,readme filename:module.prop"
+            "$query in:name,description,readme"
         }
-        val url = "$API_ROOT/search/repositories?q=${enc(q)}&sort=stars&order=desc&per_page=$perPage"
+        // 浏览（空搜索）按 star 排序；关键词搜索**不要**加 sort=stars —— 那会把 Magisk 本体、
+        // awesome 列表这类超大仓库顶到前面，而它们压根没有 module.prop，会被下面的校验全部滤掉
+        // （2026-10-01 实测：`magisk module` 带 sort=stars 时 top20 命中 0 个，交给 GitHub 的
+        //  best-match 相关性排序才有结果）。
+        val sort = if (query.isBlank()) "&sort=stars&order=desc" else ""
+        val url = "$API_ROOT/search/repositories?q=${enc(q)}&per_page=$perPage$sort"
         val json = get(url) ?: return emptyList()
         val root = JSONObject(json)
         val items = root.optJSONArray("items") ?: return emptyList()

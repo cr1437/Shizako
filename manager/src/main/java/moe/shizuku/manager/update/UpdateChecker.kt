@@ -6,12 +6,14 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.FileProvider
 import kotlinx.coroutines.*
 import moe.shizuku.manager.R
+import moe.shizuku.manager.ShizukuSettings
 import org.json.JSONObject
 import java.io.File
 import java.io.FileOutputStream
@@ -23,10 +25,35 @@ import java.util.Locale
 object UpdateChecker {
 
     private const val GITHUB_API = "https://api.github.com/repos/cr1437/Shizako/releases/latest"
+
+    /**
+     * 更新检查的入口，**按顺序尝试**，第一个拿到合法 JSON 的胜出。
+     *
+     * 为什么必须有备选：`api.github.com` 在国内网络下经常被 **DNS 层面直接拦掉**。
+     * 实测（vivo / Android 16 / 移动网络）：`ping api.github.com` → unknown host，
+     * 而 `github.com`、`objects.githubusercontent.com` 都正常 —— 于是更新检查永远失败，
+     * 用户永远收不到更新提示（而且失败是静默的，看起来就像「这功能没做」）。
+     * 后面几个反代域名在同样的网络下实测可解析，作为兜底。
+     */
+    private val API_ENDPOINTS = listOf(
+        GITHUB_API,
+        "https://gh-proxy.com/$GITHUB_API",
+        "https://ghfast.top/$GITHUB_API",
+        "https://ghproxy.net/$GITHUB_API",
+    )
+
+    /** 上次成功的入口下标：下次先试它，省掉一次注定失败的等待。 */
+    private const val KEY_WORKING_ENDPOINT = "update_endpoint_index"
+
+    /** 探测入口时的超时：比下载短，避免 4 个入口串起来等太久。 */
+    private const val PROBE_CONNECT_TIMEOUT_MS = 8_000
+    private const val PROBE_READ_TIMEOUT_MS = 10_000
     private const val CHANNEL_ID = "shizako_update"
     private const val DOWNLOAD_CHANNEL_ID = "shizako_download"
     private const val NOTIFY_ID = 1001
     private const val DOWNLOAD_NOTIFY_ID = 1003
+
+    private const val TAG = "UpdateChecker"
 
     private const val MAX_RETRIES = 3
     private const val RETRY_BASE_DELAY_MS = 1_000L
@@ -36,6 +63,22 @@ object UpdateChecker {
      * Keeps system load low while still feeling live to the user.
      */
     private const val NOTIFY_THROTTLE_MS = 400L
+
+    /**
+     * 「打开 App」自动检查的最小间隔：**60 秒**。
+     *
+     * 需求是「每次打开都能知道有没有新版本」，所以这里只留一个极短的防抖 ——
+     * 防止转屏 / 几秒内来回切前后台连打两次 GitHub。原来是 1 小时，
+     * 等于一天最多自动查几次，用户开着 App 也看不到更新。
+     */
+    private const val APP_OPEN_CHECK_INTERVAL_MS = 60_000L
+
+    /** 前台自动检查是否正在进行：避免并发重复请求。 */
+    @Volatile
+    private var foregroundCheckInFlight = false
+
+    /** 最近一次成功检查的时间戳（节流用）。 */
+    private const val KEY_LAST_AUTO_CHECK_MS = "update_last_check_ms"
 
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
     private var downloadJob: Job? = null
@@ -66,11 +109,15 @@ object UpdateChecker {
 
     private fun userAgent(): String = "Shizako-Updater/1.0"
 
-    private fun openConnection(url: String): HttpURLConnection {
+    private fun openConnection(
+        url: String,
+        connectTimeoutMs: Int = 15_000,
+        readTimeoutMs: Int = 15_000,
+    ): HttpURLConnection {
         val conn = URL(url).openConnection() as HttpURLConnection
         conn.setRequestProperty("User-Agent", userAgent())
-        conn.connectTimeout = 15_000
-        conn.readTimeout = 15_000
+        conn.connectTimeout = connectTimeoutMs
+        conn.readTimeout = readTimeoutMs
         conn.instanceFollowRedirects = true
         return conn
     }
@@ -100,9 +147,17 @@ object UpdateChecker {
             try {
                 val info = fetchLatestRelease()
                 if (info != null) {
+                    // 记录一次成功检查（App 前台节流的依据）
+                    ShizukuSettings.getPreferences().edit()
+                        .putLong(KEY_LAST_AUTO_CHECK_MS, System.currentTimeMillis()).apply()
                     val pi = context.packageManager.getPackageInfo(context.packageName, 0)
                     val current = pi.versionName ?: ""
-                    val hasUpdate = info.tagName != current
+                    // 只有**确实更新**才算更新：不能只看字符串不相等，
+                    // 否则线上 release 比本机旧时会诱导用户降级（详见 isNewerVersion 注释）
+                    val hasUpdate = isNewerVersion(info.tagName, current)
+                    if (!hasUpdate && info.tagName != current) {
+                        Log.i(TAG, "远端 ${info.tagName} 不比本机 $current 新，不提示更新")
+                    }
                     withContext(Dispatchers.Main) { onResult(if (hasUpdate) info else null) }
                 } else {
                     withContext(Dispatchers.Main) { onResult(null) }
@@ -129,6 +184,32 @@ object UpdateChecker {
         // 后台自动检查：没网/失败都静默，别在通知栏和屏幕上留噪音
         checkForUpdate(context, silent = true) { info ->
             if (info != null) showUpdateNotification(context, info)
+        }
+    }
+
+    /**
+     * 「打开 App」时的节流自动检查：距上次成功检查超过 [APP_OPEN_CHECK_INTERVAL_MS] 才发请求。
+     * 让用户一打开应用就能知道有没有新版本，而不是干等后台闹钟。
+     */
+    /**
+     * 「打开 App」时的自动检查：**每次打开都查**（只留 [APP_OPEN_CHECK_INTERVAL_MS] 的极短防抖）。
+     *
+     * @param onUpdateFound 发现新版本时回调（主线程）。调用方通常用它就地弹「发现新版本」对话框 ——
+     *   只丢通知的话，用户明明开着 App 却看不到能直接下载的入口。
+     */
+    fun checkOnAppForeground(context: Context, onUpdateFound: ((ReleaseInfo) -> Unit)? = null) {
+        if (!ShizukuSettings.isAutoUpdateEnabled()) return
+        val last = ShizukuSettings.getPreferences().getLong(KEY_LAST_AUTO_CHECK_MS, 0L)
+        if (System.currentTimeMillis() - last < APP_OPEN_CHECK_INTERVAL_MS) return
+        if (foregroundCheckInFlight) return
+        foregroundCheckInFlight = true
+        checkForUpdate(context, silent = true) { info ->
+            foregroundCheckInFlight = false
+            if (info != null) {
+                // 通知照旧留着：用户可能已经把 App 切走了
+                showUpdateNotification(context, info)
+                onUpdateFound?.invoke(info)
+            }
         }
     }
 
@@ -311,14 +392,82 @@ object UpdateChecker {
 
     // ── Release fetching ──────────────────────────────────────────────
 
+    /**
+     * 远端 tag 是否**比本机版本更新**。
+     *
+     * 以前这里写的是 `tagName != versionName` —— 只判「不相等」，于是：
+     * 1. **装了比线上更新的版本时会被诱导降级**：实测线上最新 tag 是 `zako3.02`，
+     *    而开发机上是 `zako3.12`，字符串不相等 → 弹「发现新版本 zako3.02」，
+     *    用户一点就下回来一个旧 10 个版本的包；
+     * 2. tag 带前缀（`v`）或资产名与 tag 不同名时（线上资产叫
+     *    `shizako-vzako3.02-release.apk`）判定也会乱。
+     *
+     * 现在按**数字段逐段比较**：`zako3.12` → [3,12]、`vzako3.02` → [3,2]，只有确实更大才算更新。
+     * 数字段相同时再看后缀：带后缀的视为更新（`zako3.01-hp` > `zako3.01`），
+     * 否则不算（避免同一版本反复提示）。
+     */
+    fun isNewerVersion(remoteTag: String, localVersion: String): Boolean {
+        val remote = versionSegments(remoteTag)
+        val local = versionSegments(localVersion)
+        // 任一侧解析不出数字就**不乱提示**（宁可不提示，也不能提示错的方向）
+        if (remote.isEmpty() || local.isEmpty()) return false
+
+        for (i in 0 until maxOf(remote.size, local.size)) {
+            val r = remote.getOrElse(i) { 0 }
+            val l = local.getOrElse(i) { 0 }
+            if (r != l) return r > l
+        }
+
+        val remoteSuffix = versionSuffix(remoteTag)
+        val localSuffix = versionSuffix(localVersion)
+        return remoteSuffix.isNotEmpty() && remoteSuffix != localSuffix
+    }
+
+    /** 取出字符串里所有数字段：`shizako-vzako3.02-release` → [3, 2] */
+    private fun versionSegments(version: String): List<Int> =
+        Regex("\\d+").findAll(version).map { it.value.toIntOrNull() ?: 0 }.toList()
+
+    /** 取 `-` 之后的后缀（小写）：`zako3.01-hp` → `hp`，`zako3.12` → `` */
+    private fun versionSuffix(version: String): String =
+        version.substringAfter('-', "").trim().lowercase(Locale.ROOT)
+
+    /**
+     * 取最新 release：按 [API_ENDPOINTS] 顺序尝试，先试上次成功的那个。
+     *
+     * 全部失败才返回 null（调用方按「没检查成功」处理：不写时间戳，下次打开再试）。
+     */
     private fun fetchLatestRelease(): ReleaseInfo? {
-        val conn = openConnection(GITHUB_API).apply {
+        val prefs = ShizukuSettings.getPreferences()
+        val preferred = prefs.getInt(KEY_WORKING_ENDPOINT, 0)
+            .coerceIn(0, API_ENDPOINTS.lastIndex)
+        val order = listOf(preferred) + API_ENDPOINTS.indices.filter { it != preferred }
+
+        for (index in order) {
+            val info = tryFetchRelease(API_ENDPOINTS[index])
+            if (info != null) {
+                if (index != preferred) {
+                    // 记下来：下次先走这条，少等一次注定失败的探测
+                    prefs.edit().putInt(KEY_WORKING_ENDPOINT, index).apply()
+                }
+                return info
+            }
+        }
+        return null
+    }
+
+    /** 单个入口的尝试：任何异常都只记日志并返回 null，由上层换下一个入口。 */
+    private fun tryFetchRelease(url: String): ReleaseInfo? {
+        val conn = openConnection(url, PROBE_CONNECT_TIMEOUT_MS, PROBE_READ_TIMEOUT_MS).apply {
             requestMethod = "GET"
             setRequestProperty("Accept", "application/vnd.github.v3+json")
         }
 
         try {
-            if (conn.responseCode != 200) return null
+            val code = conn.responseCode
+            if (code != 200) {
+                Log.w(TAG, "update endpoint ${hostOf(url)} -> HTTP $code")
+                return null
+            }
             val json = JSONObject(conn.inputStream.bufferedReader().readText())
 
             val assets = json.getJSONArray("assets")
@@ -353,10 +502,16 @@ object UpdateChecker {
                 apkDirectUrl = apkDirectUrl,
                 apkSize = apkSize
             )
+        } catch (e: Exception) {
+            // 最常见的就是 UnknownHostException（域名被 DNS 拦掉）：继续试下一个入口
+            Log.w(TAG, "update endpoint ${hostOf(url)} failed: ${e.javaClass.simpleName} ${e.message}")
+            return null
         } finally {
             conn.disconnect()
         }
     }
+
+    private fun hostOf(url: String): String = runCatching { URL(url).host }.getOrDefault(url)
 
     // ── Download with retry ───────────────────────────────────────────
 
@@ -621,6 +776,7 @@ object UpdateChecker {
     }
 
     private fun showUpdateNotification(context: Context, info: ReleaseInfo) {
+        ensureChannels(context)
         val launch = context.packageManager.getLaunchIntentForPackage(context.packageName) ?: return
         launch.putExtra("check_update", true)
 

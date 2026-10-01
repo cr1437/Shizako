@@ -31,6 +31,6 @@ def baseVersionName = "${api_version_major}.6.0"
 ext {
     // versionCode 跟 versionName 走（不是 git 提交数）：3.01 → 301，
     // 这样每次发版只要改 versionName，升级判断自然成立
-    versionCode = 301
-    versionName = "zako3.01-hp"
+    versionCode = 312
+    versionName = "zako3.12"
 }

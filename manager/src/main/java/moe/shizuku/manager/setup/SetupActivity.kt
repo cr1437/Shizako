@@ -1,9 +1,11 @@
 package moe.shizuku.manager.setup
 
+import android.Manifest
 import android.app.AppOpsManager
 import android.app.ForegroundServiceStartNotAllowedException
 import android.app.NotificationManager
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.os.SystemClock
@@ -13,6 +15,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -34,6 +37,7 @@ import moe.shizuku.manager.starter.ServiceStartHelper
 import moe.shizuku.manager.starter.Starter
 import moe.shizuku.manager.ui.glass.GlassWindow
 import moe.shizuku.manager.ui.style.UiStyle
+import moe.shizuku.manager.ui.theme.setShizakoContent
 import moe.shizuku.manager.utils.EnvironmentUtils
 import rikka.core.util.ResourceUtils
 import rikka.material.app.LocaleDelegate
@@ -60,6 +64,15 @@ class SetupActivity : AppActivity() {
 
         /** 连点保护窗口：一次切页动画内不再接受新的切页请求（和底栏切页的合并窗口同一思路）。 */
         private const val NAV_LOCK_MS = 360L
+
+        /**
+         * Dhizuku 激活是否正在进行。
+         *
+         * 必须是**进程级**的：旋转屏幕会重建 Activity，页面状态 `activatingDhizuku` 会复位，
+         * 只靠它就会出现「转个屏按钮又能点了」→ 同一条 `dpm set-device-owner` 并发跑两次。
+         */
+        @Volatile
+        private var dhizukuActivationInFlight = false
     }
 
     // ---------- 页面状态（Compose 直接读这些可变状态） ----------
@@ -68,6 +81,8 @@ class SetupActivity : AppActivity() {
     private var disclaimerAgreed by mutableStateOf(false)
     private var shizukuRunning by mutableStateOf(false)
     private var dhizukuActive by mutableStateOf(false)
+    /** 设置里的「Dhizuku 模式」总开关：关掉后本页的 Dhizuku 按钮要置灰，而不是点了没反应。 */
+    private var dhizukuModeEnabled by mutableStateOf(true)
     private var activatingDhizuku by mutableStateOf(false)
     /** 缺了这个 mutableStateOf，方法卡点了 UI 不刷新（表现为「点不了」）——已修。 */
     private var preferredMethod by mutableStateOf(ShizukuSettings.StartMethod.UNSET)
@@ -87,6 +102,31 @@ class SetupActivity : AppActivity() {
 
     private val binderDeadListener = Shizuku.OnBinderDeadListener {
         runOnUiThread { refreshStates() }
+    }
+
+    /** 通知权限授权后就地继续那次「开始配对」（只有 Android 13+ 会用到）。 */
+    private var pairingAfterPermission = false
+
+    /**
+     * Android 13+ 的 POST_NOTIFICATIONS 运行时授权。
+     *
+     * 配对流程要靠一条**带输入框的通知**把配对码送进来，所以没有这个权限就配不成。
+     * 以前这里直接把人丢进系统设置页（白跑一趟），现在就地申请、授权后自动接着配对；
+     * 用户拒绝才提示并给一个去设置的入口。
+     */
+    private val notificationPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission(),
+    ) { granted ->
+        notificationsAllowed = granted || isNotificationEnabled()
+        val resumePairing = pairingAfterPermission && granted
+        pairingAfterPermission = false
+        when {
+            resumePairing -> startWirelessPairing()
+            !notificationsAllowed -> {
+                Toast.makeText(this, R.string.setup_wadb_need_notification, Toast.LENGTH_LONG).show()
+                openNotificationSettings()
+            }
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -118,13 +158,14 @@ class SetupActivity : AppActivity() {
         }
         setContentView(composeView)
 
-        composeView.setContent {
+        composeView.setShizakoContent {
             SetupFlow(
                 state = SetupUiState(
                     step = step,
                     disclaimerAgreed = disclaimerAgreed,
                     shizukuRunning = shizukuRunning,
                     dhizukuActive = dhizukuActive,
+                    dhizukuModeEnabled = dhizukuModeEnabled,
                     activatingDhizuku = activatingDhizuku,
                     preferredMethod = preferredMethod,
                     paired = paired,
@@ -179,7 +220,10 @@ class SetupActivity : AppActivity() {
 
     private fun refreshStates() {
         shizukuRunning = Shizuku.pingBinder()
-        dhizukuActive = DhizukuSettings.isDeviceOwner(this)
+        dhizukuActive = DhizukuSettings.isActive(this)
+        dhizukuModeEnabled = DhizukuSettings.isModeEnabled()
+        // 激活可能在旋转前就开始了：重建后要把转圈状态接回来，否则按钮会「复活」
+        activatingDhizuku = dhizukuActivationInFlight
         preferredMethod = ShizukuSettings.getPreferredStartMethod()
         paired = runCatching {
             PreferenceAdbKeyStore(ShizukuSettings.getPreferences()).get() != null
@@ -212,7 +256,9 @@ class SetupActivity : AppActivity() {
     private fun canNav(): Boolean = SystemClock.uptimeMillis() >= navLockUntil
 
     private fun navigateBack() {
-        if (!canNav() || step == SetupStep.WELCOME) return
+        if (step == SetupStep.WELCOME) return
+        // 注意：返回**不受**导航锁限制 —— 锁是为了防止连点把切页动画叠成一团，
+        // 但用户按返回键时被锁吞掉会显得「按了没反应」。这里只置锁、不查锁。
         markNav()
         step = SetupStep.entries[step.ordinal - 1]
     }
@@ -250,6 +296,12 @@ class SetupActivity : AppActivity() {
     }
 
     private fun applyLanguage(tag: String) {
+        // 点当前已选的语言不该重建：白闪一下，还会把本页动画与倒计时重来一遍
+        if (ShizukuSettings.getPreferences()
+                .getString(ShizukuSettings.LANGUAGE, "SYSTEM") == tag
+        ) {
+            return
+        }
         ShizukuSettings.getPreferences().edit()
             .putString(ShizukuSettings.LANGUAGE, tag)
             .apply()
@@ -295,6 +347,7 @@ class SetupActivity : AppActivity() {
         }
         ServiceStartHelper.startRoot { ok ->
             runOnUiThread {
+                if (isFinishing || isDestroyed) return@runOnUiThread
                 Toast.makeText(
                     this,
                     if (ok) R.string.setup_activate_started else R.string.setup_activate_failed,
@@ -310,14 +363,31 @@ class SetupActivity : AppActivity() {
             refreshStates()
             return
         }
-        if (canAutoAdb || paired) {
-            Toast.makeText(this, R.string.setup_activate_started, Toast.LENGTH_SHORT).show()
-            ServiceStartHelper.startAdb(this) { runOnUiThread { refreshStates() } }
-        } else {
+        if (!canAutoAdb && !paired) {
             // 还没配对：直接进入配对流程，而不是弹一个死路提示
             startWirelessPairing()
+            return
+        }
+        // 已配对、但无线调试没开、又没能力自动开（Android 13 以下拿不到 WRITE_SECURE_SETTINGS）：
+        // 这种情况下 startAdb 是真的连不上，不能先弹一个「已启动」骗人（旧版就是这么做的，
+        // 结果 11/12 上用户点了完全没反应）。TCP 模式例外 —— 那条路不依赖无线调试。
+        if (!canAutoAdb && !ShizukuSettings.isTcpMode() && !isWirelessDebuggingOn()) {
+            Toast.makeText(this, R.string.setup_wadb_need_wireless, Toast.LENGTH_LONG).show()
+            openDeveloperOptions()
+            return
+        }
+        // 只说「正在启动…」，不要提前报成功：真正的成功判据是 binder 回来（状态行会刷新）。
+        // 旧文案是「已启动」，失败时就会出现「已启动」+ 状态行「未运行」的自相矛盾。
+        Toast.makeText(this, R.string.activation_toast_starting, Toast.LENGTH_SHORT).show()
+        ServiceStartHelper.startAdb(this) {
+            runOnUiThread { if (!isFinishing && !isDestroyed) refreshStates() }
         }
     }
+
+    /** 无线调试开关当前是否打开。`Settings.Global` 任何应用都可读，失败按「没开」处理。 */
+    private fun isWirelessDebuggingOn(): Boolean = runCatching {
+        Settings.Global.getInt(contentResolver, "adb_wifi_enabled", 0) == 1
+    }.getOrDefault(false)
 
     /**
      * 进入 ADB 配对流程：和「配对教程」页同一套做法 ——
@@ -326,6 +396,15 @@ class SetupActivity : AppActivity() {
      */
     private fun startWirelessPairing() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) return
+
+        // 13+ 通知要运行时授权：就地申请，授权后回调里会自动接着往下走
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+            checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED
+        ) {
+            pairingAfterPermission = true
+            notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            return
+        }
 
         if (!notificationsAllowed) {
             Toast.makeText(this, R.string.setup_wadb_need_notification, Toast.LENGTH_LONG).show()
@@ -352,9 +431,10 @@ class SetupActivity : AppActivity() {
                         null,
                     )
                 if (mode == AppOpsManager.MODE_ERRORED) {
+                    // 原来这里是一句硬编码英文（还带情绪），既没翻译也不给用户出路
                     Toast.makeText(
                         this,
-                        "OP_START_FOREGROUND is denied. What are you doing?",
+                        R.string.setup_wadb_fgs_denied,
                         Toast.LENGTH_LONG,
                     ).show()
                 }
@@ -411,28 +491,44 @@ class SetupActivity : AppActivity() {
     }
 
     private fun activateDhizuku() {
+        // 「Dhizuku 模式」在设置里被关掉时，引导页也不该再放行激活
+        if (!DhizukuSettings.isModeEnabled()) {
+            Toast.makeText(this, R.string.dhizuku_mode_off_toast, Toast.LENGTH_SHORT).show()
+            return
+        }
         if (!Shizuku.pingBinder()) {
             Toast.makeText(this, R.string.setup_activate_dhizuku_not_running, Toast.LENGTH_LONG).show()
             return
         }
-        if (activatingDhizuku) return
+        if (activatingDhizuku || dhizukuActivationInFlight) return
+        dhizukuActivationInFlight = true
         activatingDhizuku = true
 
         Thread {
             val result = ActivationRunner.run(DhizukuSettings.setDeviceOwnerCommand)
             runOnUiThread {
+                if (isFinishing || isDestroyed) {
+                    dhizukuActivationInFlight = false
+                    return@runOnUiThread
+                }
+                dhizukuActivationInFlight = false
                 activatingDhizuku = false
                 refreshStates()
-                val active = DhizukuSettings.isDeviceOwner(this)
-                Toast.makeText(
-                    this,
-                    if (result.success || active) {
-                        R.string.setup_activate_dhizuku_success
-                    } else {
-                        R.string.setup_activate_dhizuku_failed
-                    },
-                    Toast.LENGTH_LONG,
-                ).show()
+                val active = DhizukuSettings.isActive(this)
+                if (result.success || active) {
+                    Toast.makeText(this, R.string.setup_activate_dhizuku_success, Toast.LENGTH_LONG).show()
+                } else {
+                    // 带上失败原因的首行 —— 只报「激活失败」等于让人干瞪眼（激活页那边就是这么做的）
+                    val reason = result.output.lineSequence()
+                        .firstOrNull { it.isNotBlank() }
+                        .orEmpty()
+                        .ifBlank { getString(R.string.setup_activate_dhizuku_failed) }
+                    Toast.makeText(
+                        this,
+                        getString(R.string.home_dhizuku_activate_failed, reason),
+                        Toast.LENGTH_LONG,
+                    ).show()
+                }
             }
         }.start()
     }
@@ -440,9 +536,14 @@ class SetupActivity : AppActivity() {
     // ---------- 通知可用性（和配对教程页同一判断） ----------
 
     private fun isNotificationEnabled(): Boolean {
-        val nm = getSystemService(NotificationManager::class.java)
+        val nm = getSystemService(NotificationManager::class.java) ?: return true
+        if (!nm.areNotificationsEnabled()) return false
+        // getNotificationChannel 是 **API 26+** 的方法，而本模块 minSdk = 24：
+        // 在 Android 7.x 上通知渠道还不存在，无条件调用会直接 NoSuchMethodError。
+        // 这里又是 onCreate 的必经路径 —— 不挡的话，7.x 一进引导页就闪退，
+        // 而没走完引导就永远被 MainActivity 重定向回来，等于整个 App 打不开。
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return true
         val channel = nm.getNotificationChannel(AdbPairingService.notificationChannel)
-        return nm.areNotificationsEnabled() &&
-            (channel == null || channel.importance != NotificationManager.IMPORTANCE_NONE)
+        return channel == null || channel.importance != NotificationManager.IMPORTANCE_NONE
     }
 }
