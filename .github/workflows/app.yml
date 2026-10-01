@@ -44,7 +44,9 @@ jobs:
           echo 'org.gradle.caching=true' >> gradle.properties
           echo 'org.gradle.parallel=true' >> gradle.properties
           ./gradlew :manager:assemble
-          releaseName=`ls manager/build/outputs/apk/release/shizuku*-v*-release.apk | awk -F '(/|-release.apk)' '{print $6}'` && echo "releaseName=$releaseName" >> $GITHUB_OUTPUT
+          # 产物名是 fork 自定的 shizako-zako3.13-release.apk（上游是 shizuku-v*-release.apk，
+          # 旧 glob 在这里永远匹配不到 → ls 失败 + bash -e → 构建步骤假红）
+          releaseName=`ls manager/build/outputs/apk/release/shizako*-release.apk | awk -F '(/|-release.apk)' '{print $6}'` && echo "releaseName=$releaseName" >> $GITHUB_OUTPUT
       - name: Upload release
         if: success()
         uses: actions/upload-artifact@v4
