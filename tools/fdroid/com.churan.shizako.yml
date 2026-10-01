@@ -34,9 +34,14 @@ Builds:
     # 项目需要 NDK 参与构建（manager / shell / rish / starter 都有 JNI）
     # 需要确认 F-Droid 构建机上存在这一版；否则要先降级到他们有的版本
     ndk: 29.0.14206865
-    # 镜像问题已由仓库自身解决，无需 prebuild sed：
-    # settings.gradle 检测到 -Pfdroid 时自动关闭全部阿里云镜像、改走官方
-    # google()/mavenCentral()/gradlePluginPortal()（GitHub 版构建不受影响）。
+    # 依赖源：无需 sed —— settings.gradle 检测到 -Pfdroid 时自动关闭全部阿里云镜像、
+    # 改走官方 google()/mavenCentral()/gradlePluginPortal()（GitHub 版构建不受影响）。
+    #
+    # Gradle 发行包：仓库里的 wrapper 指向国内镜像 mirrors.cloud.tencent.com（为了国内
+    # 开发机下载快），这里改成官方 services.gradle.org —— 构建机的出网白名单不一定
+    # 覆盖国内镜像，用官方地址最稳（只在构建机上生效，不影响仓库与本地开发）。
+    prebuild: |
+      sed -i 's#mirrors\.cloud\.tencent\.com/gradle/#services.gradle.org/distributions/#g' gradle/wrapper/gradle-wrapper.properties
 
 MaintainerNotes: |
   上游为 Shizuku（Apache-2.0），本项目为其 fork，按上游许可声明使用自有 app id 与权限名：

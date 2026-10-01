@@ -59,9 +59,12 @@ extra UI and tooling. Submitting the dedicated F-Droid build variant.
 4. 过一遍 fdroiddata MR 模板的自查清单（重点：License、AntiFeatures=无、
    预编译二进制=无、tag 与 versionCode 对应）
 
-## MR 时可能被追问的两项（见 README.md 第 4 节）
+## MR 时可能被追问的三项（见 README.md 第 4 节）
 
 1. **libsu 依赖只在 jitpack.io**（Maven Central 无）→ 若他们的构建机不放行
    jitpack，需要改为 srclibs 源码构建或替换依赖
 2. **UpdateCheckData 的 versionName 不带 `-f` 后缀** → 以 versionCode 313 为准；
    若 linter 报告不一致，把 `-f` 后缀下沉进根 build.gradle 的 versionName
+3. **Gradle 发行包地址**：仓库 wrapper 默认指向国内镜像（开发机下载快），
+   recipe 的 `prebuild:` 会在构建机上改回官方 `services.gradle.org`；
+   若审核者更希望仓库里直接用官方地址，改 wrapper 并删掉那行 prebuild 即可

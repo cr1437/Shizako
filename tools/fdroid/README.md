@@ -30,7 +30,10 @@ F-Droid 不用 GitHub，走 **GitLab**：
 
 - 镜像：`settings.gradle` 检测到 `-Pfdroid` 时**自动关闭全部阿里云镜像**，
   改走 google() / mavenCentral() / gradlePluginPortal()。GitHub 版（不带参数）不变。
-  recipe 因此**不需要** `prebuild:` sed。
+  依赖仓库因此**不需要** sed。
+- Gradle 发行包：仓库 wrapper 指向国内镜像 `mirrors.cloud.tencent.com`（国内开发机下载快），
+  recipe 用 `prebuild:` 在构建机上改回官方 `services.gradle.org` —— 构建机出网白名单
+  不一定覆盖国内镜像，官方地址最稳，且不改仓库、不影响本地开发。
 - 离线验证：`-Pfdroid --offline` 配置与解析通过（本机缓存热；F-Droid 构建机
   对允许源有预置/代理机制 —— 他们 metadata 里 `sudo: curl nodejs.org` 是白名单网络的旁证）。
 - NDK：根 `build.gradle` 与 recipe 均为 **29.0.14206865**（一致 ✔）。
