@@ -215,7 +215,12 @@
     [].slice.call(document.querySelectorAll('[data-stat]')).forEach(function (el) {
       var key = el.getAttribute('data-stat');
       if (counted[key]) return;
-      var raw = (el.textContent || '').replace(/[^\d]/g, '');
+      var txt = (el.textContent || '').trim();
+      // 只有「纯数字」的卡片才做数字滚动。
+      // 版本号是 zako3.12 这种字符串，早先这里用「提取所有数字」判断，
+      // 于是它被当成 312 滚了一遍并覆盖掉原文本（真机上显示成 312）。
+      if (!/^[\d,]+$/.test(txt)) return;
+      var raw = txt.replace(/[^\d]/g, '');
       if (!raw) return;
       counted[key] = true;
       countUp(el, parseInt(raw, 10));
