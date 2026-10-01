@@ -82,7 +82,7 @@ img { max-width: 100%; height: auto; }
 .nav.scrolled { border-bottom-color: var(--line); background: rgba(11, 13, 18, .88); }
 
 .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--fg); }
-.brand img { border-radius: 9px; }
+.brand img { border-radius: 50%; box-shadow: 0 0 0 1px var(--line-strong); }
 .brand:hover { text-decoration: none; }
 
 .nav-links { display: flex; gap: 18px; margin-left: 8px; }
