@@ -637,9 +637,6 @@ class MainActivity : AppActivity() {
         super.onResume()
         // 主人可能在设置里改了底栏入口，回到页面时按新配置刷新一次
         applyNavVisibilityNow(findNavController()?.currentDestination?.id ?: 0, animate = false)
-        // 日活上报（匿名、每天最多一次）。放在这里而不是 Application：
-        // 「用户真的打开了应用」才算活跃。未配置接收端 / 未同意 / 开关关闭时都不上报。
-        runCatching { moe.shizuku.manager.stats.DauReporter.maybeReport(this) }
         // 自动更新：**每次回到前台都静默查一次**（只留极短防抖，见 UpdateChecker）。
         // 发现新版本时不止发通知，还就地弹「发现新版本」对话框 —— 用户正开着 App，
         // 这里才是能立刻下载升级的地方。
