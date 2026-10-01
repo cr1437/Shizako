@@ -1,4 +1,4 @@
-package moe.shizuku.manager.update
+﻿package moe.shizuku.manager.update
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -136,6 +136,13 @@ object UpdateChecker {
         silent: Boolean = false,
         onResult: (ReleaseInfo?) -> Unit,
     ) {
+// F-Droid 版关闭一切更新检查（F-Droid 用自己的密钥签名，自更新在 F-Droid 用户设备上
+        // 必然安装失败，且绕过 F-Droid 分发）—— 见 fdroid/FdroidBuild.kt
+        if (!moe.shizuku.manager.fdroid.FdroidBuild.allowSelfUpdate) {
+            onResult(null)
+            return
+        }
+
         if (!moe.shizuku.manager.utils.NetworkUtils.isOnline(context)) {
             if (!silent) {
                 Toast.makeText(context, R.string.update_no_network, Toast.LENGTH_SHORT).show()
@@ -272,6 +279,8 @@ object UpdateChecker {
         fileName: String,
         listener: DownloadListener? = null
     ) {
+        // 一键注入路径在 F-Droid 版不可用（会下载并安装第三方 APK）
+        if (!moe.shizuku.manager.fdroid.FdroidBuild.allowOneClickInject) return
         if (downloadJob?.isActive == true) return
 
         // 离线：直接失败，不要开一个永远 0% 的下载
