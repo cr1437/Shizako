@@ -16,8 +16,8 @@ android {
         applicationId "com.churan.shizako"
         versionCode rootProject.ext.versionCode
         // F-Droid 版（-Pfdroid）：版本名带 -f 后缀，一眼区分两个变体。
-        //   GitHub 版：./gradlew :manager:assembleRelease          → zako3.12
-        //   F-Droid 版：./gradlew :manager:assembleRelease -Pfdroid → zako3.12-f
+        //   GitHub 版：./gradlew :manager:assembleRelease          → zako3.13
+        //   F-Droid 版：./gradlew :manager:assembleRelease -Pfdroid → zako3.13-f
         // 用构建属性而不是 productFlavors：flavor 会把产物路径改成 apk/<flavor>/release/，
         // 影响现有发版脚本与官网下载链接；这里保持路径不变。
         def fdroidBuild = project.hasProperty('fdroid')

@@ -41,7 +41,7 @@ F-Droid 不用 GitHub，走 **GitLab**：
 | 事项 | 影响 |
 |---|---|
 | **签名不同** | F-Droid 用它自己的密钥签名 APK → 用户**无法从 GitHub 版覆盖升级**（必须卸载重装）。这是 F-Droid 的固有限制，几乎所有应用都这样。stub 的权限是 `dangerous` 级（校验在本体），换签名后运行时无碍 ✔ |
-| **版本号规范** | `versionName` 是 `zako3.12`（F-Droid 版 `-f` 后缀），recipe 里 `versionCode: 312`，**每次发版递增**（目前 312 ✔） |
+| **版本号规范** | `versionName` 是 `zako3.13`（F-Droid 版 `-f` 后缀），recipe 里 `versionCode: 313`，**每次发版递增**（目前 313 ✔） |
 | **与官方 Shizuku 冲突** | 兼容桥占用了官方 provider authority，两者不能共存。F-Droid 审核可能会问，需要在 MR 里**主动说明**这是刻意设计（`README` 里已写明） |
 
 ## 4. 审核可能追问的点（提前准备答复）

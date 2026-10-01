@@ -11,8 +11,8 @@ import moe.shizuku.manager.BuildConfig
  *
  * 构建方式（见 tools/fdroid/变体方案.md）：
  * ```
- * ./gradlew :manager:assembleRelease            # GitHub 版（zako3.12）
- * ./gradlew :manager:assembleRelease -Pfdroid   # F-Droid 版（zako3.12-f）
+ * ./gradlew :manager:assembleRelease            # GitHub 版（zako3.13）
+ * ./gradlew :manager:assembleRelease -Pfdroid   # F-Droid 版（zako3.13-f）
  * ```
  */
 object FdroidBuild {
