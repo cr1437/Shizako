@@ -124,40 +124,31 @@ img { max-width: 100%; height: auto; }
 .badges { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 22px 0 8px; }
 .badges img { height: 20px; }
 
-/* ── 首屏数据卡片 ───────────────────────────────────── */
-.stats {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  justify-content: center;
-  margin: 26px 0 6px;
+/* ── 首屏数据卡片（与功能卡同一套视觉：图标 + 大号数字 + 说明）───────── */
+.stats-grid {
+  max-width: 880px;
+  margin: 26px auto 6px;
+  grid-template-columns: repeat(auto-fit, minmax(196px, 1fr));
 }
-.stat {
+.stat-card {
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  min-width: 132px;
-  padding: 12px 18px;
-  border-radius: 16px;
-  border: 1px solid var(--line);
-  background: linear-gradient(180deg, var(--glass-hi), var(--glass));
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  align-items: center;
+  text-align: center;
+  padding: 22px 18px;
   color: var(--fg);
-  transition: transform .16s, border-color .2s;
 }
-.stat:hover { text-decoration: none; transform: translateY(-2px); border-color: var(--line-strong); }
-.stat.plain { cursor: default; }
-.stat.plain:hover { transform: none; border-color: var(--line); }
-.stat-label { font-size: 12px; letter-spacing: .06em; color: var(--fg-faint); }
-.stat-value {
-  font-size: 22px;
-  font-weight: 700;
-  line-height: 1.25;
+.stat-card:hover { text-decoration: none; }
+.stat-icon { font-size: 22px; line-height: 1; margin-bottom: 10px; opacity: .92; }
+.stat-num {
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1.15;
   font-variant-numeric: tabular-nums;
 }
-.stat-value.small { font-size: 15px; font-weight: 600; color: var(--fg-dim); }
-.stat-value.gold { color: var(--gold); }
+.stat-num.gold { color: var(--gold); }
+.stat-name { margin-top: 4px; font-size: 14px; font-weight: 600; }
+.stat-card p { margin: 6px 0 0; font-size: 12.5px; color: var(--fg-faint); }
 .cta { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin: 22px 0 8px; }
 .hint { color: var(--fg-faint); font-size: 13px; margin-top: 14px; }
 

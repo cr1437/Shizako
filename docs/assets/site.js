@@ -96,7 +96,10 @@
     'stat.downloads': 'Total downloads',
     'stat.stars': 'Stars',
     'stat.platform': 'Platform',
-    'stat.license': 'License'
+    'stat.license': 'License',
+    'stat.version.desc': 'Newest release tag on GitHub',
+    'stat.downloads.desc': 'Sum of downloads across all releases',
+    'stat.stars.desc': 'One tap feeds the catgirl'
   };
 
   var TITLES = {

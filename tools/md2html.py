@@ -24,9 +24,11 @@ OUT_DIR = os.path.join(ROOT, "docs", "dev")
 # 默认要转换的文档：(源文件, 输出文件名, 页面标题, 说明)
 JOBS = [
     ("docs/API.md", "api.html", "API 使用指南", "接入路线、binder 生命周期、AIDL 用户服务与常见坑"),
+    ("docs/BUILD.md", "build.html", "编译与参与开发", "环境要求、编译命令、签名注意事项与代码结构"),
     ("api/SHIZAKO-CHANGES.md", "changes.html", "对 Shizuku-API 的本地修改", "为什么权限名不同、如何与上游同步"),
     ("api/README.md", "upstream-api.html", "Shizuku-API 上游文档", "官方客户端库的原始说明（英文）"),
     ("api/rish/README.md", "rish.html", "rish 命令行", "在终端里调用特权 API 的 CLI 工具"),
+    ("更新日志.md", "changelog.html", "更新日志", "各版本的对外更新内容（与 GitHub Releases 同步）"),
 ]
 
 PAGE = """<!DOCTYPE html>

@@ -41,28 +41,26 @@
       <h1>Shizako</h1>
       <p class="tagline" data-i18n="hero.tagline">让猫耳看板娘替你「借」系统权限 —— 不 Root、不刷机</p>
       <p class="sub" data-i18n="hero.sub">用 Root / 无线调试 / 电脑 ADB / Dhizuku 唤醒一个特权小进程，再把特权借给你信得过的应用。每个应用都要你亲自点头，随时收回。</p>
-      <!-- 数据卡片：数字由 stats.json 提供（由 .github/workflows/badges.yml 定时刷新），
-           卡片里先写好当前值作为兜底，JS 取不到数据也不会显示成空。 -->
-      <div class="stats">
-        <a class="stat" href="https://github.com/cr1437/Shizako/releases/latest">
-          <span class="stat-label" data-i18n="stat.version">最新版本</span>
-          <span class="stat-value" data-stat="version">zako3.12</span>
+      <!-- 数据卡片：数字由 stats.json 提供（.github/workflows/badges.yml 定时刷新）；
+           卡片里先写好当前值兜底，JS 取不到也不会是空的。 -->
+      <div class="grid stats-grid">
+        <a class="card stat-card" href="https://github.com/cr1437/Shizako/releases/latest">
+          <span class="stat-icon">📦</span>
+          <span class="stat-num" data-stat="version">zako3.12</span>
+          <span class="stat-name" data-i18n="stat.version">最新版本</span>
+          <p data-i18n="stat.version.desc">GitHub Releases 上最新的版本标签</p>
         </a>
-        <a class="stat" href="https://github.com/cr1437/Shizako/releases">
-          <span class="stat-label" data-i18n="stat.downloads">总下载量</span>
-          <span class="stat-value" data-stat="downloads">1,340</span>
+        <a class="card stat-card" href="https://github.com/cr1437/Shizako/releases">
+          <span class="stat-icon">⬇️</span>
+          <span class="stat-num" data-stat="downloads">1,340</span>
+          <span class="stat-name" data-i18n="stat.downloads">总下载量</span>
+          <p data-i18n="stat.downloads.desc">全部历史版本安装包下载次数之和</p>
         </a>
-        <a class="stat" href="https://github.com/cr1437/Shizako">
-          <span class="stat-label" data-i18n="stat.stars">Star</span>
-          <span class="stat-value gold" data-stat="stars">38</span>
-        </a>
-        <span class="stat plain">
-          <span class="stat-label" data-i18n="stat.platform">平台</span>
-          <span class="stat-value small">Android 7.0+</span>
-        </span>
-        <a class="stat" href="https://github.com/cr1437/Shizako/blob/main/LICENSE">
-          <span class="stat-label" data-i18n="stat.license">许可</span>
-          <span class="stat-value small">Apache-2.0</span>
+        <a class="card stat-card" href="https://github.com/cr1437/Shizako">
+          <span class="stat-icon">⭐</span>
+          <span class="stat-num gold" data-stat="stars">38</span>
+          <span class="stat-name" data-i18n="stat.stars">Star</span>
+          <p data-i18n="stat.stars.desc">点一下就是她的猫粮</p>
         </a>
       </div>
       <div class="cta">

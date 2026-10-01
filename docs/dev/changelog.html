@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>更新日志 — Shizako 开发文档</title>
+<meta name="description" content="各版本的对外更新内容（与 GitHub Releases 同步）">
+<meta name="theme-color" content="#0b0d12">
+<link rel="icon" href="../assets/icon.png">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body class="doc-body">
+
+<header class="nav" id="nav">
+  <a class="brand" href="../index.html">
+    <img src="../assets/icon.png" alt="Shizako" width="32" height="32">
+    <span>Shizako</span>
+  </a>
+  <nav class="nav-links">
+    <a href="../index.html">首页</a>
+    <a href="../index.html#features">功能</a>
+    <a href="../index.html#activate">激活</a>
+    <a href="index.html" class="active">开发文档</a>
+    <a href="https://github.com/cr1437/Shizako">GitHub</a>
+  </nav>
+  <div class="nav-right">
+    <a class="btn primary small" href="https://github.com/cr1437/Shizako/releases/latest">下载</a>
+  </div>
+</header>
+
+<div class="doc-layout">
+  <aside class="doc-side">
+    <a class="doc-back" href="index.html">← 开发文档总览</a>
+    <nav class="doc-toc">
+      <p class="doc-toc-title">本页目录</p>
+      <a href="#zako312-更新日志">zako3.12 更新日志</a>
+      <a href="#-新功能" class="lvl3">✨ 新功能</a>
+      <a href="#-修复与优化" class="lvl3">🔧 修复与优化</a>
+      <a href="#-english" class="lvl3">🌍 English</a>
+      <a href="#zako301-hp-更新日志">zako3.01-hp 更新日志</a>
+      <a href="#zako301-更新日志">zako3.01 更新日志</a>
+      <a href="#-新功能" class="lvl3">✨ 新功能</a>
+      <a href="#-修复与优化" class="lvl3">🔧 修复与优化</a>
+    </nav>
+  </aside>
+
+  <main class="doc-main">
+    <article class="doc-article">
+<blockquote>按版本记录每次对外发布的更新内容（与 GitHub Releases 的说明保持同步）。</blockquote>
+<hr>
+<h2 id="zako312-更新日志">zako3.12 更新日志</h2>
+<p><strong>激活可靠性大修 + 全面性能优化，强烈建议所有用户升级。</strong></p>
+<h3 id="-新功能">✨ 新功能</h3>
+<ul><li>每次打开 App 自动检查更新，发现新版本<strong>就地弹出可下载的对话框</strong>（不再只依赖通知栏）</li><li>更新检查自动挑选可用源：GitHub API 被网络拦截时自动切换镜像，国内网络同样能收到更新</li></ul>
+<h3 id="-修复与优化">🔧 修复与优化</h3>
+<ul><li><strong>激活</strong>：</li><li>修复「电脑 ADB」激活必失败（启动命令缺少 APK 路径参数）</li><li>修复 Dhizuku 一键激活必失败（命令带了电脑端前缀，却在设备上执行）</li><li>修复看门狗 / 开机自启 / 快捷磁贴重启服务时<strong>用错启动方式</strong></li><li>修复无线调试配对可能永久卡在「配对中」（补连接与读取超时）</li><li>修复服务端一处空指针：同一进程二次连接时应用会<strong>永久收不到服务</strong>，且界面看不出异常</li><li>修复共享 uid 下只有第一个包能收到服务的漏推问题</li><li><strong>首次引导</strong>：修复 Android 7.x 闪退、Android 11/12 点激活无反应、倒计时被转屏重置等 17 处问题</li><li><strong>更新检查</strong>：改为按版本号逐段比较，只认「确实更新」，避免把旧版本当作新版本推送</li><li><strong>问题反馈</strong>：修复 #5（Dhizuku 缺少开关）、#6（深色模式黑字）、#7（模块搜索不到）</li><li><strong>性能与耗电</strong>：</li><li>启用 Baseline Profile：冷启动实测提升约 15% ~ 20%</li><li>后台保活轮询 12 秒 → 45 秒，去掉无用的周期性唤醒，明显降低耗电与闪存写入</li><li>应用列表图标改为真正命中缓存（此前每次新建项都走主线程加载）</li><li>界面噪点纹理全应用共用，窗口底图内存减半</li></ul>
+<h3 id="-english">🌍 English</h3>
+<p><strong>Activation reliability overhaul + broad performance work — strongly recommended for all users.</strong></p>
+<ul><li><strong>New</strong>: check for updates on every app launch, with an in-app download dialog; automatic mirror fallback when the GitHub API is blocked by your network</li><li><strong>Fixed</strong>: "Computer ADB" and one-tap Dhizuku activation never worked; watchdog / boot / quick-tile restarting the service with the wrong launch method; wireless pairing could hang forever; a server-side NPE that left an app permanently without the service; shared-UID binder push skipping all but the first package</li><li><strong>Fixed</strong> 17 issues in the first-run setup wizard (Android 7.x crash, no-op activation on Android 11/12, countdown reset on rotation)</li><li><strong>Update check</strong> now compares version numbers instead of string inequality (no more downgrade prompts)</li><li><strong>Fixed</strong> issues #5 / #6 / #7</li><li><strong>Performance</strong>: Baseline Profile enabled (~15–20% faster cold start), background keep-alive polling 12s → 45s, real icon-cache hits, shared noise texture, half the background bitmap memory</li></ul>
+<h2 id="zako301-hp-更新日志">zako3.01-hp 更新日志</h2>
+<p><strong>紧急修复版，强烈建议所有用户升级。</strong></p>
+<ul><li>修复「激活」可能一直转圈、卡住无反应的问题：新增超时保护，未完成配对时会明确提示</li><li>修复启动失败时误关「无线调试」开关的问题（失败后可立即重试）</li><li>修复控制台列表弹窗偶发闪退</li><li>一并加强：「分屏配对」对话框（不用电脑也能走完配对流程）+ 持久 TCP 模式（默认开启，断网也能一键启动）</li></ul>
+<h2 id="zako301-更新日志">zako3.01 更新日志</h2>
+<p>玻璃 / Material 3 双风格领衔：zako3 系列首个版本，整套系统全面重做，外加一整套新玩具。更新后建议先逛逛「工具箱」和「设置」～</p>
+<h3 id="-新功能">✨ 新功能</h3>
+<ul><li>玻璃 / Material 3 双风格全新界面：KernelSU 风格重做，一键切换、深浅色与动态取色全适配</li><li>一站式激活：Root / 无线调试 / 电脑 ADB / Dhizuku 一页搞定；已配对可一键启动</li><li>全新工具箱：模块 / 控制台 / 无障碍管理器 / 实验室 / 推荐应用</li><li>首次引导全面重构：七页五步，内嵌配对指引</li><li>更新欢迎页：老用户升级后首次打开可见</li></ul>
+<h3 id="-修复与优化">🔧 修复与优化</h3>
+<ul><li>修复动态取色下部分按钮 / 图标颜色不同步</li><li>修复主页与激活页状态显示不一致</li><li>滚动、切页等性能与动画细节优化</li></ul>
+    </article>
+    <footer class="doc-foot">
+      <p>本页由 <code>tools/md2html.py</code> 从 <code>更新日志.md</code> 生成，请勿直接编辑 HTML。</p>
+      <p><a href="../index.html">← 返回官网</a> · <a href="https://github.com/cr1437/Shizako">GitHub</a> ·
+         <a href="https://github.com/cr1437/Shizako/blob/main/更新日志.md">查看本文源文件</a></p>
+    </footer>
+  </main>
+</div>
+
+<script>
+// 顶栏滚动态（与首页同一效果，文档页不加载 site.js 以免误伤语言切换）
+(function () {
+  var nav = document.getElementById('nav');
+  function onScroll() { if (nav) nav.classList.toggle('scrolled', window.scrollY > 8); }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>
+</body>
+</html>
