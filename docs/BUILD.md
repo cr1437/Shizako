@@ -65,15 +65,17 @@ Shizako/
 
 | 脚本 | 作用 |
 |------|------|
-| `tools/update_badges.py` | 拉取真实数据，重新生成 `docs/badge-*.svg` 与 `docs/stats.json`（官网数据卡片的数据源） |
+| `tools/update_badges.py` | 拉取真实数据，重新生成 `docs/badge-*.svg` 与 `docs/stats.json`（后者是官网卡片在 api.github.com 被拦时的兜底数据） |
 | `tools/md2html.py` | 把 Markdown 文档渲染成官网上的网页（`docs/dev/*.html`） |
 | `tools/deploy-site.sh` | 把 `docs/` 静态站点部署到自己的服务器（也可忽略，改用 GitHub Pages） |
 
 ## 国内网络
 
 - 仓库已配置阿里云 Maven 镜像，一般不需要额外代理；
-- 但 `api.github.com` 在部分网络下会被 DNS 拦掉（本项目官网的数据更新也因此改用同源的
-  `stats.json`，而不是让浏览器直连 GitHub API）。
+- `api.github.com` 在部分网络下会被 DNS 拦掉。官网数据卡片的数字因此走三级：
+  HTML 里的兜底值 → 同源 `stats.json`（`badges.yml` 每小时刷新）→
+  浏览器直连 GitHub API 的实时值（`docs/assets/site.js`）。实时这一路失败就静默
+  停在上一步 —— 页面仍显示最多旧一小时的数字，不会空着，也不会报错。
 
 ## 提交改动
 

@@ -1,18 +1,23 @@
 name: badges
 
-# 刷新 README 里的自托管徽章（docs/badge-*.svg）。
+# 刷新 README 里的自托管徽章（docs/badge-*.svg）与官网数据卡片的兜底数据
+# （docs/stats.json）。
 #
 # 为什么需要它：徽章是仓库内的 SVG 文件（相对路径引用，由 github.com 直接提供），
 # 这样在国内网络下也不会像 shields.io 那样裂图；但静态文件显示不了会变的数字，
 # 于是用这个工作流定时把最新数据写回去。
 #
+# 官网卡片的实时数字由浏览器直连 api.github.com 拿到（docs/assets/site.js），
+# 这里刷新的 stats.json 是「api 被墙时」的兜底，所以频率调成每小时 —— 兜底值
+# 最多旧一小时，而不是旧六小时。
+#
 # 注意：用默认 GITHUB_TOKEN 推送的提交不会触发其它工作流，所以这里的定时提交
-# 不会反复触发 app.yml 的构建。
+# 不会反复触发 app.yml 的构建（但仍会触发 GitHub Pages 重新部署，属正常开销）。
 
 on:
   schedule:
-    # 每 6 小时一次（错开整点，减少排队）
-    - cron: '17 */6 * * *'
+    # 每小时一次（错开整点，减少排队）；数字没变就不会产生提交
+    - cron: '17 * * * *'
   workflow_dispatch:
   release:
     types: [published]

@@ -60,8 +60,9 @@
       <h1>Shizako</h1>
       <p class="tagline" data-i18n="hero.tagline">让猫耳看板娘替你「借」系统权限 —— 不 Root、不刷机</p>
       <p class="sub" data-i18n="hero.sub">用 Root / 无线调试 / 电脑 ADB / Dhizuku 唤醒一个特权小进程，再把特权借给你信得过的应用。每个应用都要你亲自点头，随时收回。</p>
-      <!-- 数据卡片：数字由 stats.json 提供（.github/workflows/badges.yml 定时刷新）；
-           卡片里先写好当前值兜底，JS 取不到也不会是空的。 -->
+      <!-- 数据卡片：数字先由 HTML 兜底，随后 stats.json（badges.yml 定时刷新）
+           填一次，最后由浏览器直连 api.github.com 覆盖成实时值 ——
+           实时那路在国内网络可能被拦，所以兜底与 stats.json 都必须留着。 -->
       <div class="grid stats-grid">
         <a class="card stat-card" href="https://github.com/cr1437/Shizako/releases/latest">
           <span class="icon icon-lg icon-line" data-icon="package"></span>
@@ -71,13 +72,13 @@
         </a>
         <a class="card stat-card" href="https://github.com/cr1437/Shizako/releases">
           <span class="icon icon-lg icon-line" data-icon="download"></span>
-          <span class="stat-num" data-stat="downloads">1,340</span>
+          <span class="stat-num" data-stat="downloads">1,400</span>
           <span class="stat-name" data-i18n="stat.downloads">总下载量</span>
           <p data-i18n="stat.downloads.desc">全部历史版本安装包下载次数之和</p>
         </a>
         <a class="card stat-card" href="https://github.com/cr1437/Shizako">
           <span class="icon icon-lg icon-line" data-icon="star"></span>
-          <span class="stat-num gold" data-stat="stars">38</span>
+          <span class="stat-num gold" data-stat="stars">40</span>
           <span class="stat-name" data-i18n="stat.stars">Star</span>
           <p data-i18n="stat.stars.desc">点一下就是她的猫粮</p>
         </a>
@@ -249,6 +250,6 @@
 </footer>
 
 <script src="assets/icons.js?v=3"></script>
-<script src="assets/site.js?v=3"></script>
+<script src="assets/site.js?v=4"></script>
 </body>
 </html>

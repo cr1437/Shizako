@@ -1,6 +1,7 @@
 /* Shizako 官网脚本。
    功能：图标注入（Lucide，见 assets/icons.js）、中英切换、手机端汉堡菜单、
-        滚动进场动画、数字滚动、以及读取同源 stats.json 填充数据卡片。
+        滚动进场动画、数字滚动、以及数据卡片（GitHub API 实时查询 +
+        同源 stats.json 兜底，见文件末尾「数据来源」三段）。
    无第三方依赖；所有动画都尊重系统的「减少动效」设置。 */
 (function () {
   'use strict';
@@ -197,10 +198,13 @@
   window.addEventListener('scroll', onScroll, { passive: true });
 
   // ── 数字滚动（进入视口时从 0 递增到目标值）───────────────────────────
-  function countUp(el, target) {
+  // alive()：动画在跑的过程中有新数据到达时返回 false，动画立刻停手 ——
+  // 否则它会在 900ms 内把「旧目标值」一帧帧写回去，把刚到的真实数字盖掉。
+  function countUp(el, target, alive) {
     if (reduceMotion || !isFinite(target)) { el.textContent = fmt(target); return; }
     var start = performance.now(), dur = 900;
     function step(now) {
+      if (alive && !alive()) return;
       var p = Math.min(1, (now - start) / dur);
       var eased = 1 - Math.pow(1 - p, 3);
       el.textContent = fmt(Math.round(target * eased));
@@ -209,12 +213,47 @@
     requestAnimationFrame(step);
   }
   function fmt(v) { return Number(v).toLocaleString('en-US'); }
-  var counted = {};
+
+  // ── 数据卡片 ─────────────────────────────────────────────────────────
+  // 数字有三个来源，优先级从低到高：
+  //   1) HTML 里写死的兜底值（JS / 网络全挂也看得见）；
+  //   2) 同源 stats.json（badges.yml 定时刷新）—— 永远读得到，是弱网兜底；
+  //   3) api.github.com 实时查询 —— 拿到就覆盖，刷新页面即最新数字。
+  // 为什么保留 2)：api.github.com 在国内部分网络会被 DNS 拦掉，
+  // 那一路失败时页面仍要显示「较新」的数字，而不是写死的兜底值。
+  var statAnimated = {};   // key -> 首次进场动画是否已经放过
+  var statSeq = {};        // key -> 动画代号：新数据一到就作废正在跑的那段动画
+  var statFromData = {};   // key -> 已经拿到过真实数据（stats.json / 实时接口）
+
+  function statEls(key) {
+    return [].slice.call(document.querySelectorAll('[data-stat="' + key + '"]'));
+  }
+
+  // 渲染某个卡片。animate=true 且这张卡还没滚动过 → 数字滚动；
+  // 之后再有新数据（stats.json 晚到、或实时查询返回）就直接换数字 ——
+  // 既不会从 0 再滚一遍，也不会因为「已经滚过」把新值丢掉
+  // （早先的写法只认第一次，兜底值先滚完就把后到的真实数字吞了）。
+  function renderStat(key, value, animate) {
+    if (value === undefined || value === null || value === '') return;
+    var s = String(value);
+    var numeric = /^\d+$/.test(s);
+    var seq = (statSeq[key] = (statSeq[key] || 0) + 1);
+    statEls(key).forEach(function (el) {
+      if (numeric && animate && !statAnimated[key] && !reduceMotion) {
+        statAnimated[key] = true;
+        countUp(el, Number(s), function () { return statSeq[key] === seq; });
+      } else {
+        el.textContent = numeric ? fmt(Number(s)) : s;
+      }
+    });
+  }
 
   function startCounts() {
+    // 首屏兜底值的进场滚动：把 HTML 里的当前值滚一遍。
+    // 已经拿到真实数据的卡片跳过 —— 不能用兜底值把新数字盖回去。
     [].slice.call(document.querySelectorAll('[data-stat]')).forEach(function (el) {
       var key = el.getAttribute('data-stat');
-      if (counted[key]) return;
+      if (statFromData[key]) return;
       var txt = (el.textContent || '').trim();
       // 只有「纯数字」的卡片才做数字滚动。
       // 版本号是 zako3.12 这种字符串，早先这里用「提取所有数字」判断，
@@ -222,8 +261,7 @@
       if (!/^[\d,]+$/.test(txt)) return;
       var raw = txt.replace(/[^\d]/g, '');
       if (!raw) return;
-      counted[key] = true;
-      countUp(el, parseInt(raw, 10));
+      renderStat(key, raw, true);
     });
   }
 
@@ -251,21 +289,81 @@
     startCounts();
   }
 
-  // ── 数据卡片：读同源 stats.json（定时 Action 刷新）───────────────────
-  // 刻意不直接调 GitHub API：api.github.com 在部分网络（含国内）会解析失败。
+  // ── 数据来源 2：同源 stats.json（badges.yml 定时刷新，弱网兜底）──────
   fetch('stats.json', { cache: 'no-cache' })
     .then(function (r) { return r.ok ? r.json() : null; })
     .then(function (s) {
       if (!s) return;
-      document.querySelectorAll('[data-stat]').forEach(function (el) {
-        var key = el.getAttribute('data-stat');
-        var val = s[key];
-        if (val === undefined || val === null || val === '') return;
-        if (!counted[key] && /^\d+$/.test(String(val))) { counted[key] = true; countUp(el, Number(val)); }
-        else if (!/^\d+$/.test(String(val))) { el.textContent = String(val); }
+      ['version', 'downloads', 'stars'].forEach(function (k) {
+        if (s[k] === undefined || s[k] === null || s[k] === '') return;
+        statFromData[k] = true;
+        renderStat(k, s[k], true);
       });
     })
     .catch(function () { /* 静默：兜底值已在 HTML 里 */ });
+
+  // ── 数据来源 3：GitHub API 实时查询 ──────────────────────────────────
+  // 刷新页面即最新：star 一次请求；下载量把所有 release 的 asset 次数加起来
+  // （100 条一页，实测 12 个 release，留了翻页保险）。任一请求失败都静默 ——
+  // 上面两路数字已经显示出来了，页面不该因为 GitHub 被拦而空着或报错。
+  var GH_API = 'https://api.github.com/repos/cr1437/Shizako';
+  var liveLastFetch = 0;
+
+  function ghJson(url, timeoutMs) {
+    var ctrl = window.AbortController ? new AbortController() : null;
+    var timer = ctrl ? setTimeout(function () { ctrl.abort(); }, timeoutMs) : null;
+    return fetch(url, {
+      cache: 'no-store',
+      signal: ctrl ? ctrl.signal : undefined,
+      headers: { Accept: 'application/vnd.github+json' },
+    }).then(function (r) {
+      if (timer) clearTimeout(timer);
+      if (!r.ok) throw new Error('HTTP ' + r.status);   // 403 = 限流，同样静默
+      return r.json();
+    }, function (err) {
+      if (timer) clearTimeout(timer);
+      throw err;                                        // DNS 被拦 / 超时
+    });
+  }
+
+  function refreshLiveStats() {
+    liveLastFetch = Date.now();
+
+    ghJson(GH_API, 6000).then(function (repo) {
+      if (repo && typeof repo.stargazers_count === 'number') {
+        statFromData.stars = true;
+        renderStat('stars', repo.stargazers_count, true);
+      }
+    }).catch(function () { /* 保持 stats.json / 兜底数字 */ });
+
+    (function loadReleases(page, acc) {
+      ghJson(GH_API + '/releases?per_page=100&page=' + page, 8000).then(function (list) {
+        if (!Array.isArray(list)) throw new Error('bad response');
+        acc = acc.concat(list);
+        if (list.length === 100 && page < 5) return loadReleases(page + 1, acc);
+        if (!acc.length) return;
+        var total = 0;
+        acc.forEach(function (rel) {
+          (rel.assets || []).forEach(function (a) { total += (a.download_count || 0); });
+        });
+        statFromData.downloads = true;
+        renderStat('downloads', total, true);
+        if (acc[0] && acc[0].tag_name) {
+          statFromData.version = true;
+          renderStat('version', acc[0].tag_name, true);
+        }
+      }).catch(function () { /* 同上 */ });
+    })(1, []);
+  }
+
+  refreshLiveStats();
+
+  // 切回标签页时再刷一次（1 分钟内不重复请求：来回切页面不该反复打 API）
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'visible' && Date.now() - liveLastFetch > 60000) {
+      refreshLiveStats();
+    }
+  });
 
   paintIcons();
   onScroll();

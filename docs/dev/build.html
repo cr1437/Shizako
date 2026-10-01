@@ -90,10 +90,10 @@ KEYSTORE_ALIAS_PASSWORD=你的口令</code></pre></div>
 ├── docs/       文档、官网与物料（GitHub Pages 直接服务此目录）
 └── tools/      维护脚本：徽章/数据刷新、Markdown 转网页、站点部署</code></pre></div>
 <h2 id="常用维护脚本">常用维护脚本<a class="doc-anchor" href="#常用维护脚本" aria-label="链接到此节">#</a></h2>
-<div class="doc-table-wrap"><table><thead><tr><th>脚本</th><th>作用</th></tr></thead><tbody><tr><td><code>tools/update_badges.py</code></td><td>拉取真实数据，重新生成 <code>docs/badge-*.svg</code> 与 <code>docs/stats.json</code>（官网数据卡片的数据源）</td></tr><tr><td><code>tools/md2html.py</code></td><td>把 Markdown 文档渲染成官网上的网页（<code>docs/dev/*.html</code>）</td></tr><tr><td><code>tools/deploy-site.sh</code></td><td>把 <code>docs/</code> 静态站点部署到自己的服务器（也可忽略，改用 GitHub Pages）</td></tr></tbody></table></div>
+<div class="doc-table-wrap"><table><thead><tr><th>脚本</th><th>作用</th></tr></thead><tbody><tr><td><code>tools/update_badges.py</code></td><td>拉取真实数据，重新生成 <code>docs/badge-*.svg</code> 与 <code>docs/stats.json</code>（后者是官网卡片在 api.github.com 被拦时的兜底数据）</td></tr><tr><td><code>tools/md2html.py</code></td><td>把 Markdown 文档渲染成官网上的网页（<code>docs/dev/*.html</code>）</td></tr><tr><td><code>tools/deploy-site.sh</code></td><td>把 <code>docs/</code> 静态站点部署到自己的服务器（也可忽略，改用 GitHub Pages）</td></tr></tbody></table></div>
 <h2 id="国内网络">国内网络<a class="doc-anchor" href="#国内网络" aria-label="链接到此节">#</a></h2>
-<ul><li>仓库已配置阿里云 Maven 镜像，一般不需要额外代理；</li><li>但 <code>api.github.com</code> 在部分网络下会被 DNS 拦掉（本项目官网的数据更新也因此改用同源的</li></ul>
-<p><code>stats.json</code>，而不是让浏览器直连 GitHub API）。</p>
+<ul><li>仓库已配置阿里云 Maven 镜像，一般不需要额外代理；</li><li><code>api.github.com</code> 在部分网络下会被 DNS 拦掉。官网数据卡片的数字因此走三级：</li></ul>
+<p>HTML 里的兜底值 → 同源 <code>stats.json</code>（<code>badges.yml</code> 每小时刷新）→ 浏览器直连 GitHub API 的实时值（<code>docs/assets/site.js</code>）。实时这一路失败就静默 停在上一步 —— 页面仍显示最多旧一小时的数字，不会空着，也不会报错。</p>
 <h2 id="提交改动">提交改动<a class="doc-anchor" href="#提交改动" aria-label="链接到此节">#</a></h2>
 <ol><li>尽量一次只做一件事，提交信息写清「改了什么、为什么」；</li><li>改了 <code>docs/<em>.md</code> 或 <code>api/</em>.md</code> 之后，跑一次 <code>python3 tools/md2html.py</code> 重新生成网页；</li><li>涉及签名、权限、包名的改动请<strong>不要</strong>提交 <code>signing.properties</code>、<code>*.jks</code> 等敏感文件</li></ol>
 <p>（<code>.gitignore</code> 已拦住，别用 <code>-f</code> 绕过）。</p>
