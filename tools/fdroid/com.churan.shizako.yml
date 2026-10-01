@@ -1,0 +1,49 @@
+# F-Droid 元数据 recipe 草稿
+#
+# 放到 fdroiddata 仓库的 metadata/com.churan.shizako.yml
+# 现在还不能直接提交 —— 先看同目录 README.md 里的两个硬拦路虎。
+
+Categories:
+  - Development
+  - System
+License: Apache-2.0
+AuthorName: 初然 (Churan)
+AuthorEmail: q14779041201@gmail.com
+WebSite: https://cr1437.github.io/Shizako/
+SourceCode: https://github.com/cr1437/Shizako
+IssueTracker: https://github.com/cr1437/Shizako/issues
+Changelog: https://github.com/cr1437/Shizako/blob/main/%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97.md
+
+AutoName: Shizako
+
+RepoType: git
+Repo: https://github.com/cr1437/Shizako.git
+
+Builds:
+  - versionName: zako3.12
+    versionCode: 312
+    commit: zako3.12
+    subdir: .
+    gradle:
+      - :manager:assembleRelease
+    output: manager/build/outputs/apk/release/shizako-zako3.12-release.apk
+    # 项目需要 NDK 参与构建（manager / shell / rish / starter 都有 JNI）
+    # 需要确认 F-Droid 构建机上存在这一版；否则要先降级到他们有的版本
+    ndk: 29.0.13113456
+    # F-Droid 构建机完全离线，而本仓库默认配了阿里云镜像 ——
+    # 要么在 prebuild 里把它替换掉，要么先让镜像配置可被关闭
+    # prebuild: |
+    #   sed -i 's#maven.aliyun.com[^"]*#repo1.maven.org/maven2#g' settings.gradle build.gradle
+
+MaintainerNotes: |
+  上游为 Shizuku（Apache-2.0），本项目为其 fork，按上游许可声明使用自有 app id 与权限名：
+  com.churan.shizako / com.churan.shizako.permission.API_V23。
+  由于内置兼容桥占用了官方 provider authority（moe.shizuku.privileged.api.shizuku），
+  本应用与官方 Shizuku 不能同时安装 —— 这是刻意设计，已在 README 中说明。
+
+AutoUpdateMode: Version
+UpdateCheckMode: Tags
+# 版本 tag 形如 zako3.12 / zako3.01-hp
+UpdateCheckData: build.gradle|versionCode = (\d+)|.|versionName = "([^"]+)"
+CurrentVersion: zako3.12
+CurrentVersionCode: 312
