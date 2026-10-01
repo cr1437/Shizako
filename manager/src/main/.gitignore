@@ -1,1 +1,4 @@
+# 构建产物，一律不入库（F-Droid 要求所有二进制由源码构建）
+# .dex 由 :shell:assemble 生成，.apk 由 :stub:assembleDebug + copyStubApk 生成
 /assets/*.dex
+/assets/*.apk

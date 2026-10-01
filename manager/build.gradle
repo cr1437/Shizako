@@ -131,8 +131,10 @@ tasks.register('copyStubApk') {
     // 跑 :manager:assembleDebug 时也会先自动把 stub 编出来。
     dependsOn ':stub:assembleDebug'
     inputs.file("${rootProject.projectDir}/stub/build/outputs/apk/debug/stub-debug.apk")
-    // 把 assets 里的产物也算进输入：文件被删掉时任务不会因为"输出已存在"而跳过
-    inputs.file(stubApkFile).optional()
+    // 注意：不要再把 stubApkFile（本任务自己的输出）声明成输入 —— Gradle 8 会做
+    // 输入文件存在性校验，新鲜克隆（F-Droid 构建机）上该文件尚不存在，任务会直接
+    // 报 "input file does not exist" 而拒绝执行。「文件被删后重跑」由 outputs.file
+    // 天然保证：声明过的输出缺失即视为过期。
     outputs.file(stubApkFile)
     doLast {
         def src = file("${rootProject.projectDir}/stub/build/outputs/apk/debug/stub-debug.apk")
