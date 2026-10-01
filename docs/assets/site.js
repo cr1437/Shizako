@@ -1,22 +1,32 @@
-/* Shizako 官网脚本：中英切换 + 顶栏滚动阴影。
-   无依赖。中文文案直接来自 HTML（作为默认语言并在此处捕获），
-   这里只额外提供英文词典，因此切换是双向的、不需要重复维护中文。 */
+/* Shizako 官网脚本。
+   功能：图标注入（Lucide，见 assets/icons.js）、中英切换、手机端汉堡菜单、
+        滚动进场动画、数字滚动、以及读取同源 stats.json 填充数据卡片。
+   无第三方依赖；所有动画都尊重系统的「减少动效」设置。 */
 (function () {
   'use strict';
 
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ── 英文词典（中文文案直接来自 HTML，脚本加载时捕获，见下方 ZH）────────
   var EN = {
     'nav.features': 'Features',
     'nav.activate': 'Activation',
     'nav.compat': 'Compatibility',
     'nav.faq': 'FAQ',
-    'nav.api': 'API docs',
+    'nav.api': 'Docs',
     'nav.download': 'Download',
+    'nav.releases': 'All releases',
+    'nav.repo': 'GitHub repository',
 
     'hero.tagline': 'Borrow privileged Android APIs through your catgirl assistant — no root, no flashing',
     'hero.sub': 'Wake a small privileged process through root / wireless debugging / computer ADB / Dhizuku, then lend that privilege to apps you trust. Every app needs your explicit approval, and you can revoke it any time.',
     'hero.download': 'Download latest',
     'hero.github': 'GitHub repository',
     'hero.hint': 'Android 7.0+ · wireless debugging needs Android 11+ · Apache-2.0',
+    'quick.docs': 'Documentation',
+    'quick.releases': 'All releases',
+    'quick.issues': 'Report an issue',
+    'quick.star': 'Star her',
 
     'features.title': 'What she can do',
     'features.lead': 'The idea in one sentence: lend system privileges to apps you trust, instead of rooting the whole phone.',
@@ -79,7 +89,7 @@
 
     'final.title': 'Take her home',
     'final.lead': 'Download, wake her up, and start issuing passports to your apps.',
-    'final.star': '⭐ Star the project',
+    'final.star': 'Star the project',
 
     'footer.desc': 'A catgirl-mascot privileged-API assistant. Open source, free, no ads.',
     'footer.links': 'Links',
@@ -89,7 +99,7 @@
     'footer.api': 'Developer API docs',
     'footer.community': 'Community',
     'footer.license': 'License',
-    'footer.licenseText': 'Apache License 2.0. Upstream copyright RikkaApps; modifications copyright 初然.',
+    'footer.licenseText': 'Apache License 2.0. Upstream copyright RikkaApps; modifications copyright 初然. Icons: Lucide (ISC).',
     'footer.bottom': 'Made with love · she does not bite (ˊᗜˋ*)',
 
     'stat.version': 'Latest version',
@@ -107,12 +117,24 @@
     en: 'Shizako — privileged Android APIs without root'
   };
 
-  // 捕获 HTML 里的中文原文，作为 zh 词典（这样只需维护一份英文翻译）
-  var nodes = document.querySelectorAll('[data-i18n]');
+  // ── 图标注入 ─────────────────────────────────────────────────────────
+  function paintIcons() {
+    var icons = window.SHIZAKO_ICONS;
+    if (!icons) return;
+    [].slice.call(document.querySelectorAll('[data-icon]')).forEach(function (el) {
+      var body = icons[el.getAttribute('data-icon')];
+      if (!body || el.getAttribute('data-painted') === '1') return;
+      el.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" '
+        + 'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">'
+        + body + '</svg>';
+      el.setAttribute('data-painted', '1');
+    });
+  }
+
+  // ── 中英切换 ─────────────────────────────────────────────────────────
+  var nodes = [].slice.call(document.querySelectorAll('[data-i18n]'));
   var ZH = {};
-  nodes.forEach(function (el) {
-    ZH[el.getAttribute('data-i18n')] = el.innerHTML;
-  });
+  nodes.forEach(function (el) { ZH[el.getAttribute('data-i18n')] = el.innerHTML; });
 
   var langBtn = document.getElementById('langBtn');
   var current = 'zh';
@@ -127,33 +149,97 @@
     document.title = TITLES[lang] || TITLES.zh;
     if (langBtn) langBtn.textContent = lang === 'en' ? '中文' : 'EN';
     current = lang;
-    try { localStorage.setItem('shizako.lang', lang); } catch (e) { /* 隐私模式下忽略 */ }
+    try { localStorage.setItem('shizako.lang', lang); } catch (e) { /* 忽略 */ }
   }
 
-  // 初始语言：优先用户上次选择，其次跟随浏览器
   var saved = null;
-  try { saved = localStorage.getItem('shizako.lang'); } catch (e) { /* ignore */ }
-  var initial = saved || ((navigator.language || '').toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en');
-  apply(initial);
-
+  try { saved = localStorage.getItem('shizako.lang'); } catch (e) { /* 忽略 */ }
+  apply(saved || ((navigator.language || '').toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en'));
   if (langBtn) {
-    langBtn.addEventListener('click', function () {
-      apply(current === 'zh' ? 'en' : 'zh');
+    langBtn.addEventListener('click', function () { apply(current === 'zh' ? 'en' : 'zh'); });
+  }
+
+  // ── 顶栏滚动态 + 手机端汉堡菜单 ──────────────────────────────────────
+  var nav = document.getElementById('nav');
+  var toggle = document.getElementById('navToggle');
+  var menu = document.getElementById('mobileMenu');
+
+  function onScroll() { if (nav) nav.classList.toggle('scrolled', window.scrollY > 8); }
+
+  function closeMenu() {
+    if (!menu) return;
+    menu.classList.remove('open');
+    if (toggle) toggle.setAttribute('aria-expanded', 'false');
+  }
+
+  if (toggle && menu) {
+    toggle.addEventListener('click', function () {
+      var open = menu.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    menu.addEventListener('click', function (e) { if (e.target.tagName === 'A') closeMenu(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(); });
+    document.addEventListener('click', function (e) {
+      if (!menu.classList.contains('open')) return;
+      if (menu.contains(e.target) || toggle.contains(e.target)) return;
+      closeMenu();
     });
   }
 
-  // 顶栏滚动态
-  var nav = document.getElementById('nav');
-  function onScroll() {
-    if (!nav) return;
-    nav.classList.toggle('scrolled', window.scrollY > 8);
-  }
   window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
 
-  // 首屏数据卡片：读取与页面同源的 stats.json（由 .github/workflows/badges.yml
-  // 每 6 小时刷新一次）。刻意不直接调 GitHub API —— api.github.com 在部分网络
-  // （含国内）会解析失败，那样页面就拿不到数字了。取不到时保留 HTML 里写死的兜底值。
+  // ── 数字滚动（进入视口时从 0 递增到目标值）───────────────────────────
+  function countUp(el, target) {
+    if (reduceMotion || !isFinite(target)) { el.textContent = fmt(target); return; }
+    var start = performance.now(), dur = 900;
+    function step(now) {
+      var p = Math.min(1, (now - start) / dur);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = fmt(Math.round(target * eased));
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  function fmt(v) { return Number(v).toLocaleString('en-US'); }
+  var counted = {};
+
+  function startCounts() {
+    [].slice.call(document.querySelectorAll('[data-stat]')).forEach(function (el) {
+      var key = el.getAttribute('data-stat');
+      if (counted[key]) return;
+      var raw = (el.textContent || '').replace(/[^\d]/g, '');
+      if (!raw) return;
+      counted[key] = true;
+      countUp(el, parseInt(raw, 10));
+    });
+  }
+
+  // ── 滚动进场动画 ─────────────────────────────────────────────────────
+  var revealTargets = [].slice.call(document.querySelectorAll(
+    '.section > h2, .section > .lead, .section .card, .shots figure, .faq details, .cta-final > *'
+  ));
+  if (!reduceMotion && 'IntersectionObserver' in window && revealTargets.length) {
+    revealTargets.forEach(function (el, i) {
+      el.classList.add('reveal');
+      el.style.transitionDelay = Math.min(i % 6, 5) * 55 + 'ms';
+    });
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        en.target.classList.add('in');
+        io.unobserve(en.target);
+        if (en.target.closest && en.target.closest('.stats-grid')) startCounts();
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    revealTargets.forEach(function (el) { io.observe(el); });
+    // 首屏的数据卡片可能已经在视口内，直接开始滚动
+    setTimeout(startCounts, 300);
+  } else {
+    startCounts();
+  }
+
+  // ── 数据卡片：读同源 stats.json（定时 Action 刷新）───────────────────
+  // 刻意不直接调 GitHub API：api.github.com 在部分网络（含国内）会解析失败。
   fetch('stats.json', { cache: 'no-cache' })
     .then(function (r) { return r.ok ? r.json() : null; })
     .then(function (s) {
@@ -162,12 +248,12 @@
         var key = el.getAttribute('data-stat');
         var val = s[key];
         if (val === undefined || val === null || val === '') return;
-        el.textContent = (key === 'downloads' || key === 'stars')
-          ? Number(val).toLocaleString('en-US')
-          : String(val);
+        if (!counted[key] && /^\d+$/.test(String(val))) { counted[key] = true; countUp(el, Number(val)); }
+        else if (!/^\d+$/.test(String(val))) { el.textContent = String(val); }
       });
-      var upd = document.querySelector('[data-stat-updated]');
-      if (upd && s.updated) upd.textContent = String(s.updated).slice(0, 10);
     })
-    .catch(function () { /* 静默：兜底值已经在 HTML 里 */ });
+    .catch(function () { /* 静默：兜底值已在 HTML 里 */ });
+
+  paintIcons();
+  onScroll();
 })();

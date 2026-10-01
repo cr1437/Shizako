@@ -28,9 +28,22 @@
   </nav>
   <div class="nav-right">
     <button id="langBtn" class="btn ghost small" type="button" aria-label="切换语言">EN</button>
-    <a class="btn primary small" href="https://github.com/cr1437/Shizako/releases/latest" data-i18n="nav.download">下载</a>
+    <a class="btn primary small hide-sm" href="https://github.com/cr1437/Shizako/releases/latest" data-i18n="nav.download">下载</a>
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="菜单" aria-expanded="false">
+      <span class="icon" data-icon="menu"></span>
+    </button>
   </div>
 </header>
+
+<nav class="mobile-menu" id="mobileMenu" aria-label="站点导航">
+  <a href="#features" data-i18n="nav.features">功能</a>
+  <a href="#activate" data-i18n="nav.activate">激活</a>
+  <a href="#compat" data-i18n="nav.compat">兼容</a>
+  <a href="#faq" data-i18n="nav.faq">FAQ</a>
+  <a href="dev/index.html" data-i18n="nav.api">开发文档</a>
+  <a href="https://github.com/cr1437/Shizako/releases" data-i18n="nav.releases">全部版本</a>
+  <a href="https://github.com/cr1437/Shizako" data-i18n="nav.repo">GitHub 仓库</a>
+</nav>
 
 <main id="top">
 
@@ -45,19 +58,19 @@
            卡片里先写好当前值兜底，JS 取不到也不会是空的。 -->
       <div class="grid stats-grid">
         <a class="card stat-card" href="https://github.com/cr1437/Shizako/releases/latest">
-          <span class="stat-icon">📦</span>
+          <span class="icon icon-lg icon-line" data-icon="package"></span>
           <span class="stat-num" data-stat="version">zako3.12</span>
           <span class="stat-name" data-i18n="stat.version">最新版本</span>
           <p data-i18n="stat.version.desc">GitHub Releases 上最新的版本标签</p>
         </a>
         <a class="card stat-card" href="https://github.com/cr1437/Shizako/releases">
-          <span class="stat-icon">⬇️</span>
+          <span class="icon icon-lg icon-line" data-icon="download"></span>
           <span class="stat-num" data-stat="downloads">1,340</span>
           <span class="stat-name" data-i18n="stat.downloads">总下载量</span>
           <p data-i18n="stat.downloads.desc">全部历史版本安装包下载次数之和</p>
         </a>
         <a class="card stat-card" href="https://github.com/cr1437/Shizako">
-          <span class="stat-icon">⭐</span>
+          <span class="icon icon-lg icon-line" data-icon="star"></span>
           <span class="stat-num gold" data-stat="stars">38</span>
           <span class="stat-name" data-i18n="stat.stars">Star</span>
           <p data-i18n="stat.stars.desc">点一下就是她的猫粮</p>
@@ -66,6 +79,15 @@
       <div class="cta">
         <a class="btn primary" href="https://github.com/cr1437/Shizako/releases/latest" data-i18n="hero.download">下载最新版</a>
         <a class="btn ghost" href="https://github.com/cr1437/Shizako" data-i18n="hero.github">GitHub 仓库</a>
+      </div>
+      <div class="quick-links">
+        <a href="dev/index.html"><span class="icon icon-sm icon-line" data-icon="book-open"></span><span data-i18n="quick.docs">开发文档</span></a>
+        <span class="dot">·</span>
+        <a href="https://github.com/cr1437/Shizako/releases"><span class="icon icon-sm icon-line" data-icon="download"></span><span data-i18n="quick.releases">全部版本</span></a>
+        <span class="dot">·</span>
+        <a href="https://github.com/cr1437/Shizako/issues"><span class="icon icon-sm icon-line" data-icon="message-circle"></span><span data-i18n="quick.issues">反馈问题</span></a>
+        <span class="dot">·</span>
+        <a href="https://github.com/cr1437/Shizako"><span class="icon icon-sm icon-line" data-icon="star"></span><span data-i18n="quick.star">Star 支持她</span></a>
       </div>
       <p class="hint" data-i18n="hero.hint">Android 7.0+ · 无线调试激活需 Android 11+ · Apache-2.0</p>
     </div>
@@ -184,7 +206,7 @@
     <p class="lead" data-i18n="final.lead">下载安装，选一种姿势唤醒她 —— 然后就能开始给应用发通行证了。</p>
     <div class="cta">
       <a class="btn primary" href="https://github.com/cr1437/Shizako/releases/latest" data-i18n="hero.download">下载最新版</a>
-      <a class="btn ghost star" href="https://github.com/cr1437/Shizako" data-i18n="final.star">⭐ 点个 Star 喂猫</a>
+      <a class="btn ghost star" href="https://github.com/cr1437/Shizako"><span class="icon icon-sm" data-icon="star"></span><span data-i18n="final.star">点个 Star 喂猫</span></a>
     </div>
   </section>
 
@@ -220,6 +242,7 @@
   <p class="footer-bottom" data-i18n="footer.bottom">为爱发电 · 用爱发电的她不会咬人 (ˊᗜˋ*)</p>
 </footer>
 
+<script src="assets/icons.js"></script>
 <script src="assets/site.js"></script>
 </body>
 </html>

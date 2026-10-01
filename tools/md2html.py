@@ -20,6 +20,7 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_DIR = os.path.join(ROOT, "docs", "dev")
+ICON_DIR = os.path.join(ROOT, "docs", "assets", "icons")
 
 # 要转换的文档：(源文件, 输出文件名, 页面标题, 说明)。顺序即左侧导航与上下篇的顺序。
 JOBS = [
@@ -199,6 +200,22 @@ def highlight(code):
     return TOKEN_RE.sub(repl, html.escape(code, quote=True))
 
 
+def icon(name, cls="doc-note-svg"):
+    """内联一个图标（构建期读 docs/assets/icons/*.svg，页面因此不需要额外请求）。"""
+    path = os.path.join(ICON_DIR, name + ".svg")
+    try:
+        with open(path, encoding="utf-8") as fh:
+            raw = fh.read()
+    except OSError:
+        return ""
+    body = re.sub(r"<!--.*?-->", "", raw, flags=re.S)
+    body = re.sub(r"^.*?<svg[^>]*>", "", body, flags=re.S)
+    body = re.sub(r"</svg>.*$", "", body, flags=re.S)
+    body = re.sub(r"\s+", " ", body).strip()
+    return ('<svg class="%s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" '
+            'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">%s</svg>' % (cls, body))
+
+
 def slug(text):
     """标题 → 锚点 id（保留中日韩字符与字母数字）。"""
     s = re.sub(r"<[^>]+>", "", text)
@@ -291,8 +308,7 @@ def render(md):
             while i < n and lines[i].lstrip().startswith(">"):
                 buf.append(lines[i].lstrip()[1:].strip())
                 i += 1
-            body.append('<div class="doc-note"><span class="doc-note-icon">💡</span>'
-                        "<p>%s</p></div>" % inline(" ".join(buf)))
+            body.append('<div class="doc-note">%s<p>%s</p></div>' % (icon("lightbulb"), inline(" ".join(buf))))
             continue
 
         # 列表
