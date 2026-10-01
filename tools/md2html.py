@@ -41,7 +41,7 @@ PAGE = """<!DOCTYPE html>
 <meta name="description" content="{desc}">
 <meta name="theme-color" content="#0b0d12">
 <link rel="icon" href="{p}assets/icon-mark.png">
-<link rel="stylesheet" href="{p}assets/site.css">
+<link rel="stylesheet" href="{p}assets/site.css?v=3">
 </head>
 <body>
 
