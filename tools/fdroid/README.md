@@ -1,10 +1,19 @@
 # 上架 F-Droid：准备清单与拦路虎
 
-> 这份文档记录把 Shizako 提交到 F-Droid 需要做的事。recipe 草稿见 `com.churan.shizako.yml`，
+> 这份文档记录把 Shizako 提交到 F-Droid 需要做的事。recipe 见 `com.churan.shizako.yml`，
 > 实施方案与进度见 `变体方案.md`（第六节有逐项勾选）。
 >
-> **当前状态（2026-10-01）：两个硬拦路虎都已解决**（预编译二进制 → 构建时生成；
-> 镜像 → `-Pfdroid` 自动关闭），剩发 tag + 提 MR，以及第 4 节里两个 MR 时验证项。
+> ## ✅ 已提交（2026-10-01）
+>
+> **Merge Request：<https://gitlab.com/fdroid/fdroiddata/-/merge_requests/50819>**
+> （`!50819`，标题 `add com.churan.shizako (Shizako)`，源分支 `cr1459/fdroiddata:com.churan.shizako` → `master`）。
+> 提交前做过一次「模拟 F-Droid 构建机」的验证：**全新克隆 tag `zako3.13` + 冷依赖缓存 +
+> 只用官方源（无阿里云镜像）**，跑 recipe 里那条 `:manager:assembleRelease -Pfdroid`
+> → `BUILD SUCCESSFUL in 12m 54s`，产出 `shizako-zako3.13-f-release.apk`（8.22 MB）。
+>
+> 上游 MR 普遍不带流水线（同期 AppShelf / Perfica / Cryo / OsmAnd 等 10 条 MR 均无），
+> fork 侧那两条 failed 是环境噪声，与本次 metadata 无关。
+> 下一步就等 F-Droid 维护者 review；第 4 节列了可能被追问的点。
 
 ## 1. 提交方式
 
