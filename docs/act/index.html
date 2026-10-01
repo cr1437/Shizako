@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>激活教程 — Shizako</title>
+<meta name="description" content="Shizako 激活教程：无线调试、电脑 ADB、Root、Dhizuku 四种方式的完整步骤与真机截图。">
+<meta name="theme-color" content="#0b0d12">
+<link rel="icon" href="../assets/logo.svg">
+<link rel="stylesheet" href="../assets/site.css?v=3">
+<style>
+  /* 教程页专用（不改动站点公共样式，避免影响其它页面缓存） */
+  .guide { max-width: 940px; margin: 0 auto; padding: 96px 20px 40px; }
+  .guide h1 { font-size: clamp(26px, 4.6vw, 38px); line-height: 1.25; margin: 0 0 14px; }
+  .guide .lead { color: var(--muted, #9aa3b2); font-size: 16px; line-height: 1.75; margin: 0 0 26px; }
+  .guide h2 { font-size: clamp(20px, 3.4vw, 26px); margin: 44px 0 10px; scroll-margin-top: 84px; }
+  .guide h3 { font-size: 17px; margin: 26px 0 8px; }
+  .guide p, .guide li { line-height: 1.85; }
+  .guide ol, .guide ul { padding-left: 22px; }
+  .toc { display: flex; flex-wrap: wrap; gap: 8px 14px; margin: 0 0 10px; padding: 0; list-style: none; }
+  .toc a { font-size: 14px; }
+  .method-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .tag { font-size: 12px; padding: 2px 9px; border-radius: 999px; border: 1px solid rgba(255,255,255,.18); color: #cbd5e1; }
+  .tag.good { border-color: rgba(90, 200, 140, .5); color: #8ee0ad; }
+  .note { border-left: 3px solid #ff9ca8; background: rgba(255,156,168,.07); padding: 12px 14px; border-radius: 8px; margin: 14px 0; font-size: 15px; }
+  .step { counter-increment: step; position: relative; padding-left: 44px; margin: 26px 0; }
+  .step::before {
+    content: counter(step);
+    position: absolute; left: 0; top: 2px;
+    width: 30px; height: 30px; border-radius: 50%;
+    display: grid; place-items: center;
+    background: rgba(255,156,168,.16); color: #ff9ca8; font-weight: 700; font-size: 15px;
+  }
+  .steps { counter-reset: step; padding-left: 0; }
+  .shot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; margin: 16px 0 4px; }
+  figure.shot { margin: 0; }
+  figure.shot img {
+    width: 100%; height: auto; display: block;
+    border-radius: 12px; border: 1px solid rgba(255,255,255,.10); background: #0b0d12;
+  }
+  figure.shot figcaption { font-size: 13px; color: #9aa3b2; margin-top: 8px; line-height: 1.6; }
+  figure.shot.narrow { max-width: 340px; }
+  .compare { width: 100%; border-collapse: collapse; margin: 14px 0 6px; font-size: 15px; }
+  .compare th, .compare td { padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,.09); text-align: left; vertical-align: top; }
+  .compare th { color: #cbd5e1; font-weight: 600; white-space: nowrap; }
+  .table-wrap { overflow-x: auto; }
+  .guide details { border: 1px solid rgba(255,255,255,.09); border-radius: 10px; padding: 12px 16px; margin: 10px 0; }
+  .guide summary { cursor: pointer; font-weight: 600; }
+  .guide details p { margin: 10px 0 2px; }
+  .guide code { background: rgba(255,255,255,.07); padding: 2px 6px; border-radius: 5px; font-size: 13px; word-break: break-all; }
+  @media (max-width: 700px) {
+    /* 四列对比表在手机上改成卡片，否则每格只剩几个字宽 */
+    .compare, .compare tbody, .compare tr, .compare td { display: block; width: 100%; }
+    .compare thead { display: none; }
+    .compare tr { border: 1px solid rgba(255,255,255,.10); border-radius: 10px; padding: 6px 12px 10px; margin: 12px 0; }
+    .compare td { border: none; padding: 6px 0; }
+    .compare td::before { content: attr(data-label); display: block; font-size: 12px; color: #9aa3b2; margin-bottom: 2px; }
+  }
+  @media (max-width: 640px) { .guide { padding-top: 78px; } }
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <a class="brand" href="../index.html">
+    <img src="../assets/logo.svg" alt="Shizako" width="32" height="32">
+    <span>Shizako</span>
+  </a>
+  <nav class="nav-links">
+    <a href="../index.html#features" data-i18n="nav.features">功能</a>
+    <a href="../index.html#activate" data-i18n="nav.activate">激活</a>
+    <a href="index.html" aria-current="page">激活教程</a>
+    <a href="../index.html#compat" data-i18n="nav.compat">兼容</a>
+    <a href="../index.html#faq" data-i18n="nav.faq">FAQ</a>
+    <a href="../dev/index.html" data-i18n="nav.api">开发文档</a>
+  </nav>
+  <div class="nav-right">
+    <a class="btn primary small hide-sm" href="https://github.com/cr1437/Shizako/releases/latest" data-i18n="nav.download">下载</a>
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="菜单" aria-expanded="false">
+      <span class="icon" data-icon="menu"></span>
+    </button>
+  </div>
+</header>
+
+<nav class="mobile-menu" id="mobileMenu" aria-label="站点导航">
+  <a href="../index.html#features" data-i18n="nav.features">功能</a>
+  <a href="../index.html#activate" data-i18n="nav.activate">激活</a>
+  <a href="index.html">激活教程</a>
+  <a href="../index.html#compat" data-i18n="nav.compat">兼容</a>
+  <a href="../index.html#faq" data-i18n="nav.faq">FAQ</a>
+  <a href="../dev/index.html" data-i18n="nav.api">开发文档</a>
+  <a href="https://github.com/cr1437/Shizako/releases/latest" data-i18n="nav.download">下载</a>
+</nav>
+
+<main class="guide">
+
+  <h1>激活教程：把 Shizako 叫醒</h1>
+  <p class="lead">
+    这份教程配的全部是<b>真机截图</b>（vivo V2417A / Android 16）。四种激活方式按“你手上有什么”来选就行，
+    只有 Dhizuku 会改变系统状态（成为设备所有者），其余三种都只在本次开机内生效。
+  </p>
+
+  <ul class="toc">
+    <li><a href="#pick">先挑一种方式</a></li>
+    <li><a href="#wireless">① 无线调试（推荐）</a></li>
+    <li><a href="#adb">② 电脑 ADB</a></li>
+    <li><a href="#root">③ Root</a></li>
+    <li><a href="#dhizuku">④ Dhizuku</a></li>
+    <li><a href="#after">激活之后</a></li>
+    <li><a href="#faq">遇到问题</a></li>
+  </ul>
+
+  <section id="pick">
+    <h2>先挑一种方式</h2>
+    <div class="table-wrap">
+      <table class="compare">
+        <thead>
+          <tr><th>方式</th><th>需要什么</th><th>重启手机后</th><th>适合谁</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-label="方式"><b>无线调试</b></td>
+            <td data-label="需要什么">Android 11 及以上，不需要电脑</td>
+            <td data-label="重启手机后">要重新点一次启动（配对信息会记住，不用再配对）</td>
+            <td data-label="适合谁">大多数人 —— 一台手机就能搞定</td>
+          </tr>
+          <tr>
+            <td data-label="方式"><b>电脑 ADB</b></td>
+            <td data-label="需要什么">一台电脑 + 数据线</td>
+            <td data-label="重启手机后">同上，需要电脑再执行一次命令</td>
+            <td data-label="适合谁">手边正好有电脑、想最稳的一条路</td>
+          </tr>
+          <tr>
+            <td data-label="方式"><b>Root</b></td>
+            <td data-label="需要什么">设备已经 Root（Magisk / KernelSU）</td>
+            <td data-label="重启手机后">可以设置开机自动启动</td>
+            <td data-label="适合谁">已经 Root 的设备，最省事</td>
+          </tr>
+          <tr>
+            <td data-label="方式"><b>Dhizuku</b></td>
+            <td data-label="需要什么">电脑执行一次命令；激活前设备上不能有账户</td>
+            <td data-label="重启手机后"><b>不用</b>，特权与开机一起就位</td>
+            <td data-label="适合谁">想一劳永逸，也不想一直开着无线调试</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">
+      还没装 App？先到 <a href="https://github.com/cr1437/Shizako/releases/latest">最新版本</a> 下载安装。
+      装好后打开，会看到「一站式激活」——四种方式都在那一个页面里。
+    </div>
+  </section>
+
+  <section id="wireless">
+    <h2 class="method-head">① 无线调试 <span class="tag good">推荐</span> <span class="tag">Android 11+</span> <span class="tag">不用电脑</span></h2>
+    <p>
+      原理是让系统自己开一个「无线调试」配对服务，Shizako 通过它拿到 shell 权限。
+      配对码在<b>通知栏</b>里输入，所以整个过程中不用来回切屏，也不需要第二台设备。
+    </p>
+
+    <div class="steps">
+      <div class="step">
+        <h3>在 App 里点「开始配对」</h3>
+        <p>
+          首页往下滚 → 「一站式激活」→ 在「无线调试」卡片里点「开始配对」。
+          这时系统会问你要<b>通知权限</b>，一定要允许 —— 下一步的配对码就是在这个通知里输入的。
+          如果之前拒绝过，去系统设置里给 Shizako 打开通知。
+        </p>
+      </div>
+
+      <div class="step">
+        <h3>打开系统里的「无线调试」</h3>
+        <p>
+          路径：<b>设置 → 系统（或“更多设置”）→ 开发者选项 → 无线调试</b>。
+          找不到「开发者选项」的话，先到「关于手机」里连点「版本号」7 次把它叫出来。
+          Shizako 的「无线调试」卡片里也有一个「打开开发者选项」按钮，可以少走几步。
+        </p>
+        <div class="shot-grid">
+          <figure class="shot">
+            <img src="shots/zh-dev-options.jpg" alt="开发者选项中的 USB 调试与无线调试" width="720" height="1533" loading="lazy" decoding="async">
+            <figcaption>开发者选项：「USB 调试」给电脑 ADB 用，「无线调试」给本机自激活用。</figcaption>
+          </figure>
+          <figure class="shot">
+            <img src="shots/zh-wireless-steps.jpg" alt="Shizako 的无线调试四步说明" width="720" height="1533" loading="lazy" decoding="async">
+            <figcaption>App 里也写着这四步，照着做即可。</figcaption>
+          </figure>
+        </div>
+        <div class="note">
+          注意：<b>「无线调试」这一整行都能点</b>，右边那个开关只是总开关。
+          要进二级页面，得点这一行本身 —— 只打开右边的开关是配不了对的。
+        </div>
+      </div>
+
+      <div class="step">
+        <h3>点「使用配对码配对设备」，记下 6 位配对码</h3>
+        <p>
+          进入「无线调试」二级页后，点「使用配对码配对设备」，
+          屏幕上会弹出一个 6 位配对码（下面截图里的码是示例，真实码每次都不一样）。
+          这个页面<b>先别关</b>，配对码在它开着的时候才有效。
+        </p>
+        <div class="shot-grid">
+          <figure class="shot">
+            <img src="shots/zh-wireless-on.jpg" alt="无线调试页面：二维码配对与配对码配对" width="720" height="737" loading="lazy" decoding="async">
+            <figcaption>无线调试页：选「使用配对码配对设备」（局域网 IP 已打码）。</figcaption>
+          </figure>
+          <figure class="shot">
+            <img src="shots/zh-pairing-code.jpg" alt="6 位 WLAN 配对码弹窗" width="720" height="1533" loading="lazy" decoding="async">
+            <figcaption>弹窗里的 6 位码就是下一步要输入的东西（示例值，真机每次不同）。</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="step">
+        <h3>下拉通知栏，把配对码输进 Shizako 的通知</h3>
+        <p>
+          从屏幕顶部往下拉出通知栏，找到 Shizako 那条「正在搜索配对服务 / 输入配对码」的通知，
+          点它输入 6 位码。之后<b>配对 → 连接 → 启动服务会全自动完成</b>，不用再切回开发者选项。
+        </p>
+        <div class="shot-grid">
+          <figure class="shot narrow">
+            <img src="shots/zh-notification.jpg" alt="通知栏里 Shizako 的配对通知" width="720" height="120" loading="lazy" decoding="async">
+            <figcaption>配对通知：在这里输入配对码。（只截了 Shizako 这一条，其它通知是别人家的隐私）</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="step">
+        <h3>回到 App，确认服务已经在跑</h3>
+        <p>
+          配对成功后服务会自动启动，首页会显示「Shizako 已经在主人身边待命了哦」，
+          「服务」一行变成<b>运行中</b>。以后重启手机只要点「一键启动服务」即可，不用再配对。
+        </p>
+        <div class="shot-grid">
+          <figure class="shot">
+            <img src="shots/zh-activated.jpg" alt="Activated state" width="720" height="1533" loading="lazy" decoding="async">
+            <figcaption>激活成功：服务「运行中 · root」指的是本次服务以 root 身份运行。</figcaption>
+          </figure>
+          <figure class="shot">
+            <img src="shots/zh-home.jpg" alt="未激活时的主界面" width="720" height="1533" loading="lazy" decoding="async">
+            <figcaption>对比：没激活时首页顶部是红色的「还在睡懒觉」提示。</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="adb">
+    <h2 class="method-head">② 电脑 ADB <span class="tag">需要电脑</span></h2>
+    <p>
+      手边有电脑时这是最稳的一条路：用 USB 线连一次，把 App 里给出的那条命令粘到终端里执行，
+      服务立刻起来，全程不需要 Root。
+    </p>
+    <div class="steps">
+      <div class="step">
+        <h3>打开 USB 调试并连接电脑</h3>
+        <p>
+          开发者选项里打开「USB 调试」（见上面的开发者选项截图），用数据线连上电脑。
+          手机上会弹出「允许 USB 调试吗？」——勾选「一律允许使用这台计算机进行调试」再点允许。
+        </p>
+      </div>
+      <div class="step">
+        <h3>复制 App 给出的命令，在电脑终端执行</h3>
+        <p>
+          App 里「一站式激活 → 电脑 ADB → 复制命令」，然后在电脑上（已装 platform-tools）粘贴执行。
+          命令里带的是当前安装路径，所以<b>以 App 里显示的为准</b>，不要照抄别人博客里的版本。
+        </p>
+        <div class="shot-grid">
+          <figure class="shot">
+            <img src="shots/zh-adb-command.jpg" alt="电脑 ADB 的命令与复制按钮" width="720" height="1533" loading="lazy" decoding="async">
+            <figcaption>电脑 ADB：整条命令可以直接复制，粘到电脑终端里回车即可。</figcaption>
+          </figure>
+        </div>
+        <div class="note">
+          命令形如 <code>adb shell /data/app/…/libshizuku.so --apk=/data/app/…/base.apk</code>。
+          执行成功后 App 会立刻变成「运行中」；本教程的截图就是在 Android 16 上这样跑起来的。
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="root">
+    <h2 class="method-head">③ Root <span class="tag good">最省事</span></h2>
+    <p>
+      设备已经 Root（Magisk / KernelSU / APatch）的话，这是最省事的一条路：点一下、授权一次就完事，
+      还能在设置里打开「开机启动」，重启后自动就位。
+    </p>
+    <div class="steps">
+      <div class="step">
+        <h3>点「启动」，在 root 管理器弹窗里允许</h3>
+        <p>
+          「一站式激活 → Root → 启动」，随后你的 root 管理器（Magisk / KernelSU）会弹窗要权限，
+          允许即可。首次授权后，服务状态会变成「运行中 · root」。
+        </p>
+        <div class="shot-grid">
+          <figure class="shot">
+            <img src="shots/zh-activation.jpg" alt="Root 激活方式与启动按钮" width="720" height="1533" loading="lazy" decoding="async">
+            <figcaption>Root 卡片：三步就完事；下面是「无线调试」和「电脑 ADB」两种方式的入口。</figcaption>
+          </figure>
+        </div>
+      </div>
+      <div class="step">
+        <h3>（可选）打开开机自启</h3>
+        <p>设置 → 稳定性与自动化 → 打开「开机启动」，以后重启手机不用再手动叫醒她。</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="dhizuku">
+    <h2 class="method-head">④ Dhizuku（设备所有者） <span class="tag good">重启不失效</span></h2>
+    <p>
+      把 Shizako 设为设备所有者（Device Owner），之后授权的应用可以随时借用特权，
+      不用 Root、也不用一直开着无线调试，<b>重启手机也不会失效</b>。
+    </p>
+    <div class="steps">
+      <div class="step">
+        <h3>服务先跑起来</h3>
+        <p>用上面任意一种方式让服务处于「运行中」——Dhizuku 激活需要在服务运行时发起。</p>
+      </div>
+      <div class="step">
+        <h3>点「激活」，或按提示在电脑执行一次命令</h3>
+        <p>
+          服务在运行时，直接点「激活」一键搞定；服务没运行时，点「查看指令」，
+          在电脑上执行一次（需要开启 USB 调试）。
+        </p>
+        <div class="shot-grid">
+          <figure class="shot">
+            <img src="shots/zh-adb-command.jpg" alt="Dhizuku 指令与电脑 ADB 命令" width="720" height="1533" loading="lazy" decoding="async">
+            <figcaption>同一页再往下就是 Dhizuku 卡片：需要电脑时点「查看指令」。</figcaption>
+          </figure>
+        </div>
+        <div class="note">
+          注意：<b>激活前需要移除设备上的所有账户</b>（小米/华为等厂商账号、Google 账号都要退），
+          否则命令会失败；激活后「查找设备」等部分功能可能受影响。
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="after">
+    <h2>激活之后：给应用发通行证</h2>
+    <p>
+      服务跑起来后，<b>每个应用第一次连接都要你亲自点头</b>，白名单只存在本机，随时可以在
+      「被调教的小可爱们」里收回。官方 Shizuku-API 写的应用（MT 管理器、冰箱、SystemUI Tuner 等）
+      不用改一行代码就能连上。
+    </p>
+    <div class="shot-grid">
+      <figure class="shot">
+        <img src="shots/zh-apps.jpg" alt="已授权应用列表" width="720" height="1533" loading="lazy" decoding="async">
+        <figcaption>「被调教的小可爱们」：每个应用一行，点进去可以看它拿到了什么权限。</figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="shots/zh-activation.jpg" alt="激活页当前状态" width="720" height="1533" loading="lazy" decoding="async">
+        <figcaption>激活页顶部随时能看到「服务」与「设备所有者」两种状态。</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="faq">
+    <h2>遇到问题</h2>
+
+    <details>
+      <summary>重启手机后要重新激活吗？</summary>
+      <p>
+        无线调试 / 电脑 ADB / Root 三种方式：<b>需要</b>（Root 可以在设置里打开「开机启动」免掉这一步）。
+        Dhizuku：<b>不需要</b>，设备所有者身份重启后依然有效。
+      </p>
+    </details>
+
+    <details>
+      <summary>通知里输入配对码的地方没出现 / 一直「正在搜索配对服务」</summary>
+      <p>按顺序排查这几点：</p>
+      <ul>
+        <li>确认系统里的「无线调试」<b>还开着</b>（部分系统在锁屏后会把它关掉）；</li>
+        <li>确认给过 Shizako <b>通知权限</b>（配对码是在通知里输入的）；</li>
+        <li>Android 16 上系统还会单独询问<b>本地网络访问</b>权限，拒绝后就会一直搜不到配对服务；</li>
+        <li>小米 / MIUI / HyperOS：到「通知管理 → 通知显示设置」把通知样式切成<b>原生样式</b>，
+          否则通知里没有输入框；</li>
+        <li>还是不行就在「无线调试」二级页重新点一次「使用配对码配对设备」，取新的配对码重来。</li>
+      </ul>
+    </details>
+
+    <details>
+      <summary>配对码输了没反应 / 提示配对失败</summary>
+      <p>
+        配对码和端口是一对，每次点「使用配对码配对设备」都会换一组。
+        请确认输入的是<b>当前这一个弹窗</b>里显示的 6 位码，并且弹窗没有被关掉后重开。
+      </p>
+    </details>
+
+    <details>
+      <summary>电脑执行命令时提示 device unauthorized / 没有设备</summary>
+      <p>
+        说明 USB 调试授权没给：解锁手机屏幕，重新插拔数据线，在弹出的「允许 USB 调试吗？」
+        里点允许（建议勾上「一律允许」）。另外确认电脑上装的是官方 platform-tools。
+      </p>
+    </details>
+
+    <details>
+      <summary>激活后应用还是连不上 Shizako</summary>
+      <p>
+        回到首页确认「服务」是<b>运行中</b>。若刚重启过手机，需要先点一次「一键启动服务」；
+        另外部分系统会限制后台，去设置 → 稳定性与自动化 里打开「后台保活」并允许自启。
+      </p>
+    </details>
+
+    <div class="note">
+      激活本身不涉及 Root 也可以完成；Shizako 不收集任何数据、不需要账号，
+      每个权限都由你当面点头。遇到教程没覆盖的情况，欢迎到
+      <a href="https://github.com/cr1437/Shizako/issues">问题反馈</a> 里说一声。
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-cols">
+    <div>
+      <h4>Shizako</h4>
+      <p data-i18n="footer.desc">猫耳看板娘的系统权限助手。开源、免费、无广告。</p>
+    </div>
+    <div>
+      <h4 data-i18n="footer.links">链接</h4>
+      <ul>
+        <li><a href="../index.html">官网首页</a></li>
+        <li><a href="https://github.com/cr1437/Shizako" data-i18n="footer.repo">GitHub 仓库</a></li>
+        <li><a href="https://github.com/cr1437/Shizako/releases" data-i18n="footer.releases">版本发布</a></li>
+        <li><a href="https://github.com/cr1437/Shizako/issues" data-i18n="footer.issues">问题反馈</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 data-i18n="footer.community">交流</h4>
+      <ul>
+        <li><a href="https://qm.qq.com/cgi-bin/qm/qr?k=891276089">QQ 891276089</a></li>
+        <li><a href="https://qm.qq.com/cgi-bin/qm/qr?k=1104445003">QQ 群 1104445003</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 data-i18n="footer.license">许可</h4>
+      <p data-i18n="footer.licenseText">Apache License 2.0。上游版权归 RikkaApps，修改部分版权归 初然。</p>
+    </div>
+  </div>
+  <p class="footer-bottom" data-i18n="footer.bottom">为爱发电 · 用爱发电的她不会咬人 (ˊᗜˋ*)</p>
+</footer>
+
+<script src="../assets/icons.js?v=3"></script>
+<script src="../assets/site.js?v=4"></script>
+</body>
+</html>
