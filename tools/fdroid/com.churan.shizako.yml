@@ -1,4 +1,4 @@
-﻿# F-Droid 元数据 recipe 草稿
+# F-Droid 元数据 recipe 草稿
 #
 # 放到 fdroiddata 仓库的 metadata/com.churan.shizako.yml
 # 现在还不能直接提交 —— 先看同目录 README.md 里的两个硬拦路虎。
@@ -20,20 +20,23 @@ RepoType: git
 Repo: https://github.com/cr1437/Shizako.git
 
 Builds:
-  - versionName: zako3.12
+  # F-Droid 变体：-Pfdroid 开启后 versionName 自动带 -f 后缀，
+  # 与 GitHub 版（zako3.12）在同一个仓库、同一份源码里产出（见 tools/fdroid/变体方案.md）。
+  - versionName: zako3.12-f
     versionCode: 312
     commit: zako3.12
     subdir: .
     gradle:
       - :manager:assembleRelease
-    output: manager/build/outputs/apk/release/shizako-zako3.12-release.apk
+      # 单独一项原样传给 gradle：开关变体（版本名 -f、关自更新/一键注入/AI/反代）
+      - -Pfdroid
+    output: manager/build/outputs/apk/release/shizako-zako3.12-f-release.apk
     # 项目需要 NDK 参与构建（manager / shell / rish / starter 都有 JNI）
     # 需要确认 F-Droid 构建机上存在这一版；否则要先降级到他们有的版本
     ndk: 29.0.14206865
-    # F-Droid 构建机完全离线，而本仓库默认配了阿里云镜像 ——
-    # 要么在 prebuild 里把它替换掉，要么先让镜像配置可被关闭
-    # prebuild: |
-    #   sed -i 's#maven.aliyun.com[^"]*#repo1.maven.org/maven2#g' settings.gradle build.gradle
+    # 镜像问题已由仓库自身解决，无需 prebuild sed：
+    # settings.gradle 检测到 -Pfdroid 时自动关闭全部阿里云镜像、改走官方
+    # google()/mavenCentral()/gradlePluginPortal()（GitHub 版构建不受影响）。
 
 MaintainerNotes: |
   上游为 Shizuku（Apache-2.0），本项目为其 fork，按上游许可声明使用自有 app id 与权限名：
@@ -44,6 +47,9 @@ MaintainerNotes: |
 AutoUpdateMode: Version
 UpdateCheckMode: Tags
 # 版本 tag 形如 zako3.12 / zako3.01-hp
+# 注意：UpdateCheckData 的 versionName 正则取自根 build.gradle（基名，不含 -f 后缀，
+# 后缀是构建参数拼出来的）；更新判断以 versionCode（312，须逐发递增）为准。
+# 若 MR 时 linter 报 CurrentVersion 与提取值不一致，再把 -f 后缀下沉进根 versionName。
 UpdateCheckData: build.gradle|versionCode = (\d+)|.|versionName = "([^"]+)"
-CurrentVersion: zako3.12
+CurrentVersion: zako3.12-f
 CurrentVersionCode: 312

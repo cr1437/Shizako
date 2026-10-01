@@ -1,28 +1,40 @@
 pluginManagement {
+    // F-Droid 构建（-Pfdroid）不使用阿里云镜像：他们的构建机在海外、依赖源固定为
+    // 官方仓库，国内镜像对它毫无意义反而可能被拒。不带 -Pfdroid 的本地/GitHub 构建
+    // 行为完全不变（仍然阿里云优先）。同一个 -Pfdroid 也驱动 manager 的 FDROID_BUILD
+    // 开关，一处属性管到底 —— 见 tools/fdroid/变体方案.md。
+    def useCnMirrors = !gradle.startParameter.projectProperties.containsKey("fdroid")
     repositories {
         // CN mirrors (Aliyun) first, fall back to originals
-        maven {
-            url("https://maven.aliyun.com/repository/google")
-            content {
-                includeGroupByRegex("com\\.android.*")
-                includeGroupByRegex("com\\.google.*")
-                includeGroupByRegex("androidx.*")
+        if (useCnMirrors) {
+            maven {
+                url("https://maven.aliyun.com/repository/google")
+                content {
+                    includeGroupByRegex("com\\.android.*")
+                    includeGroupByRegex("com\\.google.*")
+                    includeGroupByRegex("androidx.*")
+                }
             }
-        }
-        maven {
-            url("https://maven.aliyun.com/repository/public")
-            content {
-                includeGroupByRegex("org\\.jetbrains.*")
-                includeGroupByRegex("org\\.jetbrains\\.kotlin.*")
-                includeGroupByRegex("dev\\.rikka.*")
+            maven {
+                url("https://maven.aliyun.com/repository/public")
+                content {
+                    includeGroupByRegex("org\\.jetbrains.*")
+                    includeGroupByRegex("org\\.jetbrains\\.kotlin.*")
+                    includeGroupByRegex("dev\\.rikka.*")
+                }
             }
-        }
-        maven {
-            url("https://maven.aliyun.com/repository/gradle-plugin")
+            maven {
+                url("https://maven.aliyun.com/repository/gradle-plugin")
+            }
         }
         google()
         mavenLocal()
         mavenCentral()
+        // F-Droid 路径补上官方插件门户（阿里云 gradle-plugin 镜像被关掉后的等价兜底；
+        // 本地路径不加，保持原有仓库顺序不变）
+        if (!useCnMirrors) {
+            gradlePluginPortal()
+        }
     }
     plugins {
         id("com.android.application") version "8.10.1"
@@ -38,23 +50,26 @@ dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         // CN mirrors (Aliyun) first, fall back to originals
-        maven {
-            url("https://maven.aliyun.com/repository/google")
-            content {
-                includeGroupByRegex("com\\.android.*")
-                includeGroupByRegex("com\\.google.*")
-                includeGroupByRegex("androidx.*")
+        // （-Pfdroid 时关闭，理由见文件顶部 pluginManagement 处的说明）
+        if (!gradle.startParameter.projectProperties.containsKey("fdroid")) {
+            maven {
+                url("https://maven.aliyun.com/repository/google")
+                content {
+                    includeGroupByRegex("com\\.android.*")
+                    includeGroupByRegex("com\\.google.*")
+                    includeGroupByRegex("androidx.*")
+                }
             }
-        }
-        maven {
-            url("https://maven.aliyun.com/repository/public")
-            content {
-                includeGroupByRegex("org\\.jetbrains.*")
-                includeGroupByRegex("org\\.jetbrains\\.kotlin.*")
-                includeGroupByRegex("dev\\.rikka.*")
-                includeGroupByRegex("org\\.slf4j.*")
-                includeGroupByRegex("com\\.squareup.*")
-                includeGroupByRegex("org\\.ow2.*")
+            maven {
+                url("https://maven.aliyun.com/repository/public")
+                content {
+                    includeGroupByRegex("org\\.jetbrains.*")
+                    includeGroupByRegex("org\\.jetbrains\\.kotlin.*")
+                    includeGroupByRegex("dev\\.rikka.*")
+                    includeGroupByRegex("org\\.slf4j.*")
+                    includeGroupByRegex("com\\.squareup.*")
+                    includeGroupByRegex("org\\.ow2.*")
+                }
             }
         }
         google()
