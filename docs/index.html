@@ -50,7 +50,13 @@
   <section class="hero">
     <div class="hero-glow"></div>
     <div class="hero-inner">
-      <img class="hero-banner" src="banner.jpg" alt="Shizako 看板娘横幅">
+      <!-- 手机端用 720 宽的小横幅（44KB），桌面才加载 2560 宽的原图（405KB）：
+           蜂窝网下这张大图是首屏最沉的东西。宽高都写死，避免图片加载完页面跳动。 -->
+      <picture>
+        <source media="(max-width: 720px)" srcset="banner-720.jpg">
+        <img class="hero-banner" src="banner.jpg" width="2560" height="1440"
+             alt="Shizako 看板娘横幅" fetchpriority="high" decoding="async">
+      </picture>
       <h1>Shizako</h1>
       <p class="tagline" data-i18n="hero.tagline">让猫耳看板娘替你「借」系统权限 —— 不 Root、不刷机</p>
       <p class="sub" data-i18n="hero.sub">用 Root / 无线调试 / 电脑 ADB / Dhizuku 唤醒一个特权小进程，再把特权借给你信得过的应用。每个应用都要你亲自点头，随时收回。</p>
@@ -161,7 +167,7 @@
     <p class="lead" data-i18n="shots.lead">真机截图（vivo V2417A / Android 16，深色 + 玻璃风格）。</p>
     <div class="shots">
       <figure>
-        <img src="shots/home.png" alt="Shizako 首页" loading="lazy">
+        <img src="shots/home.png" alt="Shizako 首页" width="480" height="1066" loading="lazy" decoding="async">
         <figcaption data-i18n="shots.cap1">首页：服务状态、版本、激活方式一目了然</figcaption>
       </figure>
     </div>

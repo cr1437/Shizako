@@ -173,6 +173,14 @@
   }
 
   if (toggle && menu) {
+    // 菜单顶部对齐真实顶栏高度（写死 56px 会在有安全区/大字号时错位）
+    function syncNavHeight() {
+      if (nav) document.documentElement.style.setProperty('--navh', nav.offsetHeight + 'px');
+    }
+    syncNavHeight();
+    window.addEventListener('resize', function () { syncNavHeight(); closeMenu(); });
+    window.addEventListener('orientationchange', function () { syncNavHeight(); closeMenu(); });
+
     toggle.addEventListener('click', function () {
       var open = menu.classList.toggle('open');
       toggle.setAttribute('aria-expanded', open ? 'true' : 'false');

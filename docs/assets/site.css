@@ -21,7 +21,14 @@
 
 * { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  /* 锚点跳转时给固定顶栏留出空间：否则手机上点菜单会停在"标题被顶栏挡住"的位置 */
+  scroll-padding-top: 76px;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  overflow-x: hidden;
+}
 
 body {
   margin: 0;
@@ -31,13 +38,18 @@ body {
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  max-width: 100%;
 }
 
-/* 背景光斑：纯 CSS，不用图片 */
+/* 背景光斑：纯 CSS，不用图片。
+   注意：这里**不能**用左右负 inset（那会让装饰层比屏幕宽，手机端就能把页面左右拖动）。 */
 body::before {
   content: "";
   position: fixed;
-  inset: -20% -10% auto -10%;
+  top: -20%;
+  left: 0;
+  right: 0;
+  width: 100%;
   height: 90vh;
   background:
     radial-gradient(45% 45% at 20% 10%, rgba(139, 123, 240, .22), transparent 70%),
@@ -731,4 +743,40 @@ body::before { animation: drift 22s ease-in-out infinite alternate; }
     transition-duration: .001ms !important;
   }
   .reveal { opacity: 1; transform: none; }
+}
+
+/* ══ 手机端性能与观感收尾（放在最后，确保覆盖前面的规则）═══════════ */
+/* 点按不加 300ms 延迟 */
+a, button, summary, .btn, .card { touch-action: manipulation; }
+
+/* 图片按块级排版，避免行内基线留白导致的轻微错位 */
+.hero-banner, .shots img, picture { display: block; margin-left: auto; margin-right: auto; }
+
+/* 菜单顶部跟随真实顶栏高度 */
+.mobile-menu { top: var(--navh, 56px); }
+
+@media (max-width: 720px) {
+  /* 手机上关掉大面积模糊：顶栏与卡片的 backdrop-filter 在滚动时很吃 GPU，
+     观感差异很小（顶栏改不透明底色，卡片本身有渐变底） */
+  .nav,
+  .card,
+  .stat-card,
+  .doc-toc,
+  .mobile-menu {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  .nav { background: rgba(11, 13, 18, .96); }
+  .mobile-menu { background: rgba(11, 13, 18, .99); }
+
+  /* 装饰光斑不再游动（省电，也避免低端机上的合成开销） */
+  body::before { animation: none !important; }
+
+  /* 首屏横幅在手机上占满宽度即可 */
+  .hero-banner { width: 100%; }
+}
+
+/* 导出/打印时不需要装饰 */
+@media print {
+  body::before, .nav, .mobile-menu, .doc-progress { display: none !important; }
 }
