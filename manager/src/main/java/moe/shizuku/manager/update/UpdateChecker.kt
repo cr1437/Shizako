@@ -1,4 +1,4 @@
-﻿package moe.shizuku.manager.update
+package moe.shizuku.manager.update
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -14,6 +14,8 @@ import androidx.core.content.FileProvider
 import kotlinx.coroutines.*
 import moe.shizuku.manager.R
 import moe.shizuku.manager.ShizukuSettings
+import moe.shizuku.manager.fdroid.FdroidBuild
+import moe.shizuku.manager.utils.NetworkUtils
 import org.json.JSONObject
 import java.io.File
 import java.io.FileOutputStream
@@ -35,11 +37,13 @@ object UpdateChecker {
      * 用户永远收不到更新提示（而且失败是静默的，看起来就像「这功能没做」）。
      * 后面几个反代域名在同样的网络下实测可解析，作为兜底。
      */
-    private val API_ENDPOINTS = listOf(
+    private val API_ENDPOINTS = listOfNotNull(
         GITHUB_API,
-        "https://gh-proxy.com/$GITHUB_API",
-        "https://ghfast.top/$GITHUB_API",
-        "https://ghproxy.net/$GITHUB_API",
+        // 反代只在 GitHub 版启用：F-Droid 版只走官方 api.github.com
+        // （第三方反代属 NonFreeNet 边缘情形，见 fdroid/FdroidBuild.kt）
+        "https://gh-proxy.com/$GITHUB_API".takeIf { FdroidBuild.allowUpdateMirrors },
+        "https://ghfast.top/$GITHUB_API".takeIf { FdroidBuild.allowUpdateMirrors },
+        "https://ghproxy.net/$GITHUB_API".takeIf { FdroidBuild.allowUpdateMirrors },
     )
 
     /** 上次成功的入口下标：下次先试它，省掉一次注定失败的等待。 */
@@ -136,14 +140,14 @@ object UpdateChecker {
         silent: Boolean = false,
         onResult: (ReleaseInfo?) -> Unit,
     ) {
-// F-Droid 版关闭一切更新检查（F-Droid 用自己的密钥签名，自更新在 F-Droid 用户设备上
+        // F-Droid 版关闭一切更新检查（F-Droid 用自己的密钥签名，自更新在 F-Droid 用户设备上
         // 必然安装失败，且绕过 F-Droid 分发）—— 见 fdroid/FdroidBuild.kt
-        if (!moe.shizuku.manager.fdroid.FdroidBuild.allowSelfUpdate) {
+        if (!FdroidBuild.allowSelfUpdate) {
             onResult(null)
             return
         }
 
-        if (!moe.shizuku.manager.utils.NetworkUtils.isOnline(context)) {
+        if (!NetworkUtils.isOnline(context)) {
             if (!silent) {
                 Toast.makeText(context, R.string.update_no_network, Toast.LENGTH_SHORT).show()
             }
@@ -225,10 +229,13 @@ object UpdateChecker {
     }
 
     fun downloadAndInstall(context: Context, info: ReleaseInfo, listener: DownloadListener?) {
+        // F-Droid 版没有任何「下载并安装 Shizako」的路径：签名不同，装上去也是失败，
+        // 还会绕过 F-Droid 的分发。这里挡在最终入口上，UI 之外也堵死（见 fdroid/FdroidBuild.kt）
+        if (!FdroidBuild.allowSelfUpdate) return
         if (downloadJob?.isActive == true) return
 
         // 没网就别开下载：直接告诉用户，别让他对着 0% 的进度条等超时
-        if (!moe.shizuku.manager.utils.NetworkUtils.isOnline(context)) {
+        if (!NetworkUtils.isOnline(context)) {
             Toast.makeText(context, R.string.update_no_network, Toast.LENGTH_SHORT).show()
             listener?.onFailed(context.getString(R.string.update_no_network))
             return
@@ -280,11 +287,11 @@ object UpdateChecker {
         listener: DownloadListener? = null
     ) {
         // 一键注入路径在 F-Droid 版不可用（会下载并安装第三方 APK）
-        if (!moe.shizuku.manager.fdroid.FdroidBuild.allowOneClickInject) return
+        if (!FdroidBuild.allowOneClickInject) return
         if (downloadJob?.isActive == true) return
 
         // 离线：直接失败，不要开一个永远 0% 的下载
-        if (!moe.shizuku.manager.utils.NetworkUtils.isOnline(context)) {
+        if (!NetworkUtils.isOnline(context)) {
             listener?.onFailed(context.getString(R.string.update_no_network))
             return
         }

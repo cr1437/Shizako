@@ -27,6 +27,7 @@ import androidx.navigation.fragment.findNavController
 import moe.shizuku.manager.MainActivity
 import moe.shizuku.manager.R
 import moe.shizuku.manager.databinding.FragmentSubPageBinding
+import moe.shizuku.manager.fdroid.FdroidBuild
 import moe.shizuku.manager.settings.LabFeaturesScreen
 import moe.shizuku.manager.settings.ModulePolicyPage
 import moe.shizuku.manager.settings.SettingsBackupHelper
@@ -278,17 +279,21 @@ class ToolboxFragment : Fragment() {
         ),
         ToolboxGroup(
             titleRes = R.string.toolbox_group_device,
-            items = listOf(
-                entry(R.drawable.ic_bolt_24dp, R.string.activation_page_title,
-                    R.string.toolbox_summary_activation) { openDestination(R.id.activation_fragment) },
-                entry(R.drawable.ic_wireless_adb_24dp, R.string.download_page_title,
-                    R.string.settings_recommended_apps_summary) { openDestination(R.id.apps_download_fragment) },
-                entry(R.drawable.ic_dhizuku_24dp, R.string.activation_method_dhizuku,
+            items = buildList {
+                add(entry(R.drawable.ic_bolt_24dp, R.string.activation_page_title,
+                    R.string.toolbox_summary_activation) { openDestination(R.id.activation_fragment) })
+                // 「推荐应用」（下载并安装第三方 APK）在 F-Droid 版整个不显示：
+                // 既是分发第三方二进制，也与「不得绕过商店安装应用」相抵触 —— 见 FdroidBuild
+                if (FdroidBuild.allowOneClickInject) {
+                    add(entry(R.drawable.ic_wireless_adb_24dp, R.string.download_page_title,
+                        R.string.settings_recommended_apps_summary) { openDestination(R.id.apps_download_fragment) })
+                }
+                add(entry(R.drawable.ic_dhizuku_24dp, R.string.activation_method_dhizuku,
                     R.string.toolbox_summary_dhizuku) {
                     // Dhizuku 的授权管理在「被调教的小可爱们」的第二页 —— 同样按次级页 push
                     openDestination(R.id.apps_fragment)
-                },
-            ),
+                })
+            },
         ),
         ToolboxGroup(
             titleRes = R.string.toolbox_group_more,

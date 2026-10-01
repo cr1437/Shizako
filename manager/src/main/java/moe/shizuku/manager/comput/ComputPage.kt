@@ -304,7 +304,9 @@ fun ComputSettingsPage(
             }
         }
 
-        item {
+        // F-Droid 版移除 AI 解释：内置的都是**专有**服务商入口，关掉之后
+        // 就不必申报 NonFreeNet 反特性（见 fdroid/FdroidBuild.kt）
+        if (moe.shizuku.manager.fdroid.FdroidBuild.allowAiExplain) item {
             HintCard(palette = palette, modifier = Modifier.itemEntrance(1)) {
                 HintSectionTitle(
                     palette = palette,
@@ -480,7 +482,8 @@ fun ComputSettingsPage(
                 )
             }
         }
-
+        // （AI 卡片是单语句 if 形式：item 自己的右括号就是 if 的结束，外面不再套括号）
+        // 宏（与 AI 无关，两个变体都有）
         item {
             HintCard(palette = palette, modifier = Modifier.itemEntrance(3)) {
                 HintSectionTitle(

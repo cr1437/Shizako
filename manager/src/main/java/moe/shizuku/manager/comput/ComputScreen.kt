@@ -716,14 +716,17 @@ fun ComputScreen(
                             )
                         },
                     )
-                    ComputToolButton(
-                        palette = palette,
-                        icon = Icons.Rounded.AutoAwesome,
-                        label = stringResource(R.string.comput_toolbar_ai),
-                        contentDescription = stringResource(R.string.comput_toolbar_ai_desc),
-                        enabled = state.aiKeyConfigured && output.isNotBlank() && !state.isExplaining,
-                        onClick = { callbacks.onExplain() },
-                    )
+                    // AI 解释（内置专有服务商）：F-Droid 版没有这个按钮 —— 见 fdroid/FdroidBuild.kt
+                    if (moe.shizuku.manager.fdroid.FdroidBuild.allowAiExplain) {
+                        ComputToolButton(
+                            palette = palette,
+                            icon = Icons.Rounded.AutoAwesome,
+                            label = stringResource(R.string.comput_toolbar_ai),
+                            contentDescription = stringResource(R.string.comput_toolbar_ai_desc),
+                            enabled = state.aiKeyConfigured && output.isNotBlank() && !state.isExplaining,
+                            onClick = { callbacks.onExplain() },
+                        )
+                    }
                 }
             }
         }
@@ -784,7 +787,8 @@ fun ComputScreen(
         }
 
         // ---------------- AI 解释 ----------------
-        item {
+        // F-Droid 版整块不显示（连 API Key 入口一起）：关掉之后不必申报 NonFreeNet
+        if (moe.shizuku.manager.fdroid.FdroidBuild.allowAiExplain) item {
             HintCard(palette = palette, modifier = Modifier.itemEntrance(3)) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
@@ -891,7 +895,7 @@ fun ComputScreen(
                 }
             }
         }
-
+        // （上面 AI 卡片是单语句 if 形式：item 自己的右括号就是 if 的结束，外面不再套括号）
         // ---------------- 宏 ----------------
         item {
             HintCard(palette = palette, modifier = Modifier.itemEntrance(4)) {

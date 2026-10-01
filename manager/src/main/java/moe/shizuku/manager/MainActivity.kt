@@ -640,7 +640,8 @@ class MainActivity : AppActivity() {
         // 自动更新：**每次回到前台都静默查一次**（只留极短防抖，见 UpdateChecker）。
         // 发现新版本时不止发通知，还就地弹「发现新版本」对话框 —— 用户正开着 App，
         // 这里才是能立刻下载升级的地方。
-        runCatching {
+        // F-Droid 版没有自更新（签名不同，装了也失败）：入口直接不挂，见 fdroid/FdroidBuild.kt
+        if (moe.shizuku.manager.fdroid.FdroidBuild.allowSelfUpdate) runCatching {
             moe.shizuku.manager.update.UpdateChecker.checkOnAppForeground(this) { info ->
                 if (!isFinishing && !isDestroyed) {
                     moe.shizuku.manager.update.UpdatePrompt.show(this, info)

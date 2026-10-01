@@ -52,6 +52,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import moe.shizuku.manager.R
+import moe.shizuku.manager.fdroid.FdroidBuild
 import moe.shizuku.manager.ui.hint.HintCard
 import moe.shizuku.manager.ui.hint.HintPage
 import moe.shizuku.manager.ui.hint.HintPalette
@@ -892,13 +893,16 @@ private fun StartupPage(
             checked = state.dhizukuMode,
             onChange = onDhizukuMode,
         )
-        SettingSwitchRow(
-            palette = palette,
-            title = stringResource(R.string.settings_auto_update),
-            summary = stringResource(R.string.settings_auto_update_summary),
-            checked = state.autoUpdate,
-            onChange = onAutoUpdate,
-        )
+        // F-Droid 版不提供自更新（签名不同，装了也失败）：整行不显示
+        if (FdroidBuild.allowSelfUpdate) {
+            SettingSwitchRow(
+                palette = palette,
+                title = stringResource(R.string.settings_auto_update),
+                summary = stringResource(R.string.settings_auto_update_summary),
+                checked = state.autoUpdate,
+                onChange = onAutoUpdate,
+            )
+        }
         // 开机自动关掉 USB 调试（需要 WRITE_SECURE_SETTINGS，ADB 给过一次就有）
         SettingSwitchRow(
             palette = palette,
@@ -990,12 +994,15 @@ private fun DebugPage(
             summary = stringResource(R.string.settings_api_log_summary),
             onClick = onOpenApiLog,
         )
-        SettingActionRow(
-            palette = palette,
-            title = stringResource(R.string.settings_check_update),
-            summary = stringResource(R.string.settings_check_update_summary),
-            onClick = onCheckUpdate,
-        )
+        // F-Droid 版没有自更新：连「检查更新」入口都不显示（见 fdroid/FdroidBuild.kt）
+        if (FdroidBuild.allowSelfUpdate) {
+            SettingActionRow(
+                palette = palette,
+                title = stringResource(R.string.settings_check_update),
+                summary = stringResource(R.string.settings_check_update_summary),
+                onClick = onCheckUpdate,
+            )
+        }
     }
 }
 

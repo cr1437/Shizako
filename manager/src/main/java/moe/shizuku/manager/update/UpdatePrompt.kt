@@ -4,6 +4,7 @@ import android.content.Context
 import android.widget.Toast
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import moe.shizuku.manager.R
+import moe.shizuku.manager.fdroid.FdroidBuild
 import moe.shizuku.manager.ui.glass.GlassWindow
 
 /**
@@ -20,6 +21,8 @@ object UpdatePrompt {
 
     /** 弹「发现新版本」对话框；点「下载」进入带进度的下载流程。 */
     fun show(context: Context, info: UpdateChecker.ReleaseInfo) {
+        // 兜底：F-Droid 版不该有任何更新提示（入口都已关闭），这里再挡一层
+        if (!FdroidBuild.allowSelfUpdate) return
         MaterialAlertDialogBuilder(context)
             .setTitle(R.string.update_available_title)
             .setMessage(context.getString(R.string.update_dialog_message, info.tagName, info.body))
@@ -31,6 +34,7 @@ object UpdatePrompt {
 
     /** 下载并安装，全程显示进度对话框（用户取消时同时取消下载）。 */
     fun downloadWithProgress(context: Context, info: UpdateChecker.ReleaseInfo) {
+        if (!FdroidBuild.allowSelfUpdate) return
         val progressDialog = DownloadProgressDialog.show(
             context,
             title = context.getString(R.string.update_downloading),

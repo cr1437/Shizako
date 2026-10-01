@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import moe.shizuku.manager.ShizukuSettings
+import moe.shizuku.manager.fdroid.FdroidBuild
 
 /**
  * Schedules (or cancels) the periodic background update check via AlarmManager.
@@ -32,6 +33,9 @@ object AutoUpdateScheduler {
     }
 
     fun schedule(context: Context) {
+        // F-Droid 版不排任何更新闹钟：周期检查会把用户引向「下载安装新版本」，
+        // 而那条路在 F-Droid 版上必然失败（签名不同）—— 见 fdroid/FdroidBuild.kt
+        if (!FdroidBuild.allowSelfUpdate) return
         if (!ShizukuSettings.isAutoUpdateEnabled()) return
 
         val am = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager ?: return

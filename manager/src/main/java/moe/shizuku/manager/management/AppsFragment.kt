@@ -157,7 +157,11 @@ class AppsFragment : Fragment() {
             )
         }
 
-        // 右上角菜单：推荐应用（下载引导页）
+        // 右上角菜单：推荐应用（下载引导页）。
+        // F-Droid 版把这一项直接摘掉（下载并安装第三方 APK 不合政策）—— 见 fdroid/FdroidBuild.kt
+        if (!moe.shizuku.manager.fdroid.FdroidBuild.allowOneClickInject) {
+            binding.toolbar.menu.findItem(R.id.menu_recommended_apps)?.isVisible = false
+        }
         binding.toolbar.setOnMenuItemClickListener { item ->
             if (item.itemId == R.id.menu_recommended_apps) {
                 findNavController().navigate(
