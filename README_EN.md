@@ -10,7 +10,7 @@
 
 [简体中文](README.md) | **English**
 
-A fork of [Shizuku](https://github.com/RikkaApps/Shizuku) · by [初然 (cr1437)](https://github.com/cr1437)
+Compatible with the [Shizuku-API](https://github.com/RikkaApps/Shizuku-API) ecosystem · by [初然 (cr1437)](https://github.com/cr1437)
 
 <!-- All badges are self-hosted under docs/ and referenced by relative path, so they are
      served by github.com itself and render reliably (the previous shields.io badges often
@@ -53,7 +53,7 @@ A fork of [Shizuku](https://github.com/RikkaApps/Shizuku) · by [初然 (cr1437)
 | First-run wizard | Step-by-step setup (language / appearance / activation method) with activation built in; 10-second forced disclaimer |
 | Four activation paths | Root / wireless debugging / computer ADB / Dhizuku, all on one page; one-tap start once paired |
 | One-tap injection | Grant privileges to common tools (Thanox, Ice Box, 炼妖壶 …), with in-app download for missing ones |
-| Compatibility bridge | Built-in provider relay so older clients that don't recognise the fork's package name still connect |
+| Compatibility bridge | Built-in provider relay so older clients that only know the legacy package name still connect |
 | Tasker support | Broadcasts to start/stop the service, activate Dhizuku, query status, trigger downloads |
 | API audit log | Records which app called which privileged API — review it any time in settings |
 | Auto update | Checks for a new version **every time you open the app**, with an in-app download dialog; falls back to a working mirror when GitHub is blocked by your network |
@@ -208,7 +208,7 @@ Shizako/
 No. Wireless debugging or USB is enough; root simply adds more options.
 
 **How does this relate to Shizuku?**
-It is a fork of Shizuku. Core capabilities come from upstream; the name, package name and mascot are original, plus extras such as Dhizuku compatibility and one-tap injection.
+It is compatible with the Shizuku-API ecosystem — apps built on the official SDK connect without changes. Per the upstream license it ships its own package and permission names, so it cannot coexist with the official Shizuku; on top of that it adds Dhizuku compatibility, one-tap injection and more.
 
 **Can it coexist with the official Shizuku?**
 No — the compatibility bridge conflicts on the provider authority. Pick one.

@@ -10,7 +10,7 @@
 
 **简体中文** | [English](README_EN.md)
 
-基于 [Shizuku](https://github.com/RikkaApps/Shizuku) 二次开发 · 作者 [初然](https://github.com/cr1437)
+兼容 [Shizuku-API](https://github.com/RikkaApps/Shizuku-API) 生态 · 作者 [初然](https://github.com/cr1437)
 
 <!-- 徽章全部自托管在 docs/ 下，用相对路径引用：这类图片由 github.com 自己提供，
      在国内网络也能稳定显示（以前用 shields.io 图床会整排裂图）。
@@ -52,7 +52,7 @@
 | 新手引导 | 首次启动逐步向导：语言 / 外观 / 启动方式，引导内**直接完成激活**；免责声明 10 秒强制阅读 |
 | 四种激活方式 | Root / 无线调试 / 电脑 ADB / Dhizuku，一页搞定；已配对可一键启动 |
 | 一键注入 | 把权限分给常用工具（黑阈、小黑屋、冰箱、炼妖壶），没装的应用内直接下载 |
-| 兼容桥 | 内置官方 provider 中转，认不出 Fork 包名的老客户端也能连上 |
+| 兼容桥 | 内置官方 provider 中转，只认旧包名的老客户端也能连上 |
 | Tasker 支持 | 广播一键启停服务、激活 Dhizuku、查状态、触发下载 |
 | API 审计 | 完整记录哪个应用调用了哪个特权 API，设置里随时查 |
 | 自动更新 | 每次打开应用自动检查新版本，发现更新**就地弹出可下载的对话框**；网络拦截 GitHub 时自动切换可用源 |
@@ -207,7 +207,7 @@ Shizako/
 A：不要。无线调试 / USB 就能激活；有 Root 也行，姿势更多，但绝非必需。
 
 **Q：跟 Shizuku 什么关系？**
-A：她是 Shizuku 的二次开发 fork，核心能力源自上游；换了名字、包名与看板娘，另加 Dhizuku 兼容、一键注入等功能。
+A：它兼容 Shizuku-API 生态 —— 用官方 SDK 写的应用零改动直连。按上游许可要求，本项目使用自己的包名与权限名，因此不能与官方 Shizuku 共存；在此之上还加了 Dhizuku 兼容、一键注入等自家功能。
 
 **Q：能不能和官方 Shizuku 一起装？**
 A：不能，兼容桥会撞 provider。二选一。

@@ -18,14 +18,15 @@ Modifications Copyright 2026 初然 (Churan):
 - Added one-click grant (activation) home card
 - Rebranded about page and version scheme (zako2.1)
 
-Per the upstream license notice, this fork does NOT use the "Shizuku"
+Per the upstream license notice, this project does NOT use the "Shizuku"
 app name, the "moe.shizuku.privileged.api" application id, the
 "moe.shizuku.manager.permission.*" permissions, or any upstream
 launcher icon assets.
 
-The "api" directory is a git submodule of Shizuku-API
-(https://github.com/RikkaApps/Shizuku-API), Copyright (c) 2021 RikkaW,
-licensed under the MIT License.
+The "api" directory contains the source of Shizuku-API
+(https://github.com/RikkaApps/Shizuku-API), vendored into this repository
+rather than referenced as a git submodule.
+Copyright (c) 2021 RikkaW, licensed under the MIT License.
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
