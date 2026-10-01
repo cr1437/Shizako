@@ -18,6 +18,7 @@ import json
 import os
 import sys
 import urllib.request
+from datetime import datetime, timezone
 
 REPO = "cr1437/Shizako"
 API = "https://api.github.com"
@@ -102,6 +103,18 @@ def main():
         changed.append("badge-star.svg")
     if write_if_changed("badge-version.svg", badge("version", latest, "#2ea44f")):
         changed.append("badge-version.svg")
+
+    # 同时输出一份机器可读的数据，供官网首屏的「数据卡片」直接读取。
+    # 为什么不让学生浏览器直接调 GitHub API：api.github.com 在部分网络（含国内）会被
+    # DNS 拦掉，页面会拿不到数字；这份 json 与页面同源，永远读得到。
+    stats = {
+        "version": latest,
+        "downloads": downloads,
+        "stars": stars,
+        "updated": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+    }
+    if write_if_changed("stats.json", json.dumps(stats, ensure_ascii=False, indent=2) + "\n"):
+        changed.append("stats.json")
 
     print("downloads=%d stars=%d latest=%s" % (downloads, stars, latest))
     print("updated: %s" % (", ".join(changed) if changed else "(no change)"))

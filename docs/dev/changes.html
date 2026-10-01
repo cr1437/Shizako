@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>对 Shizuku-API 的本地修改 — Shizako 开发文档</title>
+<meta name="description" content="为什么权限名不同、如何与上游同步">
+<meta name="theme-color" content="#0b0d12">
+<link rel="icon" href="../assets/icon.png">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body class="doc-body">
+
+<header class="nav" id="nav">
+  <a class="brand" href="../index.html">
+    <img src="../assets/icon.png" alt="Shizako" width="32" height="32">
+    <span>Shizako</span>
+  </a>
+  <nav class="nav-links">
+    <a href="../index.html">首页</a>
+    <a href="../index.html#features">功能</a>
+    <a href="../index.html#activate">激活</a>
+    <a href="index.html" class="active">开发文档</a>
+    <a href="https://github.com/cr1437/Shizako">GitHub</a>
+  </nav>
+  <div class="nav-right">
+    <a class="btn primary small" href="https://github.com/cr1437/Shizako/releases/latest">下载</a>
+  </div>
+</header>
+
+<div class="doc-layout">
+  <aside class="doc-side">
+    <a class="doc-back" href="index.html">← 开发文档总览</a>
+    <nav class="doc-toc">
+      <p class="doc-toc-title">本页目录</p>
+      <a href="#为什么不直接声明官方权限让官方-api-应用直连">为什么不直接声明官方权限让官方 API 应用直连？</a>
+      <a href="#与上游同步">与上游同步</a>
+    </nav>
+  </aside>
+
+  <main class="doc-main">
+    <article class="doc-article">
+<p>本目录源自 <a href="https://github.com/RikkaApps/Shizuku-API">RikkaApps/Shizuku-API</a>（MIT License）， 自 zako2.1 起由 git 子模块改为直接内置，便于随本仓库一起分发与修改。</p>
+<p>上游代码保持原样，仅做了以下改动：</p>
+<div class="doc-table-wrap"><table><thead><tr><th>文件</th><th>改动</th><th>原因</th></tr></thead><tbody><tr><td><code>provider/src/main/AndroidManifest.xml</code></td><td>追加声明 <code>&lt;uses-permission android:name="com.churan.shizako.permission.API_V23"/&gt;</code></td><td>双管理器支持：使用本库的应用同时请求官方 Shizuku 与 Shizako 两个权限，两台服务器各自只推送、只授予自己定义的权限，因此同一份应用可连接任一管理器</td></tr><tr><td><code>shared/src/main/java/rikka/shizuku/ShizukuApiConstants.java</code></td><td>服务端版本常量与 Shizako 版本体系对齐</td><td>避免"激活后仍显示上游 13.6 版本号"</td></tr></tbody></table></div>
+<h2 id="为什么不直接声明官方权限让官方-api-应用直连">为什么不直接声明官方权限让官方 API 应用直连？</h2>
+<p>上游 Shizuku 的许可（Apache 2.0 附加条款）明确禁止 fork 声明 <code>moe.shizuku.manager.permission.*</code> 权限；技术上，重复定义同名 runtime 权限也会在 与官方 Shizuku 并存安装时产生"定义归属取决于安装顺序、卸载即失效"的冲突。 因此本库选择"双权限请求"路线：<strong>换用本库编译的应用</strong>可同时兼容两个生态， 未改动的官方 <code>dev.rikka.shizuku:api</code> 应用仍按原样连接官方 Shizuku。</p>
+<h2 id="与上游同步">与上游同步</h2>
+<pre class="lang-bash"><code>git remote add shizuku-api https://github.com/RikkaApps/Shizuku-API.git
+git fetch shizuku-api
+git diff HEAD shizuku-api/master -- api/   # 人工核对后合并，保留上述两处改动</code></pre>
+    </article>
+    <footer class="doc-foot">
+      <p>本页由 <code>tools/md2html.py</code> 从 <code>api/SHIZAKO-CHANGES.md</code> 生成，请勿直接编辑 HTML。</p>
+      <p><a href="../index.html">← 返回官网</a> · <a href="https://github.com/cr1437/Shizako">GitHub</a> ·
+         <a href="../API.md">查看本文的 Markdown 原文</a></p>
+    </footer>
+  </main>
+</div>
+
+<script>
+// 顶栏滚动态（与首页同一效果，文档页不加载 site.js 以免误伤语言切换）
+(function () {
+  var nav = document.getElementById('nav');
+  function onScroll() { if (nav) nav.classList.toggle('scrolled', window.scrollY > 8); }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>
+</body>
+</html>

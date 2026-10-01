@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>rish 命令行 — Shizako 开发文档</title>
+<meta name="description" content="在终端里调用特权 API 的 CLI 工具">
+<meta name="theme-color" content="#0b0d12">
+<link rel="icon" href="../assets/icon.png">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body class="doc-body">
+
+<header class="nav" id="nav">
+  <a class="brand" href="../index.html">
+    <img src="../assets/icon.png" alt="Shizako" width="32" height="32">
+    <span>Shizako</span>
+  </a>
+  <nav class="nav-links">
+    <a href="../index.html">首页</a>
+    <a href="../index.html#features">功能</a>
+    <a href="../index.html#activate">激活</a>
+    <a href="index.html" class="active">开发文档</a>
+    <a href="https://github.com/cr1437/Shizako">GitHub</a>
+  </nav>
+  <div class="nav-right">
+    <a class="btn primary small" href="https://github.com/cr1437/Shizako/releases/latest">下载</a>
+  </div>
+</header>
+
+<div class="doc-layout">
+  <aside class="doc-side">
+    <a class="doc-back" href="index.html">← 开发文档总览</a>
+    <nav class="doc-toc">
+      <p class="doc-toc-title">本页目录</p>
+      <a href="#description">Description</a>
+      <a href="#usage">Usage</a>
+      <a href="#options">Options</a>
+      <a href="#rish_preserve_env" class="lvl3">RISH_PRESERVE_ENV</a>
+    </nav>
+  </aside>
+
+  <main class="doc-main">
+    <article class="doc-article">
+<p>&lt;del&gt;Rish is an Interactive SHell for android&lt;/del&gt;</p>
+<h2 id="description">Description</h2>
+<p><code>rish</code> is an Android program for interacting with a shell that runs on a high-privileged daemon process.</p>
+<p>Currently, Shizuku and Sui are two available backends.</p>
+<h2 id="usage">Usage</h2>
+<p>First of all, follow the guide from Shizuku or Sui to create the files of <code>rish</code>.</p>
+<p>The remain is very simple, you only need to replace <code>sh</code> with <code>rish</code> in the command you want to run, <code>rish</code> will pass arguments directly to the remote shell.</p>
+<p>Here is an example.</p>
+<pre><code>rish -c &#x27;ls&#x27;</code></pre>
+<p>This is what will be executed at remote:</p>
+<pre><code>/system/bin/sh -c &#x27;ls&#x27;</code></pre>
+<p>If you want to use other shells rather than <code>/system/bin/sh</code>, use <code>rish exec /path/to/other/shell</code>.</p>
+<h2 id="options">Options</h2>
+<p>Since <code>rish</code> passes arguments directly to the remote, <code>rish</code> uses environment variable for options.</p>
+<h3 id="rish_preserve_env">RISH_PRESERVE_ENV</h3>
+<div class="doc-table-wrap"><table><thead><tr><th>Value</th><th>Description</th></tr></thead><tbody><tr><td><code>0</code></td><td>Do not change environment variables of the remote process</td></tr><tr><td><code>1</code></td><td>Replace the environment variables of the remote process with local's</td></tr></tbody></table></div>
+<p>Termux app set <code>PATH</code> and <code>LD_PRELOAD</code> to Termux's internal path. Adb (Shizuku can run under adb) does not have sufficient permissions to access such places, making users can even not using commands like <code>cd</code>.</p>
+<p>If the backend runs under adb, <code>RISH_PRESERVE_ENV</code> will be treated as <code>0</code> when not set.</p>
+<p>If the backend runs under root, <code>RISH_PRESERVE_ENV</code> will be treated as <code>1</code> when not set.</p>
+    </article>
+    <footer class="doc-foot">
+      <p>本页由 <code>tools/md2html.py</code> 从 <code>api/rish/README.md</code> 生成，请勿直接编辑 HTML。</p>
+      <p><a href="../index.html">← 返回官网</a> · <a href="https://github.com/cr1437/Shizako">GitHub</a> ·
+         <a href="../API.md">查看本文的 Markdown 原文</a></p>
+    </footer>
+  </main>
+</div>
+
+<script>
+// 顶栏滚动态（与首页同一效果，文档页不加载 site.js 以免误伤语言切换）
+(function () {
+  var nav = document.getElementById('nav');
+  function onScroll() { if (nav) nav.classList.toggle('scrolled', window.scrollY > 8); }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>
+</body>
+</html>

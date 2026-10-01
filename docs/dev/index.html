@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>开发文档 — Shizako</title>
+<meta name="description" content="Shizako 开发文档：把特权能力接入你自己的应用，依赖配置、权限申请、binder 生命周期、AIDL 用户服务与常见坑。">
+<meta name="theme-color" content="#0b0d12">
+<link rel="icon" href="../assets/icon.png">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <a class="brand" href="../index.html">
+    <img src="../assets/icon.png" alt="Shizako" width="32" height="32">
+    <span>Shizako</span>
+  </a>
+  <nav class="nav-links">
+    <a href="../index.html">首页</a>
+    <a href="../index.html#features">功能</a>
+    <a href="../index.html#activate">激活</a>
+    <a href="index.html" class="active">开发文档</a>
+    <a href="https://github.com/cr1437/Shizako">GitHub</a>
+  </nav>
+  <div class="nav-right">
+    <a class="btn primary small" href="https://github.com/cr1437/Shizako/releases/latest">下载</a>
+  </div>
+</header>
+
+<main class="section">
+  <h2>开发文档</h2>
+  <p class="lead">把 Shizako（或 Shizuku）的特权能力接入你自己的应用 —— 从依赖配置到 AIDL 用户服务的全流程。</p>
+
+  <div class="grid">
+    <a class="card" href="api.html">
+      <h3>API 使用指南 →</h3>
+      <p>两条接入路线、依赖与 Manifest 配置、binder 生命周期、权限申请、AIDL 用户服务、能力查询、完整示例与常见坑。</p>
+    </a>
+    <a class="card" href="upstream-api.html">
+      <h3>Shizuku-API 上游文档 →</h3>
+      <p>官方客户端库的原始说明（英文）：获取 binder、远程调用、UserService、非 SDK 接口的使用方式。</p>
+    </a>
+    <a class="card" href="changes.html">
+      <h3>对 Shizuku-API 的本地修改 →</h3>
+      <p>为什么用自有的权限名而不是上游的；与上游同步的方式与差异清单。</p>
+    </a>
+    <a class="card" href="rish.html">
+      <h3>rish 命令行 →</h3>
+      <p>在终端里直接调用特权 API 的 CLI 工具：用法、选项与环境变量。</p>
+    </a>
+  </div>
+
+  <div class="grid" style="margin-top:18px">
+    <article class="card">
+      <h3>只是想用官方依赖？</h3>
+      <p>直接依赖 <code>dev.rikka.shizuku:api</code> 与 <code>dev.rikka.shizuku:provider</code> 即可 —— Shizako 对官方 API 应用是<strong>免改码直连</strong>的，你不需要为它写任何适配代码。</p>
+    </article>
+    <article class="card">
+      <h3>文档源文件</h3>
+      <p>每个页面都由仓库里的 Markdown 生成（<code>tools/md2html.py</code>），改动请改对应的 <code>.md</code>：<a href="../API.md">docs/API.md</a> · <a href="https://github.com/cr1437/Shizako/blob/main/api/SHIZAKO-CHANGES.md">api/SHIZAKO-CHANGES.md</a>。</p>
+    </article>
+  </div>
+</main>
+
+<footer class="footer">
+  <p class="footer-bottom">Shizako 开发文档 · <a href="../index.html">官网首页</a> · <a href="https://github.com/cr1437/Shizako">GitHub</a> · Apache-2.0</p>
+</footer>
+
+<script>
+(function () {
+  var nav = document.getElementById('nav');
+  function onScroll() { if (nav) nav.classList.toggle('scrolled', window.scrollY > 8); }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>
+</body>
+</html>

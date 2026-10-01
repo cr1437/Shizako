@@ -90,7 +90,13 @@
     'footer.community': 'Community',
     'footer.license': 'License',
     'footer.licenseText': 'Apache License 2.0. Upstream copyright RikkaApps; modifications copyright 初然.',
-    'footer.bottom': 'Made with love · she does not bite (ˊᗜˋ*)'
+    'footer.bottom': 'Made with love · she does not bite (ˊᗜˋ*)',
+
+    'stat.version': 'Latest version',
+    'stat.downloads': 'Total downloads',
+    'stat.stars': 'Stars',
+    'stat.platform': 'Platform',
+    'stat.license': 'License'
   };
 
   var TITLES = {
@@ -141,4 +147,24 @@
   }
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+
+  // 首屏数据卡片：读取与页面同源的 stats.json（由 .github/workflows/badges.yml
+  // 每 6 小时刷新一次）。刻意不直接调 GitHub API —— api.github.com 在部分网络
+  // （含国内）会解析失败，那样页面就拿不到数字了。取不到时保留 HTML 里写死的兜底值。
+  fetch('stats.json', { cache: 'no-cache' })
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (s) {
+      if (!s) return;
+      document.querySelectorAll('[data-stat]').forEach(function (el) {
+        var key = el.getAttribute('data-stat');
+        var val = s[key];
+        if (val === undefined || val === null || val === '') return;
+        el.textContent = (key === 'downloads' || key === 'stars')
+          ? Number(val).toLocaleString('en-US')
+          : String(val);
+      });
+      var upd = document.querySelector('[data-stat-updated]');
+      if (upd && s.updated) upd.textContent = String(s.updated).slice(0, 10);
+    })
+    .catch(function () { /* 静默：兜底值已经在 HTML 里 */ });
 })();
