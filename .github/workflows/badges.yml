@@ -1,0 +1,44 @@
+name: badges
+
+# 刷新 README 里的自托管徽章（docs/badge-*.svg）。
+#
+# 为什么需要它：徽章是仓库内的 SVG 文件（相对路径引用，由 github.com 直接提供），
+# 这样在国内网络下也不会像 shields.io 那样裂图；但静态文件显示不了会变的数字，
+# 于是用这个工作流定时把最新数据写回去。
+#
+# 注意：用默认 GITHUB_TOKEN 推送的提交不会触发其它工作流，所以这里的定时提交
+# 不会反复触发 app.yml 的构建。
+
+on:
+  schedule:
+    # 每 6 小时一次（错开整点，减少排队）
+    - cron: '17 */6 * * *'
+  workflow_dispatch:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Refresh self-hosted badges
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 tools/update_badges.py
+
+      - name: Commit when the numbers changed
+        run: |
+          if [ -z "$(git status --porcelain docs/)" ]; then
+            echo "徽章没有变化，跳过提交"
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/
+          git commit -m "docs: 刷新徽章计数"
+          git push

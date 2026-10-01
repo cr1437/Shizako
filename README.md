@@ -13,14 +13,17 @@
 基于 [Shizuku](https://github.com/RikkaApps/Shizuku) 二次开发 · 作者 [初然](https://github.com/cr1437)
 
 <!-- 徽章全部自托管在 docs/ 下，用相对路径引用：这类图片由 github.com 自己提供，
-     在国内网络也能稳定显示。以前用的是 shields.io 图床，浏览器经常整排加载不出来，
-     README 顶部就变成一堆裂图。（下面几个「动态」指标改用文字链接，同样不会裂。） -->
+     在国内网络也能稳定显示（以前用 shields.io 图床会整排裂图）。
+     version / downloads / star 三个会变的指标由 .github/workflows/badges.yml
+     每 6 小时（以及每次发版后）自动重新生成。 -->
 [![版本](docs/badge-version.svg)](https://github.com/cr1437/Shizako/releases)
+[![下载量](docs/badge-downloads.svg)](https://github.com/cr1437/Shizako/releases)
+[![Star](docs/badge-star.svg)](https://github.com/cr1437/Shizako)
 [![平台](docs/badge-platform.svg)](https://github.com/cr1437/Shizako/releases)
 [![基于](docs/badge-based-on.svg)](https://github.com/RikkaApps/Shizuku)
 [![许可](docs/badge-license.svg)](LICENSE)
 
-[📦 下载最新版](https://github.com/cr1437/Shizako/releases) · [🐛 反馈问题](https://github.com/cr1437/Shizako/issues) · [⭐ Star 支持她](https://github.com/cr1437/Shizako)
+[📦 下载最新版](https://github.com/cr1437/Shizako/releases) · [🐛 反馈问题](https://github.com/cr1437/Shizako/issues) · ⭐ Star 支持她
 
 </div>
 

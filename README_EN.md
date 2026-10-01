@@ -13,14 +13,17 @@
 A fork of [Shizuku](https://github.com/RikkaApps/Shizuku) · by [初然 (cr1437)](https://github.com/cr1437)
 
 <!-- All badges are self-hosted under docs/ and referenced by relative path, so they are
-     served by github.com itself and render reliably. The previous shields.io badges often
-     failed to load and turned the header into a row of broken images. -->
+     served by github.com itself and render reliably (the previous shields.io badges often
+     failed to load). version / downloads / star are regenerated every 6 hours and after
+     each release by .github/workflows/badges.yml. -->
 [![version](docs/badge-version.svg)](https://github.com/cr1437/Shizako/releases)
+[![downloads](docs/badge-downloads.svg)](https://github.com/cr1437/Shizako/releases)
+[![star](docs/badge-star.svg)](https://github.com/cr1437/Shizako)
 [![platform](docs/badge-platform.svg)](https://github.com/cr1437/Shizako/releases)
 [![based on](docs/badge-based-on.svg)](https://github.com/RikkaApps/Shizuku)
 [![license](docs/badge-license.svg)](LICENSE)
 
-[📦 Download latest](https://github.com/cr1437/Shizako/releases) · [🐛 Report an issue](https://github.com/cr1437/Shizako/issues) · [⭐ Star this project](https://github.com/cr1437/Shizako)
+[📦 Download latest](https://github.com/cr1437/Shizako/releases) · [🐛 Report an issue](https://github.com/cr1437/Shizako/issues) · ⭐ Star this project
 
 </div>
 
