@@ -12,12 +12,15 @@
 
 A fork of [Shizuku](https://github.com/RikkaApps/Shizuku) · by [初然 (cr1437)](https://github.com/cr1437)
 
-[![Release](https://img.shields.io/github/v/release/cr1437/Shizako?style=flat-square&label=version)](https://github.com/cr1437/Shizako/releases)
-[![Downloads](https://img.shields.io/github/downloads/cr1437/Shizako/total?style=flat-square&label=downloads)](https://github.com/cr1437/Shizako/releases)
-[![Platform](https://img.shields.io/badge/Android-7.0%2B-34A853?style=flat-square&logo=android&logoColor=white)](https://github.com/cr1437/Shizako/releases)
-[![Based on](https://img.shields.io/badge/based%20on-Shizuku%2013.x-7C6FD0?style=flat-square)](https://github.com/RikkaApps/Shizuku)
-[![License](https://img.shields.io/github/license/cr1437/Shizako?style=flat-square)](LICENSE)
-[![Star](https://img.shields.io/github/stars/cr1437/Shizako?style=for-the-badge&label=%E2%AD%90%20Star%20Shizako&color=FFD700)](https://github.com/cr1437/Shizako)
+<!-- All badges are self-hosted under docs/ and referenced by relative path, so they are
+     served by github.com itself and render reliably. The previous shields.io badges often
+     failed to load and turned the header into a row of broken images. -->
+[![version](docs/badge-version.svg)](https://github.com/cr1437/Shizako/releases)
+[![platform](docs/badge-platform.svg)](https://github.com/cr1437/Shizako/releases)
+[![based on](docs/badge-based-on.svg)](https://github.com/RikkaApps/Shizuku)
+[![license](docs/badge-license.svg)](LICENSE)
+
+[📦 Download latest](https://github.com/cr1437/Shizako/releases) · [🐛 Report an issue](https://github.com/cr1437/Shizako/issues) · [⭐ Star this project](https://github.com/cr1437/Shizako)
 
 </div>
 

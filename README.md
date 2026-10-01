@@ -12,12 +12,15 @@
 
 基于 [Shizuku](https://github.com/RikkaApps/Shizuku) 二次开发 · 作者 [初然](https://github.com/cr1437)
 
-[![Release](https://img.shields.io/github/v/release/cr1437/Shizako?style=flat-square&label=%E7%89%88%E6%9C%AC)](https://github.com/cr1437/Shizako/releases)
-[![Downloads](https://img.shields.io/github/downloads/cr1437/Shizako/total?style=flat-square&label=%E4%B8%8B%E8%BD%BD)](https://github.com/cr1437/Shizako/releases)
-[![Platform](https://img.shields.io/badge/Android-7.0%2B-34A853?style=flat-square&logo=android&logoColor=white)](https://github.com/cr1437/Shizako/releases)
-[![Based on](https://img.shields.io/badge/%E5%9F%BA%E4%BA%8E-Shizuku%2013.x-7C6FD0?style=flat-square)](https://github.com/RikkaApps/Shizuku)
-[![License](https://img.shields.io/github/license/cr1437/Shizako?style=flat-square)](LICENSE)
-[![Star](https://img.shields.io/github/stars/cr1437/Shizako?style=for-the-badge&label=%E2%AD%90%20Star%20Shizako%20%E7%8C%AE%E7%BB%99%E5%A5%B9&color=FFD700)](https://github.com/cr1437/Shizako)
+<!-- 徽章全部自托管在 docs/ 下，用相对路径引用：这类图片由 github.com 自己提供，
+     在国内网络也能稳定显示。以前用的是 shields.io 图床，浏览器经常整排加载不出来，
+     README 顶部就变成一堆裂图。（下面几个「动态」指标改用文字链接，同样不会裂。） -->
+[![版本](docs/badge-version.svg)](https://github.com/cr1437/Shizako/releases)
+[![平台](docs/badge-platform.svg)](https://github.com/cr1437/Shizako/releases)
+[![基于](docs/badge-based-on.svg)](https://github.com/RikkaApps/Shizuku)
+[![许可](docs/badge-license.svg)](LICENSE)
+
+[📦 下载最新版](https://github.com/cr1437/Shizako/releases) · [🐛 反馈问题](https://github.com/cr1437/Shizako/issues) · [⭐ Star 支持她](https://github.com/cr1437/Shizako)
 
 </div>
 

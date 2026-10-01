@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="20" role="img" aria-label="based on: Shizuku 13.x">
+  <title>based on: Shizuku 13.x</title>
+  <g shape-rendering="crispEdges">
+    <rect width="66" height="20" fill="#555"/>
+    <rect x="66" width="94" height="20" fill="#7C6FD0"/>
+  </g>
+  <g fill="#fff" text-anchor="middle" font-family="Verdana,Geneva,DejaVu Sans,sans-serif" font-size="11">
+    <text x="33" y="14">based on</text>
+    <text x="113" y="14">Shizuku 13.x</text>
+  </g>
+</svg>
