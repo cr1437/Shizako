@@ -47,6 +47,15 @@ jobs:
           # 不存在该目录 → Gradle 启动即抛 IOException）。properties 文件同名键后者生效，
           # 这里覆盖回不带 tmpdir 的版本；开发机的本机配置不受影响。
           echo 'org.gradle.jvmargs=-Xmx4096m -Dfile.encoding=UTF-8' >> gradle.properties
+          # runner 上没有 signing.properties（.gitignore 掉的开发机配置）→ signing.gradle
+          # 回退到 debug keystore，但 ~/.config/.android/debug.keystore 不会被自动创建，
+          # validateSigningDebug/Release 会直接失败。这里按 android 惯例参数预生成一个
+          # （仅用于 CI 构建验证产物；正式发版签名走 secrets，见 Write key 步骤）。
+          mkdir -p "$HOME/.config/.android" "$HOME/.android"
+          keytool -genkeypair -keystore "$HOME/.config/.android/debug.keystore" -storetype JKS \
+            -storepass android -keypass android -alias androiddebugkey \
+            -dname "CN=Android Debug,O=Android,C=US" -keyalg RSA -keysize 2048 -validity 10000
+          cp "$HOME/.config/.android/debug.keystore" "$HOME/.android/debug.keystore"
           ./gradlew :manager:assemble
           # 产物名是 fork 自定的 shizako-zako3.13-release.apk（上游是 shizuku-v*-release.apk，
           # 旧 glob 在这里永远匹配不到 → ls 失败 + bash -e → 构建步骤假红）
