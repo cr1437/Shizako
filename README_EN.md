@@ -23,7 +23,7 @@ Compatible with the [Shizuku-API](https://github.com/RikkaApps/Shizuku-API) ecos
 [![based on](docs/badge-based-on.svg)](https://github.com/RikkaApps/Shizuku)
 [![license](docs/badge-license.svg)](LICENSE)
 
-[📦 Download latest](https://github.com/cr1437/Shizako/releases) · [🐛 Report an issue](https://github.com/cr1437/Shizako/issues) · ⭐ Star this project
+[🌐 Website](https://cr1437.github.io/Shizako/) · [📦 Download latest](https://github.com/cr1437/Shizako/releases) · [🐛 Report an issue](https://github.com/cr1437/Shizako/issues) · ⭐ Star this project
 
 </div>
 

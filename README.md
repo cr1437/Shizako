@@ -23,7 +23,7 @@
 [![基于](docs/badge-based-on.svg)](https://github.com/RikkaApps/Shizuku)
 [![许可](docs/badge-license.svg)](LICENSE)
 
-[📦 下载最新版](https://github.com/cr1437/Shizako/releases) · [🐛 反馈问题](https://github.com/cr1437/Shizako/issues) · ⭐ Star 支持她
+[🌐 官网](https://cr1437.github.io/Shizako/) · [📦 下载最新版](https://github.com/cr1437/Shizako/releases) · [🐛 反馈问题](https://github.com/cr1437/Shizako/issues) · ⭐ Star 支持她
 
 </div>
 
