@@ -15,7 +15,15 @@ android {
     defaultConfig {
         applicationId "com.churan.shizako"
         versionCode rootProject.ext.versionCode
-        versionName rootProject.ext.versionName
+        // F-Droid 版（-Pfdroid）：版本名带 -f 后缀，一眼区分两个变体。
+        //   GitHub 版：./gradlew :manager:assembleRelease          → zako3.12
+        //   F-Droid 版：./gradlew :manager:assembleRelease -Pfdroid → zako3.12-f
+        // 用构建属性而不是 productFlavors：flavor 会把产物路径改成 apk/<flavor>/release/，
+        // 影响现有发版脚本与官网下载链接；这里保持路径不变。
+        def fdroidBuild = project.hasProperty('fdroid')
+        versionName rootProject.ext.versionName + (fdroidBuild ? '-f' : '')
+        // 编译期开关，供 fdroid/FdroidBuild.kt 集中判断（F-Droid 版需关闭若干功能）
+        buildConfigField "boolean", "FDROID_BUILD", "${fdroidBuild}"
         externalNativeBuild {
             cmake {
                 arguments '-DANDROID_STL=none'
