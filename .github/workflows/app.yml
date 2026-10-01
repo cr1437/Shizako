@@ -43,6 +43,10 @@ jobs:
           echo 'android.native.buildOutput=verbose' >> gradle.properties
           echo 'org.gradle.caching=true' >> gradle.properties
           echo 'org.gradle.parallel=true' >> gradle.properties
+          # 仓库里的 gradle.properties 带 -Djava.io.tmpdir=E:/tmp（开发机专用，Linux runner
+          # 不存在该目录 → Gradle 启动即抛 IOException）。properties 文件同名键后者生效，
+          # 这里覆盖回不带 tmpdir 的版本；开发机的本机配置不受影响。
+          echo 'org.gradle.jvmargs=-Xmx4096m -Dfile.encoding=UTF-8' >> gradle.properties
           ./gradlew :manager:assemble
           # 产物名是 fork 自定的 shizako-zako3.13-release.apk（上游是 shizuku-v*-release.apk，
           # 旧 glob 在这里永远匹配不到 → ls 失败 + bash -e → 构建步骤假红）
