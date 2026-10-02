@@ -1,0 +1,5 @@
+First F-Droid release (zako3.13, versionCode 313).
+
+• Dedicated F-Droid build variant: in-app updater and update checks are disabled, one-click third-party APK installation is hidden, and the AI explain feature (proprietary providers) is removed.
+• The bundled compatibility stub APK is now built from source during the build instead of being committed as a binary.
+• Chinese Maven mirrors are automatically disabled for this build variant, so only official repositories are used.

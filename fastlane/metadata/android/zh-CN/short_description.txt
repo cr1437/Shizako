@@ -1,0 +1,1 @@
+不 Root 也能借用系统特权 API，兼容 Shizuku 生态

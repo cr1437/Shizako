@@ -1,0 +1,23 @@
+Shizako is a system-privilege assistant for Android: it wakes a small privileged process through root, wireless debugging, a computer over ADB, or Dhizuku (Device Owner), and then lends that privilege to the apps you trust.
+
+No root required for the most common setup: on Android 11 and above you can activate everything on the phone itself through Wireless debugging — the pairing code is typed right in a notification, so you never have to switch between apps. If you have a computer, a single adb command does the same job. On rooted devices you can also start it with one tap and auto-start on boot.
+
+KEY POINTS
+
+• No ads, no analytics, no tracking, no account. Nothing is uploaded; the permission list stays on your device.
+• Free software: Apache-2.0 (a fork of Shizuku by RikkaApps; see NOTICE for attribution).
+• Works with the official Shizuku-API ecosystem: apps written against dev.rikka.shizuku:api connect without any modification.
+• Every app must ask you for permission on first use, and you can revoke it at any time.
+• Dhizuku (Device Owner) mode: privileges survive reboots and work without root or keeping wireless debugging on.
+• Toolbox: module management, a shell console with macros, accessibility manager, app management, automation hooks for tools such as Tasker.
+
+FOUR WAYS TO ACTIVATE
+
+1. Wireless debugging (Android 11+): no computer needed. Start pairing in the app, enable Wireless debugging in Developer options, tap “Pair device with pairing code”, then type the 6-digit code into the Shizako notification.
+2. Computer + ADB: enable USB debugging, connect the cable, copy the command shown in the app and run it once in a terminal.
+3. Root (Magisk / KernelSU / APatch): tap Start and grant superuser access; optionally enable start-on-boot.
+4. Dhizuku (Device Owner): run the one-time command on a computer; privileges persist across reboots.
+
+NOTE
+
+The app intentionally declares the official Shizuku provider authority, so it cannot be installed alongside the official Shizuku app. This is a deliberate design decision of this fork, and it uses its own application id and permission names as required by the upstream license.

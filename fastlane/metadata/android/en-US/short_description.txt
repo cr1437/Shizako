@@ -1,0 +1,1 @@
+Borrow privileged Android APIs without root — Shizuku-API compatible
