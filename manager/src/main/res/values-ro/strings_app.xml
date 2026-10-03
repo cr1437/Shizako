@@ -547,7 +547,7 @@
     <string name="adb_modules_confirm_action_title">Rulezi action.sh?</string>
     <string name="settings_module_catalog">Catalog de module</string>
     <string name="download_app_brevent">Brevent</string>
-    <string name="lab_stub_summary">Unele aplicații recunosc doar numele original de pachet Shizuku (moe.shizuku.privileged.api) și refuză să funcționeze fără el. Instalarea acestui substituent le face să vadă Shizuku ca disponibil.</string>
+    <string name="lab_stub_summary">Unele aplicații recunosc doar numele original de pachet Shizuku (%1$s) și refuză să funcționeze fără el. Instalarea acestui substituent le face să vadă Shizuku ca disponibil.</string>
     <string name="home_info_android">Android</string>
     <string name="activation_faq_reboot_a">Root: da, pornește din nou după fiecare bootare (sau activează \"Pornire la bootare\" în setări). Depanare wireless / ADB de pe computer: da, serviciul se oprește la repornire. Dhizuku: nu, statutul de Device Owner persistă peste reporniri.</string>
     <string name="comput_macro_run">Rulează</string>

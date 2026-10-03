@@ -547,7 +547,7 @@
     <string name="adb_modules_confirm_action_title">Chạy action.sh chứ?</string>
     <string name="settings_module_catalog">Danh mục module</string>
     <string name="download_app_brevent">Brevent</string>
-    <string name="lab_stub_summary">Một số ứng dụng ghi cứng tên gói Shizuku gốc (moe.shizuku.privileged.api) vào mã, không tìm thấy là kết luận \"không có Shizuku\" rồi từ chối chạy. Cài một gói thay thế cùng tên là chúng lại thấy \"Shizuku đã cài\".</string>
+    <string name="lab_stub_summary">Một số ứng dụng ghi cứng tên gói Shizuku gốc (%1$s) vào mã, không tìm thấy là kết luận \"không có Shizuku\" rồi từ chối chạy. Cài một gói thay thế cùng tên là chúng lại thấy \"Shizuku đã cài\".</string>
     <string name="home_info_android">Android</string>
     <string name="activation_faq_reboot_a">Root: có, mỗi lần khởi động máy phải khởi động lại (hoặc bật \"Tự chạy khi khởi động\" trong cài đặt). Gỡ lỗi không dây / ADB qua máy tính: có, dịch vụ sẽ dừng sau khi khởi động lại. Dhizuku: không, danh phận Chủ sở hữu thiết bị vẫn còn sau khi khởi động lại.</string>
     <string name="comput_macro_run">Thực thi</string>

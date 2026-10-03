@@ -98,8 +98,13 @@ dependencyResolutionManagement {
 }
 
 include ':server', ':starter', ':shell'
-// 兼容性 Stub 占位包（moe.shizuku.privileged.api）：产物由 manager 的 copyStubApk 打进 assets
-include ':stub'
+// 兼容性 Stub 占位包（applicationId 就是上游的 moe.shizuku.privileged.api）：产物由
+// manager 的 copyStubApk 打进 assets，运行时由 StubManager 安装。
+// -Pfdroid 时**不 include 这个模块** —— 上游 README 的 FORBIDDEN 条款禁止 fork 使用该
+// application id，F-Droid 维护者要求在这个变体里关掉它，所以连构建都不做。
+if (!gradle.startParameter.projectProperties.containsKey("fdroid")) {
+    include ':stub'
+}
 include ':manager'
 include ':common'
 

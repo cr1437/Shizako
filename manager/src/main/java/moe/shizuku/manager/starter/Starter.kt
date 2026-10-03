@@ -16,11 +16,10 @@ object Starter {
     /**
      * 让用户在**电脑**上执行的命令（「电脑 ADB」激活方式）。
      *
-     * **必须带上 `--apk=`**：不带的话 starter 会回退到「按写死的 PACKAGE_NAME 去 `pm path` 找 APK」，
-     * 而 `starter.cpp` 里那个包名仍是上游的 `moe.shizuku.privileged.api` —— 在本 fork 里它只是
-     * 兼容性占位壳（[moe.shizuku.manager.compat.StubManager]），里面根本没有
-     * `rikka.shizuku.server.ShizukuService`，于是必然启动失败（没装占位壳时则直接 exit 7）。
-     * 所以这里直接复用 [internalCommand]，把本体的 APK 路径显式告诉 starter。
+     * **仍要带上 `--apk=`**：不带的话 starter 会回退到「按 `starter.cpp` 里的 PACKAGE_NAME
+     * 去 `pm path` 找 APK」。那个宏已改成本 fork 自己的包名（com.churan.shizako），兜底
+     * 能成，但多一次 shell 调用、且要求 PACKAGE_NAME 与 applicationId 永远保持一致；
+     * 直接把本体的 APK 路径显式告诉 starter 更稳。
      */
     val adbCommand = "adb shell $internalCommand"
 }

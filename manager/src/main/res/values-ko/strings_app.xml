@@ -547,7 +547,7 @@
     <string name="adb_modules_confirm_action_title">action.sh를 실행할까요?</string>
     <string name="settings_module_catalog">모듈 목록</string>
     <string name="download_app_brevent">黑阈 (Brevent)</string>
-    <string name="lab_stub_summary">일부 앱은 원본 Shizuku 패키지 이름(moe.shizuku.privileged.api)을 코드에 박아 두고, 없으면 Shizuku가 없다고 판단해 동작을 거부해요. 같은 이름의 자리표시자 패키지를 설치하면 그런 앱들이 Shizuku가 설치된 걸로 보게 돼요.</string>
+    <string name="lab_stub_summary">일부 앱은 원본 Shizuku 패키지 이름(%1$s)을 코드에 박아 두고, 없으면 Shizuku가 없다고 판단해 동작을 거부해요. 같은 이름의 자리표시자 패키지를 설치하면 그런 앱들이 Shizuku가 설치된 걸로 보게 돼요.</string>
     <string name="home_info_android">Android</string>
     <string name="activation_faq_reboot_a">Root: 필요해요. 부팅할 때마다 다시 시작하세요(또는 설정에서 「부팅 시 자동 시작」을 켜세요). 무선 디버깅 / PC ADB: 필요해요. 재부팅하면 서비스가 멈춰요. Dhizuku: 필요 없어요. 기기 소유자 신분은 재부팅 후에도 유지돼요.</string>
     <string name="comput_macro_run">실행</string>

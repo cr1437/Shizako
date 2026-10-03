@@ -547,7 +547,7 @@
     <string name="adb_modules_confirm_action_title">Naj zaženem action.sh?</string>
     <string name="settings_module_catalog">Katalog modulov</string>
     <string name="download_app_brevent">Brevent</string>
-    <string name="lab_stub_summary">Nekatere aplikacije prepoznajo le ime izvirnega paketa Shizuku (moe.shizuku.privileged.api) in nočejo delovati brez njega. Če namestiš ta nadomestni paket, bodo videle, da je Shizuku na voljo.</string>
+    <string name="lab_stub_summary">Nekatere aplikacije prepoznajo le ime izvirnega paketa Shizuku (%1$s) in nočejo delovati brez njega. Če namestiš ta nadomestni paket, bodo videle, da je Shizuku na voljo.</string>
     <string name="home_info_android">Android</string>
     <string name="activation_faq_reboot_a">Root: da, znova je treba zagnati po vsakem zagonu naprave (lahko pa v nastavitvah vklopiš "Zaženi ob zagonu"). Brezžično razhroščevanje / ADB z računalnikom: da, storitev se ob ponovnem zagonu ustavi. Dhizuku: ne, lastnik naprave ostane tudi po ponovnem zagonu.</string>
     <string name="comput_macro_run">Zaženi</string>

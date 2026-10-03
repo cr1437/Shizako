@@ -547,7 +547,7 @@
     <string name="adb_modules_confirm_action_title">Pokrenuti action.sh?</string>
     <string name="settings_module_catalog">Katalog modula</string>
     <string name="download_app_brevent">Brevent</string>
-    <string name="lab_stub_summary">Neke aplikacije prepoznaju samo naziv paketa originalnog Shizuka (moe.shizuku.privileged.api) i odbijaju raditi bez njega. Instaliranjem ovog zamjenskog paketa vide Shizuku kao dostupan.</string>
+    <string name="lab_stub_summary">Neke aplikacije prepoznaju samo naziv paketa originalnog Shizuka (%1$s) i odbijaju raditi bez njega. Instaliranjem ovog zamjenskog paketa vide Shizuku kao dostupan.</string>
     <string name="home_info_android">Android</string>
     <string name="activation_faq_reboot_a">Root: da, pokreni ponovno nakon svakog podizanja (ili uključi "Pokreni pri podizanju sustava" u postavkama). Bežično otklanjanje pogrešaka / ADB s računala: da, usluga se zaustavlja pri restartu. Dhizuku: ne, Device Owner ostaje i nakon restarta.</string>
     <string name="comput_macro_run">Izvrši</string>

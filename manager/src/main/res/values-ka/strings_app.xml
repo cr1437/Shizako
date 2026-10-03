@@ -681,7 +681,7 @@
     <string name="adb_modules_confirm_action_title">გავუშვათ action.sh?</string>
     <string name="settings_module_catalog">მოდულების კატალოგი</string>
     <string name="download_app_brevent">Brevent</string>
-    <string name="lab_stub_summary">ზოგიერთი აპი მხოლოდ Shizuku-ს ორიგინალურ პაკეტის სახელს (moe.shizuku.privileged.api) ცნობს და მის გარეშე მუშაობაზე უარს ამბობს. ამ ჩანაცვლების დაყენებით ისინი Shizuku-ს დაყენებულად დაინახავენ.</string>
+    <string name="lab_stub_summary">ზოგიერთი აპი მხოლოდ Shizuku-ს ორიგინალურ პაკეტის სახელს (%1$s) ცნობს და მის გარეშე მუშაობაზე უარს ამბობს. ამ ჩანაცვლების დაყენებით ისინი Shizuku-ს დაყენებულად დაინახავენ.</string>
     <string name="home_info_android">Android</string>
     <string name="grant_dialog_button_allow_always">ყოველთვის დაშვება</string>
     <string name="adb_pairing_tutorial_content_miui_2">წინააღმდეგ შემთხვევაში შეტყობინებიდან დაწყვილების კოდის შეყვანა შეიძლება ვერ შეძლო.</string>

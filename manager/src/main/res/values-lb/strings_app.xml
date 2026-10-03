@@ -547,7 +547,7 @@
     <string name="adb_modules_confirm_action_title">action.sh lafen?</string>
     <string name="settings_module_catalog">Modul-Katalog</string>
     <string name="download_app_brevent">Brevent</string>
-    <string name="lab_stub_summary">E puer Appen erkennen nëmmen den originale Paknumm vu Shizuku (moe.shizuku.privileged.api) an refuséieren ze schaffen ouni en. D\'Installatioun vun dësem Plazhalter mécht, datt si Shizuku als verfügbar gesinn.</string>
+    <string name="lab_stub_summary">E puer Appen erkennen nëmmen den originale Paknumm vu Shizuku (%1$s) an refuséieren ze schaffen ouni en. D\'Installatioun vun dësem Plazhalter mécht, datt si Shizuku als verfügbar gesinn.</string>
     <string name="home_info_android">Android</string>
     <string name="activation_faq_reboot_a">Root: jo, no all Start erëm uschalten (oder "Beim Start ufänken" an den Astellungen aschalten). Drahllosen Debug / Computer-ADB: jo, de Service stoppt beim Neistart. Dhizuku: nee, den Device Owner bleift iwwer Neistarts.</string>
     <string name="comput_macro_run">Ausféieren</string>

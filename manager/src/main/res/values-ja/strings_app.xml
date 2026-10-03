@@ -547,7 +547,7 @@
     <string name="adb_modules_confirm_action_title">action.sh を実行しますか？</string>
     <string name="settings_module_catalog">モジュールカタログ</string>
     <string name="download_app_brevent">黑阈（Brevent）</string>
-    <string name="lab_stub_summary">一部のアプリはオリジナルの Shizuku のパッケージ名（moe.shizuku.privileged.api）をコードに直接書いていて、見つからないと「Shizuku がない」と判断して動作を拒否します。同名のスタブを入れておけば「Shizuku はインストール済み」と認識されます。</string>
+    <string name="lab_stub_summary">一部のアプリはオリジナルの Shizuku のパッケージ名（%1$s）をコードに直接書いていて、見つからないと「Shizuku がない」と判断して動作を拒否します。同名のスタブを入れておけば「Shizuku はインストール済み」と認識されます。</string>
     <string name="home_info_android">Android</string>
     <string name="activation_faq_reboot_a">Root：必要です。起動のたびに再度起動してください（設定で「起動時に自動開始」を有効にできます）。ワイヤレスデバッグ / PC の ADB：必要です。再起動するとサービスは停止します。Dhizuku：不要です。デバイスオーナーは再起動後も有効なままです。</string>
     <string name="comput_macro_run">実行</string>

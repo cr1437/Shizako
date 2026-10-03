@@ -547,7 +547,7 @@
     <string name="adb_modules_confirm_action_title">action.sh uitvoeren?</string>
     <string name="settings_module_catalog">Modulecatalogus</string>
     <string name="download_app_brevent">Brevent</string>
-    <string name="lab_stub_summary">Sommige apps herkennen alleen de originele pakketnaam van Shizuku (moe.shizuku.privileged.api) en weigeren te werken zonder die. Met deze plaatsvervanger zien ze Shizuku als beschikbaar.</string>
+    <string name="lab_stub_summary">Sommige apps herkennen alleen de originele pakketnaam van Shizuku (%1$s) en weigeren te werken zonder die. Met deze plaatsvervanger zien ze Shizuku als beschikbaar.</string>
     <string name="home_info_android">Android</string>
     <string name="activation_faq_reboot_a">Root: ja, start na elke herstart opnieuw (of zet \"Starten bij opstarten\" aan in de instellingen). Draadloos debuggen / computer-ADB: ja, de service stopt bij een herstart. Dhizuku: nee, de toesteleigenaar blijft na herstarts bestaan.</string>
     <string name="comput_macro_run">Uitvoeren</string>

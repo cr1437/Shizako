@@ -547,7 +547,7 @@
     <string name="adb_modules_confirm_action_title">action.sh चलानी है?</string>
     <string name="settings_module_catalog">मॉड्यूल कैटलॉग</string>
     <string name="download_app_brevent">Brevent</string>
-    <string name="lab_stub_summary">कुछ ऐप्स कोड में ही असली Shizuku के पैकेज नाम (moe.shizuku.privileged.api) पर अटक जाते हैं और वह न मिले तो "Shizuku नहीं है" मानकर काम करने से मना कर देते हैं। एक ही नाम वाला प्लेसहोल्डर पैकेज इंस्टॉल कर दें, तो उन्हें "Shizuku इंस्टॉल है" दिखने लगेगा।</string>
+    <string name="lab_stub_summary">कुछ ऐप्स कोड में ही असली Shizuku के पैकेज नाम (%1$s) पर अटक जाते हैं और वह न मिले तो "Shizuku नहीं है" मानकर काम करने से मना कर देते हैं। एक ही नाम वाला प्लेसहोल्डर पैकेज इंस्टॉल कर दें, तो उन्हें "Shizuku इंस्टॉल है" दिखने लगेगा।</string>
     <string name="home_info_android">Android</string>
     <string name="activation_faq_reboot_a">Root: हाँ, हर बार बूट के बाद दोबारा शुरू करना होगा (या सेटिंग्स में \'बूट पर शुरू करें\' चालू कर दें)। वायरलेस डिबगिंग / कंप्यूटर ADB: हाँ, रीस्टार्ट पर सेवा रुक जाती है। Dhizuku: नहीं, डिवाइस ओनर पद रीस्टार्ट के बाद भी बना रहता है।</string>
     <string name="comput_macro_run">चलाएँ</string>

@@ -678,7 +678,7 @@
     <string name="adb_modules_confirm_action_title">להריץ את action.sh?</string>
     <string name="settings_module_catalog">קטלוג מודולים</string>
     <string name="download_app_brevent">Brevent</string>
-    <string name="lab_stub_summary">חלק מהאפליקציות מזהות רק את שם החבילה המקורי של Shizuku (moe.shizuku.privileged.api) ומסרבות לעבוד בלעדיו. התקנת חבילת המילוי הזו גורמת להן לראות ש-Shizuku זמינה.</string>
+    <string name="lab_stub_summary">חלק מהאפליקציות מזהות רק את שם החבילה המקורי של Shizuku (%1$s) ומסרבות לעבוד בלעדיו. התקנת חבילת המילוי הזו גורמת להן לראות ש-Shizuku זמינה.</string>
     <string name="home_info_android">Android</string>
     <string name="grant_dialog_button_allow_always">אשר תמיד</string>
     <string name="adb_pairing_tutorial_content_miui_2">אחרת ייתכן שלא תוכלו להזין את קוד הצימוד מההתראה.</string>

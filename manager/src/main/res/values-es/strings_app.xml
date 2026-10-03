@@ -547,7 +547,7 @@
     <string name="adb_modules_confirm_action_title">¿Ejecutar action.sh?</string>
     <string name="settings_module_catalog">Catálogo de módulos</string>
     <string name="download_app_brevent">Brevent</string>
-    <string name="lab_stub_summary">Algunas apps solo reconocen el nombre de paquete original de Shizuku (moe.shizuku.privileged.api) y se niegan a funcionar sin él. Instalar este paquete de relleno hace que lo vean como disponible.</string>
+    <string name="lab_stub_summary">Algunas apps solo reconocen el nombre de paquete original de Shizuku (%1$s) y se niegan a funcionar sin él. Instalar este paquete de relleno hace que lo vean como disponible.</string>
     <string name="home_info_android">Android</string>
     <string name="activation_faq_reboot_a">Root: sí, hay que iniciarlo de nuevo tras cada arranque (o activa «Iniciar al arrancar» en los ajustes). Depuración inalámbrica / ADB desde PC: sí, el servicio se detiene al reiniciar. Dhizuku: no, el Device Owner se mantiene entre reinicios.</string>
     <string name="comput_macro_run">Ejecutar</string>

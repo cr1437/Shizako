@@ -550,7 +550,7 @@
     <string name="adb_modules_confirm_action_title">Kør action.sh?</string>
     <string name="settings_module_catalog">Modulkatalog</string>
     <string name="download_app_brevent">Brevent</string>
-    <string name="lab_stub_summary">Nogle apps genkender kun det originale Shizuku-pakkenavn (moe.shizuku.privileged.api) og nægter at virke uden det. Installation af denne placeholder får dem til at se Shizuku som tilgængelig.</string>
+    <string name="lab_stub_summary">Nogle apps genkender kun det originale Shizuku-pakkenavn (%1$s) og nægter at virke uden det. Installation af denne placeholder får dem til at se Shizuku som tilgængelig.</string>
     <string name="home_info_android">Android</string>
     <string name="activation_faq_reboot_a">Root: ja, start igen efter hver opstart (eller slå \"Start ved opstart\" til i indstillingerne). Trådløs fejlfinding / computer-ADB: ja, tjenesten stopper ved genstart. Dhizuku: nej, Enhedsejer-status bevares gennem genstart.</string>
     <string name="comput_macro_run">Kør</string>

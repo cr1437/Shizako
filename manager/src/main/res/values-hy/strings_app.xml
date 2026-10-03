@@ -623,7 +623,7 @@
     <string name="adb_modules_confirm_action_title">Աշխատացնե՞լ action.sh-ը։</string>
     <string name="settings_module_catalog">Մոդուլների կատալոգ</string>
     <string name="download_app_brevent">Brevent</string>
-    <string name="lab_stub_summary">Որոշ հավելվածներ ճանաչում են միայն Shizuku-ի բնօրինակ փաթեթի անունը (moe.shizuku.privileged.api) և հրաժարվում են աշխատել առանց դրա։ Այս փոխարինիչ փաթեթը տեղադրելով՝ նրանք կտեսնեն, որ Shizuku-ն հասանելի է։</string>
+    <string name="lab_stub_summary">Որոշ հավելվածներ ճանաչում են միայն Shizuku-ի բնօրինակ փաթեթի անունը (%1$s) և հրաժարվում են աշխատել առանց դրա։ Այս փոխարինիչ փաթեթը տեղադրելով՝ նրանք կտեսնեն, որ Shizuku-ն հասանելի է։</string>
     <string name="home_info_android">Android</string>
     <string name="adb_pairing_tutorial_content_miui_2">Հակառակ դեպքում կարող ես չկարողանալ զուգակցման կոդը մուտքագրել ծանուցումից։</string>
     <string name="setup_back">Հետ</string>

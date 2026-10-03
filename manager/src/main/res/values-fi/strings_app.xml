@@ -547,7 +547,7 @@
     <string name="adb_modules_confirm_action_title">Suoritetaanko action.sh?</string>
     <string name="settings_module_catalog">Moduutiluettelo</string>
     <string name="download_app_brevent">Brevent</string>
-    <string name="lab_stub_summary">Jotkin sovellukset tunnistavat vain alkuperäisen Shizuku-paketin nimen (moe.shizuku.privileged.api) ja kieltäytyvät toimimasta ilman sitä. Tämän paikkamerkkipaketin asentaminen saa ne näkemään Shizukun asennettuna.</string>
+    <string name="lab_stub_summary">Jotkin sovellukset tunnistavat vain alkuperäisen Shizuku-paketin nimen (%1$s) ja kieltäytyvät toimimasta ilman sitä. Tämän paikkamerkkipaketin asentaminen saa ne näkemään Shizukun asennettuna.</string>
     <string name="home_info_android">Android</string>
     <string name="activation_faq_reboot_a">Root: kyllä, käynnistä uudelleen jokaisen käynnistyksen jälkeen (tai kytke "Käynnistä laitteen käynnistyessä" päälle asetuksista). Langaton virheenkorjaus / tietokoneen ADB: kyllä, palvelu pysähtyy uudelleenkäynnistyksessä. Dhizuku: ei, laiteomistajuus säilyy uudelleenkäynnistysten yli.</string>
     <string name="comput_macro_run">Suorita</string>

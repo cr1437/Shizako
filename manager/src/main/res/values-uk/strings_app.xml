@@ -547,7 +547,7 @@
     <string name="adb_modules_confirm_action_title">Запустити action.sh?</string>
     <string name="settings_module_catalog">Каталог модулів</string>
     <string name="download_app_brevent">Brevent</string>
-    <string name="lab_stub_summary">Деякі застосунки мають назву пакета оригінального Shizuku (moe.shizuku.privileged.api) жорстко в коді й відмовляються працювати без неї. Встановіть цю заглушку — і вони побачать, що Shizuku доступний.</string>
+    <string name="lab_stub_summary">Деякі застосунки мають назву пакета оригінального Shizuku (%1$s) жорстко в коді й відмовляються працювати без неї. Встановіть цю заглушку — і вони побачать, що Shizuku доступний.</string>
     <string name="home_info_android">Android</string>
     <string name="activation_faq_reboot_a">Root: так, запускати знову після кожного завантаження (або увімкніть «Запуск після завантаження» в налаштуваннях). Бездротове налагодження / ADB з комп’ютера: так, після перезавантаження служба зупиняється. Dhizuku: ні, статус власника пристрою зберігається після перезавантаження.</string>
     <string name="comput_macro_run">Виконати</string>

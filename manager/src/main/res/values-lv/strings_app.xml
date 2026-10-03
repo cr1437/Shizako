@@ -547,7 +547,7 @@
     <string name="adb_modules_confirm_action_title">Izpildīt action.sh?</string>
     <string name="settings_module_catalog">Moduļu katalogs</string>
     <string name="download_app_brevent">Brevent</string>
-    <string name="lab_stub_summary">Dažas programmas atpazīst tikai oriģinālo Shizuku pakotnes nosaukumu (moe.shizuku.privileged.api) un atsakās darboties bez tā. Instalējot šo vietturi, tās redzēs, ka Shizuku ir pieejams.</string>
+    <string name="lab_stub_summary">Dažas programmas atpazīst tikai oriģinālo Shizuku pakotnes nosaukumu (%1$s) un atsakās darboties bez tā. Instalējot šo vietturi, tās redzēs, ka Shizuku ir pieejams.</string>
     <string name="home_info_android">Android</string>
     <string name="activation_faq_reboot_a">Root: jā, pēc katras ieslēgšanas jāpalaiž vēlreiz (vai iestatījumos jāieslēdz \"Palaist pēc ieslēgšanas\"). Bezvadu atkļūdošana / datora ADB: jā, pēc pārstartēšanas pakalpojums apstājas. Dhizuku: nē, ierīces īpašnieka statuss saglabājas pēc pārstartēšanas.</string>
     <string name="comput_macro_run">Izpildīt</string>

@@ -664,7 +664,7 @@
     <string name="adb_modules_confirm_action_title">Jalankan action.sh?</string>
     <string name="settings_module_catalog">Katalog modul</string>
     <string name="download_app_brevent">Brevent</string>
-    <string name="lab_stub_summary">Sesetengah aplikasi hanya mengenali nama pakej Shizuku asal (moe.shizuku.privileged.api) dan enggan berfungsi tanpanya. Memasang pemegang tempat ini membuatkan mereka melihat Shizuku sebagai tersedia.</string>
+    <string name="lab_stub_summary">Sesetengah aplikasi hanya mengenali nama pakej Shizuku asal (%1$s) dan enggan berfungsi tanpanya. Memasang pemegang tempat ini membuatkan mereka melihat Shizuku sebagai tersedia.</string>
     <string name="home_info_android">Android</string>
     <string name="grant_dialog_button_allow_always">Benarkan sepanjang masa</string>
     <string name="adb_pairing_tutorial_content_miui_2">Jika tidak, anda mungkin tidak dapat memasukkan kod pasangan dari pemberitahuan.</string>

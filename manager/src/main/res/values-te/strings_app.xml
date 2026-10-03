@@ -547,7 +547,7 @@
     <string name="adb_modules_confirm_action_title">action.sh రన్ చేయాలా?</string>
     <string name="settings_module_catalog">మాడ్యూల్ కేటలాగ్</string>
     <string name="download_app_brevent">Brevent</string>
-    <string name="lab_stub_summary">కొన్ని యాప్‌లు అసలు Shizuku ప్యాకేజీ పేరు (moe.shizuku.privileged.api) ను కోడ్‌లోనే గట్టిగా రాసి పెట్టుకుంటాయి, అది కనబడకపోతే "Shizuku లేదు" అని భావించి పనిచేయడు. అదే పేరుతో ఒక ప్లేస్‌హోల్డర్ ప్యాకేజీ ఇన్‌స్టాల్ చేస్తే, వాటికి "Shizuku ఇన్‌స్టాల్ అయింది" అని కనిపిస్తుంది.</string>
+    <string name="lab_stub_summary">కొన్ని యాప్‌లు అసలు Shizuku ప్యాకేజీ పేరు (%1$s) ను కోడ్‌లోనే గట్టిగా రాసి పెట్టుకుంటాయి, అది కనబడకపోతే "Shizuku లేదు" అని భావించి పనిచేయడు. అదే పేరుతో ఒక ప్లేస్‌హోల్డర్ ప్యాకేజీ ఇన్‌స్టాల్ చేస్తే, వాటికి "Shizuku ఇన్‌స్టాల్ అయింది" అని కనిపిస్తుంది.</string>
     <string name="home_info_android">Android</string>
     <string name="activation_faq_reboot_a">Root: అవసరం, ప్రతి బూట్ తర్వాత మళ్లీ స్టార్ట్ చేయాలి (లేదా సెట్టింగ్‌ల్లో 「బూట్‌లో స్టార్ట్」 ఆన్ చేయండి). వైర్‌లెస్ డీబగ్గింగ్ / కంప్యూటర్ ADB: అవసరం, రీబూట్ తర్వాత సర్వీస్ ఆగిపోతుంది. Dhizuku: అవసరం లేదు, Device Owner హోదా రీబూట్ తర్వాత కూడా అలాగే ఉంటుంది.</string>
     <string name="comput_macro_run">రన్</string>

@@ -547,7 +547,7 @@
     <string name="adb_modules_confirm_action_title">Vols executar action.sh?</string>
     <string name="settings_module_catalog">Catàleg de mòduls</string>
     <string name="download_app_brevent">Brevent</string>
-    <string name="lab_stub_summary">Algunes aplicacions només reconeixen el nom de paquet original de Shizuku (moe.shizuku.privileged.api) i es neguen a funcionar sense ell. Instal·lant aquest paquet de farciment, veuen Shizuku com a disponible.</string>
+    <string name="lab_stub_summary">Algunes aplicacions només reconeixen el nom de paquet original de Shizuku (%1$s) i es neguen a funcionar sense ell. Instal·lant aquest paquet de farciment, veuen Shizuku com a disponible.</string>
     <string name="home_info_android">Android</string>
     <string name="activation_faq_reboot_a">Root: sí, cal tornar a iniciar després de cada arrencada (o activa "Inicia en arrencar" a la configuració). Depuració sense fil / ADB per ordinador: sí, el servei s\'atura en reiniciar. Dhizuku: no, el Propietari del dispositiu es manté després dels reinicis.</string>
     <string name="comput_macro_run">Executa</string>

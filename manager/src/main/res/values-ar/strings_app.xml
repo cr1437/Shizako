@@ -547,7 +547,7 @@
     <string name="adb_modules_confirm_action_title">أتشغّل action.sh؟</string>
     <string name="settings_module_catalog">كتالوج الوحدات</string>
     <string name="download_app_brevent">Brevent</string>
-    <string name="lab_stub_summary">بعض التطبيقات تثبّت اسم حزمة Shizuku الأصلي (moe.shizuku.privileged.api) في الكود، وإذا لم تجده تحكم بأن Shizuku غير مثبّتة وترفض العمل. ثبّت حزمة بديلة بنفس الاسم وستراها كأن Shizuku مثبّتة.</string>
+    <string name="lab_stub_summary">بعض التطبيقات تثبّت اسم حزمة Shizuku الأصلي (%1$s) في الكود، وإذا لم تجده تحكم بأن Shizuku غير مثبّتة وترفض العمل. ثبّت حزمة بديلة بنفس الاسم وستراها كأن Shizuku مثبّتة.</string>
     <string name="home_info_android">Android</string>
     <string name="activation_faq_reboot_a">Root: نعم، شغّلها من جديد بعد كل إقلاع (أو فعّل \"التشغيل عند الإقلاع\" في الإعدادات). التصحيح اللاسلكي / ADB عبر الحاسوب: نعم، تتوقف الخدمة عند إعادة التشغيل. Dhizuku: لا، فصفة مالك الجهاز تبقى بعد إعادة التشغيل.</string>
     <string name="comput_macro_run">تنفيذ</string>

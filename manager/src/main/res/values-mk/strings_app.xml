@@ -547,7 +547,7 @@
     <string name="adb_modules_confirm_action_title">Да се изврши action.sh?</string>
     <string name="settings_module_catalog">Каталог на модули</string>
     <string name="download_app_brevent">Brevent</string>
-    <string name="lab_stub_summary">Некои апликации го препознаваат само оригиналното име на пакетот на Shizuku (moe.shizuku.privileged.api) и одбиваат да работат без него. Со инсталирање на оваа замена тие гледаат Shizuku како достапен.</string>
+    <string name="lab_stub_summary">Некои апликации го препознаваат само оригиналното име на пакетот на Shizuku (%1$s) и одбиваат да работат без него. Со инсталирање на оваа замена тие гледаат Shizuku како достапен.</string>
     <string name="home_info_android">Android</string>
     <string name="activation_faq_reboot_a">Root: да, стартувајте повторно по секое подигање (или овозможете „Стартувај при подигање“ во поставките). Безжично отстранување грешки / компјутерски ADB: да, услугата запира при рестартирање. Dhizuku: не, Device Owner останува и по рестартирање.</string>
     <string name="comput_macro_run">Изврши</string>

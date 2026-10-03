@@ -547,7 +547,7 @@
     <string name="adb_modules_confirm_action_title">Eseguire action.sh?</string>
     <string name="settings_module_catalog">Catalogo dei moduli</string>
     <string name="download_app_brevent">Brevent</string>
-    <string name="lab_stub_summary">Alcune app riconoscono solo il nome del pacchetto Shizuku originale (moe.shizuku.privileged.api) e si rifiutano di funzionare senza. Installando questo segnaposto vedranno Shizuku come disponibile.</string>
+    <string name="lab_stub_summary">Alcune app riconoscono solo il nome del pacchetto Shizuku originale (%1$s) e si rifiutano di funzionare senza. Installando questo segnaposto vedranno Shizuku come disponibile.</string>
     <string name="home_info_android">Android</string>
     <string name="activation_faq_reboot_a">Root: sì, va avviato di nuovo a ogni accensione (oppure attiva \"Avvia all\'accensione\" nelle impostazioni). Debug wireless / ADB da computer: sì, il servizio si ferma al riavvio. Dhizuku: no, il Device Owner resta anche dopo i riavvii.</string>
     <string name="comput_macro_run">Esegui</string>

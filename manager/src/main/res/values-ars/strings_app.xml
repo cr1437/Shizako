@@ -684,7 +684,7 @@
     <string name="adb_modules_confirm_action_title">تشغيل action.sh؟</string>
     <string name="settings_module_catalog">فهرس الوحدات</string>
     <string name="download_app_brevent">Brevent</string>
-    <string name="lab_stub_summary">بعض التطبيقات تثبّت اسم حزمة Shizuku الأصلي (moe.shizuku.privileged.api) في شيفرتها، وإن لم تجده حكمت أنه \"لا يوجد Shizuku\" ورفضت العمل. وبتركيب حزمة بديلة بالاسم نفسه، ترى \"Shizuku مثبَّت\" وتعمل.</string>
+    <string name="lab_stub_summary">بعض التطبيقات تثبّت اسم حزمة Shizuku الأصلي (%1$s) في شيفرتها، وإن لم تجده حكمت أنه \"لا يوجد Shizuku\" ورفضت العمل. وبتركيب حزمة بديلة بالاسم نفسه، ترى \"Shizuku مثبَّت\" وتعمل.</string>
     <string name="home_info_android">Android</string>
     <string name="grant_dialog_button_allow_always">السماح طوال الوقت</string>
     <string name="adb_pairing_tutorial_content_miui_2">وإلا فقد لا تتمكن من إدخال رمز الاقتران من الإشعار.</string>

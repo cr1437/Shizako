@@ -672,7 +672,7 @@
     <string name="adb_modules_confirm_action_title">Να εκτελεστεί το action.sh;</string>
     <string name="settings_module_catalog">Κατάλογος μονάδων</string>
     <string name="download_app_brevent">Brevent</string>
-    <string name="lab_stub_summary">Κάποιες εφαρμογές έχουν καρφιτσωμένο το όνομα πακέτου του αυθεντικού Shizuku (moe.shizuku.privileged.api) και αρνούνται να δουλέψουν χωρίς αυτό. Με αυτό το placeholder βλέπουν το Shizuku ως διαθέσιμο.</string>
+    <string name="lab_stub_summary">Κάποιες εφαρμογές έχουν καρφιτσωμένο το όνομα πακέτου του αυθεντικού Shizuku (%1$s) και αρνούνται να δουλέψουν χωρίς αυτό. Με αυτό το placeholder βλέπουν το Shizuku ως διαθέσιμο.</string>
     <string name="home_info_android">Android</string>
     <string name="grant_dialog_button_allow_always">Να επιτρέπεται πάντα</string>
     <string name="adb_pairing_tutorial_content_miui_2">Διαφορετικά, ίσως να μην μπορείς να εισαγάγεις τον κωδικό ζεύξης από την ειδοποίηση.</string>

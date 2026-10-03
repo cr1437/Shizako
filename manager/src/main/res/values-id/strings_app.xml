@@ -547,7 +547,7 @@
     <string name="adb_modules_confirm_action_title">Jalankan action.sh?</string>
     <string name="settings_module_catalog">Katalog modul</string>
     <string name="download_app_brevent">Brevent</string>
-    <string name="lab_stub_summary">Sebagian aplikasi menuliskan nama paket Shizuku asli (moe.shizuku.privileged.api) langsung di kodenya dan menolak bekerja tanpa itu. Memasang paket pengganti ini membuat mereka melihat Shizuku sebagai tersedia.</string>
+    <string name="lab_stub_summary">Sebagian aplikasi menuliskan nama paket Shizuku asli (%1$s) langsung di kodenya dan menolak bekerja tanpa itu. Memasang paket pengganti ini membuat mereka melihat Shizuku sebagai tersedia.</string>
     <string name="home_info_android">Android</string>
     <string name="activation_faq_reboot_a">Root: perlu, nyalakan lagi tiap kali habis menyala (atau aktifkan "Jalan saat menyala" di pengaturan). Debug nirkabel / ADB komputer: perlu, layanan berhenti saat restart. Dhizuku: tidak perlu, status Pemilik Perangkat tetap berlaku setelah restart.</string>
     <string name="comput_macro_run">Jalankan</string>

@@ -22,7 +22,7 @@
     <string name="lab_stub_title">兼容性 Stub</string>
     <string name="lab_stub_installed">已安装</string>
     <string name="lab_stub_not_installed">未安装</string>
-    <string name="lab_stub_summary">部分应用把原版 Shizuku 的包名（moe.shizuku.privileged.api）写死在代码里，查不到就判定"没有 Shizuku"而拒绝工作。装一个同名占位包，它们就能看到"Shizuku 已安装"。</string>
+    <string name="lab_stub_summary">部分应用把原版 Shizuku 的包名（%1$s）写死在代码里，查不到就判定"没有 Shizuku"而拒绝工作。装一个同名占位包，它们就能看到"Shizuku 已安装"。</string>
     <string name="lab_stub_install">安装</string>
     <string name="lab_stub_uninstall">卸载</string>
     <string name="lab_stub_working">处理中…</string>

@@ -547,7 +547,7 @@
     <string name="adb_modules_confirm_action_title">จะรัน action.sh ไหม?</string>
     <string name="settings_module_catalog">แค็ตตาล็อกโมดูล</string>
     <string name="download_app_brevent">Brevent</string>
-    <string name="lab_stub_summary">บางแอปฝังชื่อแพ็กเกจของ Shizuku ต้นฉบับ (moe.shizuku.privileged.api) ไว้ในโค้ด หาไม่เจอก็ตัดสินว่า \"ไม่มี Shizuku\" แล้วไม่ยอมทำงาน ติดตั้งแพ็กเกจตัวแทนชื่อเดียวกันนี้ พวกมันก็จะเห็นว่ามี Shizuku ติดตั้งอยู่</string>
+    <string name="lab_stub_summary">บางแอปฝังชื่อแพ็กเกจของ Shizuku ต้นฉบับ (%1$s) ไว้ในโค้ด หาไม่เจอก็ตัดสินว่า \"ไม่มี Shizuku\" แล้วไม่ยอมทำงาน ติดตั้งแพ็กเกจตัวแทนชื่อเดียวกันนี้ พวกมันก็จะเห็นว่ามี Shizuku ติดตั้งอยู่</string>
     <string name="home_info_android">Android</string>
     <string name="activation_faq_reboot_a">Root: ต้องเริ่มใหม่ทุกครั้งหลังบูต (หรือเปิด \"เริ่มทำงานตอนบูต\" ในตั้งค่า) การดีบักไร้สาย / ADB ผ่านคอมพิวเตอร์: ต้อง เพราะบริการจะหยุดเมื่อรีสตาร์ท Dhizuku: ไม่ต้อง สถานะ Device Owner ยังอยู่หลังรีสตาร์ท</string>
     <string name="comput_macro_run">รัน</string>

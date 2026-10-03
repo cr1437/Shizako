@@ -547,7 +547,7 @@
     <string name="adb_modules_confirm_action_title">Ĉu ruli action.sh?</string>
     <string name="settings_module_catalog">Modula katalogo</string>
     <string name="download_app_brevent">Brevent</string>
-    <string name="lab_stub_summary">Iuj aplikaĵoj rekonas nur la originalan paknomon de Shizuku (moe.shizuku.privileged.api) kaj rifuzas funkcii sen ĝi. Instalo de ĉi tiu anstataŭa pako igas ilin vidi Shizuku kiel disponeblan.</string>
+    <string name="lab_stub_summary">Iuj aplikaĵoj rekonas nur la originalan paknomon de Shizuku (%1$s) kaj rifuzas funkcii sen ĝi. Instalo de ĉi tiu anstataŭa pako igas ilin vidi Shizuku kiel disponeblan.</string>
     <string name="home_info_android">Android</string>
     <string name="activation_faq_reboot_a">Root: jes, startu denove post ĉiu ekŝalto (aŭ ebligu "Starti ĉe ekŝalto" en la agordoj). Sendrata sencimigado / komputila ADB: jes, la servo haltas ĉe restarto. Dhizuku: ne, la Aparata Posedanto restas post restartoj.</string>
     <string name="comput_macro_run">Ruli</string>

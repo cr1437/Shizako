@@ -547,7 +547,7 @@
     <string name="adb_modules_confirm_action_title">Kas käivitada action.sh?</string>
     <string name="settings_module_catalog">Moodulite kataloog</string>
     <string name="download_app_brevent">Brevent</string>
-    <string name="lab_stub_summary">Mõned rakendused tunnevad ära ainult originaalse Shizuku paketi nime (moe.shizuku.privileged.api) ja keelduvad ilma selleta töötamast. Selle kohatäite installimine paneb neid nägema, et Shizuku on saadaval.</string>
+    <string name="lab_stub_summary">Mõned rakendused tunnevad ära ainult originaalse Shizuku paketi nime (%1$s) ja keelduvad ilma selleta töötamast. Selle kohatäite installimine paneb neid nägema, et Shizuku on saadaval.</string>
     <string name="home_info_android">Android</string>
     <string name="activation_faq_reboot_a">Root: jah, käivita pärast iga käivitumist uuesti (või luba seadetes \"Käivita süsteemi käivitumisel\"). Juhtmevaba silumine / arvuti ADB: jah, teenus peatub taaskäivitusel. Dhizuku: ei, Device Owner püsib üle taaskäivituste.</string>
     <string name="comput_macro_run">Käivita</string>

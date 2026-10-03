@@ -544,7 +544,7 @@
     <string name="adb_modules_confirm_action_title">Futtatod az action.sh-t?</string>
     <string name="settings_module_catalog">Modulkatalógus</string>
     <string name="download_app_brevent">Brevent</string>
-    <string name="lab_stub_summary">Néhány alkalmazás csak az eredeti Shizuku csomagnevet (moe.shizuku.privileged.api) ismeri fel, és anélkül nem hajlandó működni. Ha telepíted ezt a helyettesítő csomagot, számukra a Shizuku elérhetőnek látszik.</string>
+    <string name="lab_stub_summary">Néhány alkalmazás csak az eredeti Shizuku csomagnevet (%1$s) ismeri fel, és anélkül nem hajlandó működni. Ha telepíted ezt a helyettesítő csomagot, számukra a Shizuku elérhetőnek látszik.</string>
     <string name="home_info_android">Android</string>
     <string name="activation_faq_reboot_a">Root: igen, minden indítás után újra el kell indítani (vagy kapcsold be a beállításokban az „Indítás rendszerindításkor" opciót). Vezeték nélküli hibakeresés / számítógépes ADB: igen, a szolgáltatás leáll újraindításkor. Dhizuku: nem, az Eszköztulajdonos státusz megmarad az újraindítások után.</string>
     <string name="comput_macro_run">Futtatás</string>

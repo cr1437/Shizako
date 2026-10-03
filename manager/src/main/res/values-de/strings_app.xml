@@ -547,7 +547,7 @@
     <string name="adb_modules_confirm_action_title">action.sh ausführen?</string>
     <string name="settings_module_catalog">Modulkatalog</string>
     <string name="download_app_brevent">Brevent</string>
-    <string name="lab_stub_summary">Manche Apps kennen nur den Original-Paketnamen von Shizuku (moe.shizuku.privileged.api) und verweigern ohne ihn die Arbeit. Mit diesem Platzhalterpaket sehen sie Shizuku als vorhanden an.</string>
+    <string name="lab_stub_summary">Manche Apps kennen nur den Original-Paketnamen von Shizuku (%1$s) und verweigern ohne ihn die Arbeit. Mit diesem Platzhalterpaket sehen sie Shizuku als vorhanden an.</string>
     <string name="home_info_android">Android</string>
     <string name="activation_faq_reboot_a">Root: ja, nach jedem Start neu starten (oder in den Einstellungen „Beim Start starten\" aktivieren). WLAN-Debugging / PC-ADB: ja, der Dienst endet beim Neustart. Dhizuku: nein, der Gerätebesitzer bleibt über Neustarts hinweg erhalten.</string>
     <string name="comput_macro_run">Ausführen</string>

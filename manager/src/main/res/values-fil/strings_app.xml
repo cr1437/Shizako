@@ -547,7 +547,7 @@
     <string name="adb_modules_confirm_action_title">Patakbuhin ang action.sh?</string>
     <string name="settings_module_catalog">Katalogo ng module</string>
     <string name="download_app_brevent">Brevent</string>
-    <string name="lab_stub_summary">Ang ilang app ay nakikilala lang ang orihinal na package name ng Shizuku (moe.shizuku.privileged.api) at tumatangging gumana kung wala ito. Ang pag-install ng placeholder na ito ay nagpapakita sa kanila na available ang Shizuku.</string>
+    <string name="lab_stub_summary">Ang ilang app ay nakikilala lang ang orihinal na package name ng Shizuku (%1$s) at tumatangging gumana kung wala ito. Ang pag-install ng placeholder na ito ay nagpapakita sa kanila na available ang Shizuku.</string>
     <string name="home_info_android">Android</string>
     <string name="activation_faq_reboot_a">Root: oo, kailangang simulan muli pagkatapos ng bawat boot (o i-enable ang "Start on boot" sa settings). Wireless debugging / computer ADB: oo, humihinto ang serbisyo kapag nag-reboot. Dhizuku: hindi, tumatagal ang Device Owner kahit mag-reboot.</string>
     <string name="comput_macro_run">Patakbuhin</string>

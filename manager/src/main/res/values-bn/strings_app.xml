@@ -547,7 +547,7 @@
     <string name="adb_modules_confirm_action_title">要运行 action.sh 吗？</string>
     <string name="settings_module_catalog">模块目录</string>
     <string name="download_app_brevent">黑阈（Brevent）</string>
-    <string name="lab_stub_summary">部分应用把原版 Shizuku 的包名（moe.shizuku.privileged.api）写死在代码里，查不到就判定"没有 Shizuku"而拒绝工作。装一个同名占位包，它们就能看到"Shizuku 已安装"。</string>
+    <string name="lab_stub_summary">部分应用把原版 Shizuku 的包名（%1$s）写死在代码里，查不到就判定"没有 Shizuku"而拒绝工作。装一个同名占位包，它们就能看到"Shizuku 已安装"。</string>
     <string name="home_info_android">Android</string>
     <string name="activation_faq_reboot_a">Root：需要，每次开机后重新启动（或在设置里开启「开机启动」）。无线调试 / 电脑 ADB：需要，重启后服务会停止。Dhizuku：不需要，设备所有者身份重启后依然有效。</string>
     <string name="comput_macro_run">执行</string>

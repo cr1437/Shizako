@@ -547,7 +547,7 @@
     <string name="adb_modules_confirm_action_title">Köra action.sh?</string>
     <string name="settings_module_catalog">Modulkatalog</string>
     <string name="download_app_brevent">Brevent</string>
-    <string name="lab_stub_summary">Vissa appar känner bara igen Shizukus ursprungliga paketnamn (moe.shizuku.privileged.api) och vägrar fungera utan det. Att installera den här platshållaren gör att de ser Shizuku som tillgängligt.</string>
+    <string name="lab_stub_summary">Vissa appar känner bara igen Shizukus ursprungliga paketnamn (%1$s) och vägrar fungera utan det. Att installera den här platshållaren gör att de ser Shizuku som tillgängligt.</string>
     <string name="home_info_android">Android</string>
     <string name="activation_faq_reboot_a">Root: ja, starta igen efter varje uppstart (eller aktivera \"Starta vid uppstart\" i inställningarna). Trådlös felsökning / dator-ADB: ja, tjänsten stoppas vid omstart. Dhizuku: nej, enhetsägarstatusen består över omstarter.</string>
     <string name="comput_macro_run">Kör</string>

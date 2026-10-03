@@ -547,7 +547,7 @@
     <string name="adb_modules_confirm_action_title">Да се изпълни ли action.sh?</string>
     <string name="settings_module_catalog">Каталог с модули</string>
     <string name="download_app_brevent">Brevent</string>
-    <string name="lab_stub_summary">Някои приложения разпознават само оригиналното име на пакета на Shizuku (moe.shizuku.privileged.api) и отказват да работят без него. Инсталирането на този пакет-заместител ги кара да виждат Shizuku като наличен.</string>
+    <string name="lab_stub_summary">Някои приложения разпознават само оригиналното име на пакета на Shizuku (%1$s) и отказват да работят без него. Инсталирането на този пакет-заместител ги кара да виждат Shizuku като наличен.</string>
     <string name="home_info_android">Android</string>
     <string name="activation_faq_reboot_a">Root: да, стартирайте отново след всеки рестарт (или включете „Стартирай при включване“ в настройките). Безжично отстраняване на грешки / компютър ADB: да, услугата спира при рестарт. Dhizuku: не, правата на владелец на устройството остават след рестарт.</string>
     <string name="comput_macro_run">Изпълни</string>

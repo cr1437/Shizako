@@ -22,7 +22,7 @@
     <string name="lab_stub_title">Compatibility stub</string>
     <string name="lab_stub_installed">Installed</string>
     <string name="lab_stub_not_installed">Not installed</string>
-    <string name="lab_stub_summary">Some apps only recognise the original Shizuku package name (moe.shizuku.privileged.api) and refuse to work without it. Installing this placeholder makes them see Shizuku as available.</string>
+    <string name="lab_stub_summary">Some apps only recognise the original Shizuku package name (%1$s) and refuse to work without it. Installing this placeholder makes them see Shizuku as available.</string>
     <string name="lab_stub_install">Install</string>
     <string name="lab_stub_uninstall">Uninstall</string>
     <string name="lab_stub_working">Working…</string>

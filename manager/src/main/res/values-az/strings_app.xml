@@ -547,7 +547,7 @@
     <string name="adb_modules_confirm_action_title">action.sh işlədilsin?</string>
     <string name="settings_module_catalog">Modul kataloqu</string>
     <string name="download_app_brevent">Brevent</string>
-    <string name="lab_stub_summary">Bəzi tətbiqlər yalnız orijinal Shizuku paket adını (moe.shizuku.privileged.api) tanıyır və o olmadan işləməkdən imtina edir. Bu yer tutucunu quraşdırsan, onlar Shizukunu mövcud görəcəklər.</string>
+    <string name="lab_stub_summary">Bəzi tətbiqlər yalnız orijinal Shizuku paket adını (%1$s) tanıyır və o olmadan işləməkdən imtina edir. Bu yer tutucunu quraşdırsan, onlar Shizukunu mövcud görəcəklər.</string>
     <string name="home_info_android">Android</string>
     <string name="activation_faq_reboot_a">Root: bəli, hər açılışdan sonra yenidən başlat (və ya ayarlarda \"Açılışda başlat\" seçimini aktiv et). Simsiz sazlama / kompüter ADB: bəli, xidmət yenidən başlatmadan sonra dayanır. Dhizuku: xeyr, Cihaz Sahibi statusu yenidən başlatmadan sonra da qalır.</string>
     <string name="comput_macro_run">İşlət</string>

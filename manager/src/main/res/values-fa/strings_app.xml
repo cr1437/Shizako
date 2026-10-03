@@ -544,7 +544,7 @@
     <string name="adb_modules_confirm_action_title">action.sh اجرا شود؟</string>
     <string name="settings_module_catalog">فهرست ماژول‌ها</string>
     <string name="download_app_brevent">Brevent</string>
-    <string name="lab_stub_summary">بعضی برنامه‌ها فقط نام بستهٔ اصلی Shizuku (moe.shizuku.privileged.api) را می‌شناسند و بدون آن کار نمی‌کنند. نصب این بستهٔ جانشین باعث می‌شود Shizuku را نصب‌شده ببینند.</string>
+    <string name="lab_stub_summary">بعضی برنامه‌ها فقط نام بستهٔ اصلی Shizuku (%1$s) را می‌شناسند و بدون آن کار نمی‌کنند. نصب این بستهٔ جانشین باعث می‌شود Shizuku را نصب‌شده ببینند.</string>
     <string name="home_info_android">Android</string>
     <string name="activation_faq_reboot_a">Root: بله، بعد از هر ری‌استارت باید دوباره شروع کنید (یا در تنظیمات «شروع هنگام روشن شدن» را روشن کنید). اشکال‌زدایی بی‌سیم / ADB رایانه: بله، سرویس با ری‌استارت متوقف می‌شود. Dhizuku: نه، مالک دستگاه پس از ری‌استارت باقی می‌ماند.</string>
     <string name="comput_macro_run">اجرا</string>

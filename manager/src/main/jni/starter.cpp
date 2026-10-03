@@ -31,7 +31,10 @@
 #define EXIT_FATAL_KILL 9
 #define EXIT_FATAL_BINDER_BLOCKED_BY_SELINUX 10
 
-#define PACKAGE_NAME "moe.shizuku.privileged.api"
+// 本 fork 的 applicationId。只在「调用方没传 --apk=」时用 `pm path PACKAGE_NAME` 兜底定位
+// APK；上游这里是它自己的包名（moe.shizuku.privileged.api），照抄的话在本 fork 里会找到
+// 兼容性占位壳（没有 server 代码）而启动失败，同时也不该在产物里带上游身份。
+#define PACKAGE_NAME "com.churan.shizako"
 #define SERVER_NAME "shizuku_server"
 #define SERVER_CLASS_PATH "rikka.shizuku.server.ShizukuService"
 

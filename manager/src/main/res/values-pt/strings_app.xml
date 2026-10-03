@@ -547,7 +547,7 @@
     <string name="adb_modules_confirm_action_title">Rodar action.sh?</string>
     <string name="settings_module_catalog">Catálogo de módulos</string>
     <string name="download_app_brevent">Brevent</string>
-    <string name="lab_stub_summary">Alguns apps só reconhecem o nome de pacote do Shizuku original (moe.shizuku.privileged.api) e se recusam a funcionar sem ele. Instalar este pacote de espaço reservado faz eles verem o Shizuku como disponível.</string>
+    <string name="lab_stub_summary">Alguns apps só reconhecem o nome de pacote do Shizuku original (%1$s) e se recusam a funcionar sem ele. Instalar este pacote de espaço reservado faz eles verem o Shizuku como disponível.</string>
     <string name="home_info_android">Android</string>
     <string name="activation_faq_reboot_a">Root: sim, inicie de novo depois de cada boot (ou ative "Iniciar ao ligar" nas configurações). Depuração sem fio / ADB do computador: sim, o serviço para ao reiniciar. Dhizuku: não, o Device Owner continua valendo depois de reiniciar.</string>
     <string name="comput_macro_run">Executar</string>

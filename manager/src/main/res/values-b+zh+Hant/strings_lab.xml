@@ -20,7 +20,7 @@
 <string name="lab_stub_failed">失敗：%1$s</string>
 <string name="lab_backup_button">備份設置</string>
 <string name="lab_connectors_risk_accept">我已了解風險</string>
-<string name="lab_stub_summary">部分應用把原版 Shizuku 的包名（moe.shizuku.privileged.api）寫死在代碼裡，查不到就判定"沒有 Shizuku"而拒絕工作。裝一個同名佔位包，它們就能看到"Shizuku 已安裝"。</string>
+<string name="lab_stub_summary">部分應用把原版 Shizuku 的包名（%1$s）寫死在代碼裡，查不到就判定"沒有 Shizuku"而拒絕工作。裝一個同名佔位包，它們就能看到"Shizuku 已安裝"。</string>
 <string name="lab_stub_uninstall">卸載</string>
 <string name="lab_connectors_summary">通過本地 Provider 對外提供本應用的 Shizuku 啟動命令，讓激活器類應用在拿到臨時權限後自行拉起 Shizuku 服務。</string>
 <string name="lab_stub_install">安裝</string>

@@ -547,7 +547,7 @@
     <string name="adb_modules_confirm_action_title">Запустить action.sh?</string>
     <string name="settings_module_catalog">Каталог модулей</string>
     <string name="download_app_brevent">Brevent</string>
-    <string name="lab_stub_summary">Некоторые приложения жёстко зашивают имя пакета оригинального Shizuku (moe.shizuku.privileged.api) и без него отказываются работать. Установите эту заглушку — и они увидят, что Shizuku доступен.</string>
+    <string name="lab_stub_summary">Некоторые приложения жёстко зашивают имя пакета оригинального Shizuku (%1$s) и без него отказываются работать. Установите эту заглушку — и они увидят, что Shizuku доступен.</string>
     <string name="home_info_android">Android</string>
     <string name="activation_faq_reboot_a">Root: да, запускать заново после каждой загрузки (или включите «Запуск при загрузке» в настройках). Отладка по Wi-Fi / ADB с компьютера: да, при перезагрузке служба останавливается. Dhizuku: нет, статус владельца устройства переживает перезагрузки.</string>
     <string name="comput_macro_run">Выполнить</string>

@@ -546,7 +546,7 @@
     <string name="adb_modules_confirm_action_title">Spustit action.sh?</string>
     <string name="settings_module_catalog">Katalog modulů</string>
     <string name="download_app_brevent">Brevent</string>
-    <string name="lab_stub_summary">Některé aplikace mají jméno balíčku původního Shizuku (moe.shizuku.privileged.api) zadrátované v kódu a bez něj odmítají pracovat. Když nainstaluješ tenhle zástupný balíček, uvidí Shizuku jako dostupné.</string>
+    <string name="lab_stub_summary">Některé aplikace mají jméno balíčku původního Shizuku (%1$s) zadrátované v kódu a bez něj odmítají pracovat. Když nainstaluješ tenhle zástupný balíček, uvidí Shizuku jako dostupné.</string>
     <string name="home_info_android">Android</string>
     <string name="activation_faq_reboot_a">Root: ano, po každém startu je potřeba spustit znovu (nebo zapnout „Spouštět po startu“ v nastavení). Bezdrátové ladění / ADB z počítače: ano, služba se restartem zastaví. Dhizuku: ne, vlastník zařízení přetrvá i restart.</string>
     <string name="comput_macro_run">Spustit</string>

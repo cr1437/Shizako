@@ -686,7 +686,7 @@
     <string name="adb_modules_confirm_action_title">Yrnan action.sh?</string>
     <string name="settings_module_catalog">Bōcgerīnu þāra modula</string>
     <string name="download_app_brevent">Brevent</string>
-    <string name="lab_stub_summary">Sume bēacnunga cunnon ānlīce þone fruman Shizuku naman (moe.shizuku.privileged.api) and nellāþ wyrcan būtan him. Aseta þis setl naman and hīe gesēoþ Shizuku gearone.</string>
+    <string name="lab_stub_summary">Sume bēacnunga cunnon ānlīce þone fruman Shizuku naman (%1$s) and nellāþ wyrcan būtan him. Aseta þis setl naman and hīe gesēoþ Shizuku gearone.</string>
     <string name="home_info_android">Android</string>
     <string name="grant_dialog_button_allow_always">Ǣfre ālīefe</string>
     <string name="adb_pairing_tutorial_content_miui_2">Oþþe þū ne meaht þæt gyrdan on þǣm bode writan.</string>

@@ -547,7 +547,7 @@
     <string name="adb_modules_confirm_action_title">action.sh ஐ இயக்கவா?</string>
     <string name="settings_module_catalog">மாட்யூல் பட்டியல்</string>
     <string name="download_app_brevent">Brevent</string>
-    <string name="lab_stub_summary">சில செயலிகள் அசல் Shizuku தொகுப்புப் பெயரை (moe.shizuku.privileged.api) மட்டுமே அடையாளம் காணும், அது இல்லாமல் வேலை செய்ய மறுக்கும். இந்த இடைநிலைத் தொகுப்பை நிறுவினால், அவை "Shizuku உள்ளது" எனக் காணும்.</string>
+    <string name="lab_stub_summary">சில செயலிகள் அசல் Shizuku தொகுப்புப் பெயரை (%1$s) மட்டுமே அடையாளம் காணும், அது இல்லாமல் வேலை செய்ய மறுக்கும். இந்த இடைநிலைத் தொகுப்பை நிறுவினால், அவை "Shizuku உள்ளது" எனக் காணும்.</string>
     <string name="home_info_android">Android</string>
     <string name="activation_faq_reboot_a">Root: தேவை, ஒவ்வொரு தொடக்கத்திற்குப் பின் மீண்டும் தொடங்க வேண்டும் (அல்லது அமைப்புகளில் "தொடக்கத்தில் இயக்கு" ஐ இயக்கவும்). வயர்லெஸ் டீபக்கிங் / கணினி ADB: தேவை, மறுதொடக்கத்தில் சேவை நிற்கும். Dhizuku: தேவையில்லை, Device Owner அந்தஸ்து மறுதொடக்கத்திற்குப் பின் தொடரும்.</string>
     <string name="comput_macro_run">இயக்கு</string>

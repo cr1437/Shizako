@@ -547,7 +547,7 @@
     <string name="adb_modules_confirm_action_title">Exécuter action.sh ?</string>
     <string name="settings_module_catalog">Catalogue de modules</string>
     <string name="download_app_brevent">Brevent</string>
-    <string name="lab_stub_summary">Certaines applis ne reconnaissent que le nom de paquet Shizuku d\'origine (moe.shizuku.privileged.api) et refusent de fonctionner sans lui. Installer ce paquet factice leur fait voir Shizuku comme disponible.</string>
+    <string name="lab_stub_summary">Certaines applis ne reconnaissent que le nom de paquet Shizuku d\'origine (%1$s) et refusent de fonctionner sans lui. Installer ce paquet factice leur fait voir Shizuku comme disponible.</string>
     <string name="home_info_android">Android</string>
     <string name="activation_faq_reboot_a">Root : oui, redémarre-la à chaque boot (ou active « Démarrer au boot » dans les réglages). Débogage sans fil / ADB par ordinateur : oui, le service s\'arrête au redémarrage. Dhizuku : non, le Propriétaire d\'appareil persiste à travers les redémarrages.</string>
     <string name="comput_macro_run">Exécuter</string>

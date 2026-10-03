@@ -547,7 +547,7 @@
     <string name="adb_modules_confirm_action_title">Uruchomić action.sh?</string>
     <string name="settings_module_catalog">Katalog modułów</string>
     <string name="download_app_brevent">Brevent</string>
-    <string name="lab_stub_summary">Niektóre aplikacje znają tylko oryginalną nazwę pakietu Shizuku (moe.shizuku.privileged.api) i odmawiają pracy bez niej. Instalacja tego pakietu zastępczego sprawia, że widzą Shizuku jako dostępne.</string>
+    <string name="lab_stub_summary">Niektóre aplikacje znają tylko oryginalną nazwę pakietu Shizuku (%1$s) i odmawiają pracy bez niej. Instalacja tego pakietu zastępczego sprawia, że widzą Shizuku jako dostępne.</string>
     <string name="home_info_android">Android</string>
     <string name="activation_faq_reboot_a">Root: tak, uruchom ponownie po każdym starcie (albo włącz „Start przy włączeniu” w ustawieniach). Debugowanie bezprzewodowe / ADB z komputera: tak, usługa zatrzymuje się po restarcie. Dhizuku: nie, właściciel urządzenia przetrwa restarty.</string>
     <string name="comput_macro_run">Wykonaj</string>

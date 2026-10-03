@@ -14,11 +14,13 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeoutOrNull
+import moe.shizuku.manager.BuildConfig
 import moe.shizuku.manager.ShizukuSettings
 import moe.shizuku.manager.adb.AdbClient
 import moe.shizuku.manager.adb.AdbKey
 import moe.shizuku.manager.adb.AdbMdns
 import moe.shizuku.manager.adb.PreferenceAdbKeyStore
+import moe.shizuku.manager.fdroid.FdroidBuild
 import moe.shizuku.manager.ktx.logd
 import moe.shizuku.manager.utils.EnvironmentUtils
 import moe.shizuku.server.IShizukuService
@@ -49,8 +51,13 @@ import kotlin.coroutines.resume
  */
 object StubManager {
 
-    /** 写死原版 Shizuku 包名的应用认的就是它 */
-    const val STUB_PACKAGE = "moe.shizuku.privileged.api"
+    /**
+     * 写死原版 Shizuku 包名的应用认的就是它。
+     *
+     * 取自 [BuildConfig.COMPAT_STUB_PACKAGE] 而不是写死字面量：F-Droid 版该字段为空串，
+     * 包名字面量因此不会出现在 F-Droid 版的 DEX 里（见 [FdroidBuild.allowCompatStub]）。
+     */
+    const val STUB_PACKAGE = BuildConfig.COMPAT_STUB_PACKAGE
 
     /** 由 manager 的 copyStubApk 任务从 :stub 模块复制进来 */
     private const val ASSET_PATH = "shizako-stub.apk"
@@ -82,6 +89,8 @@ object StubManager {
      * （见 manager 的 AndroidManifest），可见性没问题，而且不用起 shell，UI 里可以随便调。
      */
     fun isInstalled(context: Context): Boolean {
+        // F-Droid 版不带这个功能：包名字段为空，直接当未安装处理
+        if (!FdroidBuild.allowCompatStub) return false
         return try {
             context.packageManager.getPackageInfo(STUB_PACKAGE, 0)
             true
@@ -93,6 +102,9 @@ object StubManager {
     }
 
     suspend fun install(context: Context): Result = withContext(Dispatchers.IO) {
+        if (!FdroidBuild.allowCompatStub) {
+            return@withContext Result(false, CHANNEL_NONE, "当前变体不提供兼容性占位包")
+        }
         if (isInstalled(context)) return@withContext Result(true, CHANNEL_NONE)
 
         val apkBytes = readAsset(context) ?: return@withContext Result(
@@ -126,6 +138,9 @@ object StubManager {
     }
 
     suspend fun uninstall(context: Context): Result = withContext(Dispatchers.IO) {
+        if (!FdroidBuild.allowCompatStub) {
+            return@withContext Result(false, CHANNEL_NONE, "当前变体不提供兼容性占位包")
+        }
         if (!isInstalled(context)) return@withContext Result(true, CHANNEL_NONE)
 
         var last: Result? = null

@@ -547,7 +547,7 @@
     <string name="adb_modules_confirm_action_title">action.sh çalıştırılsın mı?</string>
     <string name="settings_module_catalog">Modül kataloğu</string>
     <string name="download_app_brevent">黑阈 (Brevent)</string>
-    <string name="lab_stub_summary">Bazı uygulamalar yalnızca özgün Shizuku paket adını (moe.shizuku.privileged.api) tanır ve o olmadan çalışmayı reddeder. Bu yer tutucuyu kurunca Shizuku\'yu yüklü görürler.</string>
+    <string name="lab_stub_summary">Bazı uygulamalar yalnızca özgün Shizuku paket adını (%1$s) tanır ve o olmadan çalışmayı reddeder. Bu yer tutucuyu kurunca Shizuku\'yu yüklü görürler.</string>
     <string name="home_info_android">Android</string>
     <string name="activation_faq_reboot_a">Root: gerekir, her açılıştan sonra yeniden başlat (ya da ayarlardan \"Açılışta başlat\"ı aç). Kablosuz hata ayıklama / bilgisayar ADB: gerekir, hizmet yeniden başlatmada durur. Dhizuku: gerekmez, Cihaz Sahibi kimliği yeniden başlatmadan sonra da geçerlidir.</string>
     <string name="comput_macro_run">Çalıştır</string>
