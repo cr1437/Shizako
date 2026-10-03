@@ -25,9 +25,10 @@ Builds:
   - versionName: zako3.13-f
     versionCode: 313
     # 模板要求：commit 必须是完整哈希，不能用 tag / 分支名。
-    # 该提交比 tag zako3.13 多一个 commit，只增加了 fastlane 元数据
-    # （F-Droid 新应用模板要求上游仓库带 Fastlane/Triple-T 元数据且含 en-US）。
-    commit: 77beb7ed1386a99d900897d4ff4059dd2add8fff
+    # 该提交在 tag zako3.13 之后，包含：fastlane 元数据 + F-Droid 变体的合规改动
+    # （不声明上游 authority、不打包兼容性占位包、产物内不含上游 application id）；
+    # 版本号仍是 zako3.13 / 313，与下面的 versionName/versionCode 对应。
+    commit: 91605690f1334a7354677e1cb91232d545938f42
     subdir: .
     gradle:
       - :manager:assembleRelease
