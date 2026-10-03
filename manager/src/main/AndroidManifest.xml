@@ -307,7 +307,7 @@
         </receiver>
         <provider
             android:name=".ShizukuManagerProvider"
-            android:authorities="${applicationId}.shizuku;moe.shizuku.privileged.api.shizuku"
+            android:authorities="${compatAuthority}"
             android:directBootAware="true"
             android:enabled="true"
             android:exported="true"

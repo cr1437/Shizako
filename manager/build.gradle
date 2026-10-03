@@ -24,6 +24,17 @@ android {
         versionName rootProject.ext.versionName + (fdroidBuild ? '-f' : '')
         // 编译期开关，供 fdroid/FdroidBuild.kt 集中判断（F-Droid 版需关闭若干功能）
         buildConfigField "boolean", "FDROID_BUILD", "${fdroidBuild}"
+        // 兼容桥的 provider authority（对应 AndroidManifest 里的 ${compatAuthority}）。
+        //   GitHub 版：额外声明上游 authority —— 早期客户端会直接按它寻址管理器；
+        //   F-Droid 版：只声明我们自己的 —— 上游 README 的 FORBIDDEN 条款禁止 fork
+        //   使用上游身份，F-Droid 维护者明确要求「稳妥优先、在该变体里关掉」。
+        // 实测（Android 16 + Hail / MT 管理器）：新版客户端由管理器主动把 binder 推进
+        // 客户端自己的 provider，不依赖这个 authority。
+        manifestPlaceholders = [
+                compatAuthority: fdroidBuild
+                        ? "com.churan.shizako.shizuku"
+                        : "com.churan.shizako.shizuku;moe.shizuku.privileged.api.shizuku"
+        ]
         externalNativeBuild {
             cmake {
                 arguments '-DANDROID_STL=none'
