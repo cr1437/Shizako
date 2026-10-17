@@ -56,6 +56,16 @@
 
 Note, do not disable \"Developer options\" or \"USB debugging\", or Shizako will be stopped."</string>
     <string name="dialog_adb_discovery_message_toggle_wireless_debugging">Please try to disable and enable \"Wireless debugging\" if it keeps searching.</string>
+    <string name="diag_log_title">Diagnostics log</string>
+    <string name="diag_log_summary_idle">Captures logcat so you can send it in without a computer</string>
+    <string name="diag_log_summary_starting">Starting…</string>
+    <string name="diag_log_summary_recording">Recording · %1$d lines · %2$s</string>
+    <string name="diag_log_summary_stopped">Stopped · %d lines recorded</string>
+    <string name="diag_log_export">Export</string>
+    <string name="diag_log_copy">Copy</string>
+    <string name="diag_log_copied">Log copied to clipboard</string>
+    <string name="diag_log_empty">Nothing recorded yet</string>
+    <string name="diag_log_export_failed">Could not export the log</string>
     <string name="settings_usage_mode">Usage mode</string>
     <string name="settings_usage_mode_simple">Simple mode — only everyday features are shown</string>
     <string name="settings_usage_mode_advanced">Advanced mode — everything is shown</string>

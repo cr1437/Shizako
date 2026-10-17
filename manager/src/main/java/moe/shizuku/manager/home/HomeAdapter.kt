@@ -26,6 +26,7 @@ class HomeAdapter(
         private const val ID_ACTIVATION = 8L
         private const val ID_INFO = 10L
         private const val ID_USAGE_MODE = 11L
+        private const val ID_DIAG_LOG = 12L
     }
 
     override fun onCreateCreatorPool(): IndexCreatorPool {
@@ -60,6 +61,11 @@ class HomeAdapter(
         addItem(UsageModeViewHolder.CREATOR, null, ID_USAGE_MODE)
 
         addItem(InfoCardViewHolder.CREATOR, status to grantedCount, ID_INFO)
+
+        // 诊断日志卡：只出现在 -PlogBuild 的排查包里（正式版编译期就被裁掉）
+        if (moe.shizuku.manager.BuildConfig.LOG_BUILD) {
+            addItem(DiagLogViewHolder.CREATOR, null, ID_DIAG_LOG)
+        }
 
         // 注：「管理应用」「终端」两张卡片已移除 ——
         // 应用管理交给底栏的 Tab，终端入口挪进「一站式激活」页。

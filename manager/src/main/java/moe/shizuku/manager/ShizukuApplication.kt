@@ -49,6 +49,11 @@ class ShizukuApplication : Application() {
         // FeatureMode 是单例，若在 initialize() 之前被谁顺手读了一下，
         // 就会把默认档位锁死，用户上次选的进阶模式会「忘掉」。
         moe.shizuku.manager.feature.FeatureMode.refresh()
+        // 日志版（-PlogBuild）：一启动就开始录，别让用户先想起来去拨开关 ——
+        // 这个包的唯一用途就是把问题现场留下来。正式版编译期即裁掉。
+        if (moe.shizuku.manager.BuildConfig.LOG_BUILD) {
+            moe.shizuku.manager.diag.DiagLog.start(this)
+        }
     }
 
 }

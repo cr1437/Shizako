@@ -14,6 +14,10 @@ plugins {
 // 在脚本顶层定义一次，android{} / 任务注册 / afterEvaluate 里共用同一个判断。
 def fdroidBuild = project.hasProperty('fdroid')
 
+// 日志构建开关：`-PlogBuild` → 版本名带 -log、首页多一张「诊断日志」卡、启动即录制 logcat。
+// 只用于临时发给个别用户排查问题，**不发布**。
+def logBuild = project.hasProperty('logBuild')
+
 android {
     namespace 'moe.shizuku.manager'
     defaultConfig {
@@ -24,9 +28,13 @@ android {
         //   F-Droid 版：./gradlew :manager:assembleRelease -Pfdroid → zako3.13-f
         // 用构建属性而不是 productFlavors：flavor 会把产物路径改成 apk/<flavor>/release/，
         // 影响现有发版脚本与官网下载链接；这里保持路径不变。
-        versionName rootProject.ext.versionName + (fdroidBuild ? '-f' : '')
+        versionName rootProject.ext.versionName + (fdroidBuild ? '-f' : '') + (logBuild ? '-log' : '')
         // 编译期开关，供 fdroid/FdroidBuild.kt 集中判断（F-Droid 版需关闭若干功能）
         buildConfigField "boolean", "FDROID_BUILD", "${fdroidBuild}"
+        // 日志构建（-PlogBuild）：首页多一张「诊断日志」卡，启动即开始录制全部 logcat，
+        // 供用户导出 / 复制。**只用于发给个别用户排查问题，不发布** —— 版本名带 -log 后缀，
+        // 一眼能和正式包区分开。
+        buildConfigField "boolean", "LOG_BUILD", "${logBuild}"
         // 兼容桥的 provider authority（对应 AndroidManifest 里的 ${compatAuthority}）。
         //
         // 两个变体都**只**声明我们自己的 authority。以前 GitHub 版会额外声明上游的

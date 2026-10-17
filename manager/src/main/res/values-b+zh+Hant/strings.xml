@@ -64,6 +64,16 @@
     <string name="settings_translation">參與翻譯</string>
     <string name="settings_translation_summary">協助我們將 %s 翻譯至您的語言</string>
     <string name="dialog_stop_message">Shizako 服務將被停止。</string>
+    <string name="diag_log_title">診斷日誌</string>
+    <string name="diag_log_summary_idle">自動錄製 logcat，不用電腦也能把現場交出來</string>
+    <string name="diag_log_summary_starting">正在啟動…</string>
+    <string name="diag_log_summary_recording">錄製中 · %1$d 行 · %2$s</string>
+    <string name="diag_log_summary_stopped">已停止 · 共錄到 %d 行</string>
+    <string name="diag_log_export">匯出</string>
+    <string name="diag_log_copy">複製</string>
+    <string name="diag_log_copied">日誌已複製到剪貼簿</string>
+    <string name="diag_log_empty">還沒有錄到內容</string>
+    <string name="diag_log_export_failed">匯出失敗</string>
     <string name="settings_usage_mode">使用模式</string>
     <string name="settings_usage_mode_simple">簡單模式 · 只顯示常用功能</string>
     <string name="settings_usage_mode_advanced">進階模式 · 顯示全部功能</string>

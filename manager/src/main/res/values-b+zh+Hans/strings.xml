@@ -267,6 +267,16 @@
     <string name="tasker_adb_unavailable">ADB 自动启动不可用</string>
 
     <string name="settings_translation_summary">帮助我们将 %s 翻译至您的语言</string>
+    <string name="diag_log_title">诊断日志</string>
+    <string name="diag_log_summary_idle">自动录制 logcat，不用电脑也能把现场交出来</string>
+    <string name="diag_log_summary_starting">正在启动…</string>
+    <string name="diag_log_summary_recording">录制中 · %1$d 行 · %2$s</string>
+    <string name="diag_log_summary_stopped">已停止 · 共录到 %d 行</string>
+    <string name="diag_log_export">导出</string>
+    <string name="diag_log_copy">复制</string>
+    <string name="diag_log_copied">日志已复制到剪贴板</string>
+    <string name="diag_log_empty">还没有录到内容</string>
+    <string name="diag_log_export_failed">导出失败</string>
     <string name="settings_usage_mode">使用模式</string>
     <string name="settings_usage_mode_simple">简单模式 · 只显示常用功能</string>
     <string name="settings_usage_mode_advanced">进阶模式 · 显示全部功能</string>
