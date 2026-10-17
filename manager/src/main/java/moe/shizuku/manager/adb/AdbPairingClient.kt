@@ -187,6 +187,10 @@ class AdbPairingClient(private val hosts: List<String>, private val port: Int, p
     fun start() {
         var lastConnectFailure: Throwable? = null
 
+        // 现场排查用：把「到底连了谁、用的哪个端口」先记下来。
+        // 反馈「配对连不上」时，这一行能立刻区分「端口填错」「回环不通」「握手失败」。
+        Log.i(TAG, "pairing start: hosts=$hosts port=$port")
+
         for ((index, candidate) in hosts.withIndex()) {
             try {
                 setupTlsConnection(candidate)
@@ -198,6 +202,7 @@ class AdbPairingClient(private val hosts: List<String>, private val port: Int, p
                     Log.w(TAG, "Pairing connect to $candidate:$port failed (${e.javaClass.simpleName}), trying next host")
                     continue
                 }
+                Log.w(TAG, "pairing failed while connecting to $candidate:$port (${e.javaClass.simpleName}: ${e.message})")
                 throw e
             }
 
@@ -210,6 +215,14 @@ class AdbPairingClient(private val hosts: List<String>, private val port: Int, p
 
                 state = State.Stopped
                 return
+            } catch (t: Throwable) {
+                // 走到这里说明 TCP + TLS 都已经通了，失败发生在协议层：
+                // 记下阶段与异常类型，避免下次又只能靠猜。
+                Log.w(
+                    TAG,
+                    "pairing failed via $candidate:$port at state=$state (${t.javaClass.simpleName}: ${t.message})",
+                )
+                throw t
             } finally {
                 // 建连成功但后续握手失败时，原生上下文同样必须销毁；close() 内部先关流、
                 // 再销毁上下文，顺序不能反（destroy 之后 pairingContext 不可再用）。
@@ -234,6 +247,10 @@ class AdbPairingClient(private val hosts: List<String>, private val port: Int, p
         val sslContext = key.sslContext
         val sslSocket = sslContext.socketFactory.createSocket(socket, host, port, true) as SSLSocket
         sslSocket.soTimeout = READ_TIMEOUT_MS
+        // 握手前先记一行：现场日志里能看出「连上了但握手失败」，
+        // 这是判断「端口是连接端口而不是配对端口」的关键证据
+        // （adbd 的连接服务会校验客户端证书，配对服务则明确接受任意证书）。
+        Log.i(TAG, "TLS handshake -> $host:$port")
         sslSocket.startHandshake()
         // 记下**实际连上的是哪个地址**：回环还是局域网兜底。
         // 现场反馈「配对连不上」时，这一行能直接分辨「回环不通、已走兜底」和「压根没连上」，

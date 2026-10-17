@@ -5,6 +5,7 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
+import android.util.Log
 import android.os.Build
 import android.provider.Settings
 import android.view.Gravity
@@ -84,6 +85,15 @@ fun AdbPairDialog(
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     var discoveredPort by remember { mutableIntStateOf(-1) }
+    /**
+     * 顺带探到的「连接端口」（`_adb-tls-connect._tcp`）。
+     *
+     * 用途只有一个：用户把无线调试页面顶部那个「IP 地址和端口」填进来时**当场拦下**。
+     * 填错的表现很隐蔽 —— TCP 连得上、TLS 握手却报证书校验失败（adbd 的连接服务会校验
+     * 客户端证书，而配对服务明确接受任意证书），看起来像「配对码错了」或「服务坏了」，
+     * 光靠报错没法让用户想到端口填错。
+     */
+    var discoveredConnectPort by remember { mutableIntStateOf(-1) }
     var portText by remember { mutableStateOf("") }
     var pairingCode by remember { mutableStateOf("") }
     var portError by remember { mutableStateOf<String?>(null) }
@@ -134,9 +144,15 @@ fun AdbPairDialog(
             }
         }
         adbMdns.start()
+        // 同时探一遍连接端口（不参与任何流程，只用来在用户填错时当场点出来）
+        val connectMdns = AdbMdns(context, AdbMdns.TLS_CONNECT) { port ->
+            if (port in 1..65535) discoveredConnectPort = port
+        }
+        connectMdns.start()
         onDispose {
             scanning = false
             adbMdns.stop()
+            runCatching { connectMdns.stop() }
         }
     }
 
@@ -286,8 +302,20 @@ fun AdbPairDialog(
                                 portError = context.getString(R.string.dialog_adb_invalid_port)
                                 return@Button
                             }
+                            // 填成「连接端口」时当场拦下：那种情况下 TCP 能连上、TLS 握手报
+                            // 证书校验失败，报错看起来完全不像端口问题，用户会一直怀疑配对码。
+                            if (discoveredConnectPort in 1..65535 && port == discoveredConnectPort) {
+                                portError = context.getString(R.string.pairing_port_is_connect_port)
+                                if (discoveredPort in 1..65535 && discoveredPort != port) {
+                                    // 配对端口已经探到了就直接换上去，省得用户再找
+                                    portText = discoveredPort.toString()
+                                }
+                                return@Button
+                            }
                             isPairing = true
                             generalError = null
+                            // 进 IO 之前把候选端口取好（Compose 状态别在别的线程上读）
+                            val fallbackPort = discoveredPort
                             scope.launch(Dispatchers.IO) {
                                 // 候选地址：回环优先，回环连不上时改用本机局域网地址兜底
                                 // （部分设备/ROM 上应用连不上自己的 127.0.0.1，见 AdbPairingClient 类注释）
@@ -318,6 +346,27 @@ fun AdbPairDialog(
                                     AdbPairingClient(hosts, port, pairingCode, key).use { client ->
                                         client.start()
                                     }
+                                }.recoverCatching { first ->
+                                    // 自动恢复：填的端口**握手阶段**就失败，而 mDNS 另外探到了一个
+                                    // 配对端口 —— 说明填的这个多半是无线调试页顶部的连接端口
+                                    // （adbd 的连接服务会校验客户端证书，配对服务不会）。
+                                    // 直接换探到的那个再试一次，省得用户自己回来改。
+                                    // 只在 SSLException 时重试：配对码错误、协议错误的重试没有意义。
+                                    if (
+                                        first is SSLException &&
+                                        fallbackPort in 1..65535 &&
+                                        fallbackPort != port
+                                    ) {
+                                        Log.w(
+                                            "AdbPairDialog",
+                                            "handshake failed on $port, retrying with discovered pairing port $fallbackPort",
+                                        )
+                                        AdbPairingClient(hosts, fallbackPort, pairingCode, key).use { client ->
+                                            client.start()
+                                        }
+                                    } else {
+                                        throw first
+                                    }
                                 }
                                 withContext(Dispatchers.Main) {
                                     isPairing = false
@@ -328,9 +377,16 @@ fun AdbPairDialog(
                                         AdbPairingState.markPaired(preferences)
                                         onPairSuccess()
                                     }.onFailure { err ->
+                                        // 附上「端口 + 异常类型」：让用户截图就能说明问题，
+                                        // 不用再去捞 logcat。异常类型是判断阶段的关键
+                                        // （SSLException = 握手阶段；AdbPairingFailed = 协议阶段）。
+                                        fun detail(base: String): String =
+                                            base + "\n\n[" + port + " · " + err.javaClass.simpleName +
+                                                (err.message?.take(80)?.let { ": $it" } ?: "") + "]"
+
                                         when (err) {
                                             is ConnectException -> {
-                                                portError = context.getString(R.string.cannot_connect_port)
+                                                portError = detail(context.getString(R.string.cannot_connect_port))
                                             }
                                             is AdbInvalidPairingCodeException -> {
                                                 pairingCodeError = context.getString(R.string.paring_code_is_wrong)
@@ -345,14 +401,15 @@ fun AdbPairDialog(
                                             // 加密连接或协议层断了：跟端口号、配对码都无关，
                                             // 单独整块提示，别让用户白白折腾输入框
                                             is SSLException -> {
-                                                generalError = context.getString(R.string.pairing_handshake_failed)
+                                                generalError = detail(context.getString(R.string.pairing_handshake_failed))
                                             }
                                             is AdbPairingFailedException -> {
-                                                generalError = context.getString(R.string.pairing_failed_protocol)
+                                                generalError = detail(context.getString(R.string.pairing_failed_protocol))
                                             }
                                             else -> {
-                                                generalError = err.message
-                                                    ?: context.getString(R.string.pairing_failed_unknown)
+                                                generalError = detail(
+                                                    err.message ?: context.getString(R.string.pairing_failed_unknown)
+                                                )
                                             }
                                         }
                                     }

@@ -287,6 +287,7 @@
     <string name="adb_pairing_requires_multi_window">请先进入分屏（多窗口）模式。</string>
     <string name="adb_error_key_store">无法为无线调试生成密钥。\n这可能是因为此设备上的 KeyStore 机制已损坏。</string>
     <string name="adb_pair_required">请先进行配对步骤。</string>
+    <string name="pairing_port_is_connect_port">这是「连接端口」，不是配对端口。配对端口是「使用配对码配对设备」对话框里显示的那个，请填它。</string>
     <string name="pairing_handshake_failed">无法与配对服务建立加密连接。\n\n常见的原因之一是端口填错：如果你填的是「无线调试」页面顶部「IP 地址和端口」里的那个，那是连接端口，不是配对端口 —— 请改用「使用配对码配对设备」对话框里显示的端口。\n\n另一种可能是配对码已失效（该对话框一关，配对码就作废），请重新打开对话框后重试。</string>
     <string name="pairing_failed_protocol">配对被设备中断了。请重新打开系统「使用配对码配对设备」对话框，再试一次。</string>
     <string name="pairing_failed_unknown">配对失败。请重新打开系统「使用配对码配对设备」对话框，再试一次。</string>
