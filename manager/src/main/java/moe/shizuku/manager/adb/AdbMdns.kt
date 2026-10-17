@@ -184,5 +184,26 @@ class AdbMdns(
         const val TLS_CONNECT = "_adb-tls-connect._tcp"
         const val TLS_PAIRING = "_adb-tls-pairing._tcp"
         const val TAG = "AdbMdns"
+
+        /**
+         * 这个端口上现在还有人在监听吗。
+         *
+         * 用「能不能 bind 上去」来反推：bind 成功 = 没人监听 = false；
+         * EADDRINUSE = 有人监听 = true。与 [isPortInUse] 同一套判定，另外暴露给
+         * 配对对话框做「配对服务是否还活着」的轮询 —— 现场日志证明这很有必要：
+         * mDNS 报出端口时服务确实在，用户输完配对码再点配对时它已经停了，
+         * 表现为连接被拒，而界面还在让用户一遍遍重试同一个死端口。
+         */
+        fun isListening(port: Int): Boolean = try {
+            java.net.ServerSocket().use {
+                it.bind(java.net.InetSocketAddress("127.0.0.1", port), 1)
+                false
+            }
+        } catch (e: java.io.IOException) {
+            true
+        } catch (e: SecurityException) {
+            // 部分新系统限制回环 bind：宁可当作「还活着」，也别误报服务已停
+            true
+        }
     }
 }

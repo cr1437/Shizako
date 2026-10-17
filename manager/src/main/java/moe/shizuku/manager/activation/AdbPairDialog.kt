@@ -94,6 +94,17 @@ fun AdbPairDialog(
      * 光靠报错没法让用户想到端口填错。
      */
     var discoveredConnectPort by remember { mutableIntStateOf(-1) }
+    /**
+     * 配对服务是否已经**停止监听**。
+     *
+     * 现场日志（Pixel 9 Pro / Android 17）里最常见的失败不是证书、也不是端口填错：
+     * mDNS 报出端口时 `isPortInUse` 是通过的（那一刻确实有服务在听），
+     * 但用户输完六位配对码再点配对，回环与局域网都变成 ECONNREFUSED ——
+     * 系统「使用配对码配对设备」那个对话框一旦不再可见，配对服务就被回收了。
+     * 以前界面只会说「无法连接」，于是用户对着一个死端口反复重试。
+     */
+    var serviceGone by remember { mutableStateOf(false) }
+    var serviceGonePort by remember { mutableIntStateOf(-1) }
     var portText by remember { mutableStateOf("") }
     var pairingCode by remember { mutableStateOf("") }
     var portError by remember { mutableStateOf<String?>(null) }
@@ -163,6 +174,28 @@ fun AdbPairDialog(
         if (discoveredPort !in 1..65535) {
             scanning = false
             scanTimedOut = true
+        }
+    }
+
+    /**
+     * 盯着配对服务还在不在。
+     *
+     * 端口是系统对话框打开时才临时开的，对话框一不可见它就被回收；而用户填六位配对码
+     * 要花几秒到十几秒。现场日志里正是这个窗口期把服务等没了，然后连上去就是
+     * ECONNREFUSED。所以这里每 1.5 秒探一次端口占用，一旦没了立刻在对话框里说明，
+     * 并且禁用配对按钮 —— 让用户去重开系统对话框，而不是对着死端口重试。
+     */
+    LaunchedEffect(inPairingWindow, discoveredPort) {
+        serviceGone = false
+        if (!inPairingWindow || discoveredPort !in 1..65535) return@LaunchedEffect
+        while (true) {
+            val alive = withContext(Dispatchers.IO) { AdbMdns.isListening(discoveredPort) }
+            if (!alive) {
+                serviceGonePort = discoveredPort
+                serviceGone = true
+                break
+            }
+            delay(1_500L)
         }
     }
 
@@ -260,6 +293,16 @@ fun AdbPairDialog(
                             )
                         },
                     )
+                    // 配对服务已经不在监听（端口空转）：这是现场日志里最常见的失败 ——
+                    // mDNS 报出端口时服务还在，用户输完配对码它已经停了。
+                    // 直接说清楚，别让他对着一个死端口反复点。
+                    if (serviceGone && serviceGonePort in 1..65535) {
+                        Text(
+                            text = context.getString(R.string.pairing_service_stopped, serviceGonePort),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = palette.error,
+                        )
+                    }
                     generalError?.let { error ->
                         Text(
                             text = error,
@@ -295,7 +338,8 @@ fun AdbPairDialog(
                         }
                     }
                     Button(
-                        enabled = !isPairing && pairingCode.length == 6 && portText.isNotBlank(),
+                        enabled = !isPairing && !serviceGone &&
+                            pairingCode.length == 6 && portText.isNotBlank(),
                         onClick = {
                             val port = portText.toIntOrNull() ?: -1
                             if (port !in 1..65535) {
@@ -387,6 +431,10 @@ fun AdbPairDialog(
                                         when (err) {
                                             is ConnectException -> {
                                                 portError = detail(context.getString(R.string.cannot_connect_port))
+                                                // 连接被拒 = 这个端口上没人监听。把「配对服务可能已经停了」
+                                                // 直接摆出来，否则用户只会以为是端口数字打错。
+                                                serviceGonePort = port
+                                                serviceGone = true
                                             }
                                             is AdbInvalidPairingCodeException -> {
                                                 pairingCodeError = context.getString(R.string.paring_code_is_wrong)

@@ -91,6 +91,7 @@
     <string name="adb_error_key_store">無法為無線偵錯產生金鑰。
 \n這可能是因為此裝置上的 KeyStore 機制已損壞。</string>
     <string name="adb_pair_required">請先進行配對步驟。</string>
+    <string name="pairing_service_stopped">配對服務已經停止監聽（通訊埠 %d）。系統的「使用配對碼配對裝置」對話方塊必須一直開著並且可見 —— 請重新開啟它，用分割畫面把 Shizako 和它並排，再點一次配對。那個對話方塊一關，配對碼就作廢了。</string>
     <string name="pairing_port_is_connect_port">這是「連線通訊埠」，不是配對通訊埠。配對通訊埠是「使用配對碼配對裝置」對話方塊裡顯示的那個，請填它。</string>
     <string name="pairing_handshake_failed">無法與配對服務建立加密連線。\n\n常見的原因之一是通訊埠填錯：如果你填的是「無線偵錯」頁面頂端「IP 位址和通訊埠」裡那個，那是連線通訊埠，不是配對通訊埠 —— 請改用「使用配對碼配對裝置」對話方塊裡顯示的通訊埠。\n\n另一種可能是配對碼已失效（該對話方塊一關，配對碼就作廢），請重新開啟對話方塊後再試一次。</string>
     <string name="pairing_failed_protocol">配對被裝置中斷了。請重新開啟系統「使用配對碼配對裝置」對話方塊，再試一次。</string>

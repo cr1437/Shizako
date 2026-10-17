@@ -51,7 +51,7 @@ object DiagLog {
         private set
 
     /** 录制来源，显示在卡片上：`shizuku`（全系统）/ `app`（仅本应用）。 */
-    var source by mutableStateOf("")
+    var source by mutableStateOf("starting")
         private set
 
     private val memory = ArrayDeque<String>()
@@ -107,7 +107,7 @@ object DiagLog {
     }
 
     /** 当前缓冲区内容（最近的日志），用于复制 / 导出。 */
-    fun snapshot(): String = synchronized(lock) { memory.joinToString("") }
+    fun snapshot(): String = synchronized(lock) { memory.joinToString("\n") }
 
     /**
      * 把当前日志写成一个可分享的文件（放在 FileProvider 覆盖的目录里）。
