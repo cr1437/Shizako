@@ -107,6 +107,15 @@ fun AdbPairDialog(
     var serviceGonePort by remember { mutableIntStateOf(-1) }
     var portText by remember { mutableStateOf("") }
     var pairingCode by remember { mutableStateOf("") }
+    /**
+     * 当前端口框里的值是不是「mDNS 自动填的」。
+     *
+     * 现场日志（两份，Pixel 9 Pro / Android 17）都是同一个现象：自动填入的端口
+     * 在真正连接时 ECONNREFUSED，而系统对话框里显示的端口是另一个。
+     * 也就是说自动填的值可能已经过期，却把用户手输的正确值盖掉了。
+     * 所以：只有「用户没动过」或「值仍是上次自动填的那个」才允许覆盖。
+     */
+    var portAutoFilled by remember { mutableStateOf(false) }
     var portError by remember { mutableStateOf<String?>(null) }
     var pairingCodeError by remember { mutableStateOf<String?>(null) }
     /**
@@ -148,7 +157,11 @@ fun AdbPairDialog(
         val adbMdns = AdbMdns(context, AdbMdns.TLS_PAIRING) { port ->
             discoveredPort = port
             if (port in 1..65535) {
-                portText = port.toString()
+                // 不覆盖用户手输的值：自动填的端口可能是过期的，别把正确值盖成错的
+                if (portText.isBlank() || portAutoFilled) {
+                    portText = port.toString()
+                    portAutoFilled = true
+                }
                 portError = null
                 scanning = false
                 scanTimedOut = false
@@ -185,13 +198,14 @@ fun AdbPairDialog(
      * ECONNREFUSED。所以这里每 1.5 秒探一次端口占用，一旦没了立刻在对话框里说明，
      * 并且禁用配对按钮 —— 让用户去重开系统对话框，而不是对着死端口重试。
      */
-    LaunchedEffect(inPairingWindow, discoveredPort) {
+    LaunchedEffect(inPairingWindow, portText) {
         serviceGone = false
-        if (!inPairingWindow || discoveredPort !in 1..65535) return@LaunchedEffect
+        val monitored = portText.toIntOrNull() ?: -1
+        if (!inPairingWindow || monitored !in 1..65535) return@LaunchedEffect
         while (true) {
-            val alive = withContext(Dispatchers.IO) { AdbMdns.isListening(discoveredPort) }
+            val alive = withContext(Dispatchers.IO) { AdbMdns.isListening(monitored) }
             if (!alive) {
-                serviceGonePort = discoveredPort
+                serviceGonePort = monitored
                 serviceGone = true
                 break
             }
@@ -275,6 +289,7 @@ fun AdbPairDialog(
                         value = portText,
                         onValueChange = {
                             portText = it.filter(Char::isDigit).take(5)
+                            portAutoFilled = false
                             portError = null
                             generalError = null
                         },
@@ -435,6 +450,13 @@ fun AdbPairDialog(
                                                 // 直接摆出来，否则用户只会以为是端口数字打错。
                                                 serviceGonePort = port
                                                 serviceGone = true
+                                                // 如果这个端口是自动填的，它多半已经过期（现场两份日志都是
+                                                // 自动填的端口被拒、对话框里显示的是另一个）。清空它，
+                                                // 让用户直接照着系统对话框里显示的端口输入。
+                                                if (portAutoFilled) {
+                                                    portText = ""
+                                                    portAutoFilled = false
+                                                }
                                             }
                                             is AdbInvalidPairingCodeException -> {
                                                 pairingCodeError = context.getString(R.string.paring_code_is_wrong)

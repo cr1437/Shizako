@@ -97,7 +97,14 @@ class AdbMdns(
 
     private fun onServiceResolved(resolvedService: NsdServiceInfo) {
         // 端口必须真的有人在监听（adbd 起来后才会 bind），再上报
-        if (running && isPortInUse(resolvedService.port)) {
+        val listening = running && isPortInUse(resolvedService.port)
+        // 每次解析都记一行：现场排查时要能分辨「根本没解析出新端口」和
+        // 「解析到了但探测没过」—— 这两种情况的修法完全不同。
+        Log.i(
+            TAG,
+            "resolved type=$serviceType name=${resolvedService.serviceName} port=${resolvedService.port} listening=$listening",
+        )
+        if (listening) {
             serviceName = resolvedService.serviceName
             observer.onChanged(resolvedService.port)
         }
