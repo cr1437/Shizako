@@ -35,7 +35,11 @@
 // APK；上游这里是它自己的包名（moe.shizuku.privileged.api），照抄的话在本 fork 里会找到
 // 兼容性占位壳（没有 server 代码）而启动失败，同时也不该在产物里带上游身份。
 #define PACKAGE_NAME "com.churan.shizako"
-#define SERVER_NAME "shizuku_server"
+
+// 服务进程名。**不要**改回 "shizuku_server"：官方 Shizuku 的服务进程同名，
+// 用同一个名字既会让「按名字杀旧进程」误伤对方，也会让 ps 里分不清谁是谁。
+// 改成自己的名字后，两边可以真正并存（客户端认的是 provider，不是进程名）。
+#define SERVER_NAME "shizako_server"
 #define SERVER_CLASS_PATH "rikka.shizuku.server.ShizukuService"
 
 #if defined(__arm__)
@@ -137,8 +141,8 @@ static void start_server(const char *path, const char *main_class, const char *p
             run_server(path, main_class, process_name);
         }
         default: {
-            printf("info: shizuku_server pid is %d\n", pid);
-            printf("info: shizuku_starter exit with 0\n");
+            printf("info: shizako_server pid is %d\n", pid);
+            printf("info: shizako_starter exit with 0\n");
             exit(EXIT_SUCCESS);
         }
     }
@@ -230,25 +234,39 @@ int main(int argc, char *argv[]) {
     fflush(stdout);
 
     // kill old server
+    //
+    // 只杀**我们自己**的服务进程，不能按进程名一刀切：
+    // 以前这里用 `strcmp(SERVER_NAME, name)` 匹配 "shizuku_server"，而官方 Shizuku
+    // 的服务进程正好也叫这个名。两种后果都很糟 —— 身份不同时杀不动（EPERM）导致
+    // starter 直接退出，现象是「用电脑启动失败，还提示去关掉 Shizuku」；身份相同时
+    // 则会把**对方**的 server 悄悄杀掉。README 承诺的「可与官方 Shizuku 共存」
+    // 在这段代码上是不成立的。
+    //
+    // 判定改成看 cmdline：我们的服务是
+    //   app_process … -Djava.class.path=<我们的 APK> … rikka.shizuku.server.ShizukuService
+    // 因此「包含本应用 applicationId」且「包含服务类名」才是自己人。顺带解决了升级
+    // 场景：旧版本进程名还是 shizuku_server，但 cmdline 一样能认出来。
     printf("info: killing old process...\n");
     fflush(stdout);
 
     foreach_proc([](pid_t pid) {
         if (pid == getpid()) return;
 
-        char name[1024];
-        if (get_proc_name(pid, name, 1024) != 0) return;
+        char cmdline[4096];
+        if (get_proc_cmdline(pid, cmdline, sizeof(cmdline)) != 0) return;
 
-        if (strcmp(SERVER_NAME, name) != 0)
+        if (strstr(cmdline, PACKAGE_NAME) == nullptr)
+            return;
+        if (strstr(cmdline, SERVER_CLASS_PATH) == nullptr)
             return;
 
         if (kill(pid, SIGKILL) == 0)
-            printf("info: killed %d (%s)\n", pid, name);
+            printf("info: killed %d (our server)\n", pid);
         else if (errno == EPERM) {
-            perrorf("fatal: can't kill %d, please try to stop existing Shizuku from app first.\n", pid);
+            perrorf("fatal: can't kill %d, please stop the running Shizako service from the app first.\n", pid);
             exit(EXIT_FATAL_KILL);
         } else {
-            printf("warn: failed to kill %d (%s)\n", pid, name);
+            printf("warn: failed to kill %d\n", pid);
         }
     });
 

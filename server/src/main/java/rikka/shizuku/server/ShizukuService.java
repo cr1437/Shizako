@@ -64,7 +64,10 @@ import rikka.shizuku.server.util.UserHandleCompat;
 public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuClientManager, ShizukuConfigManager> {
 
     public static void main(String[] args) {
-        DdmHandleAppName.setAppName("shizuku_server", 0);
+        // 进程名必须和 starter.cpp 的 SERVER_NAME 一致，而且**不能**再用 "shizuku_server"：
+        // 官方 Shizuku 的服务进程叫这个名字，同名会让 starter 的「杀旧进程」误伤对方，
+        // 也让 ps / 崩溃日志里分不清两个管理器谁是谁。
+        DdmHandleAppName.setAppName("shizako_server", 0);
         RishConfig.setLibraryPath(System.getProperty("shizuku.library.path"));
 
         // 启动即建审计日志文件，manager 端 tail 时不会报 No such file

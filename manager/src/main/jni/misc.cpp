@@ -35,6 +35,45 @@ int get_proc_name(int pid, char *name, size_t size) {
     return 0;
 }
 
+int get_proc_cmdline(int pid, char *cmdline, size_t size) {
+    if (size == 0)
+        return 1;
+
+    int fd;
+    char path[PATH_MAX];
+    snprintf(path, sizeof(path), "/proc/%d/cmdline", pid);
+    if ((fd = open(path, O_RDONLY)) == -1)
+        return 1;
+
+    size_t total = 0;
+    for (;;) {
+        if (total >= size - 1)
+            break;
+        ssize_t ret = read(fd, cmdline + total, size - 1 - total);
+        if (ret < 0) {
+            if (errno == EINTR)
+                continue;
+            close(fd);
+            return 1;
+        }
+        if (ret == 0)
+            break;
+        total += (size_t) ret;
+    }
+    close(fd);
+
+    if (total == 0)
+        return 1;
+
+    cmdline[total] = '\0';
+    // cmdline 用 NUL 分隔各个参数，替换成空格后才能当成一整条字符串搜索
+    for (size_t i = 0; i < total; ++i) {
+        if (cmdline[i] == '\0')
+            cmdline[i] = ' ';
+    }
+    return 0;
+}
+
 int is_num(const char *s) {
     size_t len = strlen(s);
     for (size_t i = 0; i < len; ++i)
