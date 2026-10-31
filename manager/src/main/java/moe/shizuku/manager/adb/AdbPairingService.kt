@@ -474,7 +474,7 @@ class AdbPairingService : Service() {
                 PendingIntent.FLAG_UPDATE_CURRENT
         )
 
-        Notification.Action.Builder(
+        return Notification.Action.Builder(
             null,
             getString(R.string.notification_adb_pairing_input_paring_code),
             pendingIntent
