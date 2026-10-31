@@ -204,6 +204,11 @@ fun AdbPairDialog(
         if (!inPairingWindow || monitored !in 1..65535) return@LaunchedEffect
         while (true) {
             val alive = withContext(Dispatchers.IO) { AdbMdns.isListening(monitored) }
+            // 状态变化才记一行：下一份日志能直接看出「检测有没有生效」，
+            // 而不是只能靠猜为什么按钮还能按
+            if (!alive) {
+                Log.i("AdbPairDialog", "pairing service stopped listening on port $monitored")
+            }
             if (!alive) {
                 serviceGonePort = monitored
                 serviceGone = true
@@ -371,11 +376,31 @@ fun AdbPairDialog(
                                 }
                                 return@Button
                             }
+                            Log.i(
+                                "AdbPairDialog",
+                                "pair pressed: port=$port autoFilled=$portAutoFilled discovered=$discoveredPort",
+                            )
                             isPairing = true
                             generalError = null
                             // 进 IO 之前把候选端口取好（Compose 状态别在别的线程上读）
                             val fallbackPort = discoveredPort
                             scope.launch(Dispatchers.IO) {
+                                // 按下按钮到真正连接之间，端口可能已经被系统收回（「使用配对码
+                                // 配对设备」对话框一关，adbd 就停监听）。先确认一次：否则拿到的
+                                // 是 ECONNREFUSED，报出来像「连不上」，而实际该做的是「重开对话框」。
+                                // 这条分支走 serviceGone，和轮询探到的结果共用同一套提示。
+                                if (!AdbMdns.isListening(port)) {
+                                    Log.w(
+                                        "AdbPairDialog",
+                                        "pairing service stopped listening on port $port before connect",
+                                    )
+                                    withContext(Dispatchers.Main) {
+                                        isPairing = false
+                                        serviceGonePort = port
+                                        serviceGone = true
+                                    }
+                                    return@launch
+                                }
                                 // 候选地址：回环优先，回环连不上时改用本机局域网地址兜底
                                 // （部分设备/ROM 上应用连不上自己的 127.0.0.1，见 AdbPairingClient 类注释）
                                 val hosts = AdbPairingClient.candidateHosts(context)

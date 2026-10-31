@@ -31,7 +31,6 @@ class AdbPairingService : Service() {
         private const val tag = "AdbPairingService"
 
         private const val notificationId = 1
-        private const val replyRequestId = 1
         private const val stopRequestId = 2
         private const val retryRequestId = 3
         private const val activationRequestId = 4
@@ -39,7 +38,23 @@ class AdbPairingService : Service() {
         private const val stopAction = "stop"
         private const val replyAction = "reply"
         private const val remoteInputResultKey = "paring_code"
-        private const val portKey = "paring_code"
+
+        /**
+         * 配对端口用的 Intent extra key，**必须**和 [remoteInputResultKey] 分开。
+         *
+         * 以前两者共用 `"paring_code"`：一个装 CharSequence（配对码）、一个装 Int（端口），
+         * 同一个 key 两种类型，依靠的是「RemoteInput 的结果走 ClipData、不会落进 extras」
+         * 这条隐含前提。现场出现过「mDNS 明明报出 46499，点发送后却去连
+         * `127.0.0.1:0`」，这种写法一旦前提不成立，现象就是端口丢掉或串味，
+         * 而且报错看起来完全像是连不上。分开之后两者互不影响。
+         */
+        private const val portKey = "pairing_port"
+
+        /**
+         * 「输入配对码」这条 PendingIntent 的 requestCode 基数：每个端口用
+         * `replyRequestBase + port`。见 [replyNotificationAction]。
+         */
+        private const val replyRequestBase = 10_000
 
         fun startIntent(context: Context): Intent {
             return Intent(context, AdbPairingService::class.java).setAction(startAction)
@@ -85,6 +100,13 @@ class AdbPairingService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        // 「根本没开始连」这类失败要等 startForeground **之后**再处理。
+        // 这条意图是 PendingIntent.getForegroundService 拉起的，系统要求 5 秒内
+        // startForeground；如果在这个 when 里直接 handleResult（它只发通知、不再进前台），
+        // 就会撞上 ForegroundServiceDidNotStartInTimeException —— 为了报告一个配对失败，
+        // 反而把整个进程崩掉。
+        var pendingFailure: Throwable? = null
+
         val notification = when (intent?.action) {
             startAction -> {
                 onStart()
@@ -92,10 +114,19 @@ class AdbPairingService : Service() {
             replyAction -> {
                 val code = RemoteInput.getResultsFromIntent(intent)?.getCharSequence(remoteInputResultKey) ?: ""
                 val port = intent.getIntExtra(portKey, -1)
-                if (port != -1) {
+                // 现场排查用：端口有没有传过来、传成了几。配对码本身不进日志。
+                Log.i(tag, "pairing reply received: port=$port, code length=${code.length}")
+                if (port in 1..65535) {
                     onInput(code.toString(), port)
                 } else {
-                    onStart()
+                    // 端口拿不到就**不要**去 connect：0 会被 Socket 原样当成「连 0 号端口」，
+                    // 抛出来是 "failed to connect to /127.0.0.1 (port 0)" —— 看起来像
+                    // 「连不上」，实际是「端口丢了」，排查方向会被完全带偏。
+                    Log.w(tag, "pairing reply carries no usable port ($port), refusing to connect")
+                    pendingFailure = PairingAbortedException(
+                        getString(R.string.pairing_port_missing)
+                    )
+                    workingNotification
                 }
             }
             stopAction -> {
@@ -120,6 +151,7 @@ class AdbPairingService : Service() {
                 }
             }
         }
+        pendingFailure?.let { handleResult(false, it) }
         return START_REDELIVER_INTENT
     }
 
@@ -156,6 +188,16 @@ class AdbPairingService : Service() {
 
     private fun onInput(code: String, port: Int): Notification {
         GlobalScope.launch(Dispatchers.IO) {
+            // 动手之前先确认那个端口还有人听。mDNS 报出端口之后、用户输完码之前，
+            // 系统「使用配对码配对设备」对话框一旦被关掉，adbd 就把这个口收回去 ——
+            // 这时去 connect 只会得到 ECONNREFUSED（现场报告里最常见的一句），
+            // 而用户看到的是一句「连不上」，不知道该去重新打开对话框。
+            if (!AdbMdns.isListening(port)) {
+                Log.w(tag, "pairing service stopped listening on port $port before connect")
+                handleResult(false, PairingAbortedException(getString(R.string.pairing_service_stopped, port)))
+                return@launch
+            }
+
             // 候选地址：回环优先，回环连不上时改用本机局域网地址兜底
             // （部分设备/ROM 上应用连不上自己的 127.0.0.1，见 AdbPairingClient 类注释）
             val hosts = AdbPairingClient.candidateHosts(this@AdbPairingService)
@@ -210,6 +252,11 @@ class AdbPairingService : Service() {
             title = getString(R.string.notification_adb_pairing_failed_title)
 
             text = when (exception) {
+                is PairingAbortedException -> {
+                    // 这类失败不是「连不上」，而是根本没开始连 —— 文案在异常里，
+                    // 直接照实说出来（端口丢了 / 配对服务已经停了）
+                    exception.message
+                }
                 is ConnectException -> {
                     getString(R.string.cannot_connect_port)
                 }
@@ -401,7 +448,17 @@ class AdbPairingService : Service() {
             .build()
     }
 
-    private val replyNotificationAction by unsafeLazy {
+    /**
+     * 通知上的「输入配对码」动作。
+     *
+     * 每个端口建**各自**的 PendingIntent（requestCode = [replyRequestBase] + port），
+     * 不再沿用「先建一个 port=-1 的、再靠 `FLAG_UPDATE_CURRENT` 就地改 extra」——
+     * 后者依赖「requestCode 与 filterEquals 都相同才会更新」这条隐式规则，而且
+     * Intent 的 filterEquals **不比较 extras**：一旦某次没走到更新分支，送出去的就是
+     * 建这个 PendingIntent 时的 -1（或更糟，一个 0），连接阶段只会得到一句
+     * 「连不上」，看不出端口根本没送到。
+     */
+    private fun replyNotificationAction(port: Int): Notification.Action {
         val remoteInput = RemoteInput.Builder(remoteInputResultKey).run {
             setLabel(getString(R.string.dialog_adb_pairing_paring_code))
             build()
@@ -409,8 +466,8 @@ class AdbPairingService : Service() {
 
         val pendingIntent = PendingIntent.getForegroundService(
             this,
-            replyRequestId,
-            replyIntent(this, -1),
+            replyRequestBase + port,
+            replyIntent(this, port),
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
                 PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
             else
@@ -424,23 +481,6 @@ class AdbPairingService : Service() {
         )
             .addRemoteInput(remoteInput)
             .build()
-    }
-
-    private fun replyNotificationAction(port: Int): Notification.Action {
-        // Ensure pending intent is created
-        val action = replyNotificationAction
-
-        PendingIntent.getForegroundService(
-            this,
-            replyRequestId,
-            replyIntent(this, port),
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
-                PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
-            else
-                PendingIntent.FLAG_UPDATE_CURRENT
-        )
-
-        return action
     }
 
     private val searchingNotification by unsafeLazy {
@@ -473,3 +513,12 @@ class AdbPairingService : Service() {
         return null
     }
 }
+
+/**
+ * 配对**还没开始**就被判定做不下去（端口丢失、配对服务已经停止监听）。
+ *
+ * 它和 [ConnectException] / [SSLException] 的区别很重要：后两者表示「连了但没成」，
+ * 这个表示「根本没去连」，[message] 就是给用户看的原因 —— 界面要照实说出来，
+ * 不能笼统地报一句「连不上」。
+ */
+private class PairingAbortedException(message: String) : IllegalStateException(message)
