@@ -1,0 +1,6 @@
+Changes since the last F-Droid build (versionCode 315):
+
+• Fixed: starting the service failed — and could kill the official Shizuku's server — when both managers were installed. Our server process is now shizako_server, and the starter only kills processes that are really ours.
+• Fixed: notification-based pairing could connect with the wrong port (e.g. port 0), because the port shared one extra key with the pairing code and the PendingIntent was updated in place. The port now has its own key and its own PendingIntent per port.
+• Pairing now probes the pairing port right before connecting and reports "the pairing service has stopped listening" instead of a bare "can't connect".
+• More pairing logs, so a failure can be traced to discovery, port hand-off or connect.

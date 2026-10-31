@@ -47,6 +47,9 @@ def baseVersionName = "${api_version_major}.6.0"
 ext {
     // versionCode 跟 versionName 走（不是 git 提交数）：3.01 → 301，
     // 这样每次发版只要改 versionName，升级判断自然成立
-    versionCode = 316
-    versionName = "zako3.16hp"
+    //
+    // 3.16hp 沿用了 316（hotfix 语义，只为盖掉 3.16）；这次要进 F-Droid，
+    // 而 F-Droid 只比 versionCode，所以必须抬到 317 —— 顺带按约定把名字对回 3.17。
+    versionCode = 317
+    versionName = "zako3.17"
 }
