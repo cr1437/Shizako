@@ -16,9 +16,9 @@ RepoType: git
 Repo: https://github.com/cr1437/Shizako.git
 
 Builds:
-  - versionName: zako3.15
-    versionCode: 315
-    commit: f1a8e59de101d0b26c02aff833223bde0301dff5
+  - versionName: zako3.17
+    versionCode: 317
+    commit: c3cfe13e527dd8fa7315cc2ad0079eb6186f4e98
     subdir: manager
     gradle:
       - yes
@@ -36,9 +36,12 @@ Builds:
 
 MaintainerNotes: |
   Shizako is an Apache-2.0 fork of Shizuku (RikkaApps/Shizuku) that keeps its own app
-  name, its own application id (com.churan.shizako) and its own permission names. It
-  cannot be installed next to the official Shizuku because the compatibility bridge
-  answers the upstream provider authority; that bridge is not part of this build.
+  name, its own application id (com.churan.shizako) and its own permission names. It can
+  be installed next to the official Shizuku: this build declares only its own provider
+  authority (com.churan.shizako.shizuku), and the compatibility placeholder package that
+  used to carry the upstream application id has been removed from the source tree
+  entirely. Its server process is named shizako_server, so the two managers do not
+  interfere with each other at start-up either.
 
   The variant switch is the in-repo Gradle property `-Pfdroid`, passed via `gradleprops`.
   It makes versionName carry a `-f` suffix (versionCode is unchanged), turns off the
@@ -67,5 +70,5 @@ MaintainerNotes: |
 AutoUpdateMode: Version
 UpdateCheckMode: Tags
 UpdateCheckData: build.gradle|versionCode = (\d+)|.|versionName = "([^"]+)"
-CurrentVersion: zako3.15
-CurrentVersionCode: 315
+CurrentVersion: zako3.17
+CurrentVersionCode: 317
