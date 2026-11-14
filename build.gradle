@@ -48,8 +48,8 @@ ext {
     // versionCode 跟 versionName 走（不是 git 提交数）：3.01 → 301，
     // 这样每次发版只要改 versionName，升级判断自然成立
     //
-    // 3.16hp 沿用了 316（hotfix 语义，只为盖掉 3.16）；这次要进 F-Droid，
-    // 而 F-Droid 只比 versionCode，所以必须抬到 317 —— 顺带按约定把名字对回 3.17。
-    versionCode = 317
-    versionName = "zako3.17"
+    // 3.19：修复无线调试配对/激活链路（配对端口被 Kotlin 接收者遮蔽成 0；服务子进程被
+    // SIGHUP 竞态杀掉），并移除首页「诊断日志」测试功能。
+    versionCode = 319
+    versionName = "zako3.19"
 }

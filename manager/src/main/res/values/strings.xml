@@ -56,16 +56,6 @@
 
 Note, do not disable \"Developer options\" or \"USB debugging\", or Shizako will be stopped."</string>
     <string name="dialog_adb_discovery_message_toggle_wireless_debugging">Please try to disable and enable \"Wireless debugging\" if it keeps searching.</string>
-    <string name="diag_log_title">Diagnostics log</string>
-    <string name="diag_log_summary_idle">Captures logcat so you can send it in without a computer</string>
-    <string name="diag_log_summary_starting">Starting…</string>
-    <string name="diag_log_summary_recording">Recording · %1$d lines · %2$s</string>
-    <string name="diag_log_summary_stopped">Stopped · %d lines recorded</string>
-    <string name="diag_log_export">Export</string>
-    <string name="diag_log_copy">Copy</string>
-    <string name="diag_log_copied">Log copied to clipboard</string>
-    <string name="diag_log_empty">Nothing recorded yet</string>
-    <string name="diag_log_export_failed">Could not export the log</string>
     <string name="settings_usage_mode">Usage mode</string>
     <string name="settings_usage_mode_simple">Simple mode — only everyday features are shown</string>
     <string name="settings_usage_mode_advanced">Advanced mode — everything is shown</string>
@@ -545,6 +535,7 @@ The export function uses SAF (Storage Access Framework). It's reported that MIUI
     <string name="notification_adb_pairing_enter_activation">Open activation</string>
     <string name="notification_adb_pairing_starting_service">Starting Shizako service\u2026</string>
     <string name="notification_adb_pairing_service_started">Shizako service is running.</string>
+    <string name="notification_adb_pairing_service_start_failed">Paired, but the service did not start. Tap to retry from the activation page.</string>
 
     <!-- Quick settings tiles -->
     <string name="tile_service_label">Shizako service</string>

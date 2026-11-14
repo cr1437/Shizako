@@ -431,19 +431,22 @@ fun AdbPairDialog(
                                         client.start()
                                     }
                                 }.recoverCatching { first ->
-                                    // 自动恢复：填的端口**握手阶段**就失败，而 mDNS 另外探到了一个
-                                    // 配对端口 —— 说明填的这个多半是无线调试页顶部的连接端口
-                                    // （adbd 的连接服务会校验客户端证书，配对服务不会）。
-                                    // 直接换探到的那个再试一次，省得用户自己回来改。
-                                    // 只在 SSLException 时重试：配对码错误、协议错误的重试没有意义。
-                                    if (
-                                        first is SSLException &&
+                                    // 自动恢复（两种都只重试一次，且换的是 mDNS 另外探到的端口）：
+                                    //
+                                    // 1) 握手阶段失败（SSLException）：多半是填成了无线调试页顶部的
+                                    //    连接端口 —— adbd 的连接服务会校验客户端证书，配对服务不会。
+                                    // 2) 连接被拒（ConnectException）：多半是端口已经过期 —— 系统对话框
+                                    //    重开过以后旧端口会失效，而 mDNS 可能刚报出一个新的。
+                                    //
+                                    // 配对码错误、协议层错误不重试：换端口不会让配对码变对。
+                                    val retryable = (first is SSLException || first is ConnectException) &&
                                         fallbackPort in 1..65535 &&
                                         fallbackPort != port
-                                    ) {
+                                    if (retryable) {
                                         Log.w(
                                             "AdbPairDialog",
-                                            "handshake failed on $port, retrying with discovered pairing port $fallbackPort",
+                                            "pairing failed on $port (${first.javaClass.simpleName}), " +
+                                                "retrying with discovered pairing port $fallbackPort",
                                         )
                                         AdbPairingClient(hosts, fallbackPort, pairingCode, key).use { client ->
                                             client.start()

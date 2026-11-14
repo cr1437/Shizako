@@ -267,16 +267,6 @@
     <string name="tasker_adb_unavailable">ADB 自动启动不可用</string>
 
     <string name="settings_translation_summary">帮助我们将 %s 翻译至您的语言</string>
-    <string name="diag_log_title">诊断日志</string>
-    <string name="diag_log_summary_idle">自动录制 logcat，不用电脑也能把现场交出来</string>
-    <string name="diag_log_summary_starting">正在启动…</string>
-    <string name="diag_log_summary_recording">录制中 · %1$d 行 · %2$s</string>
-    <string name="diag_log_summary_stopped">已停止 · 共录到 %d 行</string>
-    <string name="diag_log_export">导出</string>
-    <string name="diag_log_copy">复制</string>
-    <string name="diag_log_copied">日志已复制到剪贴板</string>
-    <string name="diag_log_empty">还没有录到内容</string>
-    <string name="diag_log_export_failed">导出失败</string>
     <string name="settings_usage_mode">使用模式</string>
     <string name="settings_usage_mode_simple">简单模式 · 只显示常用功能</string>
     <string name="settings_usage_mode_advanced">进阶模式 · 显示全部功能</string>
@@ -354,6 +344,7 @@
     <string name="notification_adb_pairing_enter_activation">进入激活</string>
     <string name="notification_adb_pairing_starting_service">正在启动 Shizako 服务…</string>
     <string name="notification_adb_pairing_service_started">服务已经跑起来啦，开始调教吧～</string>
+    <string name="notification_adb_pairing_service_start_failed">配对成功，但服务没能启动。点这里进激活页重试。</string>
     <string name="adb_pairing_tutorial_content_notification_blocked">配对过程需要主人与 Shizako 的通知交互。请允许 Shizako酱 给主人发消息。</string>
     <string name="notification_settings">通知设置</string>
     <string name="adb_pairing_tutorial_content_miui">MIUI 用户可能需要在系统设置中从"通知管理"-"通知显示设置"将通知样式切换为"原生样式"。</string>

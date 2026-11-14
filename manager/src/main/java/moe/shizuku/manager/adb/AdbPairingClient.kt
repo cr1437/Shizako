@@ -199,7 +199,7 @@ class AdbPairingClient(private val hosts: List<String>, private val port: Int, p
                     // 这个地址连不上，且还有备选：换下一个（顺手关掉刚建出来的 socket）
                     closeSockets()
                     lastConnectFailure = e
-                    Log.w(TAG, "Pairing connect to $candidate:$port failed (${e.javaClass.simpleName}), trying next host")
+                    Log.w(TAG, "Pairing connect to $candidate:$port failed (${e.javaClass.simpleName}: ${e.message}), trying next host")
                     continue
                 }
                 Log.w(TAG, "pairing failed while connecting to $candidate:$port (${e.javaClass.simpleName}: ${e.message})")
@@ -239,9 +239,24 @@ class AdbPairingClient(private val hosts: List<String>, private val port: Int, p
         // 必须带超时：配对时用户可能停在系统「使用配对码配对设备」对话框里不动，
         // 而 connect / 握手 / 读包任何一步永久阻塞，都会让通知一直停在「配对中」、
         // 对话框按钮永远禁用（只能杀进程恢复）。数值与 AdbClient 保持一致（10s / 15s）。
+        // 注意：这里**不能**写成 `Socket().apply { connect(InetSocketAddress(host, port)) }`。
+        // `apply` 的接收者是 Socket，而 Socket 自带 `getPort()`（未连接时恒为 0），
+        // 大括号里的 `port` 会解析到 `Socket.port` 而不是本类的配对端口 —— 连接就变成
+        // 「连 0 号端口」，表现是配对流永远 ECONNREFUSED（现场报的「无法连接至无线调试服务」）。
+        // 先用局部变量把端口定下来，再在 apply 外用，语义就没有歧义了。
+        val remotePort = port
+        val address = java.net.InetSocketAddress(host, remotePort)
         socket = java.net.Socket().apply {
             tcpNoDelay = true
-            connect(java.net.InetSocketAddress(host, port), CONNECT_TIMEOUT_MS)
+        }
+        // 现场排查用：TCP connect 本身失败（而不是 TLS / 协议失败）时，日志里要能直接看到
+        // 「连了哪个 host:port、errno 是什么」。
+        Log.i(TAG, "tcp connect -> $host:$remotePort")
+        try {
+            socket.connect(address, CONNECT_TIMEOUT_MS)
+        } catch (e: Throwable) {
+            Log.w(TAG, "tcp connect to $host:$remotePort failed: ${e.javaClass.name}: ${e.message}", e)
+            throw e
         }
 
         val sslContext = key.sslContext
@@ -401,17 +416,19 @@ class AdbPairingClient(private val hosts: List<String>, private val port: Int, p
         }
 
         /**
-         * 组装候选地址：回环优先，其次本机局域网地址。
+         * 组装候选地址：回环优先，然后本机**所有**非回环 IPv4 地址（Wi-Fi 接口排前面）。
          *
-         * 绝大多数设备用回环就够了（也是原来的行为），局域网地址只在回环连不上时兜底 ——
-         * 见 [AdbPairingClient] 的类注释。拿不到局域网地址就只用回环。
+         * 以前只取第一个局域网地址：多网卡设备（模拟器 eth0 + wlan0、USB 网络共享、
+         * VPN tun0）上很容易挑中**不是**无线调试所在的那张网卡，配对的局域网兜底就形同虚设。
+         * 现在按接口逐个试，顺序上 Wi-Fi 优先（adbd 的配对服务在这张网卡通告）。
          */
         fun candidateHosts(context: android.content.Context): List<String> {
             val list = mutableListOf("127.0.0.1")
-            runCatching { moe.shizuku.manager.utils.NetworkUtils.findLanIpv4() }
+            runCatching { moe.shizuku.manager.utils.NetworkUtils.findAllLanIpv4() }
                 .getOrNull()
-                ?.takeIf { it.isNotBlank() && it != "127.0.0.1" }
-                ?.let { list.add(it) }
+                ?.forEach { ip ->
+                    if (ip.isNotBlank() && ip != "127.0.0.1" && ip !in list) list.add(ip)
+                }
             return list
         }
 

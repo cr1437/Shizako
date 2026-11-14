@@ -7,6 +7,7 @@ import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
+import android.util.Log
 import android.widget.Toast
 import com.topjohnwu.superuser.Shell
 import kotlinx.coroutines.CompletableDeferred
@@ -28,6 +29,8 @@ import moe.shizuku.manager.utils.EnvironmentUtils
  * and the quick settings tiles, so behavior never drifts between entry points.
  */
 object ServiceStartHelper {
+
+    private const val TAG = "ServiceStartHelper"
 
     /**
      * Whether Shizako is able to enable wireless debugging by itself, so an
@@ -124,14 +127,20 @@ object ServiceStartHelper {
                 if (Settings.Global.getInt(cr, "adb_wifi_enabled", 0) == 1) {
                     // ③ mDNS 找无线调试端口 → 交给 AdbStarter 连接并启动
                     // （TCP 模式下它顺手把端口切到 5555 并关掉无线调试）
+                    //
+                    // 6 秒而不是 3 秒：adbd 在「无线调试」刚打开/刚配对完时重新注册
+                    // `_adb-tls-connect._tcp` 有一小段空窗，NsdManager 的解析回调也可能
+                    // 排队（Android 11~13 同一时刻只允许一个 resolve）。3 秒在部分机型上
+                    // 就是差一口气，结果是「配对成功但启动时找不到端口」→ 什么都不发生。
                     val discovered = CompletableDeferred<Int>()
                     val adbMdns = AdbMdns(appContext, AdbMdns.TLS_CONNECT) { p ->
                         if (p > 0) discovered.complete(p)
                     }
                     adbMdns.start()
                     port = try {
-                        withTimeout(3_000L) { discovered.await() }
+                        withTimeout(6_000L) { discovered.await() }
                     } catch (_: TimeoutCancellationException) {
+                        Log.w(TAG, "mDNS discovery of " + AdbMdns.TLS_CONNECT + " timed out")
                         -1
                     } finally {
                         adbMdns.stop()
@@ -146,6 +155,7 @@ object ServiceStartHelper {
                 //    现在至少还能连上 adbd 已经监听的端口。
                 if (port <= 0) {
                     port = resolveLivePort()
+                    if (port > 0) Log.i(TAG, "falling back to live ADB port $port")
                 }
 
                 if (port > 0) {
@@ -153,8 +163,13 @@ object ServiceStartHelper {
                         AdbStarter.start("127.0.0.1", port, appContext)
                     } catch (e: AdbAuthPendingException) {
                         notifyAuthPending(appContext)
-                    } catch (_: Throwable) {
+                    } catch (e: Throwable) {
+                        // 以前这里把异常整个吞掉：用户只看到「点了没反应」。
+                        // 至少要让现场日志能定位到是哪一步、哪个端口失败的。
+                        Log.w(TAG, "ADB start failed on port $port", e)
                     }
+                } else {
+                    Log.w(TAG, "no usable ADB port (wifi debugging disabled or mDNS blocked)")
                 }
             } finally {
                 onFinished?.invoke()

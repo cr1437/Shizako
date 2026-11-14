@@ -1,5 +1,6 @@
 #include <cstdio>
 #include <cstdlib>
+#include <csignal>
 #include <fcntl.h>
 #include <unistd.h>
 #include <dirent.h>
@@ -121,6 +122,22 @@ v_current = (uintptr_t) v + v_size - sizeof(char *); \
 }
 
 static void start_server(const char *path, const char *main_class, const char *process_name) {
+    // 必须**在 fork 之前**忽略 SIGHUP / SIGPIPE。
+    //
+    // 现场证据（模拟器，Android 12 x86_64，无线调试激活）：
+    //   I/init: Untracked pid 3608 received signal 1     ← signal 1 = SIGHUP
+    //   D/Shizuku: start_server
+    // 即：通过 `adb shell` 跑 starter 时，adbd 在 shell 通道关闭（pty 断开）的一刻会给
+    // 前台进程组发 SIGHUP。服务子进程从 fork() 到 setsid() 之间有一个极小的窗口，信号
+    // 恰好落在窗口里就会把还没 exec 的服务进程带走 —— 表现就是「配对成功、starter 也打印了
+    // pid，但 shizako_server 永远起不来」。Root 路径（su -c）不走 pty，所以 root 正常、
+    // 无线调试失败，和现场现象完全吻合。
+    //
+    // SIG_IGN 会被子进程继承，并且 exec 之后仍然保持忽略（只有被捕获的 handler 会在 exec 时复位），
+    // 所以这样服务进程再也不会被这个 hangup 杀掉；父进程马上 exit，忽略也无副作用。
+    signal(SIGHUP, SIG_IGN);
+    signal(SIGPIPE, SIG_IGN);
+
     pid_t pid = fork();
     switch (pid) {
         case -1: {
@@ -188,6 +205,68 @@ static int switch_cgroup() {
     return -1;
 }
 
+/**
+ * cmdline 是否恰好等于 name。
+ *
+ * get_proc_cmdline 会把 NUL 全替换成空格（不 trim），而 app_process 的
+ * `--nice-name` 会把 cmdline 改写成「昵称 + 一串 NUL」，所以这里按前缀比较，
+ * 并允许尾部是空格。
+ */
+static bool cmdline_is(const char *cmdline, const char *name) {
+    size_t n = strlen(name);
+    if (strncmp(cmdline, name, n) != 0) return false;
+    for (const char *p = cmdline + n; *p; ++p) {
+        if (*p != ' ') return false;
+    }
+    return true;
+}
+
+/** /proc/<pid>/maps 里有没有出现我们自己的 APK 路径（用来区分同名的官方 Shizuku）。 */
+static bool maps_contains_package(pid_t pid) {
+    char path[64];
+    snprintf(path, sizeof(path), "/proc/%d/maps", pid);
+    FILE *fp = fopen(path, "re");
+    if (fp == nullptr) return false;
+
+    char line[PATH_MAX];
+    bool ours = false;
+    while (fgets(line, sizeof(line), fp) != nullptr) {
+        if (strstr(line, PACKAGE_NAME) != nullptr) {
+            ours = true;
+            break;
+        }
+    }
+    fclose(fp);
+    return ours;
+}
+
+/**
+ * 这个进程是不是我们自己的服务进程。
+ *
+ * **不能用 cmdline 里的包名/类名当唯一判据**：`app_process --nice-name=` 会把
+ * /proc/<pid>/cmdline 改写成只剩昵称（"shizako_server"），所以旧实现里
+ * 「cmdline 含 applicationId 且含服务类名」在真机上一次都命中不了 —— 结果是升级后
+ * 旧服务从来没被清掉，会出现两个 shizako_server 抢注册同一个 binder 名。
+ *
+ * 判定顺序（每一档都只认自己人，官方 Shizuku 不会被误杀）：
+ *   1. cmdline 同时含 applicationId 与服务类名 —— 兼容昵称改写发生前的形态；
+ *   2. cmdline 恰好是 SERVER_NAME（"shizako_server"）—— 本 fork 独有的昵称；
+ *   3. cmdline 恰好是 "shizuku_server"（老版本的昵称）—— 再看它的 maps 里有没有
+ *      我们的 APK。官方 Shizuku 的 maps 里是 moe.shizuku.privileged.api，不会被误杀。
+ */
+static bool is_our_server(pid_t pid) {
+    char cmdline[4096];
+    if (get_proc_cmdline(pid, cmdline, sizeof(cmdline)) != 0) return false;
+
+    if (strstr(cmdline, PACKAGE_NAME) != nullptr && strstr(cmdline, SERVER_CLASS_PATH) != nullptr)
+        return true;
+    if (cmdline_is(cmdline, SERVER_NAME))
+        return true;
+    if (cmdline_is(cmdline, "shizuku_server"))
+        return maps_contains_package(pid);
+    return false;
+}
+
 int main(int argc, char *argv[]) {
     std::string apk_path;
     for (int i = 0; i < argc; ++i) {
@@ -252,13 +331,7 @@ int main(int argc, char *argv[]) {
     foreach_proc([](pid_t pid) {
         if (pid == getpid()) return;
 
-        char cmdline[4096];
-        if (get_proc_cmdline(pid, cmdline, sizeof(cmdline)) != 0) return;
-
-        if (strstr(cmdline, PACKAGE_NAME) == nullptr)
-            return;
-        if (strstr(cmdline, SERVER_CLASS_PATH) == nullptr)
-            return;
+        if (!is_our_server(pid)) return;
 
         if (kill(pid, SIGKILL) == 0)
             printf("info: killed %d (our server)\n", pid);

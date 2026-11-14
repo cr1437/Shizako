@@ -71,9 +71,22 @@ class AdbPairingService : Service() {
 
     private var adbMdns: AdbMdns? = null
 
+    /**
+     * mDNS 最近一次报出、并且确认有人在监听的配对端口。
+     *
+     * 为什么单独记一份：系统「使用配对码配对设备」对话框每次打开都会**换一个新端口**。
+     * 通知里的 PendingIntent 是按「当时那个端口」建好的，用户可能因为刷新通知、重开对话框
+     * 等原因拿着一个已经过期的端口去连（ECONNREFUSED）。真到连接失败时，这里保存的
+     * 最新端口才有可能是活的 —— 配对的判据应当是「现在哪个端口在听」，不是「当初点了哪个通知」。
+     */
+    @Volatile
+    private var latestPort: Int = -1
+
     private val observer = Observer<Int> { port ->
         Log.i(tag, "Pairing service port: $port")
         if (port <= 0) return@Observer
+
+        latestPort = port
 
         // Since the service could be killed before user finishing input,
         // we need to put the port into Intent
@@ -188,20 +201,6 @@ class AdbPairingService : Service() {
 
     private fun onInput(code: String, port: Int): Notification {
         GlobalScope.launch(Dispatchers.IO) {
-            // 动手之前先确认那个端口还有人听。mDNS 报出端口之后、用户输完码之前，
-            // 系统「使用配对码配对设备」对话框一旦被关掉，adbd 就把这个口收回去 ——
-            // 这时去 connect 只会得到 ECONNREFUSED（现场报告里最常见的一句），
-            // 而用户看到的是一句「连不上」，不知道该去重新打开对话框。
-            if (!AdbMdns.isListening(port)) {
-                Log.w(tag, "pairing service stopped listening on port $port before connect")
-                handleResult(false, PairingAbortedException(getString(R.string.pairing_service_stopped, port)))
-                return@launch
-            }
-
-            // 候选地址：回环优先，回环连不上时改用本机局域网地址兜底
-            // （部分设备/ROM 上应用连不上自己的 127.0.0.1，见 AdbPairingClient 类注释）
-            val hosts = AdbPairingClient.candidateHosts(this@AdbPairingService)
-
             val preferences = ShizukuSettings.getPreferences()
             // 配对期间的密钥只留内存，配对成功才落盘 —— 一次失败的尝试不该留在本地，
             // 否则激活页会把它当成「已配对」的证据（adbd 根本不认识它）
@@ -215,20 +214,61 @@ class AdbPairingService : Service() {
                 return@launch
             }
 
-            // use{} 保证 socket 与原生配对上下文一定被回收（start() 内部也做了 finally 清理，
-            // 这里再套一层是防止将来有人改动 start() 的清理逻辑）。原先这里既没 use 也没 close：
-            // 每次配对（含失败重试）都泄漏两个 fd + 一块持有 SPAKE2 密钥的原生内存。
-            val result = runCatching {
-                AdbPairingClient(hosts, port, code, key).use { client ->
-                    client.start()
+            // 候选地址：回环优先，回环连不上时改用本机局域网地址兜底
+            // （部分设备/ROM 上应用连不上自己的 127.0.0.1，见 AdbPairingClient 类注释）
+            val hosts = AdbPairingClient.candidateHosts(this@AdbPairingService)
+
+            // 端口候选：先用户手上这个，再 mDNS 最新报出的那个（两者相同时只试一次）。
+            //
+            // **不再预先判死**：mDNS 报出端口到用户输完码之间，系统对话框可能已经被关掉，
+            // adbd 随即收回端口 —— 这时连接会得到 ECONNREFUSED。以前的写法是「探测到端口
+            // 没人听就直接失败」，但那个探测只覆盖回环 IPv4，本来就可能误判；而真正的判据
+            // 是连接结果。所以这里改成：先试，连接被拒再换最新端口试一次，最后才报错。
+            // 两次都拒 = 对话框确实已经关了，报错里会直接告诉用户重开它。
+            val candidates = LinkedHashSet<Int>()
+            candidates.add(port)
+            val fresh = latestPort
+            if (fresh > 0) candidates.add(fresh)
+
+            var lastError: Throwable? = null
+            var success = false
+
+            for (candidate in candidates) {
+                val listening = AdbMdns.isListening(candidate)
+                Log.i(tag, "pairing on port $candidate (probe says listening=$listening)")
+
+                // use{} 保证 socket 与原生配对上下文一定被回收（start() 内部也做了 finally
+                // 清理，这里再套一层是防止将来有人改动 start() 的清理逻辑）。
+                val result = runCatching {
+                    AdbPairingClient(hosts, candidate, code, key).use { client ->
+                        client.start()
+                    }
                 }
+
+                if (result.isSuccess) {
+                    success = true
+                    lastError = null
+                    break
+                }
+
+                lastError = result.exceptionOrNull()
+                Log.w(
+                    tag,
+                    "pairing failed on port $candidate (${lastError?.javaClass?.simpleName}: ${lastError?.message})",
+                )
+
+                // 只有「连接被拒」值得换端口：说明这个端口上没人监听。
+                // 配对码错误 / 握手失败换端口没有意义，直接按真实原因报错。
+                val retryable = lastError is ConnectException && candidates.size > 1
+                if (!retryable) break
             }
-            result.onFailure {
-                handleResult(false, it)
-            }.onSuccess {
+
+            if (success) {
                 keyStore.commit()
                 AdbPairingState.markPaired(preferences)
                 handleResult(true, null)
+            } else {
+                handleResult(false, lastError)
             }
         }
 
@@ -340,7 +380,11 @@ class AdbPairingService : Service() {
             if (running) {
                 notifySimple(R.string.notification_adb_pairing_service_started, withActivationAction = true)
             } else {
+                // 配对成功 ≠ 激活成功。以前这里只记一行日志，用户看到的是通知从
+                // 「正在启动服务…」直接消失、应用里仍显示未运行 —— 完全不知道该做什么。
+                // 现在给一条带「进入激活」入口的失败通知，失败原因同时写进日志。
                 Log.w(tag, "Service did not come up after pairing")
+                notifySimple(R.string.notification_adb_pairing_service_start_failed, withActivationAction = true)
             }
         }
     }

@@ -60,4 +60,28 @@ object NetworkUtils {
             null
         }
     }
+
+    /**
+     * 取本机**所有**可作为局域网目标的 IPv4 地址（Wi-Fi 接口优先，去重）。
+     *
+     * 为什么需要多个：配对兜底要连 adbd 的配对端口，而多网卡设备上「第一个」地址
+     * 不一定在无线调试所在的那张网卡上（模拟器就是 eth0=10.0.2.15、wlan0=10.0.2.16）。
+     * 逐个试才能真正兜住。拿不到就返回空列表。
+     */
+    fun findAllLanIpv4(): List<String> {
+        return try {
+            NetworkInterface.getNetworkInterfaces()?.asSequence()
+                ?.filter { it.isUp && !it.isLoopback }
+                ?.sortedByDescending { it.name.startsWith("wlan") }
+                ?.flatMap { it.inetAddresses.asSequence() }
+                ?.filterIsInstance<Inet4Address>()
+                ?.mapNotNull { it.hostAddress }
+                ?.filter { it != "0.0.0.0" && !it.startsWith("169.254.") }
+                ?.distinct()
+                ?.toList()
+                ?: emptyList()
+        } catch (e: Throwable) {
+            emptyList()
+        }
+    }
 }

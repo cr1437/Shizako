@@ -1,0 +1,8 @@
+Changes since the previous release (versionCode 317):
+
+• Fixed: wireless pairing could never connect — the pairing port was shadowed to 0 by Kotlin's Socket.apply receiver, so every attempt dialled 127.0.0.1:0. The port is now captured in a local variable before connecting.
+• Fixed: pairing succeeded but the service never started — adbd sends SIGHUP to the shell's process group when the channel closes, killing the server child between fork() and setsid(). The starter now ignores SIGHUP/SIGPIPE before forking.
+• Fixed: stale server cleanup never worked (app_process rewrites cmdline to the nickname); identification now uses the nickname plus /proc/<pid>/maps and never kills the official Shizuku.
+• Start order changed: bring the service up on the working port first, then best-effort switch to TCP 5555; a failed switch no longer blocks activation.
+• Pairing port retry, 6s mDNS discovery window, multi-interface LAN fallback, and a visible notification when the service does not start.
+• Removed: the home-page "Diagnostics log" test feature (log builds only); it is gone from both source and release packages.

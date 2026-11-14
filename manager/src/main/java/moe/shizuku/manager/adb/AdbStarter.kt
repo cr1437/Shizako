@@ -48,35 +48,61 @@ object AdbStarter {
 
         val key = AdbKey(PreferenceAdbKeyStore(ShizukuSettings.getPreferences()), "shizuku")
         val tcpMode = ShizukuSettings.isTcpMode()
-        val targetPort = if (tcpMode) TCP_MODE_PORT else port
 
         var started = false
         try {
-            val isTargetAlreadyLive = EnvironmentUtils.isAdbPortLive(targetPort)
-            if (tcpMode && port != targetPort && !isTargetAlreadyLive) {
-                log?.invoke("Switching ADB from port $port to TCP port $targetPort...")
-                try {
-                    switchToTcp(host, port, targetPort, key)
-                } catch (e: AdbAuthPendingException) {
-                    throw e
-                } catch (e: Throwable) {
-                    // 切换失败不致命：也许 5555 那边其实已经就绪，继续往下试。
-                    log?.invoke("Switch to TCP failed: ${e.message}")
+            // 先在**调用方给的端口**上把服务拉起来。
+            //
+            // 顺序是刻意的：固定 TCP 5555 只是「以后免网络直连」的可选优化，不是激活的
+            // 前置条件。以前先 `tcpip:5555` 切端口、再连 5555 启动 —— 只要切换在这台设备上
+            // 不成立（adbd 没重启成 / 无线传输被收掉），整次无线调试激活就跟着失败，
+            // 而这时配对其实已经成功了，用户只能看到「服务没起来」。现在改成：先保证激活，
+            // 再做优化；切换失败只记日志，不影响本次已经起来的服务。
+            startOnPort(host, port, key, listener, log)
+            started = true
+
+            if (tcpMode && port != TCP_MODE_PORT) {
+                if (EnvironmentUtils.isAdbPortLive(TCP_MODE_PORT)) {
+                    log?.invoke("TCP port $TCP_MODE_PORT is already live")
+                    ShizukuSettings.setLastAdbPort(TCP_MODE_PORT)
+                } else {
+                    log?.invoke("Switching ADB from port $port to TCP port $TCP_MODE_PORT...")
+                    try {
+                        switchToTcp(host, port, TCP_MODE_PORT, key)
+                        ShizukuSettings.setLastAdbPort(TCP_MODE_PORT)
+                    } catch (e: Throwable) {
+                        // 服务已经在跑了，切换失败不影响本次激活；下次仍从无线端口启动。
+                        log?.invoke("Switch to TCP failed: ${e.message}")
+                    }
                 }
             }
-            log?.invoke("Connecting to ADB on port $targetPort...")
-            connectWithRetry(host, targetPort, key) { client ->
-                ShizukuSettings.setLastLaunchMode(ShizukuSettings.LaunchMethod.ADB)
-                ShizukuSettings.setLastAdbPort(targetPort)
-                client.shellCommand(Starter.internalCommand, listener)
-            }
-            started = true
         } finally {
             // 只有「确实是 TCP 模式」且「这次真正启动成功」才关无线调试；
             // 失败时保持原样，用户可以直接重试（普通无线调试启动也不动系统开关）。
             if (tcpMode && started) {
                 disableWirelessDebugging(context)
             }
+        }
+    }
+
+    /**
+     * 在指定端口上连一次 adbd 并跑启动脚本。
+     *
+     * 单独抽出来是为了让「先用当前可用端口启动、再做 TCP 切换」这条顺序读起来清楚：
+     * 失败的判定只围绕这一次连接，跟后面的优化无关。
+     */
+    private suspend fun startOnPort(
+        host: String,
+        port: Int,
+        key: AdbKey,
+        listener: ((ByteArray) -> Unit)?,
+        log: ((String) -> Unit)?,
+    ) {
+        log?.invoke("Connecting to ADB on port $port...")
+        connectWithRetry(host, port, key) { client ->
+            ShizukuSettings.setLastLaunchMode(ShizukuSettings.LaunchMethod.ADB)
+            ShizukuSettings.setLastAdbPort(port)
+            client.shellCommand(Starter.internalCommand, listener)
         }
     }
 
