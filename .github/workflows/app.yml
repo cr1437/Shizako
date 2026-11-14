@@ -8,6 +8,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout
@@ -67,3 +69,36 @@ jobs:
           name: ${{ steps.buildWithGradle.outputs.releaseName }}
           path: "manager/build/outputs"
           compression-level: 9
+
+      # ── 发版：推送 tag 时用仓库自带的 GITHUB_TOKEN 建 GitHub Release ──
+      # 为什么不放在本机做：api.github.com 在开发机网络上被墙（DNS 超时），
+      # 但 git 协议可达 github.com；让 runner 去调 API 最稳。
+      - name: Write release notes
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          python3 - "$TAG" <<'PY'
+          import re, sys
+          tag = sys.argv[1]
+          text = open('更新日志.md', encoding='utf-8').read()
+          m = re.search(
+              r'^## ' + re.escape(tag) + r' .*?\n(.*?)(?=^---\s*$|^## zako|\Z)',
+              text, re.S | re.M,
+          )
+          body = m.group(1).strip() if m else f'Release {tag}'
+          open('release_body.md', 'w', encoding='utf-8').write(body)
+          print(f'release notes for {tag}: {len(body)} chars')
+          PY
+
+      - name: Create GitHub release
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          # 只建带更新说明的 Release；APK 由维护者用本地签名包手动上传
+          # （CI 里 Write key 的条件仍是 refs/heads/master，且仓库已改名 main，
+          #   所以 CI 产物是 debug 签名的，直接挂上去会和正式签名冲突）。
+          gh release create "$TAG" --title "$TAG" --notes-file release_body.md --verify-tag \
+            || gh release edit "$TAG" --title "$TAG" --notes-file release_body.md
