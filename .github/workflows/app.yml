@@ -102,3 +102,38 @@ jobs:
           #   所以 CI 产物是 debug 签名的，直接挂上去会和正式签名冲突）。
           gh release create "$TAG" --title "$TAG" --notes-file release_body.md --verify-tag \
             || gh release edit "$TAG" --title "$TAG" --notes-file release_body.md
+
+      # ── 兜底：main 推送时，如果 build.gradle 的版本 tag 已经推到远端但还没有
+      #    Release，就补建一个。
+      # 为什么需要这一条：GitHub 的 tag 事件只会用「tag 所指提交」里的 workflow，
+      # 所以给已存在的 tag 补发 Release 时，tag 上的旧 workflow 读不到新步骤，
+      # 必须由 main 分支上的 workflow 来补。
+      - name: Ensure release for current version
+        if: github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG=$(sed -n 's/.*versionName = "\(.*\)"/\1/p' build.gradle | head -1)
+          echo "current version tag: $TAG"
+          if ! git ls-remote --exit-code --tags origin "refs/tags/$TAG" >/dev/null 2>&1; then
+            echo "tag $TAG not pushed yet, skip"
+            exit 0
+          fi
+          python3 - "$TAG" <<'PY'
+          import re, sys
+          tag = sys.argv[1]
+          text = open('更新日志.md', encoding='utf-8').read()
+          m = re.search(
+              r'^## ' + re.escape(tag) + r' .*?\n(.*?)(?=^---\s*$|^## zako|\Z)',
+              text, re.S | re.M,
+          )
+          body = m.group(1).strip() if m else f'Release {tag}'
+          open('release_body.md', 'w', encoding='utf-8').write(body)
+          print(f'release notes for {tag}: {len(body)} chars')
+          PY
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "release $TAG already exists"
+          else
+            gh release create "$TAG" --title "$TAG" --notes-file release_body.md --verify-tag
+            echo "release $TAG created"
+          fi
