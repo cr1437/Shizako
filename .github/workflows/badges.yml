@@ -30,6 +30,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # release 事件默认检出 release 的 tag（detached HEAD），后面的 git push 会
+          # 因「not currently on a branch」失败；徽章本来就该刷到 main，固定检出 main。
+          ref: main
 
       - name: Refresh self-hosted badges
         env:
