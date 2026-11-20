@@ -30,6 +30,14 @@
     <string name="dhizuku_manage_empty">还没有授权任何应用。\n支持 Dhizuku 的应用会在第一次使用时来敲门申请。</string>
     <string name="dhizuku_revoke_title">收回特权</string>
     <string name="dhizuku_revoke_action">收回特权</string>
+    <string name="dhizuku_clear_owner_section">设备所有者</string>
+    <string name="dhizuku_clear_owner_summary">Shizako酱 只是借了「设备所有者」身份，把特权分享给上面的应用。不需要 Dhizuku 模式了就从这里交还 —— 之后 Shizako酱 就是普通应用，可以直接卸载。</string>
+    <string name="dhizuku_clear_owner_action">取消设备所有者</string>
+    <string name="dhizuku_clear_owner_running">正在取消…</string>
+    <string name="dhizuku_clear_owner_title">取消设备所有者？</string>
+    <string name="dhizuku_clear_owner_message">已授权的应用会立刻失去 Dhizuku 特权。Android 只能尽力清理设备策略，部分设置可能残留，最干净的做法是恢复出厂设置；取消后还需要另外卸载 Shizako酱。</string>
+    <string name="dhizuku_clear_owner_success">已取消设备所有者</string>
+    <string name="dhizuku_clear_owner_failed">取消设备所有者失败：%1$s</string>
     <string name="dhizuku_refresh">刷新列表</string>
     <string name="dhizuku_what_title">这是什么</string>
     <string name="dhizuku_what_body">Dhizuku 模式下，Shizako酱 是设备所有者，可以把这份特权分给别的应用。这里列的就是借到特权的应用 —— 不想给了就点「收回特权」，下次它要用来敲门重新申请。</string>

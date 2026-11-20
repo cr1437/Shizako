@@ -102,6 +102,7 @@ class ActivationFragment : Fragment() {
                 onSendAdbCommand = ::sendAdbCommand,
                 onActivateDhizuku = ::activateDhizuku,
                 onViewDhizukuCommand = ::showDhizukuCommand,
+                onClearDhizukuOwner = ::clearDhizukuOwner,
                 onOpenTerminal = ::openTerminal,
                 onCollapsedChange = { expanded -> shell.appBar.setExpanded(expanded, true) },
             )
@@ -149,6 +150,7 @@ class ActivationFragment : Fragment() {
                 else -> ServiceMode.ADB
             },
             dhizukuActive = DhizukuSettings.isActive(context),
+            dhizukuDeviceOwner = DhizukuSettings.isDeviceOwner(context),
             dhizukuModeEnabled = DhizukuSettings.isModeEnabled(),
             rooted = EnvironmentUtils.isRooted(),
             paired = hasKey,
@@ -361,6 +363,46 @@ class ActivationFragment : Fragment() {
             .setNegativeButton(android.R.string.cancel, null)
             .show()
             .also { GlassWindow.applyIfGlass(it) }
+    }
+
+    /**
+     * 撤销 Device Owner（issue #12）。
+     *
+     * 只有 Device Owner 自己能清掉自己，走 [DhizukuSettings.clearDeviceOwner]；
+     * adb 的 `dpm remove-active-admin` 对正式包（非 testOnly admin）无效。
+     */
+    private fun clearDhizukuOwner() {
+        val context = context ?: return
+        MaterialAlertDialogBuilder(context)
+            .setTitle(R.string.dhizuku_clear_owner_title)
+            .setMessage(R.string.dhizuku_clear_owner_message)
+            .setPositiveButton(R.string.dhizuku_clear_owner_action) { _, _ ->
+                doClearDhizukuOwner(context)
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
+            .also { GlassWindow.applyIfGlass(it) }
+    }
+
+    private fun doClearDhizukuOwner(context: android.content.Context) {
+        if (uiState.clearingDhizuku) return
+        uiState = uiState.copy(clearingDhizuku = true)
+        Thread {
+            val error = DhizukuSettings.clearDeviceOwner(context)
+            view?.post {
+                uiState = uiState.copy(clearingDhizuku = false)
+                if (error == null) {
+                    Toast.makeText(context, R.string.dhizuku_clear_owner_success, Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(
+                        context,
+                        getString(R.string.dhizuku_clear_owner_failed, error),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+                refreshStatus()
+            }
+        }.start()
     }
 
     override fun onDestroyView() {

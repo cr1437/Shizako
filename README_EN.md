@@ -74,7 +74,7 @@ Download the latest APK from [Releases](https://github.com/cr1437/Shizako/releas
 | Wireless debugging | Android 11+, enable wireless debugging and pair | No cable at hand |
 | Computer ADB | Run the `adb` command shown in the app once | You have a computer nearby |
 | Root | An existing root environment | Root users who want more |
-| Dhizuku (Device Owner) | Run `adb shell dpm set-device-owner com.churan.shizako/.dhizuku.DhizukuAdminReceiver` once on a computer (no accounts may be on the device) | Set-and-forget |
+| Dhizuku (Device Owner) | Run `adb shell dpm set-device-owner com.churan.shizako/moe.shizuku.manager.dhizuku.DhizukuAdminReceiver` once on a computer (no accounts may be on the device); to leave the mode, hit "Remove Device Owner" on the Dhizuku apps page | Set-and-forget |
 
 The flow matches upstream Shizuku — see the [upstream setup guide](https://shizuku.rikka.app/guide/setup/), replacing Shizuku with Shizako.
 
@@ -260,6 +260,12 @@ Android 7.0+; wireless debugging activation requires Android 11+.
 
 **The pairing dialog is stuck on "Searching for pairing service" and I cannot enter a port?**
 Automatic discovery relies on mDNS multicast. With a VPN enabled on GrapheneOS the multicast never reaches the app, and some Huawei / HarmonyOS devices block it as well — discovery simply cannot succeed there. Since zako3.14 the port field in the pairing dialog is **always visible and editable**: read the **pairing port** from "Developer options → Wireless debugging → Pair device with pairing code" and type it in together with the pairing code. If adbd already listens on a fixed port (5555, for example), you can also use "Connect to a port manually" on the activation page and skip pairing entirely.
+
+**Play Protect says "This app may be harmful" when I install or update it. Is it malware?**
+No. Shizako is a sideloaded app that can download and install APKs, launch a privileged process via `app_process`, and act as Device Owner — exactly the shape Play Protect's heuristics are trained to distrust in Shizuku-class tools. The verdict is made on Google's side and cannot be turned off from code. To verify your copy: ① download only from [Releases](https://github.com/cr1437/Shizako/releases) and check the certificate SHA-256 with `apksigner verify --print-certs <apk>` (it must be `515baf0c…9f9c8a`); ② if you installed an Actions artefact (debug-signed) or a build of unknown origin, switch to the official signed release; ③ if the checks pass, tap "More details → Keep anyway" in the Play Protect prompt, or turn off "Scan apps" under Settings → Google → Security → Play Protect (this weakens device-wide protection and is not recommended long-term). The verdict belongs to Google — a false-positive appeal can be filed following their [developer guidance](https://developers.google.com/android/play-protect/warning-dev-guidance), but the process is one-way with no guaranteed outcome or timeline.
+
+**Why does the APK request so many "dangerous" permissions?**
+All are required by the features: `QUERY_ALL_PACKAGES` renders the name and icon of authorised apps, `WRITE_SECURE_SETTINGS` toggles wireless debugging and manages accessibility services for you, and DeviceAdmin is Dhizuku mode itself. Nothing is used silently in the background, and the allowlist is local and revocable.
 
 **Why is she so cute?**
 Because the author raises her like a daughter (confirmed).

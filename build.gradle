@@ -50,6 +50,8 @@ ext {
     //
     // 3.19：修复无线调试配对/激活链路（配对端口被 Kotlin 接收者遮蔽成 0；服务子进程被
     // SIGHUP 竞态杀掉），并移除首页「诊断日志」测试功能。
-    versionCode = 319
-    versionName = "zako3.19"
+    // 3.19hp：热修复 Dhizuku 设备所有者链路 —— 激活/委派用的组件名拼错（#13）、
+    // 设备所有者没有退出入口（#12）。
+    versionCode = 320
+    versionName = "zako3.19hp"
 }

@@ -73,7 +73,7 @@
 | 无线调试 | Android 11+，开无线调试后扫码 / 配对即可 | 懒得插线的你 |
 | 电脑 ADB | 电脑跑一次应用内给出的 `adb` 命令，无版本限制 | 手边有电脑的你 |
 | Root | 已有 Root 环境直接唤醒 | 有 Root 的极致玩家 |
-| Dhizuku（设备所有者） | 电脑执行一次 `adb shell dpm set-device-owner com.churan.shizako/.dhizuku.DhizukuAdminReceiver`（设备上不能有账户），之后免 Root、免无线调试 | 一劳永逸党 |
+| Dhizuku（设备所有者） | 电脑执行一次 `adb shell dpm set-device-owner com.churan.shizako/moe.shizuku.manager.dhizuku.DhizukuAdminReceiver`（设备上不能有账户），之后免 Root、免无线调试；不需要时在应用内「Dhizuku 应用」页点「取消设备所有者」即可退回 | 一劳永逸党 |
 
 激活流程与上游 Shizuku 一致，可参考[上游配置指南](https://shizuku.rikka.app/zh-hans/guide/setup/)，把 Shizuku 换成 Shizako 即可。
 
@@ -256,6 +256,12 @@ A：Android 7.0+ 都能跑；无线调试激活需要 Android 11+。
 
 **Q：配对时一直停在「正在搜索配对服务」，端口填不了？**
 A：自动发现配对端口靠 mDNS 组播。GrapheneOS 开启 VPN 时组播不会送进应用，华为 / 鸿蒙部分机型同样会拦截 —— 这类设备上自动发现必然失败。zako3.14 起配对对话框的端口框**始终可见可手输**：从设备「开发者选项 → 无线调试 → 使用配对码配对设备」页面上读出**配对端口**填进去，配对码一起输入即可。如果设备上 adbd 已经监听在固定端口（比如 5555），也可以直接用激活页的「手动连接端口」，跳过配对。
+
+**Q：安装/更新时 Play Protect 提示「应用可能有害」，是病毒吗？**
+A：不是。Shizako 是侧载应用，又具备「下载安装」「用 app_process 起特权进程」「设备所有者」这类能力，Play Protect 的启发式模型很容易把 Shizuku 生态工具判成风险项 —— 判定发生在 Google 侧，开发者无法在代码里关掉它。建议按顺序自查：① 只从 [Releases](https://github.com/cr1437/Shizako/releases) 下载，并用 `apksigner verify --print-certs <apk>` 核对证书 SHA-256 为 `515baf0c…9f9c8a`；② 如果你装的是 Actions 产物（debug 签名）或来源不明的包，请换正式签名包；③ 确认无误后，可在 Play Protect 提示里点「更多详情 → 仍然保留」，或在「设置 → Google → 安全 → Play Protect」关闭「扫描应用」（这会降低整机防护，不建议长期关闭）。判定权在 Google，可以按[官方指引](https://developers.google.com/android/play-protect/warning-dev-guidance)提交误报申诉，但申诉是单向流程、不承诺结果与时限。
+
+**Q：为什么装包里有那么多「危险权限」？**
+A：都是功能必需：`QUERY_ALL_PACKAGES` 用来显示已授权应用的名称与图标；`WRITE_SECURE_SETTINGS` 用来一键开无线调试、管理无障碍服务；DeviceAdmin 就是 Dhizuku 模式本身。应用不会在后台偷偷使用它们，权限白名单本地记录、随时可收回。
 
 **Q：为什么这么可爱？**
 A：因为作者把她当女儿养（确信）。

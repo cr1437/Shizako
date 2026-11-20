@@ -66,10 +66,12 @@ fun DhizukuAppsScreen(
     deviceOwner: Boolean,
     apps: List<DhizukuApp>,
     activating: Boolean,
+    clearingDeviceOwner: Boolean,
     onRevoke: (DhizukuApp) -> Unit,
     onRefresh: () -> Unit,
     onActivate: () -> Unit,
     onViewCommand: () -> Unit,
+    onClearDeviceOwner: () -> Unit,
     onCollapsedChange: (Boolean) -> Unit,
 ) {
     HintPage(listState = listState, onCollapsedChange = onCollapsedChange) {
@@ -104,6 +106,34 @@ fun DhizukuAppsScreen(
                             palette = palette,
                             text = stringResource(R.string.activation_method_action_view_command),
                             onClick = onViewCommand,
+                        )
+                    }
+                }
+            }
+        }
+
+        if (deviceOwner) {
+            item {
+                Box(modifier = Modifier.itemEntrance(1)) {
+                    HintCard(palette = palette) {
+                        HintSectionTitle(
+                            palette = palette,
+                            text = stringResource(R.string.dhizuku_clear_owner_section),
+                        )
+                        Text(
+                            text = stringResource(R.string.dhizuku_clear_owner_summary),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = palette.onCard,
+                        )
+                        // issue #12：成为设备所有者后必须有退出路径（adb 移不掉非 testOnly 的 admin）
+                        HintSecondaryButton(
+                            palette = palette,
+                            text = stringResource(
+                                if (clearingDeviceOwner) R.string.dhizuku_clear_owner_running
+                                else R.string.dhizuku_clear_owner_action,
+                            ),
+                            enabled = !clearingDeviceOwner,
+                            onClick = onClearDeviceOwner,
                         )
                     }
                 }

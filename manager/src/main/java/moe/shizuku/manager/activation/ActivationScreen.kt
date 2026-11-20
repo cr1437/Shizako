@@ -76,10 +76,19 @@ enum class ServiceMode { NOT_RUNNING, ROOT, ADB }
 data class ActivationUiState(
     val serviceMode: ServiceMode = ServiceMode.NOT_RUNNING,
     val dhizukuActive: Boolean = false,
+    /**
+     * 设备**真实**的 Device Owner 状态（不受「Dhizuku 模式」软开关影响）。
+     *
+     * 撤销入口要认这个：开关关掉之后 [dhizukuActive] 会变 false，但 Device Owner
+     * 身份还在，必须仍然能退出（issue #12）。
+     */
+    val dhizukuDeviceOwner: Boolean = false,
     /** 设置里的「Dhizuku 模式」总开关：关掉时本页按钮要置灰（此前只有引导页做了，本页点了只弹 Toast） */
     val dhizukuModeEnabled: Boolean = true,
     val rooted: Boolean = false,
     val activatingDhizuku: Boolean = false,
+    /** 正在撤销 Device Owner（issue #12 的退出路径，进行中时按钮转圈/禁用） */
+    val clearingDhizuku: Boolean = false,
     val supportsWirelessAdb: Boolean = true,
     val isMiui: Boolean = false,
     val adbCommand: String = "",
@@ -123,6 +132,8 @@ fun ActivationScreen(
     onSendAdbCommand: () -> Unit,
     onActivateDhizuku: () -> Unit,
     onViewDhizukuCommand: () -> Unit,
+    /** 撤销 Device Owner（issue #12）：成为设备所有者后必须留一条退出路径 */
+    onClearDhizukuOwner: () -> Unit,
     onOpenTerminal: () -> Unit,
     onCollapsedChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
@@ -359,7 +370,7 @@ fun ActivationScreen(
                     style = MaterialTheme.typography.bodySmall,
                     color = palette.error,
                 )
-                if (!state.dhizukuActive) {
+                if (!state.dhizukuDeviceOwner) {
                     HintPrimaryButton(
                         palette = palette,
                         text = stringResource(
@@ -370,6 +381,17 @@ fun ActivationScreen(
                             !state.activatingDhizuku &&
                             state.dhizukuModeEnabled,
                         onClick = onActivateDhizuku,
+                    )
+                } else {
+                    // issue #12：设备所有者状态必须能自己退出（adb 帮不上忙）
+                    HintSecondaryButton(
+                        palette = palette,
+                        text = stringResource(
+                            if (state.clearingDhizuku) R.string.dhizuku_clear_owner_running
+                            else R.string.dhizuku_clear_owner_action
+                        ),
+                        enabled = !state.clearingDhizuku,
+                        onClick = onClearDhizukuOwner,
                     )
                 }
                 HintSecondaryButton(

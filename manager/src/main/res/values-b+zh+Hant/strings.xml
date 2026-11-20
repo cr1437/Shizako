@@ -376,6 +376,14 @@
 <string name="about_bilibili" translatable="false">Bilibili</string>
 <string name="home_info_abi">ABI</string>
 <string name="dhizuku_revoke_action">收回特權</string>
+<string name="dhizuku_clear_owner_section">裝置擁有者</string>
+<string name="dhizuku_clear_owner_summary">Shizako酱 只是借了「裝置擁有者」身分，把特權分享給上面的應用。不需要 Dhizuku 模式時就從這裡交還 —— 之後 Shizako酱 就是一般應用，可以直接解除安裝。</string>
+<string name="dhizuku_clear_owner_action">取消裝置擁有者</string>
+<string name="dhizuku_clear_owner_running">正在取消…</string>
+<string name="dhizuku_clear_owner_title">取消裝置擁有者？</string>
+<string name="dhizuku_clear_owner_message">已授權的應用會立刻失去 Dhizuku 特權。Android 只能盡力清理裝置策略，部分設定可能殘留，最乾淨的做法是恢復原廠設定；取消後還需要另外解除安裝 Shizako酱。</string>
+<string name="dhizuku_clear_owner_success">已取消裝置擁有者</string>
+<string name="dhizuku_clear_owner_failed">取消裝置擁有者失敗：%1$s</string>
 <string name="settings_bg_crop_cancel">取消</string>
 <string name="settings_bg_crop_apply">應用</string>
 <string name="settings_bg_crop_locked">已鎖定原圖比例 · %1$s</string>

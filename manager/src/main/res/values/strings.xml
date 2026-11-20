@@ -36,6 +36,14 @@
     <string name="dhizuku_revoke_message">Stop letting %1$s use Device Owner privileges?</string>
     <string name="dhizuku_revoke_confirm">Revoke</string>
     <string name="dhizuku_revoke_action">Revoke</string>
+    <string name="dhizuku_clear_owner_section">Device Owner</string>
+    <string name="dhizuku_clear_owner_summary">Shizako borrowed Device Owner only to lend its privileges to the apps above. If you no longer need Dhizuku, hand the ownership back here — afterwards Shizako is a normal app again and can be uninstalled.</string>
+    <string name="dhizuku_clear_owner_action">Remove Device Owner</string>
+    <string name="dhizuku_clear_owner_running">Removing…</string>
+    <string name="dhizuku_clear_owner_title">Remove Device Owner?</string>
+    <string name="dhizuku_clear_owner_message">Authorized apps lose Dhizuku privileges immediately. Android only clears the policies best-effort, so some settings may linger — a factory reset is the only clean way. Shizako still has to be uninstalled separately afterwards.</string>
+    <string name="dhizuku_clear_owner_success">Device Owner removed</string>
+    <string name="dhizuku_clear_owner_failed">Could not remove Device Owner: %1$s</string>
     <string name="dhizuku_refresh">Refresh list</string>
     <string name="dhizuku_what_title">What is this</string>
     <string name="dhizuku_what_body">In Dhizuku mode Shizako is the Device Owner and can lend that privilege to other apps. The apps below borrowed it — tap "Revoke" to take it back; they will ask again next time.</string>

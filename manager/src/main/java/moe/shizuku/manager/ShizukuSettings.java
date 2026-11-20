@@ -146,8 +146,9 @@ public class ShizukuSettings {
      * Dhizuku 模式是否启用，默认开启（保持既有行为）。
      *
      * 注意这是**软开关**：它只让 Dhizuku 不再对外提供特权、入口不再显示，
-     * **不会**撤销 Device Owner 身份 —— 撤销必须走 `adb shell dpm remove-active-admin`，
-     * App 即便身为 Device Owner 也不能撤销自己。文案上要说清楚。
+     * **不会**撤销 Device Owner 身份 —— 撤销走 DhizukuSettings.clearDeviceOwner()
+     * （App 以设备所有者身份调 clearDeviceOwnerApp；adb 的 remove-active-admin
+     * 对非 testOnly 的 admin 无效，见 issue #12/#13）。
      */
     public static boolean isDhizukuEnabled() {
         return getPreferences().getBoolean(DHIZUKU_ENABLED, true);

@@ -1,0 +1,6 @@
+Changes since the previous release (versionCode 319):
+
+• Fixed (#13): the Dhizuku activation command used a wrong component name, so one-tap activation never worked and the adb command shown by the app always failed with "Unknown admin". The component is now derived from the real class name.
+• Fixed (#13): authorised apps could not use Device Owner privileges because setDelegatedScopes used the same wrong component and always threw SecurityException.
+• Added (#12): a "Remove Device Owner" button on the activation page and on the Dhizuku apps page, so Shizako can hand the Device Owner role back by itself — no adb required (adb's remove-active-admin never works for a regular admin).
+• Docs (#11): added a Play Protect FAQ — how to verify the signing certificate, how to keep the app installed, and where to file a false-positive appeal.

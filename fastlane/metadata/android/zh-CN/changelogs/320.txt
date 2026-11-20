@@ -1,0 +1,6 @@
+相比上一个发布版本（versionCode 319）的改动：
+
+• 修复（#13）：Dhizuku 激活命令的组件名拼错了，一键激活从未成功，应用里给出的 adb 命令也必然报 Unknown admin。现在组件名由真实类名生成。
+• 修复（#13）：已授权应用拿不到设备所有者权限——setDelegatedScopes 用的是同一个错误组件，每次调用都抛 SecurityException。
+• 新增（#12）：激活页和「Dhizuku 应用」页都加了「取消设备所有者」按钮，Shizako 可以自己交还设备所有者身份，不需要 adb（adb 的 remove-active-admin 对正式包本来就无效）。
+• 文档（#11）：README 新增 Play Protect 误报 FAQ——如何核对签名证书、如何保留安装、以及申诉入口。

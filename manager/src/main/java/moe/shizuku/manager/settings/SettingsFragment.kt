@@ -465,7 +465,9 @@ class SettingsFragment : Fragment() {
     /**
      * Dhizuku 模式总开关。**只做软关闭**：关掉后 DhizukuProvider 立刻不再对外提供特权、
      * 各处状态判定也跟着变成「未激活」，但 Device Owner 身份本身不会被撤销 ——
-     * 那个只能靠 `adb shell dpm remove-active-admin`，App 自己撤不掉。
+     * 要真正退出 Device Owner，去应用页「Dhizuku 应用」里点「取消设备所有者」
+     * （App 以设备所有者身份调 `clearDeviceOwnerApp`；adb 的 remove-active-admin
+     * 对正式包无效，见 issue #12/#13）。
      */
     private fun setDhizukuMode(enabled: Boolean) {
         ShizukuSettings.setDhizukuEnabled(enabled)

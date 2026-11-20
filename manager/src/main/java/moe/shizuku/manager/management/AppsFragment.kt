@@ -293,6 +293,8 @@ class AppsFragment : Fragment() {
     private var dhizukuApps by mutableStateOf<List<DhizukuApp>>(emptyList())
     private var dhizukuDeviceOwner by mutableStateOf(false)
     private var dhizukuActivating by mutableStateOf(false)
+    /** 正在撤销 Device Owner（issue #12） */
+    private var dhizukuClearingOwner by mutableStateOf(false)
     private val dhizukuListState = LazyListState()
 
     /** 刷新序号：后台加载完成后只有"最新一次"的结果会被采用 */
@@ -353,10 +355,12 @@ class AppsFragment : Fragment() {
                 deviceOwner = dhizukuDeviceOwner,
                 apps = dhizukuApps,
                 activating = dhizukuActivating,
+                clearingDeviceOwner = dhizukuClearingOwner,
                 onRevoke = ::revokeDhizuku,
                 onRefresh = { refreshDhizuku() },
                 onActivate = ::activateDhizuku,
                 onViewCommand = ::showDhizukuCommand,
+                onClearDeviceOwner = ::clearDhizukuOwner,
                 onCollapsedChange = { expanded -> binding.appBar.setExpanded(expanded, true) },
             )
         }
@@ -378,7 +382,8 @@ class AppsFragment : Fragment() {
         val seq = ++dhizukuRefreshSeq
         val appContext = context.applicationContext
         Thread {
-            val owner = DhizukuSettings.isActive(appContext)
+            // 用「真实 Device Owner」而不是 isActive：软开关关掉后仍要能从这里退出（issue #12）
+            val owner = DhizukuSettings.isDeviceOwner(appContext)
             val apps = loadDhizukuApps(appContext.packageManager)
             activity?.runOnUiThread {
                 // 期间又刷新过 / 页面已销毁：丢弃这次结果
@@ -434,6 +439,43 @@ class AppsFragment : Fragment() {
                 }
             }
         }.start()
+    }
+
+    /**
+     * 撤销 Device Owner（issue #12）。
+     *
+     * 只有 Device Owner 自己能清掉自己：走 [DhizukuSettings.clearDeviceOwner]，
+     * `adb shell dpm remove-active-admin` 对正式包（非 testOnly admin）无效。
+     */
+    private fun clearDhizukuOwner() {
+        val context = context ?: return
+        if (dhizukuClearingOwner) return
+        com.google.android.material.dialog.MaterialAlertDialogBuilder(context)
+            .setTitle(R.string.dhizuku_clear_owner_title)
+            .setMessage(R.string.dhizuku_clear_owner_message)
+            .setPositiveButton(R.string.dhizuku_clear_owner_action) { _, _ ->
+                dhizukuClearingOwner = true
+                val appContext = context.applicationContext
+                Thread {
+                    val error = DhizukuSettings.clearDeviceOwner(appContext)
+                    activity?.runOnUiThread {
+                        dhizukuClearingOwner = false
+                        if (error == null) {
+                            Toast.makeText(appContext, R.string.dhizuku_clear_owner_success, Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(
+                                appContext,
+                                getString(R.string.dhizuku_clear_owner_failed, error),
+                                Toast.LENGTH_LONG,
+                            ).show()
+                        }
+                        refreshDhizuku()
+                    }
+                }.start()
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
+            .also { moe.shizuku.manager.ui.glass.GlassWindow.applyIfGlass(it) }
     }
 
     private fun showDhizukuCommand() {
