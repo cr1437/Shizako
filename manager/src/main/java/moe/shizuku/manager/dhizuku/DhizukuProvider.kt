@@ -7,6 +7,7 @@ import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 import android.os.Binder
+import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
 import android.os.Parcel
@@ -63,17 +64,47 @@ class DhizukuProvider : ContentProvider() {
 
         override fun getInterfaceDescriptor(): String = DhizukuConstants.BINDER_DESCRIPTOR
 
-        override fun onTransact(code: Int, data: Parcel, reply: Parcel?, flags: Int): Boolean {
+        override fun onTransact(code: Int, data: Parcel, reply: Parcel?, flags: Int): Boolean =
+            try {
+                dispatchTransact(code, data, reply, flags)
+            } catch (t: Throwable) {
+                // 出问题时留一条能查的日志（客户端那边只会看到 binder 异常，
+                // 用户也没有错误报告，至少 Shizako 的日志里要能看到 code 和调用方）。
+                LOGGER.w(
+                    "Dhizuku: transact code=$code uid=${Binder.getCallingUid()} failed: " +
+                        "${t.javaClass.simpleName}: ${t.message}"
+                )
+                throw t
+            }
+
+        private fun dispatchTransact(code: Int, data: Parcel, reply: Parcel?, flags: Int): Boolean {
             if (code == Binder.FIRST_CALL_TRANSACTION + 10) {
                 // TRANSACT_CODE_REMOTE_BINDER：替客户端转发 transact。
                 // 目标 binder 由客户端指定，若不做身份校验，任意应用都能借
                 // Shizako 的 Device Owner 身份操作系统服务（confused-deputy）。
                 data.enforceInterface(DhizukuConstants.REMOTE_BINDER_DESCRIPTOR)
-                if (!isDeviceOwnerActive() || !isCallerAuthorized()) return false
+                if (!isDeviceOwnerActive() || !isCallerAuthorized()) {
+                    LOGGER.w("Dhizuku: remoteTransact rejected for uid=${Binder.getCallingUid()}")
+                    return false
+                }
                 val target = data.readStrongBinder() ?: return false
                 val targetCode = data.readInt()
                 val targetFlags = data.readInt()
-                return target.transact(targetCode, data, reply, targetFlags)
+                // 转发前必须把「转发头 + target/code/flags」之后的数据拷进一个**新的** Parcel：
+                // 直接把原 Parcel 交给 target 时，target 的 enforceInterface 会先读到
+                // com.rosan.dhizuku.server 这个转发头，于是抛 SecurityException ——
+                // Dhizuku-API 应用通常没接这个异常，用户看到的就是「打开就闪退」。
+                // 上游 DhizukuService.onTransact 也是 appendFrom 到新 Parcel 再转发的。
+                val remoteData = Parcel.obtain()
+                return try {
+                    remoteData.appendFrom(data, data.dataPosition(), data.dataAvail())
+                    target.transact(targetCode, remoteData, reply, targetFlags)
+                } catch (t: Throwable) {
+                    LOGGER.w("Dhizuku: remoteTransact failed (target code=$targetCode): ${t.message}")
+                    throw t
+                } finally {
+                    remoteData.recycle()
+                }
             }
 
             data.enforceInterface(DhizukuConstants.BINDER_DESCRIPTOR)
@@ -125,7 +156,11 @@ class DhizukuProvider : ContentProvider() {
                 Binder.FIRST_CALL_TRANSACTION + 15 -> {
                     reply?.writeNoException()
                     val packageName = data.readString()
-                    val scopes = if (packageName != null && isDeviceOwnerActive() && isCallerAuthorized()) {
+                    // 委派作用域是 API 26 才有的能力：Android 7.x 上调用会
+                    // NoSuchMethodError（lint NewApi），这里直接回 null（等价于「没有委派」）。
+                    val scopes = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O &&
+                        packageName != null && isDeviceOwnerActive() && isCallerAuthorized()
+                    ) {
                         dpm()?.getDelegatedScopes(DhizukuSettings.adminComponent, packageName)
                             ?.toTypedArray()
                     } else null
@@ -138,7 +173,11 @@ class DhizukuProvider : ContentProvider() {
                     reply?.writeNoException()
                     val packageName = data.readString()
                     val scopes = data.createStringArray()
-                    if (packageName != null && scopes != null && isDeviceOwnerActive() && isCallerAuthorized()) {
+                    // 同 getDelegatedScopes：API < 26 无此系统能力，静默跳过而不是崩。
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O &&
+                        packageName != null && scopes != null &&
+                        isDeviceOwnerActive() && isCallerAuthorized()
+                    ) {
                         dpm()?.setDelegatedScopes(
                             DhizukuSettings.adminComponent,
                             packageName,
@@ -228,6 +267,38 @@ class DhizukuProvider : ContentProvider() {
             }
         }
 
+        // ---- java.lang.Process 的 API 24 兼容封装 ----
+        // destroyForcibly() / isAlive() / waitFor(timeout, unit) 都是 API 26 才有的方法，
+        // minSdk 24 的机型（Android 7.x）直接调用会 NoSuchMethodError（lint NewApi）。
+
+        private fun Process.killCompat() {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                runCatching { destroyForcibly() }
+            } else {
+                runCatching { destroy() }
+            }
+        }
+
+        private fun Process.isAliveCompat(): Boolean =
+            try {
+                exitValue()
+                false
+            } catch (_: IllegalThreadStateException) {
+                true
+            }
+
+        private fun Process.awaitExitCompat(timeout: Long, unit: TimeUnit): Boolean {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                return runCatching { waitFor(timeout, unit) }.getOrDefault(false)
+            }
+            val deadline = System.nanoTime() + unit.toNanos(timeout.coerceAtLeast(0L))
+            while (true) {
+                if (!isAliveCompat()) return true
+                if (System.nanoTime() >= deadline) return false
+                runCatching { Thread.sleep(20) }
+            }
+        }
+
         override fun onTransact(code: Int, data: Parcel, reply: Parcel?, flags: Int): Boolean {
             data.enforceInterface(getInterfaceDescriptor())
             when (code) {
@@ -259,13 +330,13 @@ class DhizukuProvider : ContentProvider() {
 
                 Binder.FIRST_CALL_TRANSACTION + 4 -> {
                     reply?.writeNoException()
-                    process.destroyForcibly()
+                    process.killCompat()
                     return true
                 }
 
                 Binder.FIRST_CALL_TRANSACTION + 5 -> {
                     reply?.writeNoException()
-                    reply?.writeInt(if (process.isAlive) 1 else 0)
+                    reply?.writeInt(if (process.isAliveCompat()) 1 else 0)
                     return true
                 }
 
@@ -282,7 +353,7 @@ class DhizukuProvider : ContentProvider() {
                     val unit = runCatching { TimeUnit.valueOf(unitName?.uppercase() ?: "SECONDS") }
                         .getOrDefault(TimeUnit.SECONDS)
                     reply?.writeInt(
-                        if (runCatching { process.waitFor(timeout, unit) }.getOrDefault(false)) 1 else 0
+                        if (runCatching { process.awaitExitCompat(timeout, unit) }.getOrDefault(false)) 1 else 0
                     )
                     return true
                 }
@@ -298,6 +369,13 @@ class DhizukuProvider : ContentProvider() {
 
     override fun call(method: String, arg: String?, extras: Bundle?): Bundle? {
         if (method != DhizukuConstants.PROVIDER_METHOD_CLIENT) return null
+        // 没开 Dhizuku 模式 / 不是 Device Owner 时不要给 binder：
+        // 客户端拿到一个「什么都不能做」的 binder 会继续按已授权流程走，
+        // 最后在特权调用上失败或空转；返回 null 它们会走「Dhizuku 不可用」分支。
+        if (!isDeviceOwnerActive()) {
+            LOGGER.w("Dhizuku: client call ignored (mode off or not device owner)")
+            return null
+        }
         val bundle = Bundle()
         bundle.putBinder(DhizukuConstants.PARAM_DHIZUKU_BINDER, DhizukuBinder())
         return bundle

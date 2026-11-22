@@ -13,4 +13,22 @@
         android:id="@+id/menu_recommended_apps"
         android:title="@string/download_page_title"
         app:showAsAction="never" />
+
+    <!-- F1：进入多选（长按列表项同样可以进入） -->
+    <item
+        android:id="@+id/menu_multi_select"
+        android:title="@string/batch_title_multi_select"
+        app:showAsAction="never" />
+
+    <!-- F6：权限模板 / 批次历史 -->
+    <item
+        android:id="@+id/menu_templates"
+        android:title="@string/template_title"
+        app:showAsAction="never" />
+
+    <!-- 应用数据备份/恢复（F3/F4/F5）：单个或多个应用都在这个页面里勾选 -->
+    <item
+        android:id="@+id/menu_data_backup"
+        android:title="@string/storage_title"
+        app:showAsAction="never" />
 </menu>

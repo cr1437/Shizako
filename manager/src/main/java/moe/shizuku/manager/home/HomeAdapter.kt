@@ -56,8 +56,10 @@ class HomeAdapter(
         clear()
         addItem(ServerStatusViewHolder.CREATOR, status, ID_STATUS)
 
-        // 使用模式开关紧跟状态卡：功能太多是第一眼的感受，总开关也放第一眼能看到的位置
-        addItem(UsageModeViewHolder.CREATOR, null, ID_USAGE_MODE)
+        // 使用模式开关已挪到「设置 → 使用模式」（2026-11-22 按主人要求）。
+        // 首页是「看状态」的地方，改东西的开关放设置里更顺；首页也少一张卡，第一屏更干净。
+        // 代码**没删**（UsageModeViewHolder / home_usage_mode.xml / 文案都还在），想放回来就把下面这行恢复：
+        // addItem(UsageModeViewHolder.CREATOR, null, ID_USAGE_MODE)
 
         addItem(InfoCardViewHolder.CREATOR, status to grantedCount, ID_INFO)
 

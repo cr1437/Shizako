@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import moe.shizuku.server.IRemoteProcess;
+import moe.shizuku.server.IStorageProxy;
 import moe.shizuku.server.IShizukuApplication;
 import moe.shizuku.server.IShizukuService;
 import moe.shizuku.server.IShizukuServiceConnection;
@@ -100,6 +101,62 @@ public abstract class Service<
 
     public boolean checkCallerPermission(String func, int callingUid, int callingPid, @Nullable ClientRecord clientRecord) {
         return false;
+    }
+
+    /**
+     * 子类实现：该 uid 是否被授予「存储代理」能力（规格 F5，通行证里单独勾选）。
+     * 默认拒绝 —— 没有实现这个能力的服务端，宁可让接口不可用，也不要默认放开。
+     */
+    public boolean checkStorageProxyPermission(int uid) {
+        return false;
+    }
+
+    /**
+     * 存储代理接口的统一入口校验（规格 F1/F5）：
+     * 1. 先走普通授权（{@link #enforceCallingPermission}，含审计）；
+     * 2. 再单独检查「存储代理」能力位。
+     *
+     * 两步都在**每一个**接口方法开头调用：binder 可以被转交，绝不能只在校验
+     * getStorageProxy() 那一次相信调用方。
+     */
+    public final void enforceStorageProxyPermission(String func) {
+        enforceCallingPermission(func);
+
+        int callingUid = Binder.getCallingUid();
+        int callingPid = Binder.getCallingPid();
+
+        // 服务进程自己（例如以后服务端内部的备份任务）直接放行
+        if (callingPid == Os.getpid() || callingUid == OsUtils.getUid()) {
+            return;
+        }
+
+        if (checkStorageProxyPermission(callingUid)) {
+            return;
+        }
+
+        String msg = "Permission Denial: " + func + " from uid=" + callingUid
+                + " pid=" + callingPid + " requires storage proxy grant";
+        LOGGER.w(msg);
+        throw new SecurityException(msg);
+    }
+
+    /**
+     * 特权存储代理（规格 F1）。子类返回 null 表示这个服务端根本没有该能力，
+     * 直接抛 SecurityException（功能不可用比「静默空实现」好排查）。
+     */
+    public final IStorageProxy getStorageProxy() {
+        enforceCallingPermission("getStorageProxy");
+
+        IStorageProxy proxy = getStorageProxyImpl();
+        if (proxy == null) {
+            throw new SecurityException("storage proxy is not supported by this server");
+        }
+        return proxy;
+    }
+
+    @Nullable
+    protected IStorageProxy getStorageProxyImpl() {
+        return null;
     }
 
     public final void enforceCallingPermission(String func) {

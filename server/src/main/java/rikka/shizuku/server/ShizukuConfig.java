@@ -43,6 +43,11 @@ public class ShizukuConfig {
         public boolean isDenied() {
             return (flags & ConfigManager.FLAG_DENIED) != 0;
         }
+
+        @Override
+        public boolean hasFlag(int flag) {
+            return (flags & flag) != 0;
+        }
     }
 
     public ShizukuConfig() {

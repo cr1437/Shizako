@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/home_fragment">
     <fragment
@@ -43,10 +44,15 @@
         android:id="@+id/activation_fragment"
         android:name="moe.shizuku.manager.activation.ActivationFragment"
         android:label="activation" />
+    <!-- 无线调试配对教程：Fragment 标了 @RequiresApi(R)。导航只由
+         ActivationFragment.startWirelessPairing() 进入，且那里已有
+         `if (SDK_INT < R) return` 的运行时闸门；lint 看不到代码侧判断，
+         所以在图里显式忽略 NewApi。 -->
     <fragment
         android:id="@+id/adb_pairing_fragment"
         android:name="moe.shizuku.manager.adb.AdbPairingTutorialFragment"
-        android:label="adb_pairing" />
+        android:label="adb_pairing"
+        tools:ignore="NewApi" />
     <fragment
         android:id="@+id/terminal_fragment"
         android:name="moe.shizuku.manager.shell.ShellTutorialFragment"

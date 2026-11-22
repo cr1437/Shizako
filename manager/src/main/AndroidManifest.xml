@@ -5,6 +5,9 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- NetworkUtils 的联网检测会读 ConnectivityManager.activeNetwork / NetworkCapabilities，
+         没有这个普通权限会抛 SecurityException（现在被 catch 成「当作有网」，检测形同虚设） -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <!-- 安装/自更新：ActionView 打开 APK 也需要它，应用才能出现在「安装未知应用」白名单里 -->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
@@ -41,6 +44,20 @@
         android:name="com.churan.shizako.permission.MANAGER"
         android:protectionLevel="signature" />
     <uses-permission android:name="com.churan.shizako.permission.MANAGER" />
+
+    <!-- 「存储代理」能力标记（规格 F5）。真正的运行时校验是 ShizukuConfig 里的
+         FLAG_STORAGE_PROXY 位（管理器「第三方调用」页单独勾选），系统是否授予这个
+         权限不参与判定 —— 这里声明它，是给第三方应用一个可读的能力名/说明，避免
+         文档里只有一句「去通行证里打开」。
+         用 dangerous 而不是 signature：signature 会让第三方清单里的 uses-permission
+         直接被忽略，反而看不出「它申请了这个能力」。 -->
+    <permission
+        android:name="com.churan.shizako.permission.STORAGE_PROXY"
+        android:description="@string/storage_permission_description"
+        android:icon="@drawable/ic_system_icon"
+        android:label="@string/storage_permission_label"
+        android:permissionGroup="com.churan.shizako.permission-group.API"
+        android:protectionLevel="dangerous" />
 
     <permission
         android:name="com.churan.shizako.permission.API_V23"
@@ -79,7 +96,6 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:remove="android:appComponentFactory"
         tools:targetApi="33">
-
         <activity
             android:name=".MainActivity"
             android:banner="@mipmap/banner"
@@ -124,6 +140,16 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <!-- 权限模板 / 批次历史（F6-F8）：应用管理页右上角「权限模板」进入 -->
+        <activity
+            android:name=".batch.TemplateListActivity"
+            android:exported="false"
+            android:label="@string/template_title" />
+        <activity
+            android:name=".batch.TemplateEditActivity"
+            android:exported="false"
+            android:label="@string/template_edit" />
         <activity
             android:name=".legacy.ShellRequestHandlerActivity"
             android:directBootAware="true"
@@ -160,6 +186,85 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <!-- apk / apk1 / apk.1「用其他应用打开」入口。
+             微信、QQ 收到安装包后会存成 xxx.apk.1（或 xxx.apk1）躲避系统安装器，
+             这里注册对应的 VIEW/SEND，用户在微信里选「用其他应用打开 → Shizako」
+             就能无感安装（Shizuku 在跑时走 pm install，不弹系统安装器）。 -->
+        <activity
+            android:name=".installer.ApkInstallActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:label="@string/apk1_installer_label"
+            android:noHistory="true"
+            android:taskAffinity=""
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            <!-- content://：微信/QQ 一般用 application/octet-stream 发 apk.1 -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="content" />
+                <data android:mimeType="application/octet-stream" />
+                <data android:mimeType="application/vnd.android.package-archive" />
+            </intent-filter>
+            <!-- file://：路径以 apk / apk1 / apk.1 结尾的文件管理器 -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="file" />
+                <data android:mimeType="*/*" />
+                <data android:pathPattern=".*\\.apk" />
+                <data android:pathPattern=".*\\.apk1" />
+                <data android:pathPattern=".*\\.apk\\.1" />
+            </intent-filter>
+            <!-- 文件管理器里「分享到 Shizako」也接 -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="application/octet-stream" />
+                <data android:mimeType="application/vnd.android.package-archive" />
+            </intent-filter>
+        </activity>
+
+        <!-- 外部应用请求静默安装时的确认框（规格 F2）。只在需要问用户时被拉起，
+             本身不做任何安装动作，所以 exported=false（只有本应用的 ApkInstallActivity 会起它）。 -->
+        <activity
+            android:name=".installer.InstallConfirmActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:theme="@style/GrantPermissions" />
+
+        <!-- 设置 →「安装」的三个二级页。都不导出：批量队列只能由本应用 UI 启动 -->
+        <activity
+            android:name=".installer.TrustedInstallersActivity"
+            android:exported="false"
+            android:label="@string/installer_trust_title" />
+        <activity
+            android:name=".installer.BatchInstallActivity"
+            android:exported="false"
+            android:label="@string/installer_batch_title" />
+        <activity
+            android:name=".installer.InstallHistoryActivity"
+            android:exported="false"
+            android:label="@string/installer_history_title" />
+
+        <!-- 应用数据备份/恢复（F3/F4/F5）：应用管理页右上角「应用数据备份与恢复」进入。
+             不导出：SAF 目录由用户当场选择，队列也只由本应用 UI 启动。
+             configChanges 是有意为之：这一页的「已选应用 / 已选目录 / 当前页签 / 操作中状态」
+             都挂在 Activity 的 Compose state 上，默认旋转会重建 Activity 并把这些选择清空；
+             这页没有需要随配置重新加载的资源（纯 Compose + 运行时数据），自己处理旋转即可。 -->
+        <activity
+            android:name=".storage.DataBackupActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden|screenLayout|smallestScreenSize|uiMode"
+            android:exported="false"
+            android:label="@string/storage_title" />
 
         <service
             android:name=".adb.AdbPairingService"
@@ -284,6 +389,33 @@
             </intent-filter>
         </receiver>
 
+        <!-- ══════════ 自动化：EXEC_SHELL 特权命令执行（F2） ══════════ -->
+        <!-- exported=true 是必需的（Tasker/MacroDroid 是别的应用，且广播只能显式组件投递）。
+             真正的门禁在接收器里：显式组件 + 令牌 + 绑定包签名，三重校验缺一不可。
+             这里保留 intent-filter 是为了让「隐式调用」也能进入 onReceive 被记进日志，
+             而不是被系统静默丢弃 —— 排查调用方写错 action 时差别很大。 -->
+        <receiver
+            android:name=".automation.ExecShellReceiver"
+            android:enabled="true"
+            android:exported="true"
+            tools:ignore="ExportedReceiver">
+            <intent-filter>
+                <action android:name="com.churan.shizako.action.EXEC_SHELL" />
+            </intent-filter>
+        </receiver>
+
+        <!-- 命令执行宿主：前台服务，否则 300s 的超时会撞广播接收器的 ANR 上限。
+             类型用 specialUse（和看门狗/无障碍一致），避免 dataSync 在 Android 15 的时长配额。 -->
+        <service
+            android:name=".automation.AutomationExecService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="automation_shell_command" />
+        </service>
+
         <receiver
             android:name=".update.UpdateCheckReceiver"
             android:enabled="true"
@@ -295,6 +427,12 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
+        <!-- 周期检查更新：JobScheduler 任务（不再用会唤醒 Doze 的 AlarmManager 闹钟） -->
+        <service
+            android:name=".update.UpdateCheckJobService"
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <!-- 开机自动关掉 USB 调试（ADB 启过 Shizuku 之后把口子关上，更安全） -->
         <receiver

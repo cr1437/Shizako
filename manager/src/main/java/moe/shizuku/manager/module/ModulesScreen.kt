@@ -180,6 +180,14 @@ fun ModulesScreen(
                     enabled = busy == null,
                     onClick = onPickZip,
                 )
+                Spacer(Modifier.height(6.dp))
+                // 有些系统的选择器会把 ZIP 当压缩包打开（点一下是"进入"不是"选中"），
+                // 这里提示长按勾选，免得用户以为装不了。
+                Text(
+                    text = stringResource(R.string.adb_modules_pick_zip_hint),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = palette.variant,
+                )
                 Spacer(Modifier.height(8.dp))
                 Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                     HintSecondaryButton(
@@ -428,7 +436,10 @@ private fun ModuleCard(
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             HintSecondaryButton(
                 palette = palette,
-                text = stringResource(R.string.adb_modules_panel_action),
+                text = stringResource(
+                    R.string.adb_modules_panel_action,
+                    stringResource(R.string.adb_modules_action),
+                ),
                 modifier = Modifier.weight(1f),
                 onClick = onToggleExpand,
             )
@@ -470,13 +481,19 @@ private fun ScriptLog(
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             HintSecondaryButton(
                 palette = palette,
-                text = stringResource(R.string.adb_modules_panel_action),
+                text = stringResource(
+                    R.string.adb_modules_panel_action,
+                    stringResource(R.string.adb_modules_action),
+                ),
                 modifier = Modifier.weight(1f),
                 onClick = { which = 0 },
             )
             HintSecondaryButton(
                 palette = palette,
-                text = stringResource(R.string.adb_modules_panel_service),
+                text = stringResource(
+                    R.string.adb_modules_panel_service,
+                    stringResource(R.string.adb_modules_service),
+                ),
                 modifier = Modifier.weight(1f),
                 onClick = { which = 1 },
             )

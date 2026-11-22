@@ -13,6 +13,17 @@
     android:paddingBottom="16dp"
     tools:ignore="UseCompoundDrawables">
 
+    <!-- 多选模式（F1）下才显示：左侧勾选框，点击整行切换选中 -->
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:focusable="false"
+        android:importantForAccessibility="no"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
     <ImageView
         android:id="@android:id/icon"
         android:layout_width="32dp"

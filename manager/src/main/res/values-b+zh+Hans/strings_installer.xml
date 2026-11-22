@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="apk1_installer_label">用 Shizako 安装</string>
+    <string name="apk1_installing">正在安装 %1$s…</string>
+    <string name="apk1_installed">已安装 %1$s</string>
+    <string name="apk1_install_failed">安装失败：%1$s</string>
+    <string name="apk1_not_apk">这个文件不是 APK（apk / apk1 / apk.1）。</string>
+    <string name="apk1_read_failed">读不到文件：%1$s</string>
+    <string name="apk1_service_missing">Shizako 服务没有运行，改用系统安装器。</string>
+
+    <!-- 设置 →「安装」分区（F1/F3/F5 的管理入口） -->
+    <string name="settings_install">安装</string>
+    <string name="settings_install_summary">信任来源 · 批量 · 历史</string>
+    <string name="installer_settings_section">安装</string>
+    <string name="installer_settings_note">不在信任列表里的应用必须经你确认才能静默安装；每次请求与结果都会写进 API 调用日志。</string>
+    <string name="installer_settings_trusted">%1$d 个受信来源</string>
+    <string name="installer_settings_unfinished">%1$d 项未完成</string>
+    <string name="installer_settings_history">%1$d 条记录</string>
+
+    <!-- 信任列表 -->
+    <string name="installer_trust_title">信任的安装来源</string>
+    <string name="installer_trust_note">只有列表里的应用可以不经询问直接安装；每次请求都会重新校验 UID 与签名。</string>
+    <string name="installer_denied_default_policy">默认策略：拒绝</string>
+    <string name="installer_trust_add_section">添加来源</string>
+    <string name="installer_trust_loading">正在读取…</string>
+    <string name="installer_trust_add_authorized">从已授权应用添加</string>
+    <string name="installer_trust_need_service">Shizako 服务没在运行；启动后才能列出已授权应用。</string>
+    <string name="installer_trust_add_manual">手动添加包名</string>
+    <string name="installer_trust_count">%1$d 个受信</string>
+    <string name="installer_trust_empty">还没有信任来源。任何外部安装请求都会先问你。</string>
+    <string name="installer_trust_remove">移除</string>
+    <string name="installer_trust_remove_message">把 %1$s 移出信任列表？</string>
+    <string name="installer_trust_detail">uid %1$d · 签名 %2$s</string>
+    <string name="installer_trust_times">添加于 %1$s · 最近使用 %2$s</string>
+    <string name="installer_trust_never">从未</string>
+    <string name="installer_trust_authorized_empty">没有找到已授权的应用。</string>
+    <string name="installer_trust_package_hint">包名</string>
+    <string name="installer_trust_add_confirm">添加</string>
+    <string name="installer_trust_confirm_title">加入信任列表</string>
+    <string name="installer_trust_confirm_message">允许 %1$s（%2$s）静默安装？\n签名：%3$s</string>
+    <string name="installer_trust_cannot_resolve">读不到这个包（没安装或拿不到签名）。</string>
+    <string name="installer_trust_uid_changed">这个包的 UID 变了，请重新添加。</string>
+    <string name="installer_close">关闭</string>
+
+    <!-- 安装确认框（F2） -->
+    <string name="installer_confirm_title">安装请求</string>
+    <string name="installer_confirm_message">%1$s 请求安装 %2$s。</string>
+    <string name="installer_confirm_caller">请求方</string>
+    <string name="installer_confirm_format">格式</string>
+    <string name="installer_confirm_size">大小</string>
+    <string name="installer_confirm_hint">「允许本次」只装这一个文件；加入信任后，这个应用以后可以直接静默安装。</string>
+    <string name="installer_confirm_allow_once">允许本次</string>
+    <string name="installer_confirm_trust">加入信任</string>
+    <string name="installer_confirm_deny">拒绝</string>
+    <string name="installer_denied_by_user">已拒绝安装请求。</string>
+    <string name="installer_trust_failed">加入信任列表失败。</string>
+    <string name="installer_denied_no_caller">已拒绝：拿不到调用方。</string>
+    <string name="installer_denied_pkg_mismatch">已拒绝：包名与信任记录不一致。</string>
+    <string name="installer_denied_uid_mismatch">已拒绝：UID 不一致（应用可能被重装过）。</string>
+    <string name="installer_denied_sig_mismatch">已拒绝：签名不一致。</string>
+    <string name="installer_denied_sig_unavailable">已拒绝：读不到签名。</string>
+    <string name="installer_denied_generic">已拒绝安装请求。</string>
+    <string name="installer_batch_count">%1$d 个文件</string>
+
+    <!-- 批量安装（F3/F4） -->
+    <string name="installer_batch_title">批量安装</string>
+    <string name="installer_batch_summary">队列、重试与 XAPK/APKS</string>
+    <string name="installer_batch_note">文件逐个安装；某一项失败不会中断队列。</string>
+    <string name="installer_batch_note_secondary">只有这个页面能启动队列。</string>
+    <string name="installer_batch_progress">进度</string>
+    <string name="installer_batch_progress_detail">已完成 %1$d / %2$d</string>
+    <string name="installer_batch_current">正在安装 %1$s</string>
+    <string name="installer_batch_current_stage">正在安装 %1$s（第 %2$d/%3$d 个 split）</string>
+    <string name="installer_batch_start">开始</string>
+    <string name="installer_batch_pause">暂停</string>
+    <string name="installer_batch_add">添加文件</string>
+    <string name="installer_batch_cancel">取消队列</string>
+    <string name="installer_batch_clear_finished">清空已完成</string>
+    <string name="installer_batch_discard">丢弃队列</string>
+    <string name="installer_batch_list">%1$d 项</string>
+    <string name="installer_batch_empty">还没有文件。点「添加文件」选 APK / XAPK / APKS。</string>
+    <string name="installer_batch_retry">重试</string>
+    <string name="installer_batch_move_up">上移</string>
+    <string name="installer_batch_move_down">下移</string>
+    <string name="installer_batch_remove">移除</string>
+    <string name="installer_batch_preloaded">已加入队列 %1$d 个文件，点「开始」才会安装。</string>
+    <string name="installer_queue_nothing_added">没有新增（可能已经在队列里）</string>
+    <string name="installer_status_waiting">等待</string>
+    <string name="installer_status_installing">安装中</string>
+    <string name="installer_status_success">成功</string>
+    <string name="installer_status_failed">失败</string>
+    <string name="installer_status_cancelled">已取消</string>
+
+    <!-- 安装历史（F5） -->
+    <string name="installer_history_title">安装历史</string>
+    <string name="installer_history_note">只保留最近 %1$d 条记录。</string>
+    <string name="installer_history_filter_result">结果</string>
+    <string name="installer_history_filter_source">来源</string>
+    <string name="installer_history_filter_time">时间</string>
+    <string name="installer_filter_all">全部</string>
+    <string name="installer_time_24h">24 小时</string>
+    <string name="installer_time_7d">7 天</string>
+    <string name="installer_time_30d">30 天</string>
+    <string name="installer_history_clear">清空历史</string>
+    <string name="installer_history_clear_message">删除全部安装记录？</string>
+    <string name="installer_history_count">%1$d 条</string>
+    <string name="installer_history_empty">没有符合筛选条件的记录。</string>
+    <string name="installer_history_meta">%1$s · %2$s · %3$s</string>
+    <string name="installer_history_duration">耗时 %1$d 毫秒</string>
+    <string name="installer_history_from">请求方 %1$s</string>
+    <string name="installer_source_ui">本应用</string>
+    <string name="installer_source_trusted">受信应用</string>
+    <string name="installer_source_user_approved">用户允许</string>
+    <string name="installer_source_system">系统</string>
+
+    <!-- 失败原因（InstallError） -->
+    <string name="installer_err_no_service">Shizako 服务没有运行</string>
+    <string name="installer_err_no_space">空间不足</string>
+    <string name="installer_err_unknown_archive">安装包格式不支持或已损坏</string>
+    <string name="installer_err_missing_base">安装包里没有 base APK</string>
+    <string name="installer_err_signature_mismatch">split 签名不一致</string>
+    <string name="installer_err_io">读不到文件</string>
+    <string name="installer_err_session_create">创建安装会话失败</string>
+    <string name="installer_err_session_write">写入安装会话失败</string>
+    <string name="installer_err_session_commit">安装会话提交失败</string>
+    <string name="installer_err_rejected">系统安装器拒绝了安装包</string>
+    <string name="installer_err_cancelled">已取消</string>
+    <string name="installer_err_unknown">未知错误</string>
+    <string name="installer_obb_not_installed">OBB 未安装：%1$s</string>
+</resources>

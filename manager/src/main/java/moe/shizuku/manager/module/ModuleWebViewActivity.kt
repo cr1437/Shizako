@@ -28,6 +28,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import moe.shizuku.manager.BuildConfig
 import moe.shizuku.manager.R
 import moe.shizuku.manager.app.AppActivity
+import moe.shizuku.manager.utils.FileSafety
 import java.io.ByteArrayInputStream
 import java.io.File
 import java.io.FileInputStream
@@ -312,9 +313,8 @@ class ModuleWebViewActivity : AppActivity() {
 
         val target = File(webRoot, relative)
         return try {
-            val rootPath = webRoot.canonicalFile.toPath()
-            val targetPath = target.canonicalFile.toPath()
-            if (!targetPath.startsWith(rootPath)) return null
+            // API 24 兼容：java.nio.file 需要 26，见 utils/FileSafety
+            if (!FileSafety.isInside(webRoot, target)) return null
             if (!target.isFile) return null
             target
         } catch (_: Exception) {

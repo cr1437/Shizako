@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 应用数据备份 / 恢复（F3/F4/F5） -->
+    <string name="storage_title">应用数据备份与恢复</string>
+    <string name="storage_mode_backup">备份</string>
+    <string name="storage_mode_restore">恢复</string>
+    <string name="storage_mode_grant">第三方调用</string>
+
+    <string name="storage_backup_note">默认只备份外部数据：/sdcard/Android/data 与 /sdcard/Android/obb。</string>
+    <string name="storage_backup_note_secondary">/data/data 的完整备份不在此功能范围内。数据边读边写进你选的目录，设备上不落临时包。</string>
+    <string name="storage_directory_none">未选择目录</string>
+    <string name="storage_directory_selected">目录：%1$s</string>
+    <string name="storage_action_pick_directory">选择目录</string>
+    <string name="storage_action_start">开始备份</string>
+    <string name="storage_include_obb">包含 OBB</string>
+    <string name="storage_include_apk">同时保存 APK</string>
+    <string name="storage_progress">已完成 %1$d / %2$d</string>
+    <string name="storage_current">正在处理：%1$s</string>
+    <string name="storage_stage_label">阶段：%1$s</string>
+    <string name="storage_stage_external">外部数据</string>
+    <string name="storage_stage_obb">OBB</string>
+    <string name="storage_stage_apk">APK</string>
+    <string name="storage_stage_meta">元数据</string>
+    <string name="storage_action_cancel">取消</string>
+    <string name="storage_action_clear">清除已完成</string>
+    <string name="storage_action_reset">清空队列</string>
+    <string name="storage_tasks_title">队列</string>
+    <string name="storage_apps_title">应用（已选 %1$d）</string>
+    <string name="storage_action_select_all">全选</string>
+    <string name="storage_action_clear_selection">清空选择</string>
+    <string name="storage_apps_loading">正在读取应用列表…</string>
+    <string name="storage_apps_empty">没有可备份的应用</string>
+    <string name="storage_status_waiting">等待中</string>
+    <string name="storage_status_running">进行中</string>
+    <string name="storage_status_success">完成</string>
+    <string name="storage_status_failed">失败</string>
+    <string name="storage_status_cancelled">已取消</string>
+    <string name="storage_need_directory">请先选择保存目录</string>
+    <string name="storage_need_apps">请至少选择一个应用</string>
+    <string name="storage_queue_busy">队列正在运行</string>
+    <string name="storage_no_service">Shizako 服务未运行，请先激活</string>
+    <string name="storage_toast_error">操作失败：%1$s</string>
+
+    <string name="storage_restore_note">按所选目录里的 &lt;包名&gt;.meta.json 识别备份。</string>
+    <string name="storage_restore_note_secondary">恢复会覆盖应用的外部数据，操作前一定会二次确认。</string>
+    <string name="storage_restore_pick">选择备份目录</string>
+    <string name="storage_action_refresh">刷新</string>
+    <string name="storage_restore_running">正在恢复…</string>
+    <string name="storage_restore_empty">这个目录里没有可识别的备份（找 &lt;包名&gt;.meta.json）</string>
+    <string name="storage_restore_item_detail">%1$s · 外部数据 %2$s · OBB %3$s · APK %4$s</string>
+    <string name="storage_restore_action">恢复</string>
+    <string name="storage_restore_confirm_title">确认覆盖</string>
+    <string name="storage_restore_confirm_message">将覆盖 %1$s 的外部数据，是否继续？</string>
+    <string name="storage_restore_version_warning">备份版本 %1$s 与已安装版本 %2$s 不一致，恢复后数据可能不兼容。\n\n</string>
+    <string name="storage_restore_not_installed_title">应用未安装</string>
+    <string name="storage_restore_not_installed_message">目标应用 %1$s 未安装。请先安装，再恢复数据。</string>
+    <string name="storage_restore_not_installed_no_download">Shizako 不会自动从网络下载 APK。</string>
+    <string name="storage_restore_install_action">安装备份中的 APK</string>
+    <string name="storage_restore_success">已恢复 %1$s 的外部数据</string>
+    <string name="storage_restore_failed">恢复失败：%1$s</string>
+    <string name="storage_restore_obb_failed">外部数据已恢复，OBB 失败：%1$s</string>
+    <string name="storage_restore_no_data">这个备份里没有可恢复的数据文件</string>
+
+    <string name="storage_grant_note">第三方应用要同时满足：已有 Shizuku 授权 + 单独打开下面的「存储代理」开关。</string>
+    <string name="storage_grant_note_secondary">每次代理调用都会写进 API 日志：调用方 uid、操作、目标路径摘要、结果。</string>
+    <string name="storage_grant_empty">没有持有 Shizuku 授权的应用</string>
+    <string name="storage_proxy_info">存储代理状态</string>
+    <string name="storage_backup_apk_skipped">未保存 APK（系统应用，或路径不在允许范围内）；数据备份已完成</string>
+    <string name="storage_saf_permission_lost">已没有这个目录的访问权限（授权被回收），请重新选择目录</string>
+
+    <!-- com.churan.shizako.permission.STORAGE_PROXY 的展示文案（能力标记，判定看 FLAG_STORAGE_PROXY） -->
+    <string name="storage_permission_label">存储代理</string>
+    <string name="storage_permission_description">通过 Shizako 的特权存储代理读写应用外部数据。还必须在本应用的「第三方调用」页单独打开。</string>
+</resources>

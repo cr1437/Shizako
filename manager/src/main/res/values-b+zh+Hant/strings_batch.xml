@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 批量與模板化管理（F1-F8）繁體中文 -->
+<resources>
+
+    <!-- ══════════ F1 多選 ══════════ -->
+    <string name="batch_title_multi_select">多選</string>
+    <string name="batch_selected_count">已選 %1$d 項</string>
+    <string name="batch_action_select_all">全選</string>
+    <string name="batch_action_invert">反選</string>
+    <string name="batch_action_grant">批次授予</string>
+    <string name="batch_action_revoke">批次撤銷</string>
+    <string name="batch_action_cancel">取消</string>
+    <string name="batch_action_apply_template">套用模板</string>
+    <string name="batch_short_grant">授予</string>
+    <string name="batch_short_revoke">撤銷</string>
+    <string name="batch_short_template">模板</string>
+    <string name="batch_short_cancel">取消</string>
+
+    <string name="batch_multi_tip">長按任意應用進入多選</string>
+
+    <!-- ══════════ F4 影響範圍確認 ══════════ -->
+    <string name="batch_confirm_title">確認批次操作</string>
+    <string name="batch_confirm_operation">操作：%1$s · %2$s</string>
+    <string name="batch_confirm_type_grant">授予</string>
+    <string name="batch_confirm_type_revoke">撤銷</string>
+    <string name="batch_confirm_target_shizuku">Shizuku 權限</string>
+    <string name="batch_confirm_target_dhizuku">Dhizuku 委派</string>
+    <string name="batch_confirm_count">受影響應用：%1$d 個</string>
+    <string name="batch_confirm_scopes">將授予的 scopes</string>
+    <string name="batch_confirm_skip_mark">已存在，將跳過</string>
+    <string name="batch_confirm_execute">確認執行</string>
+    <string name="batch_confirm_revoke_warning">撤銷立即生效，相關應用可能立刻無法繼續工作。</string>
+
+    <!-- ══════════ F2/F3 進度 ══════════ -->
+    <string name="batch_progress_title">正在批次處理</string>
+    <string name="batch_progress_count">已處理 %1$d / %2$d</string>
+    <string name="batch_progress_current">目前：%1$s</string>
+    <string name="batch_progress_cancel">取消</string>
+
+    <!-- ══════════ F5 結果 / 撤銷本批次 ══════════ -->
+    <string name="batch_result_title">批次操作結果</string>
+    <string name="batch_result_summary">成功 %1$d 項 · 失敗 %2$d 項 · 跳過 %3$d 項</string>
+    <string name="batch_result_failed_section">失敗項</string>
+    <string name="batch_result_skipped_section">跳過項</string>
+    <string name="batch_result_undo">撤銷本批次</string>
+    <string name="batch_result_done">完成</string>
+    <string name="batch_result_aborted">服務已停止，佇列已暫停，已處理項保留。</string>
+    <string name="batch_result_cancelled">已取消，已處理項保留。</string>
+    <string name="batch_undo_title">撤銷本批次？</string>
+    <string name="batch_undo_message">只會撤銷本批次新增的授權，你原有的授權不受影響。</string>
+    <string name="batch_undo_running">正在撤銷本批次…</string>
+    <string name="batch_undo_result">撤銷完成：成功 %1$d · 跳過 %2$d · 失敗 %3$d</string>
+
+    <!-- ══════════ 失敗 / 跳過原因 ══════════ -->
+    <string name="batch_need_owner">請先啟用 Dhizuku（裝置擁有者）</string>
+    <string name="batch_reason_already">已存在，將跳過</string>
+    <string name="batch_reason_not_granted">本來就沒有授權</string>
+    <string name="batch_reason_uninstalled">應用已解除安裝</string>
+    <string name="batch_reason_service_stopped">服務已停止</string>
+    <string name="batch_reason_denied">權限拒絕</string>
+    <string name="batch_reason_verify_failed">結果未生效</string>
+    <string name="batch_reason_not_supported">系統不支援委派（需 Android 8.0 以上）</string>
+    <string name="batch_reason_gone">已不存在</string>
+    <string name="batch_reason_not_owner">不是裝置擁有者</string>
+    <string name="batch_reason_unknown">未知錯誤</string>
+
+    <!-- ══════════ F6 模板 CRUD ══════════ -->
+    <string name="template_title">權限模板</string>
+    <string name="template_new">新增模板</string>
+    <string name="template_edit">編輯模板</string>
+    <string name="template_name_label">模板名稱</string>
+    <string name="template_name_hint">例如：唯讀 shell</string>
+    <string name="template_name_duplicate">模板名稱已存在</string>
+    <string name="template_name_required">請填寫模板名稱</string>
+    <string name="template_summary">%1$d 項 · 建立於 %2$s</string>
+    <string name="template_summary_builtin">%1$d 項</string>
+    <string name="template_builtin">內建</string>
+    <string name="template_builtin_readonly">內建模板唯讀，不能修改或刪除</string>
+    <string name="template_section_shizuku">Shizuku 權限</string>
+    <string name="template_section_scopes">Dhizuku 委派 scopes</string>
+    <string name="template_save">儲存</string>
+    <string name="template_delete">刪除</string>
+    <string name="template_delete_title">刪除模板？</string>
+    <string name="template_delete_message">刪除「%1$s」後無法復原。</string>
+    <string name="template_export">匯出</string>
+    <string name="template_import">匯入</string>
+    <string name="template_export_done">已匯出 %1$d 個模板</string>
+    <string name="template_export_failed">匯出失敗</string>
+    <string name="template_import_done">已匯入 %1$d 個模板</string>
+    <string name="template_import_failed">匯入失敗：JSON 結構不正確</string>
+    <string name="template_import_empty">檔案裡沒有可匯入的模板</string>
+    <string name="template_import_conflict_title">名稱衝突：%1$s</string>
+    <string name="template_import_conflict_message">已有同名模板。請選擇處理方式（內建模板不可覆蓋）。</string>
+    <string name="template_import_overwrite">覆蓋</string>
+    <string name="template_import_skip">跳過</string>
+    <string name="template_import_rename">重新命名</string>
+    <string name="template_import_renamed">已重新命名為「%1$s」</string>
+    <string name="template_import_invalid">已跳過 %1$d 筆無效資料</string>
+    <string name="template_none">還沒有模板，點右上角新增</string>
+    <string name="template_empty_items">未選擇任何項</string>
+    <string name="template_scope_hint">僅在已啟用 Dhizuku（裝置擁有者）時生效</string>
+
+    <!-- ══════════ F7 套用模板 / 差異預覽 ══════════ -->
+    <string name="template_choose_title">選擇模板</string>
+    <string name="template_apply_preview_title">套用「%1$s」</string>
+    <string name="template_apply_per_app">新增 %1$d · 保留 %2$d · 不涉及 %3$d</string>
+    <string name="template_apply_add">將新增</string>
+    <string name="template_apply_keep">已經具備</string>
+    <string name="template_apply_untouched">模板不涉及（不會被撤銷）</string>
+    <string name="template_apply_confirm">套用</string>
+
+    <!-- ══════════ 批次歷史 ══════════ -->
+    <string name="batch_history_title">批次歷史</string>
+    <string name="batch_history_empty">還沒有批次操作</string>
+    <string name="batch_history_row">成功 %1$d · 失敗 %2$d · 跳過 %3$d</string>
+    <string name="batch_history_detail_title">批次詳情</string>
+    <string name="batch_type_grant_short">授予</string>
+    <string name="batch_type_revoke_short">撤銷</string>
+
+    <!-- ══════════ 權限項 / scopes 目錄 ══════════ -->
+    <string name="perm_api_v23">Shell / 特權 API 呼叫（API_V23）</string>
+    <string name="perm_api_v23_desc">允許應用透過 Shizako 以 shell 身分呼叫系統 API</string>
+
+    <string name="scope_cert_install">安裝憑證</string>
+    <string name="scope_app_restrictions">管理應用程式限制</string>
+    <string name="scope_block_uninstall">阻止解除安裝</string>
+    <string name="scope_permission_grant">授予執行時權限</string>
+    <string name="scope_package_access">查詢已安裝應用</string>
+    <string name="scope_enable_system_app">啟用系統應用</string>
+    <string name="scope_install_existing">安裝已存在的應用程式套件</string>
+    <string name="scope_keep_uninstalled">保留已解除安裝應用的資料</string>
+
+    <!-- ══════════ 內建唯讀預設（F6） ══════════ -->
+    <string name="template_builtin_readonly_shell">唯讀 shell</string>
+    <string name="template_builtin_installer">安裝器專用</string>
+    <string name="template_builtin_module">模組管理</string>
+
+</resources>

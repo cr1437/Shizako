@@ -1,6 +1,7 @@
 package moe.shizuku.server;
 
 import moe.shizuku.server.IRemoteProcess;
+import moe.shizuku.server.IStorageProxy;
 import moe.shizuku.server.IShizukuApplication;
 import moe.shizuku.server.IShizukuServiceConnection;
 
@@ -45,4 +46,10 @@ interface IShizukuService {
     int getFlagsForUid(int uid, int mask) = 105;
 
     void updateFlagsForUid(int uid, int mask, int value) = 106;
+
+    /**
+     * 特权存储代理（规格 F1）。每次调用都会重新校验调用方授权，
+     * 拿到的 binder 本身不带身份，不能跨进程转交给别的应用使用。
+     */
+    IStorageProxy getStorageProxy() = 107;
  }

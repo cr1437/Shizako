@@ -9,6 +9,7 @@
     <string name="adb_modules_summary">模块就是一个装进应用私有目录的 ZIP。里面的脚本通过 Shizuku 以 shell（或 root）身份执行。</string>
     <string name="adb_modules_count">已安装 %1$d 个</string>
     <string name="adb_modules_install_zip">安装模块 ZIP</string>
+    <string name="adb_modules_pick_zip_hint">部分 Android 版本的选择器会把 ZIP 当成压缩包打开；长按该 ZIP 勾选，再点「SELECT」即可选中。</string>
     <string name="adb_modules_installing">正在安装…</string>
     <string name="adb_modules_trust_hint">长按卡片可把模块标为「完全信任」：之后它绕过访问模式策略。</string>
 
@@ -42,7 +43,7 @@
     <string name="adb_modules_step_1_hint">id 必须以字母开头，长度 2～64，只允许 A-Z a-z 0-9 . _ -</string>
     <string name="adb_modules_step_2_title">action.sh / service.sh</string>
     <string name="adb_modules_step_2_body">action.sh 是点「动作」按钮时跑的。service.sh 在模块启用、且服务与后台两个策略都放行时才跑。</string>
-    <string name="adb_modules_step_2_hint">两个脚本都以 shell 或 root 身份执行，MODDIR 指向模块自己的目录。</string>
+    <string name="adb_modules_step_2_hint">两个脚本都以 shell 或 root 身份执行，MODDIR 指向模块自己的目录。MODDIR 在 App 私有目录里，只有 root 能读；shell 身份能跑脚本，但读不了模块文件。</string>
     <string name="adb_modules_step_3_title">webui/index.html</string>
     <string name="adb_modules_step_3_body">把 index.html 放进 webui/，「WebUI」按钮就会用本地 WebView 打开它。</string>
     <string name="adb_modules_layout_title">ZIP 目录结构</string>

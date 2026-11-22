@@ -19,9 +19,9 @@ import java.io.File
  * 键盘安全设计（v2）：
  * - 拉活 / 唤醒优先走 exported 的 KeepAliveBridgeService（`am start-service`）：
  *   不启动任何界面、不抢焦点、不影响输入法（Activity 仅作最后兜底）；
- * - App 被杀 → 下一轮（约 12 秒内）拉起；
+ * - App 被杀 → 下一轮（≤90 秒）拉起；
  * - App 被系统冻结 → 通过「服务投递」尝试解冻；
- * - 每 ~36 秒一次无感「保温」轻推，尽量让局域网服务保持可连。
+ * - 只在「进程不在」或「进程被冻结（D/T 态）」时才推，没有定时空转；
  * shell 身份发起，不受后台启动限制；想停掉时删掉 flag 文件即可（脚本每轮自检）。
  */
 object KeepAliveDaemon {
@@ -29,7 +29,7 @@ object KeepAliveDaemon {
     private const val FLAG_NAME = "keepalive.on"
     private const val PID_NAME = "keepalive.pid"
     private const val HEARTBEAT_NAME = "keepalive.hb"
-    private const val HEARTBEAT_FRESH_MS = 120_000L
+    private const val HEARTBEAT_FRESH_MS = 240_000L
 
     private fun dir(context: Context): File =
         (context.getExternalFilesDir(null) ?: context.filesDir)
@@ -89,13 +89,13 @@ object KeepAliveDaemon {
         //
         // ★ 频率是耗电的关键，别随手调小：每轮要 fork `date` / `pidof` / `grep` 各一次，
         //   并往闪存写一次心跳。原来 sleep 12 —— 一天约 3.6 万次 fork + 7200 次闪存写入；
-        //   改成 45 秒后降到约 1/4（心跳新鲜度阈值见 HEARTBEAT_FRESH_MS，必须同步放大）。
-        // ★ 同时去掉了「每 3 轮保温轻推」：那是给已剥离的局域网功能保持可连用的，
-        //   现在只剩副作用 —— 每 36 秒 `am start-service` 一次，把前台服务和通知反复刷一遍。
-        //   现在只在「进程不在」或「进程被冻结（D/T 态）」时才推。
+        //   sleep 45 降到约 1/4；现在 90 秒再砍一半（一天约 960 轮、约 2900 次 fork、
+        //   960 次心跳写入）。心跳新鲜度阈值见 HEARTBEAT_FRESH_MS（240 秒，约 2.6 轮），
+        //   必须随循环间隔同步放大，否则 App 会把「还活着」误判成「不在岗」而反复 spawn。
+        // ★ 只在「进程不在」或「进程被冻结（D/T 态）」时才推，不做定时保温。
         val inner = "if [ -f $pid ] && kill -0 \$(cat $pid) 2>/dev/null; then exit 0; fi; " +
                 "echo \$\$ > $pid; date +%s > $hb; " +
-                "while [ -f $flag ]; do sleep 45; date +%s > $hb; " +
+                "while [ -f $flag ]; do sleep 90; date +%s > $hb; " +
                 "P=\$(pidof com.churan.shizako); " +
                 "if [ -z \"\$P\" ]; then " +
                 "$pokeService; sleep 8; " +

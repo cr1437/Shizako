@@ -34,6 +34,17 @@ object ShizukuState {
     /** 显示用：服务在不在 */
     fun isRunning(): Boolean = if (installed) cachedRunning else safePing()
 
+    /**
+     * 页面回到前台时手工校准一次缓存。
+     *
+     * 监听器是粘性的，正常情况下会自己更新；但进程刚起、服务刚拉起、回调被系统丢掉
+     * 这些边角情况下缓存可能落后一拍，表现就是「服务明明在跑，首页还显示睡懒觉」。
+     * 一次 ping 的代价可以忽略，放在 onResume 里兜底。
+     */
+    fun refresh() {
+        if (installed) cachedRunning = safePing()
+    }
+
     fun safePing(): Boolean = try {
         Shizuku.pingBinder()
     } catch (e: Throwable) {

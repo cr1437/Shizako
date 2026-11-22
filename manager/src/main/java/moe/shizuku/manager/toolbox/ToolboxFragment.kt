@@ -288,11 +288,12 @@ class ToolboxFragment : Fragment() {
             items = buildList {
                 add(entry(R.drawable.ic_bolt_24dp, R.string.activation_page_title,
                     R.string.toolbox_summary_activation) { openDestination(R.id.activation_fragment) })
-                // 「推荐应用」（下载并安装第三方 APK）在 F-Droid 版整个不显示：
-                // 既是分发第三方二进制，也与「不得绕过商店安装应用」相抵触 —— 见 FdroidBuild
+                // 「推荐应用」（黑阈 / 小黑屋 / 冰箱 … 一键下载安装）在 F-Droid 版整个不显示：
+                // 既是分发第三方二进制，也与「不得绕过商店安装应用」相抵触 —— 见 FdroidBuild。
+                // 这里**不设 ADVANCED**：用户要在工具箱里直接能点到，别藏在高级模式后面。
                 if (FdroidBuild.allowOneClickInject) {
                     add(entry(R.drawable.ic_wireless_adb_24dp, R.string.download_page_title,
-                        R.string.settings_recommended_apps_summary, FeatureLevel.ADVANCED) { openDestination(R.id.apps_download_fragment) })
+                        R.string.settings_recommended_apps_summary) { openDestination(R.id.apps_download_fragment) })
                 }
                 add(entry(R.drawable.ic_dhizuku_24dp, R.string.activation_method_dhizuku,
                     R.string.toolbox_summary_dhizuku, FeatureLevel.ADVANCED) {

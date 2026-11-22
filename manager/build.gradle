@@ -322,6 +322,10 @@ dependencies {
     implementation 'org.bouncycastle:bcpkix-jdk18on:1.80'
 
     implementation 'me.zhanghai.android.appiconloader:appiconloader:1.5.0'
+
+    // 纯 JVM 单测：自动化功能的协议/白名单/脱敏都是不依赖 Android 的纯 Kotlin，
+    // 这些是安全边界，必须能在没有模拟器的情况下回归（见 AutomationPolicyTest）。
+    testImplementation 'junit:junit:4.13.2'
 }
 
 apply from: rootProject.file('signing.gradle')

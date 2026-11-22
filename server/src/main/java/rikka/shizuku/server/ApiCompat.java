@@ -122,14 +122,39 @@ public final class ApiCompat {
     public static List<PackageInfo> getInstalledPackagesNoThrow(long flags, int userId) {
         try {
             Object pm = getPackageManager();
+            // 不同 Android 版本 IPackageManager.getInstalledPackages 的签名不一样：
+            //   API 33+ : getInstalledPackages(long flags, int userId)
+            //   API 24-32: getInstalledPackages(int flags, int userId)
+            //   API 21-23: getInstalledPackages(int flags)（没有 userId）
+            // 只按 long 签名找会在 Android 7/8（本项目 minSdk 24）上直接 "method not found"，
+            // 结果就是「应用管理」列表永远为空 —— API 24 模拟器上实测到的即此。
+            // 这里按新→旧依次回退，拿到哪版用哪版。
+            Object result = null;
             Method method = findMethodOnInterfaceOrClass(
                     "android.content.pm.IPackageManager", pm,
                     "getInstalledPackages", long.class, int.class);
+            if (method != null) {
+                result = method.invoke(pm, flags, userId);
+            } else {
+                method = findMethodOnInterfaceOrClass(
+                        "android.content.pm.IPackageManager", pm,
+                        "getInstalledPackages", int.class, int.class);
+                if (method != null) {
+                    result = method.invoke(pm, (int) flags, userId);
+                } else {
+                    method = findMethodOnInterfaceOrClass(
+                            "android.content.pm.IPackageManager", pm,
+                            "getInstalledPackages", int.class);
+                    if (method != null) {
+                        result = method.invoke(pm, (int) flags);
+                    }
+                }
+            }
             if (method == null) {
                 Log.w(TAG, "getInstalledPackages: method not found");
                 return Collections.emptyList();
             }
-            List<PackageInfo> list = unwrapPackageInfoList(method.invoke(pm, flags, userId));
+            List<PackageInfo> list = unwrapPackageInfoList(result);
             Log.i(TAG, "getInstalledPackages(flags=" + flags + ", user=" + userId + ") -> " + list.size());
             return list;
         } catch (Throwable tr) {

@@ -15,7 +15,7 @@
 <!-- 徽章全部自托管在 docs/ 下，用相对路径引用：这类图片由 github.com 自己提供，
      在国内网络也能稳定显示（以前用 shields.io 图床会整排裂图）。
      version / downloads / star 三个会变的指标由 .github/workflows/badges.yml
-     每 6 小时（以及每次发版后）自动重新生成。 -->
+     定时（以及每次发版后）自动重新生成。 -->
 [![版本](docs/badge-version.svg)](https://github.com/cr1437/Shizako/releases)
 [![下载量](docs/badge-downloads.svg)](https://github.com/cr1437/Shizako/releases)
 [![Star](docs/badge-star.svg)](https://github.com/cr1437/Shizako)
@@ -24,6 +24,8 @@
 [![许可](docs/badge-license.svg)](LICENSE)
 
 [🌐 官网](https://cr1437.github.io/Shizako/) · [📦 下载最新版](https://github.com/cr1437/Shizako/releases) · [🐛 反馈问题](https://github.com/cr1437/Shizako/issues) · ⭐ Star 支持她
+
+**当前版本：`zako4`** —— 性能优化主线版；新增应用数据备份/恢复、特权存储代理、安装信任列表与批量队列、EXEC_SHELL 自动化。
 
 </div>
 
@@ -41,6 +43,26 @@
 
 ---
 
+## 🆕 zako4：把「顺手」放在第一位
+
+这一版的主线是**性能与耗电**，功能更新只是顺路带上车：
+
+| 优化 | 之前 | 现在 |
+| --- | --- | --- |
+| **Baseline Profile** | 构建脚本把 `CompileArtProfileTask` 全局禁用，421 KB 的 `baseline-prof.txt` 每次生成却**从未进 APK**，冷启动只能靠 JIT | 移除禁用，release 包内 `assets/dexopt/baseline.prof` 真正生效，Compose / Material3 / RecyclerView 的基线配置一起回到包内 |
+| **应用列表图标** | 每次新建列表项都在主线程同步 `loadIcon`（缓存建了但没命中） | 绑定先查 `AppIconCache`（uid + 目标尺寸），命中直接上屏，未命中才异步替换 |
+| **列表测量** | 内容变化时反复 `requestLayout` | `setHasFixedSize(true)` + 固定条目标高，过滤/刷新少一轮测量 |
+| **后台唤醒** | `AlarmManager.RTC_WAKEUP` 定时唤醒查更新；保活 45s 一轮 | 更新检查改 `JobScheduler`（6h、持久化、按网络触发）；保活 90s；无障碍心跳前台 60s / 息屏 5min / 省电 10min |
+| **首页状态** | 一次 binder 探活失败就把整页判成「服务未运行」 | 单点失败只记日志，`onResume` 再校准，减少无效重载与闪烁 |
+
+想自己核对「Baseline Profile 真的进包了」：
+
+```bash
+unzip -l shizako-zako4-release.apk | grep dexopt   # 应看到 assets/dexopt/baseline.prof
+```
+
+---
+
 ## 🐾 她能做到的事
 
 | 特性 | 说明 |
@@ -48,15 +70,62 @@
 | 免 Root 特权 | 通过 ADB / 无线调试获得近似 Root 的能力 —— 不拆机、不刷机、不心惊胆战 |
 | 通行证制度 | 每个应用第一次连接都要你亲自授权，随时反悔、随时收回 |
 | 官方生态直连 | 用官方 Shizuku-API 写的应用**一行代码不用改**就能连上她 |
-| Dhizuku 模式 | 一键把她扶上「设备所有者」，特权常驻、免 Root 免无线调试；Dhizuku-API 应用（Hail、冰箱等）直接借用 |
+| Dhizuku 模式 | 一键把她扶上「设备所有者」，特权常驻、免 Root 免无线调试；不需要时应用内可「取消设备所有者」 |
 | 新手引导 | 首次启动逐步向导：语言 / 外观 / 启动方式，引导内**直接完成激活**；免责声明 10 秒强制阅读 |
 | 四种激活方式 | Root / 无线调试 / 电脑 ADB / Dhizuku，一页搞定；已配对可一键启动 |
+| **应用数据备份 / 恢复** | 外部数据（`/sdcard/Android/data`、`obb`）打包进你选的 SAF 目录，替换式恢复、批量队列、可选保存 OBB / APK |
+| **特权存储代理** | 服务进程以 shell/root 身份提供受限文件接口，四层访问降级 + 路径白名单 + 全量审计；第三方应用需单独授权 |
+| **安装信任列表 + 批量队列** | 受信应用免确认直装、外部请求弹确认框、XAPK / APKS / apk.1 全支持、单项失败不中断 |
+| **EXEC_SHELL 自动化** | 带令牌与签名校验的广播入口，Tasker / MacroDroid 可执行特权命令并按包名收回结果 |
+| **批量授权 / 权限模板** | 多选批量授予撤销、影响确认、内置模板 + 自定义模板、SAF 导出导入 |
 | 一键注入 | 把权限分给常用工具（黑阈、小黑屋、冰箱、炼妖壶），没装的应用内直接下载 |
 | 兼容桥 | 内置 provider 中转，Shizuku-API 客户端零改动直连；只用自己的 authority，**不占用上游任何标识** |
 | Tasker 支持 | 广播一键启停服务、激活 Dhizuku、查状态、触发下载 |
-| API 审计 | 完整记录哪个应用调用了哪个特权 API，设置里随时查 |
+| API 审计 | 完整记录哪个应用调用了哪个特权 API（含存储代理/安装/自动化的明细），设置里随时查 |
 | 自动更新 | 每次打开应用自动检查新版本，发现更新**就地弹出可下载的对话框**；网络拦截 GitHub 时自动切换可用源 |
 | 崩溃日志 | 崩溃自动落盘 `Download/Shizako-crash-*.txt` |
+
+---
+
+## 💾 应用数据备份与恢复（zako4 新增）
+
+入口：**应用管理 → 右上角「应用数据备份与恢复」**。
+
+- **备份**：勾选一个或多个应用 → 选一个 SAF 目录 → 开始。默认只打包外部数据
+  （`/sdcard/Android/data/<包名>`、`/sdcard/Android/obb/<包名>`），可勾选一并保存 OBB / APK。
+  数据边读边写进你选的目录，**设备上不生成临时归档**；同时写入 `<包名>.meta.json`（包名、版本、时间、Android 版本、是否含 OBB/APK）。
+- **恢复**：选备份目录 → 认出 `<包名>.meta.json` → **二次确认覆盖** → 恢复。
+  恢复是**替换式**：先解到 staging 再整体替换，解压失败时你原来的数据一个字节都不会动；
+  OBB 失败会单独报告（不影响外部数据）；目标应用未安装会提示先安装，备份里带了 APK 可直接交给安装器。
+- **批量**：备份走队列，顺序执行、单项失败不中断、可取消。
+- **边界**：`/data/data` 的完整备份不在这个功能范围内（只处理外部数据）。
+
+---
+
+## 📦 安装器：信任列表 + 批量队列（zako4 新增）
+
+- **受信应用直装**：签名 + uid 双校验通过的应用，请求安装时不再弹确认框；判定顺序固定（先调用方、再策略、最后才动安装），
+  信任列表可在「设置 → 安装」里维护。
+- **外部应用请求**：不在信任列表里的请求会弹确认框（默认拒绝），并写入历史与审计。
+- **批量队列**：一次投递多个安装包，顺序执行、单项失败不中断、可暂停/取消/重试；
+  支持普通 APK、微信式 `.apk.1`、XAPK（含 split 与 OBB）、APKS（bundletool 产物）。
+- **历史**：每次安装记录来源、格式、耗时、结果与失败原因，最多保留 200 条。
+
+---
+
+## 🤖 自动化：EXEC_SHELL（zako4 新增）
+
+- 广播 action：`com.churan.shizako.action.EXEC_SHELL`，需要显式组件 + 令牌 + 发送方签名校验；
+- 结果通过 `com.churan.shizako.action.EXEC_SHELL_RESULT` **按调用方包名**回传，令牌泄漏也不会把输出发给别人；
+- 令牌在「设置 → 自动化」里生成与轮换，命令在白名单内执行、带超时与长度限制。
+
+---
+
+## 🧩 批量授权与权限模板
+
+- 应用管理页长按（或右上角菜单「选择」）进入多选，批量授予 / 撤销，带影响确认、进度与结果报告；
+- 3 个内置模板 + 自定义模板，支持 SAF 导出 / 导入（冲突可选重命名 / 跳过 / 覆盖）；
+- 每次批量操作写入审计日志（带批次 ID），可在「权限模板 → 批次历史」里回看。
 
 ---
 
@@ -134,8 +203,6 @@ Shizako 用**自己的**包名（`com.churan.shizako`）和权限名，provider 
 指纹对不上 = 这份 APK 被人重新打包并换过签名，**不要安装、不要授权**。
 F-Droid 版由 F-Droid 用自己的密钥重新签名，指纹与上表不同，属正常；请以 F-Droid 页面标注为准。
 
-> 「第一次配对端口」之类的使用问题见下方 FAQ；本节只讲**这份文件本身是不是官方的**。
-
 ---
 
 ## 🎨 看板娘一角
@@ -175,6 +242,16 @@ implementation project(':provider')
 
 代码写法与官方 API 完全一致：`Shizuku.bindUserService(...)`、`Shizuku.requestPermission(...)` 照旧。
 
+### 存储代理（给受信第三方）
+
+zako4 起服务端多了一个 `IStorageProxy`（列目录 / 开文件 / tar 打包 / 安全解压 / 复制 / 删除 / 建目录 / 存在性）。
+第三方应用要同时满足两个条件才能用：
+
+1. 已在 Shizako 里拿到普通 Shizuku 授权；
+2. 在「数据备份与恢复 → 第三方调用」里**单独打开**该应用的「存储代理」开关。
+
+每次调用都会写一行审计（调用方 uid、操作、目标路径摘要、结果、耗时）。接口路径先过白名单与注入校验，越权、`../`、shell 元字符都会被拒。
+
 ---
 
 ## 📦 自己动手编译
@@ -192,8 +269,9 @@ cd Shizako
 | NDK | 29.0.14206865 |
 
 - 国内网络已配好阿里云 Maven 镜像，无需额外代理
-- 产物在 `manager/build/outputs/apk/release/`
+- 产物在 `manager/build/outputs/apk/release/`；release 会把 Baseline Profile 打进 `assets/dexopt/`
 - 未提供 `signing.properties` 时会自动回退到 debug 签名（仅自用够；**发布版必须使用项目签名**，否则用户无法覆盖升级）
+- 更细的构建/测试说明见 [docs/BUILD.md](docs/BUILD.md)
 
 ### Tasker / MacroDroid 广播指令
 
@@ -207,6 +285,7 @@ cd Shizako
 | `com.churan.shizako.action.QUERY_STATUS` | 查询状态（有序广播返回 `running`、`dhizuku`） |
 | `com.churan.shizako.action.DOWNLOAD_UPDATE` | 用内部下载器拉取 `url` extra 指向的 APK |
 | `com.churan.shizako.action.NOTIFY_INSTALL` | 发可点击通知：点一下安装 Download 里最新的 APK |
+| `com.churan.shizako.action.EXEC_SHELL` | 特权命令执行（需令牌 + 签名校验，见「自动化」一节） |
 
 ---
 
@@ -216,8 +295,10 @@ cd Shizako
 
 ```
 Shizako/
-├── manager/          Android 应用本体（Kotlin，约 3.2 万行，占全仓 ~82%）
+├── manager/          Android 应用本体（Kotlin，约 5 万行，占全仓约 85%）
+│   └── storage/      应用数据备份/恢复（zako4 新增）
 ├── server/           特权服务进程（Java，跑在 shell / root 里）
+│   └── storage/      特权存储代理实现（zako4 新增）
 ├── starter/          服务启动器（启动 server 进程）
 ├── shell/            构建 rish_shizuku.dex（`ShizukuShellLoader`），供 manager 打包进 APK
 ├── common/           共享工具（BuildUtils / OsUtils）
@@ -242,26 +323,38 @@ Shizako/
 **Q：要 Root 吗？**
 A：不要。无线调试 / USB 就能激活；有 Root 也行，姿势更多，但绝非必需。
 
+**Q：这版为什么叫 zako4？**
+A：改动面比过往任何一次都大（性能主线 + 备份恢复 + 安装器 + 自动化），继续叫 3.20 容易让人低估；版本号同步从 320 跳到 400。
+
 **Q：跟 Shizuku 什么关系？**
-A：它兼容 Shizuku-API 生态 —— 用官方 SDK 写的应用零改动直连。按上游许可要求，本项目使用自己的包名与权限名、不占用上游任何 authority，因此可以和官方 Shizuku 装在同一台机器上；在此之上还加了 Dhizuku 兼容、一键注入等自家功能。
+A：它兼容 Shizuku-API 生态 —— 用官方 SDK 写的应用零改动直连。按上游许可要求，本项目使用自己的包名与权限名、不占用上游任何 authority，因此可以和官方 Shizuku 装在同一台机器上；在此之上还加了 Dhizuku 兼容、一键注入、数据备份等自家功能。
+
+**Q：备份会碰 `/data/data` 吗？**
+A：不会。只处理外部数据（`/sdcard/Android/data`、`/sdcard/Android/obb`）；完整的 `/data/data` 备份不在这个功能范围内。
+
+**Q：第三方备份工具怎么用存储代理？**
+A：先给它正常的 Shizuku 授权，再到「数据备份与恢复 → 第三方调用」里单独打开它的「存储代理」开关；只有 Shizuku 授权、没有这个开关时，接口会明确拒绝并记审计。
+
+**Q：性能优化到底改了啥？**
+A：主要是四处：Baseline Profile 真正进包（冷启动）、应用列表图标真正命中缓存、列表测量收敛、后台唤醒（更新检查改 JobScheduler / 心跳自适应 / 保活 90s）。核对方法见上面的 `unzip -l | grep dexopt`。
 
 **Q：能不能和官方 Shizuku 一起装？**
 A：可以。Shizako 的 provider 只声明自己的 authority，不会和官方 Shizuku 撞。两个都装、各自授权即可。
 
 **Q：授权给应用安全吗？**
-A：每个应用都要你亲自点头才拿得到通行证，白名单本地记录、随时可收回；Dhizuku 特权转发也只在 Shizako 进程内完成。
+A：每个应用都要你亲自点头才拿得到通行证，白名单本地记录、随时可收回；Dhizuku 特权转发也只在 Shizako 进程内完成；存储代理还要额外单独授权，且每次调用都写审计。
 
 **Q：支持哪些 Android 版本？**
 A：Android 7.0+ 都能跑；无线调试激活需要 Android 11+。
 
 **Q：配对时一直停在「正在搜索配对服务」，端口填不了？**
-A：自动发现配对端口靠 mDNS 组播。GrapheneOS 开启 VPN 时组播不会送进应用，华为 / 鸿蒙部分机型同样会拦截 —— 这类设备上自动发现必然失败。zako3.14 起配对对话框的端口框**始终可见可手输**：从设备「开发者选项 → 无线调试 → 使用配对码配对设备」页面上读出**配对端口**填进去，配对码一起输入即可。如果设备上 adbd 已经监听在固定端口（比如 5555），也可以直接用激活页的「手动连接端口」，跳过配对。
+A：自动发现配对端口靠 mDNS 组播。GrapheneOS 开启 VPN 时组播不会送进应用，华为 / 鸿蒙部分机型同样会拦截 —— 这类设备上自动发现必然失败。配对对话框的端口框**始终可见可手输**：从设备「开发者选项 → 无线调试 → 使用配对码配对设备」页面上读出**配对端口**填进去，配对码一起输入即可。如果设备上 adbd 已经监听在固定端口（比如 5555），也可以直接用激活页的「手动连接端口」，跳过配对。
 
 **Q：安装/更新时 Play Protect 提示「应用可能有害」，是病毒吗？**
 A：不是。Shizako 是侧载应用，又具备「下载安装」「用 app_process 起特权进程」「设备所有者」这类能力，Play Protect 的启发式模型很容易把 Shizuku 生态工具判成风险项 —— 判定发生在 Google 侧，开发者无法在代码里关掉它。建议按顺序自查：① 只从 [Releases](https://github.com/cr1437/Shizako/releases) 下载，并用 `apksigner verify --print-certs <apk>` 核对证书 SHA-256 为 `515baf0c…9f9c8a`；② 如果你装的是 Actions 产物（debug 签名）或来源不明的包，请换正式签名包；③ 确认无误后，可在 Play Protect 提示里点「更多详情 → 仍然保留」，或在「设置 → Google → 安全 → Play Protect」关闭「扫描应用」（这会降低整机防护，不建议长期关闭）。判定权在 Google，可以按[官方指引](https://developers.google.com/android/play-protect/warning-dev-guidance)提交误报申诉，但申诉是单向流程、不承诺结果与时限。
 
 **Q：为什么装包里有那么多「危险权限」？**
-A：都是功能必需：`QUERY_ALL_PACKAGES` 用来显示已授权应用的名称与图标；`WRITE_SECURE_SETTINGS` 用来一键开无线调试、管理无障碍服务；DeviceAdmin 就是 Dhizuku 模式本身。应用不会在后台偷偷使用它们，权限白名单本地记录、随时可收回。
+A：都是功能必需：`QUERY_ALL_PACKAGES` 用来显示已授权应用的名称与图标；`WRITE_SECURE_SETTINGS` 用来一键开无线调试、管理无障碍服务；DeviceAdmin 就是 Dhizuku 模式本身；`STORAGE_PROXY` 是存储代理的能力标记（真正的开关在应用内）。应用不会在后台偷偷使用它们，权限白名单本地记录、随时可收回。
 
 **Q：为什么这么可爱？**
 A：因为作者把她当女儿养（确信）。

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 批量与模板化管理（F1-F8）：多选、批量授予/撤销、模板 CRUD 与导入导出 -->
+<resources>
+
+    <!-- ══════════ F1 多选 ══════════ -->
+    <string name="batch_title_multi_select">Select</string>
+    <string name="batch_selected_count">%1$d selected</string>
+    <string name="batch_action_select_all">All</string>
+    <string name="batch_action_invert">Invert</string>
+    <string name="batch_action_grant">Grant</string>
+    <string name="batch_action_revoke">Revoke</string>
+    <string name="batch_action_cancel">Cancel</string>
+    <string name="batch_action_apply_template">Template</string>
+    <string name="batch_short_grant">Grant</string>
+    <string name="batch_short_revoke">Revoke</string>
+    <string name="batch_short_template">Apply</string>
+    <string name="batch_short_cancel">Cancel</string>
+
+    <string name="batch_multi_tip">Long-press an app to start selecting</string>
+
+    <!-- ══════════ F4 影响范围确认 ══════════ -->
+    <string name="batch_confirm_title">Confirm batch operation</string>
+    <string name="batch_confirm_operation">Operation: %1$s · %2$s</string>
+    <string name="batch_confirm_type_grant">Grant</string>
+    <string name="batch_confirm_type_revoke">Revoke</string>
+    <string name="batch_confirm_target_shizuku">Shizuku permission</string>
+    <string name="batch_confirm_target_dhizuku">Dhizuku delegation</string>
+    <string name="batch_confirm_count">Apps affected: %1$d</string>
+    <string name="batch_confirm_scopes">Scopes to grant</string>
+    <string name="batch_confirm_skip_mark">already present, will skip</string>
+    <string name="batch_confirm_execute">Run</string>
+    <string name="batch_confirm_revoke_warning">Revocation takes effect immediately. The selected apps may stop working.</string>
+
+    <!-- ══════════ F2/F3 进度 ══════════ -->
+    <string name="batch_progress_title">Working…</string>
+    <string name="batch_progress_count">Processed %1$d / %2$d</string>
+    <string name="batch_progress_current">Now: %1$s</string>
+    <string name="batch_progress_cancel">Cancel</string>
+
+    <!-- ══════════ F5 结果 / 撤销本批次 ══════════ -->
+    <string name="batch_result_title">Batch result</string>
+    <string name="batch_result_summary">%1$d succeeded · %2$d failed · %3$d skipped</string>
+    <string name="batch_result_failed_section">Failed</string>
+    <string name="batch_result_skipped_section">Skipped</string>
+    <string name="batch_result_undo">Undo this batch</string>
+    <string name="batch_result_done">Done</string>
+    <string name="batch_result_aborted">Service stopped — the queue was paused, finished items are kept.</string>
+    <string name="batch_result_cancelled">Cancelled — finished items are kept.</string>
+    <string name="batch_undo_title">Undo this batch?</string>
+    <string name="batch_undo_message">Only the grants added by this batch are revoked. Existing grants are left untouched.</string>
+    <string name="batch_undo_running">Undoing this batch…</string>
+    <string name="batch_undo_result">Undo finished: %1$d succeeded · %2$d skipped · %3$d failed</string>
+
+    <!-- ══════════ 失败 / 跳过原因 ══════════ -->
+    <string name="batch_need_owner">Activate Dhizuku (Device Owner) first</string>
+    <string name="batch_reason_already">Already present, skipped</string>
+    <string name="batch_reason_not_granted">Was not granted</string>
+    <string name="batch_reason_uninstalled">App uninstalled</string>
+    <string name="batch_reason_service_stopped">Service stopped</string>
+    <string name="batch_reason_denied">Permission denied</string>
+    <string name="batch_reason_verify_failed">Did not take effect</string>
+    <string name="batch_reason_not_supported">Delegation needs Android 8.0 or later</string>
+    <string name="batch_reason_gone">No longer present</string>
+    <string name="batch_reason_not_owner">Not Device Owner</string>
+    <string name="batch_reason_unknown">Unknown error</string>
+
+    <!-- ══════════ F6 模板 CRUD ══════════ -->
+    <string name="template_title">Permission templates</string>
+    <string name="template_new">New template</string>
+    <string name="template_edit">Edit template</string>
+    <string name="template_name_label">Template name</string>
+    <string name="template_name_hint">For example: Read-only shell</string>
+    <string name="template_name_duplicate">A template with this name already exists</string>
+    <string name="template_name_required">Please enter a name</string>
+    <string name="template_summary">%1$d items · created %2$s</string>
+    <string name="template_summary_builtin">%1$d items</string>
+    <string name="template_builtin">Built-in</string>
+    <string name="template_builtin_readonly">Built-in templates are read-only</string>
+    <string name="template_section_shizuku">Shizuku permissions</string>
+    <string name="template_section_scopes">Dhizuku delegated scopes</string>
+    <string name="template_save">Save</string>
+    <string name="template_delete">Delete</string>
+    <string name="template_delete_title">Delete template?</string>
+    <string name="template_delete_message">“%1$s” cannot be recovered after deletion.</string>
+    <string name="template_export">Export</string>
+    <string name="template_import">Import</string>
+    <string name="template_export_done">Exported %1$d templates</string>
+    <string name="template_export_failed">Export failed</string>
+    <string name="template_import_done">Imported %1$d templates</string>
+    <string name="template_import_failed">Import failed: invalid JSON structure</string>
+    <string name="template_import_empty">No template found in this file</string>
+    <string name="template_import_conflict_title">Name conflict: %1$s</string>
+    <string name="template_import_conflict_message">A template with this name already exists. Built-in templates cannot be overwritten.</string>
+    <string name="template_import_overwrite">Overwrite</string>
+    <string name="template_import_skip">Skip</string>
+    <string name="template_import_rename">Rename</string>
+    <string name="template_import_renamed">Renamed to “%1$s”</string>
+    <string name="template_import_invalid">Skipped %1$d invalid entries</string>
+    <string name="template_none">No templates yet — create one with the + button</string>
+    <string name="template_empty_items">Nothing selected</string>
+    <string name="template_scope_hint">Only effective while Dhizuku (Device Owner) is active</string>
+
+    <!-- ══════════ F7 套用模板 / 差异预览 ══════════ -->
+    <string name="template_choose_title">Choose a template</string>
+    <string name="template_apply_preview_title">Apply “%1$s”</string>
+    <string name="template_apply_per_app">+%1$d new · %2$d kept · %3$d untouched</string>
+    <string name="template_apply_add">Will add</string>
+    <string name="template_apply_keep">Already present</string>
+    <string name="template_apply_untouched">Not in template (will not be revoked)</string>
+    <string name="template_apply_confirm">Apply</string>
+
+    <!-- ══════════ 批次历史 ══════════ -->
+    <string name="batch_history_title">Batch history</string>
+    <string name="batch_history_empty">No batch operations yet</string>
+    <string name="batch_history_row">%1$d ok · %2$d failed · %3$d skipped</string>
+    <string name="batch_history_detail_title">Batch detail</string>
+    <string name="batch_type_grant_short">Grant</string>
+    <string name="batch_type_revoke_short">Revoke</string>
+
+    <!-- ══════════ 权限项 / scopes 目录 ══════════ -->
+    <string name="perm_api_v23">Shell / privileged API (API_V23)</string>
+    <string name="perm_api_v23_desc">Lets the app call system APIs through Shizako with shell identity</string>
+
+    <string name="scope_cert_install">Install certificates</string>
+    <string name="scope_app_restrictions">Manage app restrictions</string>
+    <string name="scope_block_uninstall">Block uninstall</string>
+    <string name="scope_permission_grant">Grant runtime permissions</string>
+    <string name="scope_package_access">Query installed apps</string>
+    <string name="scope_enable_system_app">Enable system apps</string>
+    <string name="scope_install_existing">Install existing packages</string>
+    <string name="scope_keep_uninstalled">Keep data of uninstalled apps</string>
+
+    <!-- ══════════ 内置只读预设（F6） ══════════ -->
+    <string name="template_builtin_readonly_shell">Read-only shell</string>
+    <string name="template_builtin_installer">Installer only</string>
+    <string name="template_builtin_module">Module manager</string>
+
+</resources>

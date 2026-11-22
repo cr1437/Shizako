@@ -14,7 +14,7 @@ Compatible with the [Shizuku-API](https://github.com/RikkaApps/Shizuku-API) ecos
 
 <!-- All badges are self-hosted under docs/ and referenced by relative path, so they are
      served by github.com itself and render reliably (the previous shields.io badges often
-     failed to load). version / downloads / star are regenerated every 6 hours and after
+     failed to load). version / downloads / star are regenerated periodically and after
      each release by .github/workflows/badges.yml. -->
 [![version](docs/badge-version.svg)](https://github.com/cr1437/Shizako/releases)
 [![downloads](docs/badge-downloads.svg)](https://github.com/cr1437/Shizako/releases)
@@ -25,62 +25,118 @@ Compatible with the [Shizuku-API](https://github.com/RikkaApps/Shizuku-API) ecos
 
 [🌐 Website](https://cr1437.github.io/Shizako/) · [📦 Download latest](https://github.com/cr1437/Shizako/releases) · [🐛 Report an issue](https://github.com/cr1437/Shizako/issues) · ⭐ Star this project
 
+**Current version: `zako4`** — a performance-focused release, plus app data backup/restore, a privileged storage proxy, a trusted-installer list with a batch queue, and EXEC_SHELL automation.
+
 </div>
 
 ---
 
-> "Hi there, I'm **Shizako** `(ฅ'ω'ฅ)`
->
-> Your phone is full of 'system-only' goodies — silent installs, freezing apps, tweaking permissions,
-> reading system settings — yet only the system itself gets to touch them. Annoying, right?
-> Root can hand you the keys, but the price is… brick warnings, a voided warranty, and banking apps
-> that stop trusting you.
->
-> So I took another path: I run one small privileged process for you (wake me up via wireless debugging,
-> USB, or root — your choice), then **lend** that privilege to apps you trust. Lend, not give:
-> every app needs your explicit approval, and you can revoke it any time."
+## 🆕 zako4: making everyday use smoother
+
+The main theme of this release is **performance and battery**, with new features along for the ride:
+
+| Optimization | Before | Now |
+| --- | --- | --- |
+| **Baseline Profile** | The build disabled `CompileArtProfileTask` globally, so the generated 421 KB `baseline-prof.txt` **never made it into the APK** and cold start was pure JIT | The override is gone; `assets/dexopt/baseline.prof` ships in the release APK, bringing Compose / Material3 / RecyclerView profiles back |
+| **App-list icons** | Every new list item synchronously called `loadIcon` on the main thread (the cache existed but never hit) | Binding first checks `AppIconCache` (uid + target size); hits render immediately, misses load asynchronously |
+| **List measurement** | Content changes triggered repeated `requestLayout` | `setHasFixedSize(true)` + fixed item heights, one less measure pass on filter/refresh |
+| **Background wake-ups** | `AlarmManager.RTC_WAKEUP` for update checks; keep-alive every 45s | Update checks use `JobScheduler` (6h, persisted, network-constrained); keep-alive 90s; adaptive accessibility heartbeat (60s foreground / 5min screen-off / 10min battery saver) |
+| **Home status** | A single failed binder probe marked the whole page as "service not running" | Single failures are logged; `onResume` re-checks, less reload churn and flicker |
+
+Verify the Baseline Profile yourself:
+
+```bash
+unzip -l shizako-zako4-release.apk | grep dexopt   # should list assets/dexopt/baseline.prof
+```
 
 ---
 
 ## 🐾 What she can do
 
 | Feature | Description |
-|---------|-------------|
-| Privileges without root | Approximate root-level power through ADB / wireless debugging — no unlocking, no flashing |
-| Passport system | Every app needs your explicit approval on first connect; revocable at any time |
-| Works with the official ecosystem | Apps built on the official Shizuku-API connect **without a single line of changes** |
-| Dhizuku mode | Promote her to Device Owner for always-on privileges without root or wireless debugging; Dhizuku-API apps (Hail, Ice Box, …) can borrow directly |
-| First-run wizard | Step-by-step setup (language / appearance / activation method) with activation built in; 10-second forced disclaimer |
-| Four activation paths | Root / wireless debugging / computer ADB / Dhizuku, all on one page; one-tap start once paired |
-| One-tap injection | Grant privileges to common tools (Thanox, Ice Box, 炼妖壶 …), with in-app download for missing ones |
-| Compatibility bridge | Built-in provider relay so Shizuku-API clients connect unchanged; it declares **only its own authority and claims no upstream identifier** |
-| Tasker support | Broadcasts to start/stop the service, activate Dhizuku, query status, trigger downloads |
-| API audit log | Records which app called which privileged API — review it any time in settings |
-| Auto update | Checks for a new version **every time you open the app**, with an in-app download dialog; falls back to a working mirror when GitHub is blocked by your network |
+|------|------|
+| No root required | Privileged APIs through ADB / wireless debugging — no unlocking, no flashing |
+| Permission passes | Every app needs your explicit approval on first connect; revocable any time |
+| Official ecosystem | Apps built with the official Shizuku-API work **without a single code change** |
+| Dhizuku mode | She can become Device Owner herself, forwarding privileges to Dhizuku-API apps (Hail, IceBox, …) |
+| Setup wizard | First-run guide: language / appearance / launch method, with activation right inside |
+| Four activation methods | Root / wireless debugging / USB ADB / Dhizuku, all on one page |
+| **App data backup / restore** | External data (`/sdcard/Android/data`, `obb`) streamed into a SAF folder you pick; replace-style restore, batch queue, optional OBB / APK |
+| **Privileged storage proxy** | A whitelisted file API served by the shell/root service, with a four-layer fallback and full audit; third-party apps must be granted explicitly |
+| **Trusted installers + batch queue** | Signature+uid verified installs, confirmation for unknown requesters, XAPK / APKS / apk.1, failures don't stop the queue |
+| **EXEC_SHELL automation** | Token + signature protected broadcast for privileged commands; results are delivered package-scoped |
+| **Batch grants / templates** | Multi-select grant/revoke with impact confirmation, built-in + custom templates, SAF export/import |
+| One-tap injection | Give privileges to common tools (BlackBox, IceBox, …), download missing ones in-app |
+| Compatibility bridge | Provider relay so Shizuku-API clients connect unchanged — using only our own authority |
+| Tasker support | Broadcasts to start/stop, activate Dhizuku, query status, trigger downloads |
+| API audit | Every privileged call is logged (including storage / install / automation details) and browsable in Settings |
+| Auto update | Checks on every launch with an in-app download dialog; automatic mirror fallback when GitHub is blocked |
 | Crash logs | Crashes are written to `Download/Shizako-crash-*.txt` |
 
 ---
 
-## 🚀 Getting started
+## 💾 App data backup / restore (new in zako4)
 
-### 1. Adopt her
+Entry: **App management → top-right menu → "App data backup & restore"**.
+
+- **Backup**: select one or more apps → pick a SAF folder → start. Only external data is packaged by default
+  (`/sdcard/Android/data/<pkg>`, `/sdcard/Android/obb/<pkg>`); OBB / APK can be included.
+  Data is streamed straight into the folder — **no temporary archive on the device** — and a
+  `<pkg>.meta.json` (package, version, time, Android version, OBB/APK flags) is written next to it.
+- **Restore**: pick the backup folder → backups are recognised by `<pkg>.meta.json` → **confirm overwrite** → restore.
+  Restore is **replace-style**: extraction happens in a staging directory and is swapped in afterwards,
+  so a failed extraction leaves your current data untouched. OBB failures are reported separately,
+  missing apps are reported with an install hint (a backed-up APK can be handed to the installer).
+- **Batch**: backups run in a queue — sequential, failures don't stop the queue, cancellable.
+- **Scope**: a full `/data/data` backup is out of scope; only external data is handled.
+
+---
+
+## 📦 Installer: trust list + batch queue (new in zako4)
+
+- **Trusted installs**: apps matching both signature and uid install without a confirmation dialog; the order of checks is fixed (caller → policy → install).
+- **External requests**: unknown requesters get a confirmation dialog (deny by default) and are recorded in history and the audit log.
+- **Batch queue**: queue several packages; sequential, failures don't stop the queue, pause/cancel/retry; supports plain APK, WeChat-style `.apk.1`, XAPK (splits + OBB) and APKS.
+- **History**: source, format, duration, result and failure reason are kept (up to 200 entries).
+
+---
+
+## 🤖 Automation: EXEC_SHELL (new in zako4)
+
+- Broadcast action `com.churan.shizako.action.EXEC_SHELL`, requiring an explicit component, a token and the caller's signature;
+- Results come back via `com.churan.shizako.action.EXEC_SHELL_RESULT`, **package-scoped to the caller**;
+- The token is generated/rotated in Settings → Automation; commands run under a whitelist with timeout and length limits.
+
+---
+
+## 🧩 Batch grants and permission templates
+
+- Long-press (or "Select" in the top-right menu) to multi-select, then grant/revoke in bulk with impact confirmation, progress and a result report;
+- 3 built-in templates plus custom ones, with SAF export/import (rename / skip / overwrite on conflict);
+- Every batch operation is audited with a batch id and can be reviewed in "Permission templates → Batch history".
+
+---
+
+## 🚀 Get her home
+
+### Step 1: Adopt
 
 Download the latest APK from [Releases](https://github.com/cr1437/Shizako/releases) and install it.
 
-### 2. Wake her up
+### Step 2: Wake her up
 
-| Method | Requirements | Best for |
-|--------|--------------|----------|
-| Wireless debugging | Android 11+, enable wireless debugging and pair | No cable at hand |
-| Computer ADB | Run the `adb` command shown in the app once | You have a computer nearby |
-| Root | An existing root environment | Root users who want more |
-| Dhizuku (Device Owner) | Run `adb shell dpm set-device-owner com.churan.shizako/moe.shizuku.manager.dhizuku.DhizukuAdminReceiver` once on a computer (no accounts may be on the device); to leave the mode, hit "Remove Device Owner" on the Dhizuku apps page | Set-and-forget |
+| Method | Requirements | For |
+|----------|------|---------|
+| Wireless debugging | Android 11+, enable wireless debugging, pair in-app | People who hate cables |
+| USB ADB | Run the `adb` command shown in the app once | People with a computer nearby |
+| Root | Already rooted | Power users |
+| Dhizuku (Device Owner) | One `adb shell dpm set-device-owner com.churan.shizako/moe.shizuku.manager.dhizuku.DhizukuAdminReceiver` (no accounts on the device); remove it later from the Dhizuku apps page | Set-and-forget |
 
-The flow matches upstream Shizuku — see the [upstream setup guide](https://shizuku.rikka.app/guide/setup/), replacing Shizuku with Shizako.
+The activation flow mirrors upstream Shizuku; see the [upstream guide](https://shizuku.rikka.app/guide/setup/) and replace "Shizuku" with "Shizako".
 
-### 3. Issue passports
+### Step 3: Hand out passes
 
-Open an app you want to authorize; Shizako shows a permission dialog. Approve to grant, deny to decline. Every passport is recorded and can be revoked in settings.
+Open the app you want to authorise — Shizako shows a permission dialog. Allow and the pass is issued; deny and that's it. Every pass is recorded and can be revoked in Settings.
 
 ---
 
@@ -88,69 +144,50 @@ Open an app you want to authorize; Shizako shows a permission dialog. Approve to
 
 ### Built on the Shizuku API
 
-The `api/` directory contains the full [Shizuku-API](https://github.com/RikkaApps/Shizuku-API) sources (MIT License). Protocol, interfaces and call patterns are identical to upstream — see [api/SHIZAKO-CHANGES.md](api/SHIZAKO-CHANGES.md) for what changed.
+`api/` contains the full source of [Shizuku-API](https://github.com/RikkaApps/Shizuku-API) (MIT). Protocols and calls are identical to upstream — see [api/SHIZAKO-CHANGES.md](api/SHIZAKO-CHANGES.md) for our changes.
 
-### Official-ecosystem apps connect directly
+### Official apps connect directly
 
-New name, same temper. Apps built on the official `dev.rikka.shizuku:api` (MT Manager, Ice Box, SystemUI Tuner, …) connect **without code changes or recompiling**:
+Apps built with the official `dev.rikka.shizuku:api` (MT Manager, IceBox, SystemUI Tuner, …) connect **without recompiling**:
 
-| App built against | Connects to Shizuku | Connects to Shizako |
-|-------------------|:---:|:---:|
-| Official `dev.rikka.shizuku:api` | ✅ | ✅ |
-| This repository's `api/` | ✅ | ✅ |
+| App type | Official Shizuku | Shizako |
+|----------|:---:|:---:|
+| Built with official `dev.rikka.shizuku:api` | ✅ | ✅ |
+| Built with this repo's `api/` | ✅ | ✅ |
 
-The server only checks *that* an app requested the permission, not *which* permission name it requested; the first connection still requires your approval.
+The server verifies *that* an app requested the permission, not which permission name it used; the first connection still shows the approval dialog.
 
 ### Dhizuku compatibility: she is her own Device Owner
 
 - Once set as Device Owner, Dhizuku-API apps treat Shizako as Dhizuku — **no code changes**
-- All privilege forwarding happens inside the Shizako process; the system sees Shizako itself as the caller — no binder backdoor for third parties
-- Every Dhizuku-API app needs approval on first use; grants are stored in a local allowlist and revocable under "Dhizuku authorized apps"
-- The compatibility layer is written independently (wire protocol aligned with Dhizuku-API) and does not depend on the GPL-licensed Dhizuku-API library, so Shizako stays Apache-2.0
+- Privilege forwarding happens inside the Shizako process; the system only ever sees Shizako as the caller
+- Every Dhizuku-API app needs approval on first use and can be revoked from the "Dhizuku authorised apps" page
+- The compatibility layer is independently written (wire-compatible), so Shizako stays Apache-2.0
 
-### 🔏 Coexisting with the official Shizuku, and verifying an official build
+### 🔏 Coexistence with official Shizuku, and verifying official builds
 
-Shizako uses **its own** package name (`com.churan.shizako`) and permission names, and its provider
-declares only its own authority, `com.churan.shizako.shizuku`. It does not use the upstream
-`moe.shizuku.privileged.api` package name, the `Shizuku` app name, `moe.shizuku.manager.permission.*`
-permissions, the upstream provider authority or upstream icons. It therefore **can be installed
-alongside the official Shizuku**; whichever one is running is the one your apps talk to.
-(Historically the GitHub build shipped a "compatibility placeholder package" that squatted the
-upstream package name to please clients with the old name hard-coded. That approach has been removed
-entirely: it violated the upstream Apache-2.0 §6 terms verbatim, and from the outside it was
-indistinguishable from a repackaged, renamed counterfeit.)
+Shizako uses its **own** package name (`com.churan.shizako`) and permission names, and only declares its own provider authority `com.churan.shizako.shizuku`. It does **not** use the upstream package name, app name, permissions, authority or icon, so it can be installed alongside official Shizuku.
 
-#### Signing fingerprint of official builds
-
-Every official build is signed with the same release certificate:
+#### Official build signing certificate
 
 | Item | Value |
 | --- | --- |
-| Certificate subject | `CN=Shizako, OU=Churan, O=Churan, L=Beijing, ST=Beijing, C=CN` |
-| Certificate SHA-256 | `515BAF0C727F2AFBABA8A22379A05F8F2CC98682E5BEB24FB166565ACC9F9C8A` |
+| Subject | `CN=Shizako, OU=Churan, O=Churan, L=Beijing, ST=Beijing, C=CN` |
+| SHA-256 | `515BAF0C727F2AFBABA8A22379A05F8F2CC98682E5BEB24FB166565ACC9F9C8A` |
 
-To verify, either:
-
-1. Run `apksigner verify --print-certs shizako-*.apk` on a computer and compare the line above, or
-2. Open **Settings → About** inside the app: it shows the fingerprint of **the APK you actually
-   installed**. Compare that with the table. On launch, a mismatch also triggers a warning that
-   points you to the official release page (warn-only, never blocks; F-Droid builds don't warn).
-
-A mismatch means the APK was repackaged and re-signed. **Do not install it and do not grant it
-anything.** F-Droid builds are re-signed with F-Droid's own key, so their fingerprint differs by
-design; trust the one shown on the F-Droid listing.
+Verify with `apksigner verify --print-certs shizako-*.apk` or the in-app "Settings → About" fingerprint. A mismatch means the APK was re-signed — do not install or authorise it. F-Droid builds are re-signed by F-Droid and differ by design.
 
 ---
 
-## 🎨 Meet the mascot
+## 🎨 The mascot
 
 <div align="center">
 <img src="manager/src/main/res/mipmap-xxxhdpi/ic_launcher.png" width="96" alt="Shizako logo" />
 </div>
 
-Shizako: white hair, cat ears, crescent hairpin — a catgirl system assistant hugging a terminal. The project icon, in-app copy and artwork all revolve around her.
+Shizako is a white-haired catgirl with a crescent hairpin — a "catgirl system assistant hugging a terminal". Icons, in-app copy and promo material all revolve around her.
 
-> Officially approved for use as a sticker (ˊᗜˋ*) — as long as you don't do anything nasty.
+> Officially blessed: use her as a sticker if you like (ˊᗜˋ*), just don't do anything mean with her.
 
 ---
 
@@ -158,30 +195,27 @@ Shizako: white hair, cat ears, crescent hairpin — a catgirl system assistant h
 
 ### Option 1: Connect directly (recommended)
 
-The official `dev.rikka.shizuku:api` already works with both managers, **no changes needed**. See [docs/API.md](docs/API.md) for dependency setup, permission requests, binder lifecycle and AIDL user services.
+The official `dev.rikka.shizuku:api` works with both managers out of the box. See [docs/API.md](docs/API.md) for dependencies, permission requests, binder lifecycle and AIDL user services.
 
-### Option 2: Vendor the sources
+### Option 2: Source integration
 
-Copy the `api/` directory into your project:
+Copy `api/` into your project and add the modules as shown in the Chinese README (the Gradle snippet is language-neutral).
 
-```gradle
-// settings.gradle
-include ':aidl', ':shared', ':api', ':provider'
-project(':aidl').projectDir = file('api/aidl')
-project(':shared').projectDir = file('api/shared')
-project(':api').projectDir = file('api/api')
-project(':provider').projectDir = file('api/provider')
+Code looks exactly like the official API: `Shizuku.bindUserService(...)`, `Shizuku.requestPermission(...)`.
 
-// app/build.gradle
-implementation project(':api')
-implementation project(':provider')
-```
+### Storage proxy (for trusted third parties)
 
-Usage is identical to the official API: `Shizuku.bindUserService(...)`, `Shizuku.requestPermission(...)`.
+Since zako4 the server exposes `IStorageProxy` (list / open / tar / restore / copy / delete / mkdir / exists).
+A third-party app needs **both**:
+
+1. regular Shizuku authorisation, and
+2. the per-app "storage proxy" switch in **App data backup & restore → Third-party**.
+
+Every call writes one audit line (caller uid, operation, path digest, result, duration). Paths are whitelisted and checked for traversal/injection before anything touches the filesystem.
 
 ---
 
-## 📦 Building from source
+## 📦 Build it yourself
 
 ```bash
 git clone https://github.com/cr1437/Shizako.git
@@ -189,133 +223,108 @@ cd Shizako
 ./gradlew :manager:assembleRelease
 ```
 
-| Requirement | Version |
-|-------------|---------|
-| JDK | **21** (root `build.gradle` uses `VERSION_21` and `manager` sets `jvmTarget = "21"`; no toolchain is declared, so `JAVA_HOME` is used as-is — **17 will not build**) |
+| Dependency | Version |
+|------|---------|
+| JDK | **21** (17 will not compile) |
 | Android SDK | compileSdk 36 |
 | NDK | 29.0.14206865 |
 
-- Aliyun Maven mirrors are preconfigured (no extra proxy needed in mainland China)
-- Output: `manager/build/outputs/apk/release/`
-- Without a `signing.properties` the build falls back to the debug signature — fine for local use, but **official releases must use the project signature**, otherwise users cannot upgrade in place
+- Aliyun Maven mirrors are configured for mainland China; no extra proxy needed
+- Output: `manager/build/outputs/apk/release/`; the release APK embeds the Baseline Profile under `assets/dexopt/`
+- Without `signing.properties` the build falls back to the debug key (fine for personal use; **releases must use the project key**)
 
 ### Tasker / MacroDroid broadcasts
 
 | Action | Effect |
-|--------|--------|
-| `com.churan.shizako.action.START` | Start the service using the last launch method |
+|--------|------|
+| `com.churan.shizako.action.START` | Start the service using the last method |
 | `com.churan.shizako.action.STOP` | Stop the service |
-| `com.churan.shizako.action.START_ROOT` | Start via root |
-| `com.churan.shizako.action.START_ADB` | Start via wireless debugging |
-| `com.churan.shizako.action.ACTIVATE_DHIZUKU` | Activate Device Owner mode (Shizuku mode must be running) |
+| `com.churan.shizako.action.START_ROOT` | Start with root |
+| `com.churan.shizako.action.START_ADB` | Start with wireless debugging |
+| `com.churan.shizako.action.ACTIVATE_DHIZUKU` | Activate Device Owner mode |
 | `com.churan.shizako.action.QUERY_STATUS` | Query status (ordered broadcast returns `running`, `dhizuku`) |
-| `com.churan.shizako.action.DOWNLOAD_UPDATE` | Download the APK at the `url` extra using the built-in downloader |
-| `com.churan.shizako.action.NOTIFY_INSTALL` | Post a tappable notification that installs the newest APK in Download |
+| `com.churan.shizako.action.DOWNLOAD_UPDATE` | Download the APK at the `url` extra |
+| `com.churan.shizako.action.NOTIFY_INSTALL` | Post a tappable install notification |
+| `com.churan.shizako.action.EXEC_SHELL` | Privileged command execution (token + signature, see Automation) |
 
 ---
 
-## 🗂️ Project layout
+## 🗂️ Source layout
 
-**10 Gradle modules** (per `settings.gradle`):
-
-```
-Shizako/
-├── manager/          Android app (Kotlin, ~32k lines — ~82% of the repo)
-├── server/           Privileged server process (Java, runs as shell / root)
-├── starter/          Service starter (launches the server process)
-├── shell/            Builds rish_shizuku.dex (`ShizukuShellLoader`), bundled into the APK
-├── common/           Shared utilities (BuildUtils / OsUtils)
-├── api/              Vendored Shizuku-API (MIT) — contains 6 submodules:
-│   ├── aidl/           AIDL interface definitions
-│   ├── shared/         Constants shared by client and server
-│   ├── api/            Client library (rikka.shizuku.Shizuku)
-│   ├── provider/       Client-side ShizukuProvider
-│   ├── server-shared/  Shared server-side base classes
-│   └── rish/           Native part of the rish CLI tool
-├── hidden-api-stub/  Compile-time hidden-API stubs
-└── docs/             Documentation and artwork (the website is generated from here)
-```
-
-> The 6 modules inside `api/` have their `projectDir` rewritten to `api/<name>` in
-> `settings.gradle`, which is why their directory names don't appear at the top level.
+10 Gradle modules (see `settings.gradle`). `manager/` is the app (~50k lines, ~85%), `server/` is the privileged process (Java), `starter/` launches it, `shell/` builds the rish dex, `api/` vendors Shizuku-API (MIT), `docs/` powers the website.
 
 ---
 
 ## ❓ FAQ
 
-**Do I need root?**
-No. Wireless debugging or USB is enough; root simply adds more options.
+**Q: Does it need root?**
+A: No. Wireless debugging or USB ADB is enough; root is optional.
 
-**How does this relate to Shizuku?**
-It is compatible with the Shizuku-API ecosystem — apps built on the official SDK connect without changes. Per the upstream license it ships its own package and permission names and claims no upstream authority, so it can coexist with the official Shizuku; on top of that it adds Dhizuku compatibility, one-tap injection and more.
+**Q: Why is this release called zako4?**
+A: The changes are bigger than any previous release (performance + backup/restore + installer + automation), so we bumped the major version rather than calling it 3.20 (versionCode 320 → 400).
 
-**Can it coexist with the official Shizuku?**
-Yes. Shizako's provider declares only its own authority, so it does not clash with the official Shizuku. Install both and authorise each separately.
+**Q: How is this related to Shizuku?**
+A: It is API-compatible with the Shizuku ecosystem. Per upstream licensing, it uses its own package/permission names and can coexist with official Shizuku.
 
-**Is granting privileges to apps safe?**
-Every app requires your explicit approval on first connect; the allowlist is local and revocable, and Dhizuku privilege forwarding stays inside the Shizako process.
+**Q: Does backup touch `/data/data`?**
+A: No. Only external data (`/sdcard/Android/data`, `/sdcard/Android/obb`).
 
-**Which Android versions are supported?**
-Android 7.0+; wireless debugging activation requires Android 11+.
+**Q: How do third-party apps use the storage proxy?**
+A: Regular Shizuku authorisation **plus** the per-app switch under "App data backup & restore → Third-party"; otherwise calls are rejected and audited.
 
-**The pairing dialog is stuck on "Searching for pairing service" and I cannot enter a port?**
-Automatic discovery relies on mDNS multicast. With a VPN enabled on GrapheneOS the multicast never reaches the app, and some Huawei / HarmonyOS devices block it as well — discovery simply cannot succeed there. Since zako3.14 the port field in the pairing dialog is **always visible and editable**: read the **pairing port** from "Developer options → Wireless debugging → Pair device with pairing code" and type it in together with the pairing code. If adbd already listens on a fixed port (5555, for example), you can also use "Connect to a port manually" on the activation page and skip pairing entirely.
+**Q: What exactly was optimised?**
+A: Baseline Profile now ships, app-list icons hit a real cache, list measuring is cheaper, and background wake-ups were reduced (JobScheduler update checks, adaptive heartbeat, 90s keep-alive). See the table at the top.
 
-**Play Protect says "This app may be harmful" when I install or update it. Is it malware?**
-No. Shizako is a sideloaded app that can download and install APKs, launch a privileged process via `app_process`, and act as Device Owner — exactly the shape Play Protect's heuristics are trained to distrust in Shizuku-class tools. The verdict is made on Google's side and cannot be turned off from code. To verify your copy: ① download only from [Releases](https://github.com/cr1437/Shizako/releases) and check the certificate SHA-256 with `apksigner verify --print-certs <apk>` (it must be `515baf0c…9f9c8a`); ② if you installed an Actions artefact (debug-signed) or a build of unknown origin, switch to the official signed release; ③ if the checks pass, tap "More details → Keep anyway" in the Play Protect prompt, or turn off "Scan apps" under Settings → Google → Security → Play Protect (this weakens device-wide protection and is not recommended long-term). The verdict belongs to Google — a false-positive appeal can be filed following their [developer guidance](https://developers.google.com/android/play-protect/warning-dev-guidance), but the process is one-way with no guaranteed outcome or timeline.
+**Q: Can it coexist with official Shizuku?**
+A: Yes — different authority, different package; install both and authorise each.
 
-**Why does the APK request so many "dangerous" permissions?**
-All are required by the features: `QUERY_ALL_PACKAGES` renders the name and icon of authorised apps, `WRITE_SECURE_SETTINGS` toggles wireless debugging and manages accessibility services for you, and DeviceAdmin is Dhizuku mode itself. Nothing is used silently in the background, and the allowlist is local and revocable.
+**Q: Is authorising apps safe?**
+A: Every app needs your explicit approval, the allow-list is local and revocable; Dhizuku forwarding happens inside Shizako; the storage proxy needs a second, separate grant and is fully audited.
 
-**Why is she so cute?**
-Because the author raises her like a daughter (confirmed).
+**Q: Which Android versions are supported?**
+A: Android 7.0+; wireless-debugging activation needs Android 11+.
+
+**Q: Play Protect says "harmful app" — is it malware?**
+A: No. It is a heuristic verdict on sideloaded privileged tools, made by Google and impossible to disable from code. Verify the certificate (`515baf0c…9f9c8a`) and keep the APK if it matches; you can also submit a false-positive appeal (no guaranteed outcome).
+
+**Q: Why does it request so many "dangerous" permissions?**
+A: They are required for real features: `QUERY_ALL_PACKAGES` to show authorised apps, `WRITE_SECURE_SETTINGS` to toggle wireless debugging and accessibility, DeviceAdmin for Dhizuku mode, `STORAGE_PROXY` as the capability marker for the storage proxy. Nothing is used silently; the allow-list is local and revocable.
 
 ---
 
 ## 💗 Credits
 
-- [RikkaApps/Shizuku](https://github.com/RikkaApps/Shizuku) and its contributors — Shizako's core capabilities come from here
-- [RikkaApps/Shizuku-API](https://github.com/RikkaApps/Shizuku-API) — client communication library
-- Everyone who stars Shizako
+- [RikkaApps/Shizuku](https://github.com/RikkaApps/Shizuku) and its contributors — the core capability comes from here
+- [RikkaApps/Shizuku-API](https://github.com/RikkaApps/Shizuku-API) — the client library
+- Everyone who starred Shizako
 
-## 📬 Contact
+## 📬 Feedback
 
 | Channel | Link |
-|---------|------|
+|------|------|
 | GitHub Issues | [Issues](https://github.com/cr1437/Shizako/issues) |
 | QQ (feedback) | [891276089](https://qm.qq.com/cgi-bin/qm/qr?k=891276089) |
-| QQ group | [1104445003](https://qm.qq.com/cgi-bin/qm/qr?k=1104445003) |
+| QQ (chat) | [1104445003](https://qm.qq.com/cgi-bin/qm/qr?k=1104445003) |
 
 ## 📄 License
 
-Licensed under the upstream [Apache License 2.0](LICENSE); see also [NOTICE](NOTICE).
-
-- Original copyright belongs to RikkaApps; modifications copyright 初然
-- Does not use the upstream `Shizuku` name, the `moe.shizuku.privileged.api` package name, `moe.shizuku.manager.permission.*` permissions, the upstream provider authority, or upstream icons
-- The `api/` directory keeps its own MIT License
+Licensed under the upstream [Apache License 2.0](LICENSE); see also [NOTICE](NOTICE). The `api/` directory keeps its own MIT license.
 
 ### Name and artwork (brand)
 
-Following the same form as the upstream addendum to Apache-2.0 §6, this project states:
+Following the upstream additional terms under Apache-2.0 §6, this project states:
 
-- You are **FORBIDDEN** to use `Shizako` (including `Shizako+`, `Shizako Plus`, `Shizako Pro` or any
-  other confusingly similar variant) as the name of a third-party application, or as part of its
-  package name / application id / permission names;
-- You are **FORBIDDEN** to use this project's mascot artwork or launcher icons
-  (`manager/src/main/res/mipmap*/ic_launcher*.png` and all related assets) for anything other
-  than displaying Shizako itself;
-- You are **FORBIDDEN** to distribute any non-official build under the application id
-  `com.churan.shizako`.
+- **Do not** use `Shizako` (or confusing variants such as `Shizako+`, `Shizako Plus`, `Shizako Pro`) as the name of a third-party app, or as part of its package name / application id / permission names;
+- **Do not** use the mascot artwork or the app icons (`manager/src/main/res/mipmap*/ic_launcher*.png`) to represent anything other than Shizako;
+- **Do not** distribute non-official builds under the application id `com.churan.shizako`.
 
-In short: fork the code all you like (you are welcome to) — **change the name, the icons and the
-package name**. That keeps you compliant with Apache-2.0 and lets users tell official builds apart,
-which is the single most effective anti-counterfeiting measure there is.
+In short: fork the code freely, but **change the name, icon and package name**. This keeps the project compliant and makes official builds easy to tell apart.
 
 ---
 
 <div align="center">
 
-> ⭐ **Enjoying Shizako? Leave a star** — every star is cat food for her `(ฅ'ω'ฅ)`
+> ⭐ **Like Shizako? Leave a star** — every star is cat food `(ฅ'ω'ฅ)`
 >
 > [Feed her a star →](https://github.com/cr1437/Shizako)
 

@@ -3,6 +3,7 @@ package moe.shizuku.manager.receiver
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -204,12 +205,16 @@ class TaskerReceiver : BroadcastReceiver() {
 
         val nm = context.getSystemService(Context.NOTIFICATION_SERVICE) as android.app.NotificationManager
         val channelId = "shizako_update"
-        val channel = android.app.NotificationChannel(
-            channelId,
-            context.getString(R.string.notify_install_channel),
-            android.app.NotificationManager.IMPORTANCE_HIGH
-        )
-        nm.createNotificationChannel(channel)
+        // NotificationChannel / 带 channel 的 Builder 都是 API 26 才有的，
+        // Android 7.x 上直接调用会 NoSuchMethodError（lint NewApi）。
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = android.app.NotificationChannel(
+                channelId,
+                context.getString(R.string.notify_install_channel),
+                android.app.NotificationManager.IMPORTANCE_HIGH
+            )
+            nm.createNotificationChannel(channel)
+        }
 
         val uri = androidx.core.content.FileProvider.getUriForFile(
             context,
@@ -226,7 +231,13 @@ class TaskerReceiver : BroadcastReceiver() {
             android.app.PendingIntent.FLAG_UPDATE_CURRENT or android.app.PendingIntent.FLAG_IMMUTABLE
         )
 
-        val notification = android.app.Notification.Builder(context, channelId)
+        val builder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            android.app.Notification.Builder(context, channelId)
+        } else {
+            @Suppress("DEPRECATION")
+            android.app.Notification.Builder(context)
+        }
+        val notification = builder
             .setSmallIcon(R.mipmap.ic_launcher)
             .setContentTitle(context.getString(R.string.notify_install_title))
             .setContentText(context.getString(R.string.notify_install_text, apk.name))

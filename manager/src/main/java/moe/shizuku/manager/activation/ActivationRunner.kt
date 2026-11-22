@@ -52,7 +52,11 @@ object ActivationRunner {
     ) {
         fun openStdin(): OutputStream {
             val fd = remote.outputStream ?: error("process has no stdin pipe")
-            return ParcelFileDescriptor.AutoCloseOutputStream(fd.dup())
+            // 不要 `fd.dup()`：`AutoCloseOutputStream` 关掉的是传进来的那个 fd，
+            // 而管道要 **所有** 写端都关掉子进程才会收到 EOF。之前多 dup 一份再只关复制品，
+            // 结果是 `cat > file` 永远等不到 EOF —— 文件字节已经落盘，进程却一直挂着，
+            // 只能等超时（安装器上表现为「写会话失败」，Rish 安装里表现为白等一轮超时）。
+            return ParcelFileDescriptor.AutoCloseOutputStream(fd)
         }
 
         fun openStdout(): InputStream {

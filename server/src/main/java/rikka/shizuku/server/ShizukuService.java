@@ -48,6 +48,7 @@ import kotlin.collections.ArraysKt;
 import moe.shizuku.api.BinderContainer;
 import moe.shizuku.common.util.BuildUtils;
 import moe.shizuku.common.util.OsUtils;
+import moe.shizuku.server.IStorageProxy;
 import moe.shizuku.server.IShizukuApplication;
 import rikka.hidden.compat.ActivityManagerApis;
 import rikka.hidden.compat.DeviceIdleControllerApis;
@@ -58,6 +59,7 @@ import rikka.parcelablelist.ParcelableListSlice;
 import rikka.rish.RishConfig;
 import rikka.shizuku.ShizukuApiConstants;
 import rikka.shizuku.server.api.IContentProviderUtils;
+import rikka.shizuku.server.storage.StorageProxyImpl;
 import rikka.shizuku.server.util.HandlerUtil;
 import rikka.shizuku.server.util.UserHandleCompat;
 
@@ -106,6 +108,12 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
     private final ShizukuClientManager clientManager;
     private final ShizukuConfigManager configManager;
     private final int managerAppId;
+
+    /**
+     * 特权存储代理（规格 F1）。延迟到头一次 getStorageProxy() 才建：大多数会话根本不用
+     * 这个功能，没必要在启动路径上多建几个对象。
+     */
+    private volatile StorageProxyImpl storageProxy;
 
     public ShizukuService() {
         super();
@@ -158,6 +166,36 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
     @Override
     public ShizukuConfigManager onCreateConfigManager() {
         return new ShizukuConfigManager();
+    }
+
+    // ---------------- 存储代理（规格 F1/F2/F5） ----------------
+
+    @Override
+    protected IStorageProxy getStorageProxyImpl() {
+        StorageProxyImpl proxy = storageProxy;
+        if (proxy == null) {
+            synchronized (this) {
+                proxy = storageProxy;
+                if (proxy == null) {
+                    proxy = new StorageProxyImpl(this);
+                    storageProxy = proxy;
+                }
+            }
+        }
+        return proxy;
+    }
+
+    /**
+     * 「存储代理」能力位（规格 F5）。管理器自己永远放行（它就是授权 UI）；
+     * 第三方应用必须在通行证里被单独勾选 {@link ConfigManager#FLAG_STORAGE_PROXY}。
+     */
+    @Override
+    public boolean checkStorageProxyPermission(int uid) {
+        if (UserHandleCompat.getAppId(uid) == managerAppId) {
+            return true;
+        }
+        ConfigPackageEntry entry = configManager.find(uid);
+        return entry != null && entry.hasFlag(ConfigManager.FLAG_STORAGE_PROXY);
     }
 
     @Override
@@ -225,6 +263,36 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
      * server 与 manager 是两个进程/身份，用哨兵文件通信最省事（无需 IPC）。
      */
     private void auditCall(String func, int uid, int pid, boolean allowed) {
+        long now = System.currentTimeMillis();
+
+        synchronized (ShizukuService.class) {
+            // 1 秒内同 uid 同 API 去重（不再为去重拼 key 字符串）
+            if (uid == lastAuditUid && lastAuditFunc != null && lastAuditFunc.equals(func)
+                    && now - lastAuditTime < 1000L) {
+                return;
+            }
+            lastAuditUid = uid;
+            lastAuditFunc = func;
+            lastAuditTime = now;
+        }
+
+        writeAuditLine(func, uid, pid, allowed, null);
+    }
+
+    /**
+     * 带明细列的审计（存储代理等需要记「操作 + 目标 + 结果」的 API，规格 F5）。
+     *
+     * 与 {@link #auditCall} 共用同一个文件 / 轮转 / 开关；前 5 列格式不变，第 6 列追加
+     * 分号分隔的明细（与批量功能的 ApiAuditLog 同一套约定），日志页不需要改解析：
+     * `MM-dd HH:mm:ss,uid,pid,func,allow,src=storage;op=…;target=…#hash;result=…`
+     *
+     * **不做 1 秒去重**：一次操作只调一次这里，去重反而会把「备份成功」这条记录吞掉。
+     */
+    public static void auditDetail(String func, String detail) {
+        writeAuditLine(func, Binder.getCallingUid(), Binder.getCallingPid(), true, detail);
+    }
+
+    private static void writeAuditLine(String func, int uid, int pid, boolean allowed, @Nullable String detail) {
         try {
             if (new java.io.File(AUDIT_LOG_OFF_PATH).exists()) {
                 return; // 用户在设置里关掉了日志
@@ -232,20 +300,19 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
             long now = System.currentTimeMillis();
 
             synchronized (ShizukuService.class) {
-                // 1 秒内同 uid 同 API 去重（不再为去重拼 key 字符串）
-                if (uid == lastAuditUid && lastAuditFunc != null && lastAuditFunc.equals(func)
-                        && now - lastAuditTime < 1000L) {
-                    return;
-                }
-                lastAuditUid = uid;
-                lastAuditFunc = func;
-                lastAuditTime = now;
-
                 String stamp;
                 synchronized (AUDIT_STAMP) {
                     stamp = AUDIT_STAMP.format(new java.util.Date(now));
                 }
-                String line = stamp + "," + uid + "," + pid + "," + func + "," + (allowed ? "allow" : "deny") + "\n";
+
+                StringBuilder sb = new StringBuilder(128);
+                sb.append(stamp).append(',').append(uid).append(',').append(pid).append(',')
+                        .append(func).append(',').append(allowed ? "allow" : "deny");
+                if (detail != null && !detail.isEmpty()) {
+                    // 换行会破坏「一行一条」，统一压成空格（时间戳里没有换行，安全）
+                    sb.append(',').append(detail.replace('\n', ' ').replace('\r', ' '));
+                }
+                String line = sb.append('\n').toString();
                 byte[] bytes = line.getBytes(java.nio.charset.StandardCharsets.UTF_8);
 
                 try {
@@ -399,6 +466,16 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
             return;
         }
 
+        // 管理器进程可能已被系统回收：这个 Intent 会把它**冷启动**，而冷启动出来的进程
+        // 手里没有 binder（只有服务启动时推过一次）。这时弹窗照样能显示，但点「确定」后
+        // dispatchPermissionConfirmationResult 没有 binder、异常被吞，用户看到的是
+        // 「点了确定没授权，回管理器里手动授一次才生效」。先把 binder 推过去再起弹窗。
+        try {
+            sendBinderToManager();
+        } catch (Throwable tr) {
+            LOGGER.w("showPermissionConfirmation: sendBinderToManager failed: %s", tr);
+        }
+
         Intent intent = new Intent(ServerConstants.REQUEST_PERMISSION_ACTION)
                 .setPackage(MANAGER_APPLICATION_ID)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NEW_DOCUMENT)
@@ -472,15 +549,34 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
 
             for (String packageName : PackageManagerApis.getPackagesForUidNoThrow(requestUid)) {
                 PackageInfo pi = PackageManagerApis.getPackageInfoNoThrow(packageName, PackageManager.GET_PERMISSIONS, userId);
-                if (pi == null || pi.requestedPermissions == null || !ArraysKt.contains(pi.requestedPermissions, PERMISSION)) {
+                if (pi == null || pi.requestedPermissions == null) {
                     continue;
                 }
 
-                int deviceId = 0;//Context.DEVICE_ID_DEFAULT
-                if (allowed) {
-                    PermissionManagerApis.grantRuntimePermission(packageName, PERMISSION, userId);
+                // 必须授予客户端**实际声明**的那个权限名：用官方 dev.rikka.shizuku:api 构建的应用
+                // 只声明上游包名 moe.shizuku.manager.permission.API_V23，只按我们自己的
+                // com.churan.shizako.permission.API_V23 去 grant 会被系统忽略 —— 用户看到的就是
+                // 「在授权弹窗点确定后客户端仍然没有权限，回管理器手动授一次才生效」。
+                // （updateFlagsForUid 里早就有这段回退，这里是授权弹窗那条路径漏了。）
+                String permission;
+                if (ArraysKt.contains(pi.requestedPermissions, PERMISSION)) {
+                    permission = PERMISSION;
+                } else if (ArraysKt.contains(pi.requestedPermissions, PERMISSION_UPSTREAM_API)) {
+                    permission = PERMISSION_UPSTREAM_API;
                 } else {
-                    PermissionManagerApis.revokeRuntimePermission(packageName, PERMISSION, userId);
+                    continue;
+                }
+
+                try {
+                    if (allowed) {
+                        PermissionManagerApis.grantRuntimePermission(packageName, permission, userId);
+                    } else {
+                        PermissionManagerApis.revokeRuntimePermission(packageName, permission, userId);
+                    }
+                    LOGGER.i("dispatchPermissionConfirmationResult: %s runtime permission %s for %s",
+                            allowed ? "grant" : "revoke", permission, packageName);
+                } catch (Throwable tr) {
+                    LOGGER.w("dispatchPermissionConfirmationResult: update %s failed: %s", packageName, tr);
                 }
             }
         }
@@ -591,6 +687,18 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
                 }
 
                 // TODO kill user service using
+            }
+        }
+
+        boolean proxyTouched = (mask & ConfigManager.FLAG_STORAGE_PROXY) != 0;
+        if (proxyTouched) {
+            boolean proxyEnabled = (value & ConfigManager.FLAG_STORAGE_PROXY) != 0;
+            LOGGER.i("updateFlagsForUid: storage proxy %s for uid %d",
+                    proxyEnabled ? "grant" : "revoke", uid);
+            // 只写能力位时也要把「这个 uid 下算哪些包」带进配置：getApplications 按
+            // packages 匹配，记录写成空的会让应用从应用管理列表里消失。
+            if (packages.isEmpty()) {
+                packages.addAll(PackageManagerApis.getPackagesForUidNoThrow(uid));
             }
         }
 

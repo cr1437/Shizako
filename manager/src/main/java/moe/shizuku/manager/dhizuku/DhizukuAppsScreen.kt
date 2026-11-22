@@ -3,6 +3,7 @@ package moe.shizuku.manager.dhizuku
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,7 +15,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -27,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -73,6 +77,13 @@ fun DhizukuAppsScreen(
     onViewCommand: () -> Unit,
     onClearDeviceOwner: () -> Unit,
     onCollapsedChange: (Boolean) -> Unit,
+    // F1：多选（与 Shizako 页独立维护，状态由 AppsFragment 持有）
+    selectionMode: Boolean = false,
+    selectedUids: Set<Int> = emptySet(),
+    onEnterSelection: () -> Unit = {},
+    onToggleSelection: (DhizukuApp) -> Unit = {},
+    /** F6：直接进「权限模板」（预设模板就在里面），和右上角菜单同一个入口 */
+    onOpenTemplates: () -> Unit = {},
 ) {
     HintPage(listState = listState, onCollapsedChange = onCollapsedChange) {
         item {
@@ -142,10 +153,34 @@ fun DhizukuAppsScreen(
 
         item {
             Box(modifier = Modifier.itemEntrance(2)) {
-                HintSectionTitle(
-                    palette = palette,
-                    text = stringResource(R.string.dhizuku_manage_title),
-                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Box(modifier = Modifier.weight(1f)) {
+                        HintSectionTitle(
+                            palette = palette,
+                            text = stringResource(R.string.dhizuku_manage_title),
+                        )
+                    }
+                    // F6：模板入口（三个预设都在里面）。放在多选旁边，因为「先选模板再套用」
+                    // 是在这一页操作 —— 之前只有右上角 ⋮ 菜单里能进，用户找不到预设。
+                    if (!selectionMode) {
+                        TextButton(onClick = onOpenTemplates) {
+                            Text(
+                                text = stringResource(R.string.template_title),
+                                style = MaterialTheme.typography.labelLarge,
+                                color = palette.accent,
+                            )
+                        }
+                    }
+                    // F1：进入多选（长按卡片同样可以进入）
+                    if (!selectionMode && apps.isNotEmpty()) {
+                        TextButton(onClick = onEnterSelection) {
+                            Text(
+                                text = stringResource(R.string.batch_title_multi_select),
+                                style = MaterialTheme.typography.labelLarge,
+                            )
+                        }
+                    }
+                }
             }
         }
 
@@ -169,8 +204,27 @@ fun DhizukuAppsScreen(
         } else {
             items(apps, key = { it.uid }) { app ->
                 Box(modifier = Modifier.itemEntrance(3)) {
-                    HintCard(palette = palette) {
+                    HintCard(
+                        palette = palette,
+                        modifier = Modifier.pointerInput(app.uid, selectionMode) {
+                            detectTapGestures(
+                                onTap = { if (selectionMode) onToggleSelection(app) },
+                                // 长按：未进入多选则先进入，再选中该行
+                                onLongPress = {
+                                    if (!selectionMode) onEnterSelection()
+                                    onToggleSelection(app)
+                                },
+                            )
+                        },
+                    ) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
+                            if (selectionMode) {
+                                Checkbox(
+                                    checked = app.uid in selectedUids,
+                                    onCheckedChange = null,
+                                )
+                                Spacer(Modifier.width(4.dp))
+                            }
                             DhizukuIcon(app)
                             Spacer(Modifier.width(12.dp))
                             Column(modifier = Modifier.weight(1f)) {
@@ -187,11 +241,14 @@ fun DhizukuAppsScreen(
                                 )
                             }
                         }
-                        HintSecondaryButton(
-                            palette = palette,
-                            text = stringResource(R.string.dhizuku_revoke_action),
-                            onClick = { onRevoke(app) },
-                        )
+                        // 多选态下收起「撤销」按钮：这一下点哪儿都只改选择，避免误触
+                        if (!selectionMode) {
+                            HintSecondaryButton(
+                                palette = palette,
+                                text = stringResource(R.string.dhizuku_revoke_action),
+                                onClick = { onRevoke(app) },
+                            )
+                        }
                     }
                 }
             }

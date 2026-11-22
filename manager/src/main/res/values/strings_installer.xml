@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 「用其他应用打开」里的入口名（微信/QQ 点 apk.1 文件时显示） -->
+    <string name="apk1_installer_label">Install with Shizako</string>
+    <string name="apk1_installing">Installing %1$s…</string>
+    <string name="apk1_installed">Installed %1$s</string>
+    <string name="apk1_install_failed">Install failed: %1$s</string>
+    <string name="apk1_not_apk">This file is not an APK (apk / apk1 / apk.1).</string>
+    <string name="apk1_read_failed">Could not read the file: %1$s</string>
+    <string name="apk1_service_missing">Shizako service is not running; opening the system installer.</string>
+
+    <!-- 设置 →「安装」分区（F1/F3/F5 的管理入口） -->
+    <string name="settings_install">Installation</string>
+    <string name="settings_install_summary">Trusted sources · batch · history</string>
+    <string name="installer_settings_section">Installation</string>
+    <string name="installer_settings_note">Apps outside the trusted list must ask you before a silent install. Every request and its result is written to the API call log.</string>
+    <string name="installer_settings_trusted">%1$d trusted sources</string>
+    <string name="installer_settings_unfinished">%1$d unfinished items</string>
+    <string name="installer_settings_history">%1$d records</string>
+
+    <!-- 信任列表 -->
+    <string name="installer_trust_title">Trusted install sources</string>
+    <string name="installer_trust_note">Only apps in this list can install without asking. UID and signature are re-checked on every request.</string>
+    <string name="installer_denied_default_policy">Default policy: deny</string>
+    <string name="installer_trust_add_section">Add a source</string>
+    <string name="installer_trust_loading">Loading…</string>
+    <string name="installer_trust_add_authorized">Add from authorized apps</string>
+    <string name="installer_trust_need_service">Shizako service is not running; start it to list authorized apps.</string>
+    <string name="installer_trust_add_manual">Add by package name</string>
+    <string name="installer_trust_count">%1$d trusted</string>
+    <string name="installer_trust_empty">No trusted sources yet. Every external install request will ask first.</string>
+    <string name="installer_trust_remove">Remove</string>
+    <string name="installer_trust_remove_message">Remove %1$s from the trusted list?</string>
+    <string name="installer_trust_detail">uid %1$d · signature %2$s</string>
+    <string name="installer_trust_times">Added %1$s · last used %2$s</string>
+    <string name="installer_trust_never">never</string>
+    <string name="installer_trust_authorized_empty">No authorized apps found.</string>
+    <string name="installer_trust_package_hint">Package name</string>
+    <string name="installer_trust_add_confirm">Add</string>
+    <string name="installer_trust_confirm_title">Add to trusted sources</string>
+    <string name="installer_trust_confirm_message">Allow %1$s (%2$s) to install silently?\nSignature: %3$s</string>
+    <string name="installer_trust_cannot_resolve">Cannot read this package (not installed, or signature unavailable).</string>
+    <string name="installer_trust_uid_changed">UID changed since it was listed; please add it again.</string>
+    <string name="installer_close">Close</string>
+
+    <!-- 安装确认框（F2） -->
+    <string name="installer_confirm_title">Install request</string>
+    <string name="installer_confirm_message">%1$s wants to install %2$s.</string>
+    <string name="installer_confirm_caller">Requested by</string>
+    <string name="installer_confirm_format">Format</string>
+    <string name="installer_confirm_size">Size</string>
+    <string name="installer_confirm_hint">Allow once installs this file only. Adding to trusted sources lets this app install silently from now on.</string>
+    <string name="installer_confirm_allow_once">Allow once</string>
+    <string name="installer_confirm_trust">Always allow</string>
+    <string name="installer_confirm_deny">Deny</string>
+    <string name="installer_denied_by_user">Install request denied.</string>
+    <string name="installer_trust_failed">Could not add to trusted sources.</string>
+    <string name="installer_denied_no_caller">Install request denied: caller unknown.</string>
+    <string name="installer_denied_pkg_mismatch">Install request denied: package does not match the trusted entry.</string>
+    <string name="installer_denied_uid_mismatch">Install request denied: UID mismatch (the app may have been reinstalled).</string>
+    <string name="installer_denied_sig_mismatch">Install request denied: signature mismatch.</string>
+    <string name="installer_denied_sig_unavailable">Install request denied: signature unavailable.</string>
+    <string name="installer_denied_generic">Install request denied.</string>
+    <string name="installer_batch_count">%1$d files</string>
+
+    <!-- 批量安装（F3/F4） -->
+    <string name="installer_batch_title">Batch install</string>
+    <string name="installer_batch_summary">Queue, retry and XAPK/APKS</string>
+    <string name="installer_batch_note">Files are installed one by one; a failure does not stop the queue.</string>
+    <string name="installer_batch_note_secondary">Only this screen can start the queue.</string>
+    <string name="installer_batch_progress">Progress</string>
+    <string name="installer_batch_progress_detail">%1$d / %2$d finished</string>
+    <string name="installer_batch_current">Installing %1$s</string>
+    <string name="installer_batch_current_stage">Installing %1$s (%2$d/%3$d splits)</string>
+    <string name="installer_batch_start">Start</string>
+    <string name="installer_batch_pause">Pause</string>
+    <string name="installer_batch_add">Add files</string>
+    <string name="installer_batch_cancel">Cancel queue</string>
+    <string name="installer_batch_clear_finished">Clear finished</string>
+    <string name="installer_batch_discard">Discard queue</string>
+    <string name="installer_batch_list">%1$d items</string>
+    <string name="installer_batch_empty">No files yet. Tap Add files to pick APK / XAPK / APKS.</string>
+    <string name="installer_batch_retry">Retry</string>
+    <string name="installer_batch_move_up">Up</string>
+    <string name="installer_batch_move_down">Down</string>
+    <string name="installer_batch_remove">Remove</string>
+    <string name="installer_batch_preloaded">%1$d files added to the queue. Tap Start to install.</string>
+    <string name="installer_queue_nothing_added">Nothing added (already in the queue?)</string>
+    <string name="installer_status_waiting">Waiting</string>
+    <string name="installer_status_installing">Installing</string>
+    <string name="installer_status_success">Success</string>
+    <string name="installer_status_failed">Failed</string>
+    <string name="installer_status_cancelled">Cancelled</string>
+
+    <!-- 安装历史（F5） -->
+    <string name="installer_history_title">Install history</string>
+    <string name="installer_history_note">The latest %1$d records are kept.</string>
+    <string name="installer_history_filter_result">Result</string>
+    <string name="installer_history_filter_source">Source</string>
+    <string name="installer_history_filter_time">Time</string>
+    <string name="installer_filter_all">All</string>
+    <string name="installer_time_24h">24 h</string>
+    <string name="installer_time_7d">7 days</string>
+    <string name="installer_time_30d">30 days</string>
+    <string name="installer_history_clear">Clear history</string>
+    <string name="installer_history_clear_message">Delete all install records?</string>
+    <string name="installer_history_count">%1$d records</string>
+    <string name="installer_history_empty">No records match the filters.</string>
+    <string name="installer_history_meta">%1$s · %2$s · %3$s</string>
+    <string name="installer_history_duration">Took %1$d ms</string>
+    <string name="installer_history_from">Requested by %1$s</string>
+    <string name="installer_source_ui">This app</string>
+    <string name="installer_source_trusted">Trusted app</string>
+    <string name="installer_source_user_approved">Approved by you</string>
+    <string name="installer_source_system">System</string>
+
+    <!-- 失败原因（InstallError） -->
+    <string name="installer_err_no_service">Shizako service is not running</string>
+    <string name="installer_err_no_space">Not enough storage</string>
+    <string name="installer_err_unknown_archive">Unsupported or corrupted package</string>
+    <string name="installer_err_missing_base">Base APK missing in the archive</string>
+    <string name="installer_err_signature_mismatch">Split signatures do not match</string>
+    <string name="installer_err_io">Could not read the file</string>
+    <string name="installer_err_session_create">Could not create the install session</string>
+    <string name="installer_err_session_write">Could not write to the install session</string>
+    <string name="installer_err_session_commit">The install session failed</string>
+    <string name="installer_err_rejected">The system installer rejected the package</string>
+    <string name="installer_err_cancelled">Cancelled</string>
+    <string name="installer_err_unknown">Unknown error</string>
+    <string name="installer_obb_not_installed">OBB not installed: %1$s</string>
+</resources>

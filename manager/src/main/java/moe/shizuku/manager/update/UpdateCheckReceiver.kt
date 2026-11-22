@@ -7,11 +7,13 @@ import moe.shizuku.manager.ShizukuSettings
 import moe.shizuku.manager.fdroid.FdroidBuild
 
 /**
- * Handles the periodic update-check alarm and re-schedules it after a reboot.
+ * 旧版「更新检查」AlarmManager 闹钟的接收器，以及开机兜底。
  *
- * Registered actions:
- *   com.churan.shizako.action.UPDATE_CHECK  — perform the actual check, then queue the next
- *   android.intent.action.BOOT_COMPLETED    — re-schedule the alarm
+ * - `com.churan.shizako.action.UPDATE_CHECK`：**只用于兼容升级前已经排下的闹钟**。
+ *   现在周期检查已改用 JobScheduler（[UpdateCheckJobService]），这里收到旧闹钟时
+ *   跑一次检查，然后调 [AutoUpdateScheduler.schedule]（它会把旧闹钟取消、排上新任务）。
+ * - `BOOT_COMPLETED`：任务本身是 `setPersisted(true)`，理论上系统会自己恢复；
+ *   这里再排一次当作兜底（幂等，重复 schedule 只会覆盖同一个 job id）。
  */
 class UpdateCheckReceiver : BroadcastReceiver() {
 

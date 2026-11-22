@@ -15,6 +15,7 @@ import android.os.Build
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
+import android.os.PowerManager
 import android.provider.Settings
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
@@ -36,7 +37,8 @@ import moe.shizuku.manager.ktx.logi
  * 三个触发点（双保险）：
  *  1. 挂在 ENABLED_ACCESSIBILITY_SERVICES 上的 [ContentObserver] —— 系统或用户改动列表时触发；
  *  2. 亮屏 / 解锁广播 —— 无障碍服务最常在后台被杀，亮屏是廉价的复查时机；
- *  3. 60 秒心跳 —— 兜住那些不产生任何广播的改动。
+ *  3. 心跳 —— 兜住那些不产生任何广播的改动；间隔随状态自适应（亮屏 1 分钟 /
+ *     息屏 5 分钟 / 省电模式 10 分钟），锁屏时不再每分钟醒一次。
  *
  * 检查本身很便宜：读一次启用列表、和固定列表比对，只有真的缺了才通过 Settings 写回去。
  */
@@ -142,9 +144,24 @@ class AccessibilityDaemonService : Service() {
     private fun startHeartbeat() {
         heartbeatJob = serviceScope.launch {
             while (true) {
-                delay(HEARTBEAT_INTERVAL_MS)
+                delay(nextHeartbeatDelayMs())
                 scheduleCheck(delayMs = 0L)
             }
+        }
+    }
+
+    /**
+     * 心跳间隔按屏幕/省电状态自适应，避免锁屏后还每分钟醒一次：
+     * 亮屏 1 分钟、息屏 5 分钟、省电模式 10 分钟。
+     * 真正的变更由 [observer] 与亮屏广播即时兜底，心跳只负责「防漏」。
+     */
+    private fun nextHeartbeatDelayMs(): Long {
+        val pm = getSystemService(Context.POWER_SERVICE) as? PowerManager
+            ?: return HEARTBEAT_INTERVAL_MS
+        return when {
+            pm.isPowerSaveMode -> HEARTBEAT_INTERVAL_POWER_SAVE_MS
+            pm.isInteractive -> HEARTBEAT_INTERVAL_MS
+            else -> HEARTBEAT_INTERVAL_IDLE_MS
         }
     }
 
@@ -219,7 +236,12 @@ class AccessibilityDaemonService : Service() {
     companion object {
         private const val CHANNEL_ID = "accessibility_keep_alive"
         private const val NOTIFICATION_ID = 1006
+        /** 亮屏时的心跳间隔：防漏复查一次 */
         private const val HEARTBEAT_INTERVAL_MS = 60_000L
+        /** 息屏后的心跳间隔：真实变更靠 ContentObserver / 亮屏广播兜底，这里只防漏 */
+        private const val HEARTBEAT_INTERVAL_IDLE_MS = 5 * 60_000L
+        /** 省电模式：再拉长到 10 分钟 */
+        private const val HEARTBEAT_INTERVAL_POWER_SAVE_MS = 10 * 60_000L
         private const val MIN_CHECK_INTERVAL_MS = 2_000L
         private var channelCreated = false
 

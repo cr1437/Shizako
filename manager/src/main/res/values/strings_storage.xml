@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 应用数据备份 / 恢复（F3/F4/F5） -->
+    <string name="storage_title">App data backup &amp; restore</string>
+    <string name="storage_mode_backup">Backup</string>
+    <string name="storage_mode_restore">Restore</string>
+    <string name="storage_mode_grant">Third-party</string>
+
+    <string name="storage_backup_note">Only external data is backed up: /sdcard/Android/data and /sdcard/Android/obb.</string>
+    <string name="storage_backup_note_secondary">A full /data/data backup is out of scope. Data is streamed straight into the folder you pick, with no temporary archive on the device.</string>
+    <string name="storage_directory_none">No folder selected</string>
+    <string name="storage_directory_selected">Folder: %1$s</string>
+    <string name="storage_action_pick_directory">Choose folder</string>
+    <string name="storage_action_start">Start backup</string>
+    <string name="storage_include_obb">Include OBB</string>
+    <string name="storage_include_apk">Also save APK</string>
+    <string name="storage_progress">Finished %1$d / %2$d</string>
+    <string name="storage_current">Current: %1$s</string>
+    <string name="storage_stage_label">stage: %1$s</string>
+    <string name="storage_stage_external">external data</string>
+    <string name="storage_stage_obb">OBB</string>
+    <string name="storage_stage_apk">APK</string>
+    <string name="storage_stage_meta">metadata</string>
+    <string name="storage_action_cancel">Cancel</string>
+    <string name="storage_action_clear">Clear finished</string>
+    <string name="storage_action_reset">Reset queue</string>
+    <string name="storage_tasks_title">Queue</string>
+    <string name="storage_apps_title">Apps (selected %1$d)</string>
+    <string name="storage_action_select_all">Select all</string>
+    <string name="storage_action_clear_selection">Clear selection</string>
+    <string name="storage_apps_loading">Loading apps…</string>
+    <string name="storage_apps_empty">No backupable apps</string>
+    <string name="storage_status_waiting">Waiting</string>
+    <string name="storage_status_running">Running</string>
+    <string name="storage_status_success">Done</string>
+    <string name="storage_status_failed">Failed</string>
+    <string name="storage_status_cancelled">Cancelled</string>
+    <string name="storage_need_directory">Choose a folder first</string>
+    <string name="storage_need_apps">Select at least one app</string>
+    <string name="storage_queue_busy">The queue is running</string>
+    <string name="storage_no_service">Shizako service is not running; activate it first</string>
+    <string name="storage_toast_error">Failed: %1$s</string>
+
+    <string name="storage_restore_note">Backups are matched by &lt;package&gt;.meta.json in the selected folder.</string>
+    <string name="storage_restore_note_secondary">Restoring overwrites the app external data and always asks for confirmation first.</string>
+    <string name="storage_restore_pick">Choose backup folder</string>
+    <string name="storage_action_refresh">Refresh</string>
+    <string name="storage_restore_running">Restoring…</string>
+    <string name="storage_restore_empty">No backup found here (looks for &lt;package&gt;.meta.json)</string>
+    <string name="storage_restore_item_detail">%1$s · external %2$s · OBB %3$s · APK %4$s</string>
+    <string name="storage_restore_action">Restore</string>
+    <string name="storage_restore_confirm_title">Confirm overwrite</string>
+    <string name="storage_restore_confirm_message">This will overwrite the external data of %1$s. Continue?</string>
+    <string name="storage_restore_version_warning">Backup version %1$s differs from the installed version %2$s; restored data may be incompatible.\n\n</string>
+    <string name="storage_restore_not_installed_title">App not installed</string>
+    <string name="storage_restore_not_installed_message">%1$s is not installed. Install it first, then restore.</string>
+    <string name="storage_restore_not_installed_no_download">Shizako never downloads APKs by itself.</string>
+    <string name="storage_restore_install_action">Install the backed-up APK</string>
+    <string name="storage_restore_success">Restored external data of %1$s</string>
+    <string name="storage_restore_failed">Restore failed: %1$s</string>
+    <string name="storage_restore_obb_failed">External data restored, OBB failed: %1$s</string>
+    <string name="storage_restore_no_data">This backup has no data files</string>
+
+    <string name="storage_grant_note">Third-party apps need both Shizuku authorization and the storage-proxy switch.</string>
+    <string name="storage_grant_note_secondary">Every proxy call is written to the API log with the caller uid, operation, path digest and result.</string>
+    <string name="storage_grant_empty">No app holds Shizuku authorization</string>
+    <string name="storage_proxy_info">Storage proxy status</string>
+    <string name="storage_backup_apk_skipped">APK not saved (system app or path outside the allowed range); data backup is complete</string>
+    <string name="storage_saf_permission_lost">No access to this folder anymore (the grant was revoked). Choose the folder again.</string>
+
+    <!-- com.churan.shizako.permission.STORAGE_PROXY 的展示文案（能力标记，判定看 FLAG_STORAGE_PROXY） -->
+    <string name="storage_permission_label">Storage proxy</string>
+    <string name="storage_permission_description">Use the Shizako privileged storage proxy to read and write app external data. It must also be switched on for this app in Shizako.</string>
+</resources>

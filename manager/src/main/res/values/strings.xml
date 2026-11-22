@@ -67,6 +67,7 @@ Note, do not disable \"Developer options\" or \"USB debugging\", or Shizako will
     <string name="settings_usage_mode">Usage mode</string>
     <string name="settings_usage_mode_simple">Simple mode — only everyday features are shown</string>
     <string name="settings_usage_mode_advanced">Advanced mode — everything is shown</string>
+    <string name="settings_usage_mode_advanced_title">Advanced mode</string>
     <string name="dialog_adb_port">Pairing port</string>
     <string name="dialog_adb_port_auto_filled">Pairing port detected automatically. Change it if your device shows a different port.</string>
     <string name="dialog_adb_port_manual_hint">Type the port shown in the \"Pair device with pairing code\" dialog.\nNote: this is NOT the port in the \"IP address &amp; port\" line at the top of the wireless debugging screen — that one is the connect port, and pairing will fail at the encrypted handshake if you use it.</string>
@@ -161,7 +162,7 @@ Note, do not disable \"Developer options\" or \"USB debugging\", or Shizako will
     <string name="star_prompt_never">Never</string>
     <string name="star_no_browser">No browser available — the project URL was copied.</string>
     <string name="about_star">Star the project</string>
-    <string name="about_star_summary">Give Shizako a star on GitHub</string>    <string name="settings_recommended_apps_summary">Common apps that work with Shizako — download them in your browser</string>
+    <string name="about_star_summary">Give Shizako a star on GitHub</string>    <string name="settings_recommended_apps_summary">Brevent, StopApp, Ice Box and more — one-tap download and install</string>
     <!-- Signature self-check (anti-clone) -->
     <string name="about_signature">Signing certificate (SHA-256)</string>
     <string name="sig_status_official">Official signature</string>
@@ -771,4 +772,77 @@ The export function uses SAF (Storage Access Framework). It's reported that MIUI
     <string name="tcp_prompt_dialog_later">Not Now</string>
     <string name="tcp_prompt_dialog_do_not_remind">Don’t remind me again</string>
 
+
+    <!-- ══════════ 自动化（EXEC_SHELL 特权命令执行） ══════════ -->
+    <string name="settings_automation">Automation</string>
+    <string name="automation_short_summary">Tokens · whitelist · history</string>
+    <string name="settings_automation_summary">%1$d tokens · timeout %2$d s</string>
+    <string name="automation_tokens">Automation tokens</string>
+    <string name="automation_tokens_desc">A token binds one app (package name + signing certificate) to a permission to run whitelisted commands with Shizako\'s privilege.</string>
+    <string name="automation_token_new">New token</string>
+    <string name="automation_token_label">Label</string>
+    <string name="automation_token_label_hint">e.g. Tasker</string>
+    <string name="automation_token_package">Package name</string>
+    <string name="automation_token_package_hint">e.g. net.dinglisch.android.taskerm</string>
+    <string name="automation_token_create">Create</string>
+    <string name="automation_token_copy">Copy</string>
+    <string name="automation_token_rotate">Rotate</string>
+    <string name="automation_token_revoke">Revoke</string>
+    <string name="automation_token_empty">No tokens yet. Create one to let an automation app run commands.</string>
+    <string name="automation_token_only_once">Copy it now — the plain token is never shown again.</string>
+    <string name="automation_token_last_used">Last used %1$s</string>
+    <string name="automation_token_never_used">Never used</string>
+    <string name="automation_token_created">Created %1$s</string>
+    <string name="automation_token_broken">Cannot be decrypted (keystore key was reset). Revoke it and create a new one.</string>
+    <string name="automation_token_limit">Up to %1$d tokens</string>
+    <string name="automation_token_duplicate">This package already has a token</string>
+    <string name="automation_token_no_signature">Cannot read the signature of %1$s. Is the app installed?</string>
+    <string name="automation_token_crypto_failed">Keystore is unavailable, cannot encrypt the token</string>
+    <string name="automation_token_no_package">Package name is required</string>
+    <string name="automation_token_rotate_confirm">Rotate this token? The old value stops working immediately.</string>
+    <string name="automation_token_revoke_confirm">Revoke 「%1$s」? That app will no longer be able to call it.</string>
+    <string name="automation_whitelist">Command whitelist</string>
+    <string name="automation_whitelist_desc">Only the first word of the command is matched. Arguments are passed to the shell unchanged.</string>
+    <string name="automation_whitelist_add">Add prefix</string>
+    <string name="automation_whitelist_restore">Restore defaults</string>
+    <string name="automation_whitelist_custom">custom</string>
+    <string name="automation_metachar">Allowed metacharacters</string>
+    <string name="automation_metachar_desc">Shell metacharacters are denied by default: they can chain or substitute commands and get around the whitelist.</string>
+    <string name="automation_metachar_risk">Allowing %1$s makes command chaining/substitution possible. Only enable it if you understand the risk.</string>
+    <string name="automation_metachar_confirm">I understand</string>
+    <string name="automation_timeout">Execution timeout</string>
+    <string name="automation_timeout_desc">How long one command may run before the process is killed (%1$d–%2$d s). Currently %3$d s.</string>
+    <string name="automation_history">Execution history</string>
+    <string name="automation_history_desc">Stored locally on this device, newest first (max 200).</string>
+    <string name="automation_history_empty">No requests yet</string>
+    <string name="automation_history_clear">Clear history</string>
+    <string name="automation_filter_status">Status</string>
+    <string name="automation_filter_caller">Caller</string>
+    <string name="automation_filter_time">Time</string>
+    <string name="automation_filter_all">All</string>
+    <string name="automation_status_ok">Succeeded</string>
+    <string name="automation_status_denied">Denied</string>
+    <string name="automation_status_error">Failed</string>
+    <string name="automation_status_timeout">Timed out</string>
+    <string name="automation_filter_any_time">Any time</string>
+    <string name="automation_filter_1h">Last hour</string>
+    <string name="automation_filter_24h">Last 24 hours</string>
+    <string name="automation_filter_7d">Last 7 days</string>
+    <string name="automation_none_matching">No matching entries</string>
+    <string name="automation_exit_code">exit %1$d · %2$d ms</string>
+    <string name="automation_truncated">truncated</string>
+    <string name="automation_example">Calling example</string>
+    <string name="automation_example_desc">Send an explicit broadcast. request_id is required; the result is broadcast back to the token\'s package on com.churan.shizako.action.EXEC_SHELL_RESULT.</string>
+    <string name="automation_example_copy">Copy example</string>
+    <string name="automation_copied">Copied</string>
+    <string name="automation_verify_note">This Android version does not tell us who sent the broadcast, so only the bound package\'s signature is verified. Results are always delivered to the bound package only.</string>
+    <string name="automation_cancel">Cancel</string>
+    <string name="automation_close">Close</string>
+    <string name="automation_confirm">Confirm</string>
+    <string name="automation_delete">Delete</string>
+    <string name="automation_add">Add</string>
+    <string name="automation_notify_channel">Automation command</string>
+    <string name="automation_notify_channel_desc">Shown while an automation command is running</string>
+    <string name="automation_notify_title">Running automation command</string>
+    <string name="automation_notify_text">A whitelisted shell command is running</string>
 </resources>

@@ -107,6 +107,9 @@ class HomeFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        // 从激活页/权限弹窗回到首页时，底栏状态卡要按真实 binder 状态显示；
+        // 缓存落后一拍会出现「服务在跑但首页显示睡懒觉」。
+        moe.shizuku.manager.utils.ShizukuState.refresh()
         checkServerStatus()
     }
 

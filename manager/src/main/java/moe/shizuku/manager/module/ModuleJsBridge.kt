@@ -2,6 +2,7 @@ package moe.shizuku.manager.module
 
 import android.os.ParcelFileDescriptor
 import android.webkit.JavascriptInterface
+import moe.shizuku.manager.utils.FileSafety
 import moe.shizuku.server.IShizukuService
 import org.json.JSONObject
 import rikka.shizuku.Shizuku
@@ -163,7 +164,15 @@ class ModuleJsBridge(
         return try {
             val service = IShizukuService.Stub.asInterface(binder)
             val env = buildEnvironment(options.extraEnv)
-            val cwd = resolveModuleDirectory(options.cwd).absolutePath
+            // 路径校验仍然照做（cwd 不许逃出模块目录），但真正给进程用的 cwd 要按身份区分：
+            // 模块目录在 App 私有存储里，shell 进不去（DAC 0700 + SELinux 分类），
+            // 非 root 时退回 /data/local/tmp，命令至少能跑；要读写模块文件得用 root。
+            val requestedCwd = resolveModuleDirectory(options.cwd)
+            val cwd = if (Shizuku.getUid() == 0) {
+                requestedCwd.absolutePath
+            } else {
+                SHELL_WORK_DIR
+            }
             val remote = service.newProcess(arrayOf("sh", "-c", command), env, cwd)
 
             val stdoutPfd = remote.getInputStream()
@@ -315,9 +324,8 @@ class ModuleJsBridge(
     }
 
     private fun ensureInside(root: File, file: File) {
-        val rootPath = root.canonicalFile.toPath()
-        val filePath = file.canonicalFile.toPath()
-        require(filePath.startsWith(rootPath)) { "Path escapes the module directory." }
+        // API 24 兼容：java.nio.file 需要 26，见 utils/FileSafety
+        require(FileSafety.isInside(root, file)) { "Path escapes the module directory." }
     }
 
     private fun shellResult(exitCode: Int, stdout: String, stderr: String, timedOut: Boolean): String =
@@ -362,6 +370,12 @@ class ModuleJsBridge(
 
         /** 每条流最多回给页面 64KB（和 AdbModuleManager 一致） */
         private const val MAX_OUTPUT_CHARS = 64 * 1024
+
+        /**
+         * 非 root 身份跑 exec 时的 cwd：/data/local/tmp 是 shell 可写、可进入的公共目录。
+         * 模块目录在 App 私有存储里，shell 进不去，所以不能把模块目录直接当 cwd 交给进程。
+         */
+        private const val SHELL_WORK_DIR = "/data/local/tmp"
         private const val MAX_STDIN_CHARS = 64 * 1024
         private const val MAX_EXTRA_ENV_COUNT = 32
         private const val MAX_ENV_VALUE_CHARS = 4096

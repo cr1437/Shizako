@@ -1,5 +1,6 @@
 package moe.shizuku.manager.settings
 
+import android.content.Intent
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -35,7 +36,9 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -45,16 +48,26 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.integerArrayResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import moe.shizuku.manager.R
 import moe.shizuku.manager.feature.FeatureMode
 import moe.shizuku.manager.fdroid.FdroidBuild
+import moe.shizuku.manager.installer.InstallHistoryStore
+import moe.shizuku.manager.installer.InstallQueueStore
+import moe.shizuku.manager.installer.TrustedInstallerStore
 import moe.shizuku.manager.ui.hint.HintCard
+import moe.shizuku.manager.ui.hint.HintNote
 import moe.shizuku.manager.ui.hint.HintPage
 import moe.shizuku.manager.ui.hint.HintPalette
 import moe.shizuku.manager.ui.hint.HintSectionTitle
@@ -102,7 +115,7 @@ data class SettingsUiState(
 )
 
 /** 设置页的层级：一级菜单 + 各二级页。 */
-enum class SettingsPage { MAIN, APPEARANCE, BACKGROUND, NAV, MODULES, MODULE_POLICY, MODULE_CATALOG, COMPUT, COMPUT_SETTINGS, ACCESSIBILITY, LAB, STARTUP, LANGUAGE, DEBUG, ABOUT }
+enum class SettingsPage { MAIN, APPEARANCE, BACKGROUND, NAV, MODULES, MODULE_POLICY, MODULE_CATALOG, COMPUT, COMPUT_SETTINGS, ACCESSIBILITY, LAB, STARTUP, LANGUAGE, DEBUG, ABOUT, AUTOMATION, INSTALL }
 
 /**
  * 设置页（Compose 版，**两级菜单**）。
@@ -322,6 +335,20 @@ fun SettingsScreen(
                 onApiLogEnabled, onApiLogClear, onOpenApiLog, onCheckUpdate,
             )
 
+            SettingsPage.AUTOMATION -> moe.shizuku.manager.automation.AutomationPage(
+                palette = palette,
+                listState = pageListState,
+                onCollapsedChange = pageCollapsedChange,
+                onBack = { go(SettingsPage.MAIN) },
+            )
+
+            // 安装：信任来源 / 批量安装 / 安装历史（规格 F1/F3/F5 的管理入口）
+            SettingsPage.INSTALL -> InstallPage(
+                palette = palette,
+                listState = pageListState,
+                onCollapsedChange = pageCollapsedChange,
+            )
+
             SettingsPage.ABOUT -> AboutPage(
                 state, palette, pageListState, pageCollapsedChange, go,
                 onUnlockDebug, onCrashLogs,
@@ -373,10 +400,35 @@ private fun MainPage(
                 }
             }
         }
+        // 使用模式（简单 / 进阶）总开关：原在首页状态卡下面，按主人要求挪进设置。
+        // 读 FeatureMode.current 这个 Compose 状态 → 拨一下整个 App 的底栏/工具箱/设置行立即重组，
+        // 不需要重建 Activity；值本身由 FeatureMode 持久化（下次启动还是这一档）。
         item {
             HintCard(palette = palette, modifier = Modifier.itemEntrance(1)) {
-                // 注：简单 / 进阶的总开关在**首页**那张卡片上，不在这里 ——
-                // 这是「界面该有多复杂」的总开关，该放在第一眼就能看到的地方。
+                HintSectionTitle(
+                    palette = palette,
+                    text = stringResource(R.string.settings_usage_mode),
+                    modifier = Modifier.padding(top = 10.dp),
+                )
+                // 摘要跟着开关变：关掉时说明「只剩常用功能」，打开时说明「全部显示」
+                val modeSummary = if (FeatureMode.isAdvanced) {
+                    stringResource(R.string.settings_usage_mode_advanced)
+                } else {
+                    stringResource(R.string.settings_usage_mode_simple)
+                }
+                SettingSwitchRow(
+                    palette = palette,
+                    title = stringResource(R.string.settings_usage_mode_advanced_title),
+                    summary = modeSummary,
+                    checked = FeatureMode.isAdvanced,
+                    onChange = { FeatureMode.setAdvanced(it) },
+                )
+            }
+        }
+        item {
+            HintCard(palette = palette, modifier = Modifier.itemEntrance(2)) {
+                // 注：简单 / 进阶的总开关在**上面那张「使用模式」卡片**里，
+                // 下面的进阶项（稳定性与自动化 / 自动化 / API 日志）只跟着它变。
                 HintSectionTitle(
                     palette = palette,
                     text = stringResource(R.string.settings_group_appearance),
@@ -415,6 +467,16 @@ private fun MainPage(
                     text = stringResource(R.string.settings_group_system),
                     modifier = Modifier.padding(top = 10.dp),
                 )
+                // 安装（信任来源 / 批量安装 / 安装历史）：**不加进阶模式门槛**。
+                // 静默安装的信任列表是安全相关的审计入口，简单模式下也得能找到，
+                // 否则「谁能在后台装包」这件事普通用户根本没法查、也没法关。
+                NavRow(
+                    palette = palette,
+                    iconRes = R.drawable.ic_outline_extension_24,
+                    title = stringResource(R.string.settings_install),
+                    summary = stringResource(R.string.settings_install_summary),
+                    onClick = { onOpen(SettingsPage.INSTALL) },
+                )
                 // 稳定性 / 自动化那一页全是保活、重连、看门狗之类的开关，归进阶
                 if (FeatureMode.isAdvanced) {
                     NavRow(
@@ -423,6 +485,18 @@ private fun MainPage(
                         title = stringResource(R.string.settings_stability),
                         summary = null,
                         onClick = { onOpen(SettingsPage.STARTUP) },
+                    )
+                }
+                // 自动化（EXEC_SHELL）：令牌 + 白名单 + 超时 + 执行历史
+                // 面向 Tasker/MacroDroid 这类外部自动化，和「稳定性与自动化」一样归进阶，
+                // 简单模式下不出现（普通用户看不到、也确实用不上）。
+                if (FeatureMode.isAdvanced) {
+                    NavRow(
+                        palette = palette,
+                        iconRes = R.drawable.ic_terminal_24,
+                        title = stringResource(R.string.settings_automation),
+                        summary = stringResource(R.string.automation_short_summary),
+                        onClick = { onOpen(SettingsPage.AUTOMATION) },
                     )
                 }
                 NavRow(
@@ -1730,4 +1804,111 @@ private fun greetingText(): String {
             else -> R.string.settings_greeting_night
         },
     )
+}
+// ---------------- 二级：安装 ----------------
+
+/** 安装页的计数（信任来源 / 未完成队列 / 历史条数）。 */
+@Immutable
+private data class InstallCounts(
+    val trusted: Int = 0,
+    val unfinished: Int = 0,
+    val history: Int = 0,
+)
+
+/**
+ * 设置 →「安装」分区（规格 F1/F3/F5 的管理入口）。
+ *
+ * 三个二级页都是独立 Activity（批量安装和安装历史在 Activity 里跑队列/列表更省事），
+ * 所以从它们回来时本页不会重建 —— 用 `ON_RESUME` 刷新计数，否则信任来源加了人、
+ * 队列跑完了，回来还是旧数字。
+ *
+ * 入口本身**不做进阶模式限制**：静默安装的信任列表是安全审计入口，
+ * 简单模式下也得能找到、能关掉。
+ */
+@Composable
+private fun InstallPage(
+    palette: HintPalette,
+    listState: LazyListState,
+    onCollapsedChange: (Boolean) -> Unit,
+) {
+    val context = LocalContext.current
+    var counts by remember { mutableStateOf(InstallCounts()) }
+    var refreshKey by remember { mutableIntStateOf(0) }
+
+    val lifecycleOwner = LocalLifecycleOwner.current
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME) refreshKey++
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
+    }
+
+    LaunchedEffect(refreshKey) {
+        counts = withContext(Dispatchers.IO) {
+            InstallCounts(
+                trusted = TrustedInstallerStore.count(context),
+                unfinished = InstallQueueStore.unfinishedCount(context),
+                history = InstallHistoryStore.all(context).size,
+            )
+        }
+    }
+
+    HintPage(listState = listState, onCollapsedChange = onCollapsedChange) {
+        item {
+            HintNote(
+                palette = palette,
+                iconRes = R.drawable.ic_warning_24,
+                text = stringResource(R.string.installer_settings_note),
+                secondary = stringResource(R.string.installer_denied_default_policy),
+                modifier = Modifier.itemEntrance(0),
+            )
+        }
+        item {
+            HintCard(palette = palette, modifier = Modifier.itemEntrance(1)) {
+                HintSectionTitle(
+                    palette = palette,
+                    text = stringResource(R.string.installer_settings_section),
+                )
+                NavRow(
+                    palette = palette,
+                    iconRes = R.drawable.ic_outline_extension_24,
+                    title = stringResource(R.string.installer_trust_title),
+                    summary = stringResource(R.string.installer_settings_trusted, counts.trusted),
+                    onClick = {
+                        context.startActivity(
+                            Intent(context, moe.shizuku.manager.installer.TrustedInstallersActivity::class.java),
+                        )
+                    },
+                )
+                NavRow(
+                    palette = palette,
+                    iconRes = R.drawable.ic_outline_arrow_upward_24,
+                    title = stringResource(R.string.installer_batch_title),
+                    summary = if (counts.unfinished > 0) {
+                        stringResource(R.string.installer_settings_unfinished, counts.unfinished)
+                    } else {
+                        stringResource(R.string.installer_batch_summary)
+                    },
+                    onClick = {
+                        context.startActivity(
+                            Intent(context, moe.shizuku.manager.installer.BatchInstallActivity::class.java),
+                        )
+                    },
+                )
+                NavRow(
+                    palette = palette,
+                    iconRes = R.drawable.ic_outline_assignment_24,
+                    title = stringResource(R.string.installer_history_title),
+                    summary = stringResource(R.string.installer_settings_history, counts.history),
+                    onClick = {
+                        context.startActivity(
+                            Intent(context, moe.shizuku.manager.installer.InstallHistoryActivity::class.java),
+                        )
+                    },
+                )
+            }
+        }
+        item { Spacer(Modifier.height(96.dp)) }
+    }
 }

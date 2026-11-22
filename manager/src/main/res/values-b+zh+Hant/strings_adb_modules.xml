@@ -39,9 +39,10 @@
 <string name="adb_modules_close">關閉</string>
 <string name="adb_modules_delete">刪除</string>
 <string name="adb_modules_trust_off">%1$s 已取消信任。</string>
-<string name="adb_modules_step_2_hint">兩個腳本都以 shell 或 root 身份執行，MODDIR 指向模塊自己的目錄。</string>
+<string name="adb_modules_step_2_hint">兩個腳本都以 shell 或 root 身份執行，MODDIR 指向模塊自己的目錄。MODDIR 在 App 私有目錄裡，只有 root 能讀；shell 身份能跑腳本，但讀不了模塊檔案。</string>
 <string name="adb_modules_step_2_body">action.sh 是點「動作」按鈕時跑的。service.sh 在模塊啟用、且服務與後台兩個策略都放行時才跑。</string>
 <string name="adb_modules_install_zip">安裝模塊 ZIP</string>
+<string name="adb_modules_pick_zip_hint">部分 Android 版本的選擇器會把 ZIP 當成壓縮包開啟；長按該 ZIP 勾選，再點「SELECT」即可選取。</string>
 <string name="adb_modules_hard_limits">硬限制：每個 ZIP 最多 2048 個條目、解壓後 200 MB，腳本上限 256 KB、最長跑 120 秒，輸出只保留最後 64 KB。</string>
 <string name="adb_modules_exit_code">退出碼 %1$d</string>
 <string name="adb_modules_tag_trusted">已信任</string>

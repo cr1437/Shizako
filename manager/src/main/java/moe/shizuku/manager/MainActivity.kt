@@ -168,6 +168,10 @@ class MainActivity : AppActivity() {
             runCatching { moe.shizuku.manager.watchdog.WatchdogService.start(this) }
         }
 
+        // 周期检查更新：JobScheduler 周期任务（幂等，重复调用只会覆盖同一个 job id）；
+        // 顺带清掉旧版本遗留的 AlarmManager「唤醒闹钟」，升级后立刻生效，不必等一次开机。
+        runCatching { moe.shizuku.manager.update.AutoUpdateScheduler.schedule(this) }
+
         val binding = ActivityMainBinding.inflate(layoutInflater)
         this.binding = binding
         setContentView(binding.root)

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.view.isVisible
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.Job
 import moe.shizuku.manager.Helps
@@ -40,6 +41,12 @@ class AppViewHolder(private val binding: AppListItemBinding) : BaseViewHolder<Pa
     init {
         itemView.filterTouchesWhenObscured = true
         itemView.setOnClickListener(this)
+        // F1：长按进入多选并选中该行
+        itemView.setOnLongClickListener {
+            val appsAdapter = adapter as? AppsAdapter ?: return@setOnLongClickListener false
+            appsAdapter.onItemLongClick(data)
+            true
+        }
     }
 
     private inline val packageName get() = data.packageName
@@ -50,6 +57,12 @@ class AppViewHolder(private val binding: AppListItemBinding) : BaseViewHolder<Pa
 
     override fun onClick(v: View) {
         val context = v.context
+        // 多选态：点击整行 = 切换选中，不再触发单应用授予/撤销（避免误触，规格 F1）
+        val selectionAdapter = adapter as? AppsAdapter
+        if (selectionAdapter?.isSelectionMode == true) {
+            selectionAdapter.toggleSelection(data)
+            return
+        }
         try {
             if (AuthorizationManager.granted(packageName, uid)) {
                 AuthorizationManager.revoke(packageName, uid)
@@ -103,12 +116,23 @@ class AppViewHolder(private val binding: AppListItemBinding) : BaseViewHolder<Pa
         }
         pkg.text = ai.packageName
         switchWidget.isChecked = AuthorizationManager.granted(packageName, uid)
+        // F1：多选态下左侧出勾选框、右侧开关收起（避免"这一下到底点的是哪个"）
+        val appsAdapter = adapter as? AppsAdapter
+        val selecting = appsAdapter?.isSelectionMode == true
+        binding.checkbox.isVisible = selecting
+        binding.checkbox.isChecked = selecting && appsAdapter?.isSelected(packageName) == true
+        switchWidget.isVisible = !selecting
         root.visibility = if (ai.metaData != null && ai.metaData.getBoolean("moe.shizuku.client.V3_REQUIRES_ROOT")) View.VISIBLE else View.GONE
 
         loadIconJob = AppIconCache.loadIconBitmapAsync(context, ai, ai.uid / 100000, icon)
     }
 
     override fun onBind(payloads: List<Any>) {
+        val appsAdapter = adapter as? AppsAdapter
+        val selecting = appsAdapter?.isSelectionMode == true
+        binding.checkbox.isVisible = selecting
+        binding.checkbox.isChecked = selecting && appsAdapter?.isSelected(packageName) == true
+        switchWidget.isVisible = !selecting
         switchWidget.isChecked = AuthorizationManager.granted(packageName, uid)
     }
 

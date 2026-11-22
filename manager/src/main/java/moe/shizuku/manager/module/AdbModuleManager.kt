@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
+import moe.shizuku.manager.utils.FileSafety
 import moe.shizuku.server.IShizukuService
 import rikka.shizuku.Shizuku
 import java.io.BufferedInputStream
@@ -462,9 +463,9 @@ object AdbModuleManager {
     }
 
     private fun ensureInside(root: File, child: File) {
-        val rootPath = root.canonicalFile.toPath()
-        val childPath = child.canonicalFile.toPath()
-        require(childPath.startsWith(rootPath)) { "不安全的模块路径：${child.name}" }
+        // 不用 File.toPath()/Path.startsWith()：java.nio.file 需要 API 26，minSdk 是 24，
+        // Android 7.x 上会 NoSuchMethodError（lint NewApi）。
+        require(FileSafety.isInside(root, child)) { "不安全的模块路径：${child.name}" }
     }
 
     /** 只读完整个流，但只保留最后 [MAX_OUTPUT_CHARS] 个字符 */

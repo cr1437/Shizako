@@ -24,3 +24,61 @@ ext {
     POM_NAME = "Shizuku API - aidl"
     POM_DESCRIPTION = "Low level aidl of Shizuku and Sui."
 }
+
+/**
+ * Windows + 非 ASCII 用户名下的 AIDL 生成文件编码修复。
+ *
+ * aidl.exe 会把「完整命令行」写进生成文件头部注释（`* Using: … -d<临时目录>…`），
+ * 而命令行里的临时目录是 `C:\Users\<用户名>\AppData\Local\Temp`；**这个字符串是按
+ * 系统 ANSI 代码页（中文 Windows = GBK）写进去的**。javac 默认按 UTF-8 读源码，
+ * 于是直接报「编码 UTF-8 的不可映射字符」，:aidl 整个编译失败，进而 server/manager
+ * 全部编译不了。
+ *
+ * 本机用户名是中文，**任何 AIDL 改动**都会触发（不清缓存时的失败现场：
+ * `IShizukuService.java:3: 错误: 编码 UTF-8 的不可映射字符 (0xB3)`）。
+ * 官方没有开关能改 aidl.exe 的头注释，所以这里在 javac 执行前把这一行换成纯 ASCII：
+ * - 只动 `* Using:` 开头的行，其余字节用 ISO-8859-1 原样往返，中文注释（UTF-8）不受影响；
+ * - 只影响生成目录里的中间产物，不进产物、不影响 AIDL 接口本身。
+ *
+ * 备选方案（不推荐）：把 TEMP/TMP 指向纯 ASCII 目录 + 清构建缓存。它只在「每次构建都
+ * 先清缓存」时有效，换个终端/IDE 就复发，所以写成构建脚本里的固定步骤。
+ */
+tasks.withType(org.gradle.api.tasks.compile.JavaCompile).configureEach {
+    doFirst {
+        def genRoot = file("$buildDir/generated/aidl_source_output_dir")
+        if (!genRoot.isDirectory()) {
+            return
+        }
+        genRoot.eachFileRecurse { f ->
+            if (!f.name.endsWith(".java")) {
+                return
+            }
+            byte[] bytes = f.bytes
+            boolean hasNonAscii = false
+            for (int i = 0; i < bytes.length; i++) {
+                if ((bytes[i] & 0xFF) > 0x7F) {
+                    hasNonAscii = true
+                    break
+                }
+            }
+            if (!hasNonAscii) {
+                return
+            }
+            // ISO-8859-1 是「字节 ↔ 字符」一一对应的无损映射，往返写回不会改坏其它字节
+            String text = new String(bytes, "ISO-8859-1")
+            StringBuilder sb = new StringBuilder(text.length())
+            boolean changed = false
+            text.eachLine { line ->
+                if (line.startsWith(" * Using:")) {
+                    sb.append(" * Using: aidl (header sanitized: non-ASCII Windows temp path)\n")
+                    changed = true
+                } else {
+                    sb.append(line).append('\n')
+                }
+            }
+            if (changed) {
+                f.write(sb.toString(), "ISO-8859-1")
+            }
+        }
+    }
+}
