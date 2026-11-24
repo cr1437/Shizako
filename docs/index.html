@@ -12,7 +12,7 @@
 <meta property="og:image" content="banner.jpg">
 <link rel="icon" type="image/png" sizes="64x64" href="assets/icon-64.png">
 <link rel="apple-touch-icon" href="assets/icon.png">
-<link rel="stylesheet" href="assets/site.css?v=14">
+<link rel="stylesheet" href="assets/site.css?v=18">
 </head>
 <body>
 
@@ -86,7 +86,7 @@
       </div>
     </div>
 
-    <div class="wrap">
+    <div class="wrap stats-wrap">
       <!-- 数字来源：这里的兜底值 → stats.json（CI 每小时刷）→ api.github.com 实时值 -->
       <div class="stats">
         <a class="stat" href="https://github.com/cr1437/Shizako/releases/latest">
@@ -102,6 +102,35 @@
           <span class="stat-label" data-i18n="stat.stars">GitHub Star</span>
         </a>
       </div>
+
+      <!-- 社区收录：放在数据卡片下方 -->
+      <article class="award" data-reveal>
+        <div class="award-badge">
+          <span class="icon" data-icon="star"></span>
+        </div>
+
+        <div class="award-body">
+          <p class="award-label">
+            <img class="award-badge-img" src="assets/badge-awesome.svg" width="132" height="22" alt="Awesome Shizuku">
+            <span data-i18n="rec.badge">已收录</span>
+          </p>
+          <blockquote class="award-quote" data-i18n="rec.quote">猫娘形象版 Shizuku，可无缝替代官方管理器，官方 Shizuku-API 应用无需修改即可连接</blockquote>
+          <p class="award-meta">
+            <span>timschneeb/awesome-shizuku</span>
+            <span class="dot">·</span>
+            <span>Apache-2.0</span>
+            <span class="dot">·</span>
+            <a href="https://github.com/timschneeb/awesome-shizuku" target="_blank" rel="noopener"><span data-i18n="rec.link">查看清单</span> ↗</a>
+          </p>
+        </div>
+
+        <div class="award-stats">
+          <div><b data-stat="stars">143</b><span data-i18n="rec.s1">GitHub Star</span></div>
+          <div><b data-stat="downloads">6,634</b><span data-i18n="rec.s2">累计下载</span></div>
+          <div><b>21</b><span data-i18n="rec.s3">版本发布</span></div>
+        </div>
+      </article>
+
     </div>
   </section>
 
@@ -426,6 +455,6 @@
 </footer>
 
 <script src="assets/icons.js?v=5"></script>
-<script src="assets/site.js?v=14"></script>
+<script src="assets/site.js?v=17"></script>
 </body>
 </html>

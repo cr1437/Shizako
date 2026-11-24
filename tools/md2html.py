@@ -42,7 +42,7 @@ PAGE = """<!DOCTYPE html>
 <meta name="theme-color" content="#07080d">
 <link rel="icon" type="image/png" sizes="64x64" href="{p}assets/icon-64.png">
 <link rel="apple-touch-icon" href="{p}assets/icon.png">
-<link rel="stylesheet" href="{p}assets/site.css?v=14">
+<link rel="stylesheet" href="{p}assets/site.css?v=18">
 </head>
 <body>
 
@@ -160,7 +160,7 @@ PAGE = """<!DOCTYPE html>
 </footer>
 
 <script src="{p}assets/icons.js?v=5"></script>
-<script src="{p}assets/site.js?v=14"></script>
+<script src="{p}assets/site.js?v=17"></script>
 </body>
 </html>
 """

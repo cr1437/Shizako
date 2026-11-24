@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="132" height="22" viewBox="0 0 132 22" role="img" aria-label="Awesome Shizuku">
+  <rect x="0.5" y="0.5" width="131" height="21" rx="10.5" fill="#0b0b0c" stroke="#3d3d42"/>
+  <text x="12" y="15.6" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="11" font-weight="700" fill="#ffd166">★</text>
+  <text x="28" y="15.6" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="11" font-weight="600" letter-spacing="0.4" fill="#eef1f8">AWESOME</text>
+  <text x="94" y="15.6" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="11" fill="#a1a1a6">Shizuku</text>
+</svg>
