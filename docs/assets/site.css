@@ -426,78 +426,41 @@ table.compare th { font-size: 12px; font-weight: 500; letter-spacing: .08em; tex
 table.compare td { color: var(--fg-dim); }
 table.compare td b, table.compare td strong { color: #fff; font-weight: 500; }
 
-/* ── 荣誉卡片（awesome-shizuku 收录） ──────────────────────────────────── */
+/* ── 社区收录卡片 ───────────────────────────────────────────────────────
+   和上面的数据卡同宽、同层级，但更"轻"：单色、无发光、只留一行引言。
+   三组数字不重复放（数据卡里已经有了），避免一整屏全是 143 / 6,634。 */
 .award {
-  position: relative;
-  margin-top: 18px;
-  display: grid;
-  grid-template-columns: 64px minmax(0, 1fr) auto;
-  gap: 28px; align-items: center;
-  padding: 36px 38px;
-  border-radius: 22px;
-  border: 1px solid rgba(255, 255, 255, .12);
-  background:
-    radial-gradient(120% 160% at 0% 0%, rgba(255, 209, 102, .10), transparent 46%),
-    radial-gradient(120% 160% at 100% 100%, rgba(255, 255, 255, .05), transparent 50%),
-    var(--bg-card);
-  overflow: hidden;
+  display: flex; align-items: center; gap: 28px;
+  margin-top: 16px; padding: 26px 30px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(255, 255, 255, .045), rgba(255, 255, 255, .018));
+  transition: border-color .25s var(--ease), background-color .25s var(--ease);
 }
-.award::after {
-  content: ""; position: absolute; inset: 0 0 auto; height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .3), transparent);
-}
-.award-badge {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 64px; height: 64px; border-radius: 50%;
-  color: var(--gold);
-  background: radial-gradient(circle at 30% 25%, rgba(255, 209, 102, .28), rgba(255, 209, 102, .06) 70%);
-  border: 1px solid rgba(255, 209, 102, .32);
-  box-shadow: 0 0 32px -8px rgba(255, 209, 102, .45);
-}
-.award-badge .icon { width: 26px; height: 26px; }
-
-.award-label {
-  display: flex; align-items: center; gap: 10px;
-  margin: 0 0 10px; font-size: 11.5px; letter-spacing: .16em; text-transform: uppercase;
-  color: var(--gold); opacity: .9;
-}
+.award:hover { border-color: rgba(255, 255, 255, .2); }
+.award-main { min-width: 0; }
+.award-label { display: flex; align-items: center; gap: 10px; margin: 0 0 12px; }
+.award-badge-img { display: block; height: 20px; width: auto; }
+.award-label span { font-size: 12px; letter-spacing: .04em; color: var(--fg-faint); }
 .award-quote {
-  margin: 0 0 14px; padding: 0;
-  font-size: 19px; line-height: 1.6; color: #fff;
-  border: 0;
+  margin: 0 0 10px; font-size: 17px; line-height: 1.65; color: #ececf1;
+  max-width: 62ch;
 }
-.award-quote::before { content: "「"; opacity: .35; }
-.award-quote::after  { content: "」"; opacity: .35; }
-.award-badge-img { display: block; height: 22px; width: auto; }
-.award-meta { margin: 0; font-size: 12.5px; color: var(--fg-faint); display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-.award-meta a { color: var(--accent); }
-.award-meta a:hover { color: #7fb2ff; }
-
-.award-stats { display: flex; gap: 34px; }
-.award-stats > div { display: flex; flex-direction: column; gap: 4px; }
-.award-stats b {
-  font-size: 26px; font-weight: 500; letter-spacing: -.02em;
-  font-variant-numeric: tabular-nums;
-  background: var(--grad-metal-bright);
-  -webkit-background-clip: text; background-clip: text; color: transparent;
-  padding-bottom: .1em; margin-bottom: -.06em;
+.award-meta { margin: 0; font-size: 12.5px; color: var(--fg-faint); }
+.award-link {
+  margin-left: auto; flex: none;
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 38px; padding: 0 18px; border-radius: var(--radius-pill);
+  border: 1px solid var(--line-2); color: var(--fg);
+  font-size: 13.5px; white-space: nowrap;
+  transition: background-color .2s var(--ease), border-color .2s var(--ease);
 }
-.award-stats span { font-size: 11.5px; color: var(--fg-faint); }
+.award-link:hover { background: rgba(255, 255, 255, .08); border-color: rgba(255, 255, 255, .3); color: #fff; }
 
-@media (max-width: 960px) {
-  .award { grid-template-columns: 52px minmax(0, 1fr); gap: 20px; padding: 26px 24px; }
-  .award-badge { width: 52px; height: 52px; }
-  .award-stats { grid-column: 1 / -1; gap: 28px; padding-top: 4px; }
-}
-
-/* 手机上整张卡片竖排：徽章 → 标签/引言 → 数据，避免星形图标悬在半空 */
-@media (max-width: 640px) {
-  .award { grid-template-columns: 1fr; gap: 14px; padding: 24px 20px; }
-  .award-badge { width: 46px; height: 46px; margin-bottom: 4px; }
-  .award-badge .icon { width: 20px; height: 20px; }
-  .award-quote { font-size: 16.5px; line-height: 1.65; }
-  .award-stats { gap: 24px; }
-  .award-stats b { font-size: 22px; }
+@media (max-width: 760px) {
+  .award { flex-direction: column; align-items: flex-start; gap: 18px; padding: 22px 22px; }
+  .award-quote { font-size: 15.5px; }
+  .award-link { margin-left: 0; }
 }
 
 /* ── §7 信任 / FAQ / CTA / 页脚 ─────────────────────────────────────────── */
