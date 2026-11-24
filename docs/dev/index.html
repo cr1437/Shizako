@@ -4,84 +4,151 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>开发文档 — Shizako</title>
-<meta name="description" content="Shizako 开发文档：把特权能力接入你自己的应用，依赖配置、权限申请、binder 生命周期、AIDL 用户服务与常见坑。">
-<meta name="theme-color" content="#0b0d12">
-<link rel="icon" href="../assets/logo.svg">
-<link rel="stylesheet" href="../assets/site.css?v=3">
+<meta name="description" content="Shizako 开发文档：API 使用指南、编译与参与开发、Shizuku-API 本地修改、rish 命令行与更新日志。">
+<meta name="theme-color" content="#07080d">
+<link rel="icon" type="image/png" sizes="64x64" href="../assets/icon-64.png">
+<link rel="apple-touch-icon" href="../assets/icon.png">
+<link rel="stylesheet" href="../assets/site.css?v=14">
 </head>
 <body>
 
-<header class="nav" id="nav">
-  <a class="brand" href="../index.html">
-    <img src="../assets/logo.svg" alt="Shizako" width="32" height="32">
-    <span>Shizako</span>
-  </a>
-  <nav class="nav-links">
-    <a href="../index.html">首页</a>
-    <a href="../index.html#features">功能</a>
-    <a href="../index.html#activate">激活</a>
-    <a href="index.html" class="active">开发文档</a>
-    <a href="https://github.com/cr1437/Shizako">GitHub</a>
-  </nav>
-  <div class="nav-right">
-    <a class="btn primary small" href="https://github.com/cr1437/Shizako/releases/latest">下载</a>
+<header class="topbar" id="topbar">
+  <div class="wrap">
+    <a class="brand" href="../index.html">
+      <img src="../assets/icon.png" alt="" width="30" height="30">
+      <span>Shizako</span>
+    </a>
+    <nav class="nav-links" aria-label="主导航">
+      <a href="../index.html#features" data-i18n="nav.features">功能</a>
+      <a href="../index.html#activate" data-i18n="nav.activate">激活</a>
+      <a href="../index.html#compat" data-i18n="nav.compat">兼容</a>
+      <a href="../index.html#faq" data-i18n="nav.faq">FAQ</a>
+      <a href="index.html" class="active" data-i18n="nav.docs">开发文档</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="btn primary sm" href="https://github.com/cr1437/Shizako/releases/latest" data-i18n="nav.download">下载</a>
+      <button class="menu-btn" id="menuBtn" type="button" aria-label="菜单" aria-expanded="false">
+        <span class="icon" data-icon="menu"></span>
+      </button>
+    </div>
   </div>
 </header>
 
-<main class="section">
-  <h2>开发文档</h2>
-  <p class="lead">把 Shizako（或 Shizuku）的特权能力接入你自己的应用 —— 从依赖配置到 AIDL 用户服务的全流程。</p>
+<nav class="drawer" id="drawer" aria-label="站点导航">
+  <a href="../index.html#features" data-i18n="nav.features">功能</a>
+  <a href="../index.html#activate" data-i18n="nav.activate">激活</a>
+  <a href="../index.html#compat" data-i18n="nav.compat">兼容</a>
+  <a href="../index.html#faq" data-i18n="nav.faq">FAQ</a>
+  <a href="../act/index.html" data-i18n="nav.guide">激活教程</a>
+  <a href="https://github.com/cr1437/Shizako" data-i18n="nav.repo">GitHub 仓库</a>
+</nav>
 
-  <div class="grid">
-    <a class="card" href="api.html">
-      <h3>API 使用指南 →</h3>
-      <p>两条接入路线、依赖与 Manifest 配置、binder 生命周期、权限申请、AIDL 用户服务、能力查询、完整示例与常见坑。</p>
-    </a>
-    <a class="card" href="upstream-api.html">
-      <h3>Shizuku-API 上游文档 →</h3>
-      <p>官方客户端库的原始说明（英文）：获取 binder、远程调用、UserService、非 SDK 接口的使用方式。</p>
-    </a>
-    <a class="card" href="changes.html">
-      <h3>对 Shizuku-API 的本地修改 →</h3>
-      <p>为什么用自有的权限名而不是上游的；与上游同步的方式与差异清单。</p>
-    </a>
-    <a class="card" href="rish.html">
-      <h3>rish 命令行 →</h3>
-      <p>在终端里直接调用特权 API 的 CLI 工具：用法、选项与环境变量。</p>
-    </a>
-    <a class="card" href="build.html">
-      <h3>编译与参与开发 →</h3>
-      <p>环境要求（JDK 17 / SDK 36 / NDK 29）、编译命令、签名注意事项、代码结构与维护脚本。</p>
-    </a>
-    <a class="card" href="changelog.html">
-      <h3>更新日志 →</h3>
-      <p>各版本的对外更新内容，与 GitHub Releases 的说明保持同步。</p>
-    </a>
-  </div>
+<main>
 
-  <div class="grid" style="margin-top:18px">
-    <article class="card">
-      <h3>只是想用官方依赖？</h3>
-      <p>直接依赖 <code>dev.rikka.shizuku:api</code> 与 <code>dev.rikka.shizuku:provider</code> 即可 —— Shizako 对官方 API 应用是<strong>免改码直连</strong>的，你不需要为它写任何适配代码。</p>
-    </article>
-    <article class="card">
-      <h3>文档源文件</h3>
-      <p>每个页面都由仓库里的 Markdown 生成（<code>tools/md2html.py</code>），改动请改对应的 <code>.md</code>：<a href="../API.md">docs/API.md</a> · <a href="https://github.com/cr1437/Shizako/blob/main/api/SHIZAKO-CHANGES.md">api/SHIZAKO-CHANGES.md</a>。</p>
-    </article>
-  </div>
+  <section class="guide-hero">
+    <div class="wrap">
+      <p class="eyebrow">DEVELOPER DOCS</p>
+      <h1>开发文档</h1>
+      <p class="lede">
+        Shizako 的技术文档都在这里：怎么把特权能力接进自己的应用、怎么从源码编译、
+        以及本仓库对上游 Shizuku-API 做了哪些修改。
+      </p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:32px">
+    <div class="wrap">
+      <div class="doc-cards">
+
+        <a class="card doc-card" href="api.html">
+          <span class="doc-card-icon"><span class="icon" data-icon="key-round"></span></span>
+          <h3>API 使用指南</h3>
+          <p>接入路线、binder 生命周期、AIDL 用户服务与常见坑。用官方 dev.rikka.shizuku:api 写的应用零改动直连。</p>
+          <span class="more">阅读 →</span>
+        </a>
+
+        <a class="card doc-card" href="build.html">
+          <span class="doc-card-icon"><span class="icon" data-icon="cpu"></span></span>
+          <h3>编译与参与开发</h3>
+          <p>环境要求（JDK 21 / SDK 36）、编译命令、签名注意事项与各模块职责。</p>
+          <span class="more">阅读 →</span>
+        </a>
+
+        <a class="card doc-card" href="changes.html">
+          <span class="doc-card-icon"><span class="icon" data-icon="plug"></span></span>
+          <h3>对 Shizuku-API 的本地修改</h3>
+          <p>为什么权限名不同、双管理器怎么同时工作、如何与上游同步。</p>
+          <span class="more">阅读 →</span>
+        </a>
+
+        <a class="card doc-card" href="rish.html">
+          <span class="doc-card-icon"><span class="icon" data-icon="terminal"></span></span>
+          <h3>rish 命令行</h3>
+          <p>在终端里调用特权 API 的 CLI 工具：装法、用法与权限申请。</p>
+          <span class="more">阅读 →</span>
+        </a>
+
+        <a class="card doc-card" href="upstream-api.html">
+          <span class="doc-card-icon"><span class="icon" data-icon="book-open"></span></span>
+          <h3>Shizuku-API 上游文档</h3>
+          <p>本仓库内置的 api/ 目录的原始说明（英文），与官方保持一致。</p>
+          <span class="more">阅读 →</span>
+        </a>
+
+        <a class="card doc-card" href="changelog.html">
+          <span class="doc-card-icon"><span class="icon" data-icon="refresh-cw"></span></span>
+          <h3>更新日志</h3>
+          <p>各版本的对外更新内容，与 GitHub Releases 同步。</p>
+          <span class="more">阅读 →</span>
+        </a>
+
+      </div>
+
+      <div class="note" style="margin-top:26px">
+        <span class="icon" data-icon="lightbulb"></span>
+        <span>这份文档由 <code>tools/md2html.py</code> 从仓库里的 Markdown 生成 —— 想改内容请改源文件（<code>docs/API.md</code>、<code>docs/BUILD.md</code>、<code>更新日志.md</code> 等），然后重新跑一次脚本。</span>
+      </div>
+    </div>
+  </section>
+
 </main>
 
 <footer class="footer">
-  <p class="footer-bottom">Shizako 开发文档 · <a href="../index.html">官网首页</a> · <a href="https://github.com/cr1437/Shizako">GitHub</a> · Apache-2.0</p>
+  <div class="wrap">
+    <div class="footer-cols">
+      <div>
+        <a class="brand" href="../index.html" style="margin-bottom:12px">
+          <img src="../assets/icon.png" alt="" width="30" height="30">
+          <span>Shizako</span>
+        </a>
+        <p data-i18n="footer.desc">猫耳看板娘的系统特权助手。开源、免费、无广告。</p>
+      </div>
+      <div>
+        <h4 data-i18n="footer.links">链接</h4>
+        <ul>
+          <li><a href="../index.html">官网首页</a></li>
+          <li><a href="https://github.com/cr1437/Shizako" data-i18n="footer.repo">GitHub 仓库</a></li>
+          <li><a href="https://github.com/cr1437/Shizako/releases" data-i18n="footer.releases">版本发布</a></li>
+          <li><a href="https://github.com/cr1437/Shizako/issues" data-i18n="footer.issues">问题反馈</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-i18n="footer.community">交流</h4>
+        <ul>
+          <li><a href="https://qm.qq.com/cgi-bin/qm/qr?k=891276089">QQ 891276089</a></li>
+          <li><a href="https://qm.qq.com/cgi-bin/qm/qr?k=1104445003">QQ 群 1104445003</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-i18n="footer.license">许可</h4>
+        <p data-i18n="footer.licenseText">Apache License 2.0。上游版权归 RikkaApps，修改部分版权归 初然。</p>
+      </div>
+    </div>
+    <p class="footer-bottom" data-i18n="footer.bottom">为爱发电 · 用爱发电的她不会咬人 (ˊᗜˋ*)</p>
+  </div>
 </footer>
 
-<script>
-(function () {
-  var nav = document.getElementById('nav');
-  function onScroll() { if (nav) nav.classList.toggle('scrolled', window.scrollY > 8); }
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
-})();
-</script>
+<script src="../assets/icons.js?v=5"></script>
+<script src="../assets/site.js?v=14"></script>
 </body>
 </html>

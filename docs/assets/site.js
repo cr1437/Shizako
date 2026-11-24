@@ -1,95 +1,161 @@
-/* Shizako 官网脚本。
-   功能：图标注入（Lucide，见 assets/icons.js）、中英切换、手机端汉堡菜单、
-        滚动进场动画、数字滚动、以及数据卡片（GitHub API 实时查询 +
-        同源 stats.json 兜底，见文件末尾「数据来源」三段）。
-   无第三方依赖；所有动画都尊重系统的「减少动效」设置。 */
+/* ============================================================================
+   Shizako 官网脚本（2026-11 重构版）
+
+   做什么：
+   1. 图标注入 —— 把 assets/icons.js 里的 Lucide 路径塞进 <span data-icon="name">；
+   2. 中英切换 —— 中文直接以 HTML 为准（脚本加载时抓取），英文查 EN 词典；
+   3. 顶栏滚动态 / 手机抽屉 / 区块高亮；
+   4. 数据卡片 —— HTML 兜底 → stats.json → api.github.com 三段来源；
+   5. 文档页 —— 阅读进度、右侧目录高亮、代码块复制。
+
+   约束：无第三方依赖；尊重 prefers-reduced-motion；所有网络请求失败都静默。
+   ========================================================================== */
 (function () {
   'use strict';
 
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // ── 英文词典（中文文案直接来自 HTML，脚本加载时捕获，见下方 ZH）────────
+  /* ── 图标注入 ──────────────────────────────────────────────────────────── */
+  function paintIcons(root) {
+    var icons = window.SHIZAKO_ICONS || {};
+    [].slice.call((root || document).querySelectorAll('[data-icon]')).forEach(function (el) {
+      if (el.getAttribute('data-icon-done')) return;
+      var body = icons[el.getAttribute('data-icon')];
+      if (!body) return;
+      el.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ' +
+        'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + body + '</svg>';
+      el.setAttribute('data-icon-done', '1');
+    });
+  }
+
+  /* ── 中英切换 ──────────────────────────────────────────────────────────── */
+  // 中文文案以 HTML 为准：加载时把原文抓下来，切回中文时原样写回。
+  // data-i18n 用 textContent（安全）；data-i18n-html 用 innerHTML（标题里带渐变 span 这类结构）。
   var EN = {
     'nav.features': 'Features',
     'nav.activate': 'Activation',
     'nav.compat': 'Compatibility',
     'nav.faq': 'FAQ',
-    'nav.api': 'Docs',
+    'nav.docs': 'Docs',
+    'nav.guide': 'Activation guide',
     'nav.download': 'Download',
-    'nav.releases': 'All releases',
     'nav.repo': 'GitHub repository',
-
-    'hero.tagline': 'Borrow privileged Android APIs through your catgirl assistant — no root, no flashing',
-    'hero.sub': 'Wake a small privileged process through root / wireless debugging / computer ADB / Dhizuku, then lend that privilege to apps you trust. Every app needs your explicit approval, and you can revoke it any time.',
+    'hero.lede': 'Root, wireless debugging, computer ADB or Dhizuku — one of them wakes a small privileged process, and that privilege is then <strong>lent</strong> to apps you approve. Every app needs your explicit nod, and you can take it back at any time.',
     'hero.download': 'Download latest',
-    'hero.github': 'GitHub repository',
     'hero.hint': 'Android 7.0+ · wireless debugging needs Android 11+ · Apache-2.0',
-    'quick.docs': 'Documentation',
-    'quick.releases': 'All releases',
-    'quick.issues': 'Report an issue',
-    'quick.star': 'Star her',
 
+    'stat.version': 'Latest version',
+    'stat.downloads': 'Downloads',
+    'stat.stars': 'Stars',
+
+    'nav.shots': 'Screenshots',
+    'nav.github': 'GitHub ↗',
+    'hero.sub': 'System privileges without root.',
+    'st.title': 'Four ways <span class="grad">to wake her up</span>.',
+    'st.sub': 'No root, no flashing.',
+    'st.p': 'Use whatever you have at hand: just the phone, a cable and a computer, or an already-rooted device. Only Dhizuku changes system state — the other three last until the next reboot.',
+    'st.link': 'Step-by-step guide with real screenshots',
+    'fl.power': 'Privilege',
+    'fl.pass': 'Grants',
+    'fl.compat': 'Compatibility',
+    'fl.do': 'Device owner',
+    'fl.backup': 'Data',
+    'fl.files': 'Files',
+    'fl.install': 'Installer',
+    'fl.auto': 'Automation',
+    'fl.batch': 'Batch',
+    'fl.tpl': 'Templates',
+    'fl.tool': 'Toolbox',
+    'fl.ui': 'Interface',
+    'cl.api': 'API',
+    'cl.do': 'Device owner',
+    'cl.coexist': 'Coexistence',
+    'cl.why': 'Why',
+    'features.eyebrow': 'Features',
     'features.title': 'What she can do',
-    'features.lead': 'The idea in one sentence: lend system privileges to apps you trust, instead of rooting the whole phone.',
+    'features.lead': 'The whole idea in one sentence: lend system privileges to apps you trust instead of rooting the phone.',
+    'new': 'New',
     'f1.t': 'Privileges without root',
-    'f1.d': 'Approximate root-level power through ADB / wireless debugging — no unlocking, no flashing, warranty intact.',
+    'f1.d': 'Near-root power through ADB / wireless debugging — no unlocking, no flashing, warranty intact.',
     'f2.t': 'Passport system',
-    'f2.d': 'Every app needs your explicit approval on first connect; the allowlist is local and revocable at any time.',
+    'f2.d': 'Every app needs your explicit approval on first connect; the allowlist lives on your device and is revocable.',
     'f3.t': 'Works with the official ecosystem',
     'f3.d': 'Apps built on the official Shizuku-API connect without a single line of changes.',
     'f4.t': 'Dhizuku mode',
-    'f4.d': 'Become Device Owner with one tap for always-on privileges without root or wireless debugging; Dhizuku-API apps can borrow directly.',
-    'f5.t': 'Four activation paths',
-    'f5.d': 'Root / wireless debugging / computer ADB / Dhizuku on one page, with one-tap start once paired.',
-    'f6.t': 'Automatic update checks',
-    'f6.d': 'Every launch checks for a new version and offers an in-app download dialog; falls back to a working mirror when GitHub is blocked.',
-    'f7.t': 'Toolbox',
-    'f7.d': 'Module management, a shell console, accessibility manager, one-tap injection and automation broadcasts.',
-    'f8.t': 'Two UI styles',
-    'f8.d': 'Glassmorphism or Material 3, switchable in one tap, with dark/light and dynamic colour support.',
-
-    'activate.title': 'How to wake her up',
-    'activate.lead': 'Install, activate with whichever method suits you, then start issuing passports to apps.',
-    'a1.pill': 'Recommended',
+    'f4.d': 'One tap makes her the Device Owner: always-on privileges without root or wireless debugging, surviving reboots.',
+    'f5.t': 'App data backup / restore',
+    'f5.d': 'External data (Android/data, obb) packed into the SAF folder you pick; replace-style restore never leaves half-written data.',
+    'f6.t': 'Privileged storage proxy',
+    'f6.d': 'A restricted file API served as shell/root, with path allowlist, four-tier access fallback and a per-call audit line.',
+    'f7.t': 'Installer trust list',
+    'f7.d': 'Trusted apps install silently, everyone else gets a confirmation dialog; APK / apk.1 / XAPK / APKS in one batch queue.',
+    'f8.t': 'EXEC_SHELL automation',
+    'f8.d': 'A token + signature guarded broadcast so Tasker / MacroDroid can run privileged commands and receive results.',
+    'f9.t': 'Batch grants',
+    'f9.d': 'Multi-select grant or revoke with impact confirmation, progress and a result report; every batch lands in the audit log.',
+    'f10.t': 'Permission templates',
+    'f10.d': 'Three built-in templates plus your own, exportable/importable through SAF — move your setup to a new phone.',
+    'f11.t': 'Toolbox',
+    'f11.d': 'Module manager, shell console, accessibility keeper and one-tap injection — no computer needed for everyday privileged chores.',
+    'f12.t': 'Two UI styles',
+    'f12.d': 'Glassmorphism or Material 3, switchable in one tap, with dark/light and dynamic colour support.',
+    'a1.tag': 'Recommended',
     'a1.t': 'Wireless debugging',
-    'a1.d': 'On Android 11+ enable wireless debugging and scan/pair inside the app. Once paired, a single tap restarts her after a reboot.',
+    'a1.d': 'Android 11+ with wireless debugging on: scan or pair inside the app. Once paired, one tap restarts her after a reboot.',
     'a2.t': 'Computer ADB',
     'a2.d': 'With a computer at hand: copy the adb command shown in the app and run it once. No version limits.',
     'a3.t': 'Root',
-    'a3.d': 'If you already have root (KernelSU / Magisk), just wake her up — the easiest path of all.',
+    'a3.d': 'Already rooted (KernelSU / Magisk / APatch)? One tap, one grant, done — plus optional start-on-boot.',
+    'a4.tag': 'Survives reboot',
     'a4.t': 'Dhizuku (Device Owner)',
-    'a4.d': 'Run the dpm set-device-owner command once on a computer (no accounts may be on the device) for root-free, wireless-free privileges that survive reboots.',
+    'a4.d': 'Run the dpm set-device-owner command once on a computer (no accounts on the device). Privileges then survive reboots with no root and no wireless debugging.',
 
-    'shots.title': 'What it looks like',
-    'shots.lead': 'Real device screenshot (vivo V2417A / Android 16, dark glass style).',
-    'shots.cap1': 'Home: service status, version and activation methods at a glance',
+    'shots.eyebrow': 'Screenshots',
+    'shots.title': 'What she looks like',
+    'shots.lead': 'Real device screenshots (vivo V2417A / Android 16, dark glass style).',
+    'cap1': 'Home: service status, version and activation at a glance',
+    'cap2': 'One-stop activation: four ways in, one page',
+    'cap3': 'Authorised apps: every passport, revocable anytime',
+    'cap4': 'Activated: the server is up and running',
 
+    'compat.eyebrow': 'Compatibility',
     'compat.title': 'Ecosystem compatibility',
+    'compat.lead': 'Same wire protocol as upstream Shizuku — different name, different identity.',
     'c1.t': 'Shizuku-API apps connect unchanged',
-    'c1.d': 'Apps built on the official dev.rikka.shizuku:api (MT Manager, Ice Box, SystemUI Tuner and more) connect as-is: the server only checks that an app requested the permission, and the first connection still asks for your approval.',
+    'c1.d': 'Apps built on the official dev.rikka.shizuku:api (MT Manager, Ice Box, SystemUI Tuner and more) connect as-is: the server only checks that an app asked for permission, and the first connection still needs your approval.',
     'c2.t': 'Her own Device Owner',
     'c2.d': 'Once set as Device Owner, Dhizuku-API apps treat Shizako as Dhizuku. All privilege forwarding happens inside the Shizako process — no binder backdoor for third parties.',
-    'c3.t': 'Why the package name differs',
-    'c3.d': "Per upstream Shizuku's license, this project does not use the upstream application id or permission names; it ships com.churan.shizako.permission.* instead.",
-    'c4.t': 'Cannot coexist with official Shizuku',
-    'c4.d': 'The built-in compatibility bridge occupies the official provider authority, so installing both at once conflicts. Pick one.',
+    'c3.t': 'Coexists with official Shizuku',
+    'c3.d': 'Shizako uses its own package, permission and provider authority, so both can be installed at once: whichever server is running serves the app.',
+    'c4.t': 'Why the package name differs',
+    'c4.d': 'Per the upstream license a fork must not use the upstream app id, name or moe.shizuku.manager.permission.* — so this project ships com.churan.shizako and its own permission names.',
 
-    'faq.title': 'FAQ',
+    'safe.eyebrow': 'Trust',
+    'safe.title': 'How to tell an official build',
+    'safe.lead': 'Every official build is signed with the same certificate. If the fingerprint does not match, someone repackaged it — do not install, do not grant.',
+    's1.d': 'All official builds carry the certificate below. Check it with <code>apksigner verify --print-certs</code> or in the app under Settings → About.',
+    's2.d': 'The app reports nothing. The only outbound request is the public GitHub release API used to notice a new version.',
+    's3.d': 'Each privilege belongs to one app you approved, the allowlist is stored locally and every privileged API call is written to the audit log.',
+    's4.d': 'Build it yourself from source; upstream copyright belongs to RikkaApps and the modifications to Churan.',
+
+    'faq.eyebrow': 'FAQ',
+    'faq.title': 'Common questions',
     'q1': 'Do I need root?',
-    'q1a': 'No. Wireless debugging or USB is enough; root simply adds more options.',
+    'q1a': 'No. Wireless debugging or a USB cable is enough; root simply adds more options.',
     'q2': 'How does this relate to Shizuku?',
-    'q2a': 'It is compatible with the Shizuku-API ecosystem — apps built on the official SDK connect without changes. Per the upstream license it ships its own package and permission names, so it cannot coexist with the official app.',
+    'q2a': 'It is compatible with the Shizuku-API ecosystem — apps built on the official SDK connect without changes. Per the upstream license it ships its own package and permission names, and it can be installed alongside the official app.',
     'q3': 'Is granting privileges to apps safe?',
-    'q3a': 'Every app requires your explicit approval on first connect; the allowlist is local and revocable, and Dhizuku privilege forwarding stays inside the Shizako process.',
+    'q3a': 'Every app needs your explicit approval on first connect; the allowlist is local and revocable, Dhizuku forwarding stays inside the Shizako process, and the storage proxy needs a separate grant with per-call audit.',
     'q4': 'Which Android versions are supported?',
-    'q4a': 'Android 7.0 and above; wireless debugging activation requires Android 11+.',
+    'q4a': 'Android 7.0 and above; wireless-debugging activation needs Android 11+.',
     'q5': 'Does it collect my data?',
     'q5a': 'No. The app reports no usage data at all; the automatic update check only queries the public GitHub release API to see whether a newer version exists.',
     'q6': 'Is it open source? Can I build it myself?',
-    'q6a': 'Yes, Apache-2.0. Clone the repository and run ./gradlew :manager:assembleRelease — JDK 17+ and Android SDK 36 required.',
+    'q6a': 'Yes, Apache-2.0. Clone the repository and run <code>./gradlew :manager:assembleRelease</code> — JDK 21 and Android SDK 36 required.',
 
     'final.title': 'Take her home',
-    'final.lead': 'Download, wake her up, and start issuing passports to your apps.',
+    'final.lead': 'Download, wake her up, and start handing out passports to your apps.',
+    'final.download': 'Download latest',
     'final.star': 'Star the project',
 
     'footer.desc': 'A catgirl-mascot privileged-API assistant. Open source, free, no ads.',
@@ -97,114 +163,156 @@
     'footer.repo': 'GitHub repository',
     'footer.releases': 'Releases',
     'footer.issues': 'Issues',
-    'footer.api': 'Developer API docs',
+    'footer.docs': 'Developer docs',
     'footer.community': 'Community',
     'footer.license': 'License',
-    'footer.licenseText': 'Apache License 2.0. Upstream copyright RikkaApps; modifications copyright 初然. Icons: Lucide (ISC).',
-    'footer.bottom': 'Made with love · she does not bite (ˊᗜˋ*)',
-
-    'stat.version': 'Latest version',
-    'stat.downloads': 'Total downloads',
-    'stat.stars': 'Stars',
-    'stat.platform': 'Platform',
-    'stat.license': 'License',
-    'stat.version.desc': 'Newest release tag on GitHub',
-    'stat.downloads.desc': 'Sum of downloads across all releases',
-    'stat.stars.desc': 'One tap feeds the catgirl'
+    'footer.licenseText': 'Apache License 2.0. Upstream copyright RikkaApps; modifications copyright Churan.',
+    'footer.bottom': 'Made with love · she only bites evil (ˊᗜˋ*)'
   };
 
-  var TITLES = {
-    zh: 'Shizako — 不 Root 也能用系统特权 API',
-    en: 'Shizako — privileged Android APIs without root'
-  };
+  var zhStore = {};   // key -> 原始中文（textContent 或 innerHTML）
 
-  // ── 图标注入 ─────────────────────────────────────────────────────────
-  function paintIcons() {
-    var icons = window.SHIZAKO_ICONS;
-    if (!icons) return;
-    [].slice.call(document.querySelectorAll('[data-icon]')).forEach(function (el) {
-      var body = icons[el.getAttribute('data-icon')];
-      if (!body || el.getAttribute('data-painted') === '1') return;
-      el.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" '
-        + 'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">'
-        + body + '</svg>';
-      el.setAttribute('data-painted', '1');
+  function collectZh() {
+    [].slice.call(document.querySelectorAll('[data-i18n]')).forEach(function (el) {
+      var k = el.getAttribute('data-i18n');
+      if (!(k in zhStore)) zhStore[k] = el.innerHTML;
     });
   }
 
-  // ── 中英切换 ─────────────────────────────────────────────────────────
-  var nodes = [].slice.call(document.querySelectorAll('[data-i18n]'));
-  var ZH = {};
-  nodes.forEach(function (el) { ZH[el.getAttribute('data-i18n')] = el.innerHTML; });
-
-  var langBtn = document.getElementById('langBtn');
-  var current = 'zh';
-
-  function apply(lang) {
-    var dict = lang === 'en' ? EN : ZH;
-    nodes.forEach(function (el) {
-      var key = el.getAttribute('data-i18n');
-      if (dict[key] != null) el.innerHTML = dict[key];
+  function setLang(lang) {
+    var html = document.documentElement;
+    html.setAttribute('lang', lang === 'en' ? 'en' : 'zh-CN');
+    [].slice.call(document.querySelectorAll('[data-i18n]')).forEach(function (el) {
+      var k = el.getAttribute('data-i18n');
+      if (lang === 'en') {
+        if (!(k in EN)) return;
+        if (el.hasAttribute('data-i18n-html')) el.innerHTML = EN[k];
+        else el.textContent = EN[k];
+      } else if (k in zhStore) {
+        el.innerHTML = zhStore[k];
+      }
     });
-    document.documentElement.lang = lang === 'en' ? 'en' : 'zh-CN';
-    document.title = TITLES[lang] || TITLES.zh;
-    if (langBtn) langBtn.textContent = lang === 'en' ? '中文' : 'EN';
-    current = lang;
-    try { localStorage.setItem('shizako.lang', lang); } catch (e) { /* 忽略 */ }
+    // 激活教程里中英文是两套截图：按语言换图片（data-img-zh / data-img-en）
+    [].slice.call(document.querySelectorAll('[data-img-zh]')).forEach(function (img) {
+      var want = lang === 'en' ? img.getAttribute('data-img-en') : img.getAttribute('data-img-zh');
+      if (want && img.getAttribute('src') !== want) img.setAttribute('src', want);
+    });
+    // 下拉目录里的当前项标记 / 语言按钮文案
+    var btn = document.getElementById('langBtn');
+    if (btn) btn.textContent = lang === 'en' ? '中文' : 'EN';
+    try { localStorage.setItem('shizako.lang', lang); } catch (e) { /* 隐私模式：忽略 */ }
+    paintIcons(document);
   }
 
-  var saved = null;
-  try { saved = localStorage.getItem('shizako.lang'); } catch (e) { /* 忽略 */ }
-  apply(saved || ((navigator.language || '').toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en'));
-  if (langBtn) {
-    langBtn.addEventListener('click', function () { apply(current === 'zh' ? 'en' : 'zh'); });
+  function initLang() {
+    // 只有首页同时有两套文案；文档页与激活教程是纯中文，
+    // 那里不放语言按钮，也不做切换，避免出现「英文导航 + 中文正文」。
+    var btn = document.getElementById('langBtn');
+    if (!btn) return;
+    collectZh();
+    var saved = null;
+    try { saved = localStorage.getItem('shizako.lang'); } catch (e) { /* ignore */ }
+    // 默认中文；只有用户手动切过英文（或被浏览器语言判定为英文以外的明确选择）才跟随存储值。
+    var lang = saved === 'en' ? 'en' : 'zh';
+    setLang(lang);
+    btn.addEventListener('click', function () {
+      setLang(document.documentElement.getAttribute('lang') === 'en' ? 'zh' : 'en');
+    });
   }
 
-  // ── 顶栏滚动态 + 手机端汉堡菜单 ──────────────────────────────────────
-  var nav = document.getElementById('nav');
-  var toggle = document.getElementById('navToggle');
-  var menu = document.getElementById('mobileMenu');
-
-  function onScroll() { if (nav) nav.classList.toggle('scrolled', window.scrollY > 8); }
-
-  function closeMenu() {
-    if (!menu) return;
-    menu.classList.remove('open');
-    if (toggle) toggle.setAttribute('aria-expanded', 'false');
-  }
-
-  if (toggle && menu) {
-    // 菜单顶部对齐真实顶栏高度（写死 56px 会在有安全区/大字号时错位）
-    function syncNavHeight() {
-      if (nav) document.documentElement.style.setProperty('--navh', nav.offsetHeight + 'px');
+  /* ── 顶栏 / 抽屉 ───────────────────────────────────────────────────────── */
+  function initChrome() {
+    var bar = document.getElementById('topbar');
+    function onScroll() {
+      if (bar) bar.classList.toggle('scrolled', window.scrollY > 8);
     }
-    syncNavHeight();
-    window.addEventListener('resize', function () { syncNavHeight(); closeMenu(); });
-    window.addEventListener('orientationchange', function () { syncNavHeight(); closeMenu(); });
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
 
-    toggle.addEventListener('click', function () {
-      var open = menu.classList.toggle('open');
-      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-    menu.addEventListener('click', function (e) { if (e.target.tagName === 'A') closeMenu(); });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(); });
-    document.addEventListener('click', function (e) {
-      if (!menu.classList.contains('open')) return;
-      if (menu.contains(e.target) || toggle.contains(e.target)) return;
-      closeMenu();
-    });
+    var toggle = document.getElementById('menuBtn');
+    var drawer = document.getElementById('drawer');
+    if (toggle && drawer) {
+      toggle.addEventListener('click', function () {
+        var open = drawer.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+      drawer.addEventListener('click', function (e) {
+        if (e.target.closest('a')) {
+          drawer.classList.remove('open');
+          toggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && drawer.classList.contains('open')) {
+          drawer.classList.remove('open');
+          toggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
   }
 
-  window.addEventListener('scroll', onScroll, { passive: true });
+  /* ── 滚动进场 ──────────────────────────────────────────────────────────── */
+  function initReveal() {
+    var targets = [].slice.call(document.querySelectorAll('[data-reveal]'));
+    if (!targets.length) return;
 
-  // ── 数字滚动（进入视口时从 0 递增到目标值）───────────────────────────
-  // alive()：动画在跑的过程中有新数据到达时返回 false，动画立刻停手 ——
-  // 否则它会在 900ms 内把「旧目标值」一帧帧写回去，把刚到的真实数字盖掉。
-  function countUp(el, target, alive) {
+    function show(el) { el.classList.add('in'); }
+
+    if (reduceMotion || !('IntersectionObserver' in window)) {
+      targets.forEach(function (el) { el.classList.add('reveal'); show(el); });
+      return;
+    }
+
+    var pending = targets.slice();
+    targets.forEach(function (el, i) {
+      el.classList.add('reveal');
+      el.style.transitionDelay = Math.min(i % 4, 3) * 70 + 'ms';
+    });
+
+    // 位置兜底：滚动时按 getBoundingClientRect 再判一次。
+    // 只靠 IntersectionObserver 的话，快速甩动滚轮时「一帧就穿过视口」的元素会漏掉，
+    // 表现就是卡片永久停在 opacity:0（之前踩过这个坑）。
+    function revealInView() {
+      var vh = window.innerHeight || 800;
+      for (var i = pending.length - 1; i >= 0; i--) {
+        var el = pending[i];
+        var r = el.getBoundingClientRect();
+        if (r.top < vh * 0.94 || r.bottom < 0) {
+          show(el);
+          pending.splice(i, 1);
+        }
+      }
+    }
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        show(en.target);
+        io.unobserve(en.target);
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.01 });
+    targets.forEach(function (el) { io.observe(el); });
+
+    var ticking = false;
+    window.addEventListener('scroll', function () {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () { ticking = false; revealInView(); });
+    }, { passive: true });
+    window.addEventListener('resize', revealInView, { passive: true });
+
+    // 最后一道保险：3 秒后无条件全部显示（宁可没动画，也不能看不见）
+    setTimeout(function () { targets.forEach(show); }, 3000);
+    revealInView();
+  }
+
+  /* ── 数据卡片：兜底值 → stats.json → GitHub API ────────────────────────── */
+  function fmt(v) { return Number(v).toLocaleString('en-US'); }
+
+  function countUp(el, target) {
     if (reduceMotion || !isFinite(target)) { el.textContent = fmt(target); return; }
     var start = performance.now(), dur = 900;
     function step(now) {
-      if (alive && !alive()) return;
       var p = Math.min(1, (now - start) / dur);
       var eased = 1 - Math.pow(1 - p, 3);
       el.textContent = fmt(Math.round(target * eased));
@@ -212,159 +320,139 @@
     }
     requestAnimationFrame(step);
   }
-  function fmt(v) { return Number(v).toLocaleString('en-US'); }
 
-  // ── 数据卡片 ─────────────────────────────────────────────────────────
-  // 数字有三个来源，优先级从低到高：
-  //   1) HTML 里写死的兜底值（JS / 网络全挂也看得见）；
-  //   2) 同源 stats.json（badges.yml 定时刷新）—— 永远读得到，是弱网兜底；
-  //   3) api.github.com 实时查询 —— 拿到就覆盖，刷新页面即最新数字。
-  // 为什么保留 2)：api.github.com 在国内部分网络会被 DNS 拦掉，
-  // 那一路失败时页面仍要显示「较新」的数字，而不是写死的兜底值。
-  var statAnimated = {};   // key -> 首次进场动画是否已经放过
-  var statSeq = {};        // key -> 动画代号：新数据一到就作废正在跑的那段动画
-  var statFromData = {};   // key -> 已经拿到过真实数据（stats.json / 实时接口）
+  var statDone = {};      // key -> 已经写过真实数据（stats.json 或实时接口）
+  var statAnimated = {};  // key -> 数字滚动是否已经跑过
 
-  function statEls(key) {
-    return [].slice.call(document.querySelectorAll('[data-stat="' + key + '"]'));
-  }
-
-  // 渲染某个卡片。animate=true 且这张卡还没滚动过 → 数字滚动；
-  // 之后再有新数据（stats.json 晚到、或实时查询返回）就直接换数字 ——
-  // 既不会从 0 再滚一遍，也不会因为「已经滚过」把新值丢掉
-  // （早先的写法只认第一次，兜底值先滚完就把后到的真实数字吞了）。
-  function renderStat(key, value, animate) {
+  function renderStat(key, value) {
     if (value === undefined || value === null || value === '') return;
     var s = String(value);
     var numeric = /^\d+$/.test(s);
-    var seq = (statSeq[key] = (statSeq[key] || 0) + 1);
-    statEls(key).forEach(function (el) {
-      if (numeric && animate && !statAnimated[key] && !reduceMotion) {
+    statDone[key] = true;
+    [].slice.call(document.querySelectorAll('[data-stat="' + key + '"]')).forEach(function (el) {
+      if (numeric && !statAnimated[key]) {
         statAnimated[key] = true;
-        countUp(el, Number(s), function () { return statSeq[key] === seq; });
+        countUp(el, Number(s));
       } else {
         el.textContent = numeric ? fmt(Number(s)) : s;
       }
     });
   }
 
-  function startCounts() {
-    // 首屏兜底值的进场滚动：把 HTML 里的当前值滚一遍。
-    // 已经拿到真实数据的卡片跳过 —— 不能用兜底值把新数字盖回去。
-    [].slice.call(document.querySelectorAll('[data-stat]')).forEach(function (el) {
-      var key = el.getAttribute('data-stat');
-      if (statFromData[key]) return;
+  function initStats() {
+    var els = [].slice.call(document.querySelectorAll('[data-stat]'));
+    if (!els.length) return;
+
+    // 1) HTML 兜底值：纯数字的卡片先滚一遍（版本号是字符串，不能滚动）
+    els.forEach(function (el) {
       var txt = (el.textContent || '').trim();
-      // 只有「纯数字」的卡片才做数字滚动。
-      // 版本号是 zako3.12 这种字符串，早先这里用「提取所有数字」判断，
-      // 于是它被当成 312 滚了一遍并覆盖掉原文本（真机上显示成 312）。
+      var key = el.getAttribute('data-stat');
+      if (statDone[key] || statAnimated[key]) return;
       if (!/^[\d,]+$/.test(txt)) return;
       var raw = txt.replace(/[^\d]/g, '');
       if (!raw) return;
-      renderStat(key, raw, true);
+      statAnimated[key] = true;
+      countUp(el, Number(raw));
     });
-  }
 
-  // ── 滚动进场动画 ─────────────────────────────────────────────────────
-  var revealTargets = [].slice.call(document.querySelectorAll(
-    '.section > h2, .section > .lead, .section .card, .shots figure, .faq details, .cta-final > *'
-  ));
-  if (!reduceMotion && 'IntersectionObserver' in window && revealTargets.length) {
-    revealTargets.forEach(function (el, i) {
-      el.classList.add('reveal');
-      el.style.transitionDelay = Math.min(i % 6, 5) * 55 + 'ms';
-    });
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        if (!en.isIntersecting) return;
-        en.target.classList.add('in');
-        io.unobserve(en.target);
-        if (en.target.closest && en.target.closest('.stats-grid')) startCounts();
+    // 2) 同源 stats.json（badges.yml 每小时刷新；api.github.com 被墙时就是它兜底）
+    fetch('stats.json', { cache: 'no-cache' })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (s) {
+        if (!s) return;
+        ['version', 'downloads', 'stars'].forEach(function (k) { renderStat(k, s[k]); });
+      })
+      .catch(function () { /* 静默 */ });
+
+    // 3) api.github.com 实时值；失败不影响前两级
+    var API = 'https://api.github.com/repos/cr1437/Shizako';
+    function gh(url, ms) {
+      if (!window.fetch) return Promise.reject();
+      var ctrl = window.AbortController ? new AbortController() : null;
+      var timer = ctrl ? setTimeout(function () { ctrl.abort(); }, ms) : null;
+      return fetch(url, ctrl ? { signal: ctrl.signal } : undefined).then(function (r) {
+        if (timer) clearTimeout(timer);
+        return r.ok ? r.json() : null;
       });
-    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
-    revealTargets.forEach(function (el) { io.observe(el); });
-    // 首屏的数据卡片可能已经在视口内，直接开始滚动
-    setTimeout(startCounts, 300);
-  } else {
-    startCounts();
-  }
-
-  // ── 数据来源 2：同源 stats.json（badges.yml 定时刷新，弱网兜底）──────
-  fetch('stats.json', { cache: 'no-cache' })
-    .then(function (r) { return r.ok ? r.json() : null; })
-    .then(function (s) {
-      if (!s) return;
-      ['version', 'downloads', 'stars'].forEach(function (k) {
-        if (s[k] === undefined || s[k] === null || s[k] === '') return;
-        statFromData[k] = true;
-        renderStat(k, s[k], true);
-      });
-    })
-    .catch(function () { /* 静默：兜底值已在 HTML 里 */ });
-
-  // ── 数据来源 3：GitHub API 实时查询 ──────────────────────────────────
-  // 刷新页面即最新：star 一次请求；下载量把所有 release 的 asset 次数加起来
-  // （100 条一页，实测 12 个 release，留了翻页保险）。任一请求失败都静默 ——
-  // 上面两路数字已经显示出来了，页面不该因为 GitHub 被拦而空着或报错。
-  var GH_API = 'https://api.github.com/repos/cr1437/Shizako';
-  var liveLastFetch = 0;
-
-  function ghJson(url, timeoutMs) {
-    var ctrl = window.AbortController ? new AbortController() : null;
-    var timer = ctrl ? setTimeout(function () { ctrl.abort(); }, timeoutMs) : null;
-    return fetch(url, {
-      cache: 'no-store',
-      signal: ctrl ? ctrl.signal : undefined,
-      headers: { Accept: 'application/vnd.github+json' },
-    }).then(function (r) {
-      if (timer) clearTimeout(timer);
-      if (!r.ok) throw new Error('HTTP ' + r.status);   // 403 = 限流，同样静默
-      return r.json();
-    }, function (err) {
-      if (timer) clearTimeout(timer);
-      throw err;                                        // DNS 被拦 / 超时
-    });
-  }
-
-  function refreshLiveStats() {
-    liveLastFetch = Date.now();
-
-    ghJson(GH_API, 6000).then(function (repo) {
-      if (repo && typeof repo.stargazers_count === 'number') {
-        statFromData.stars = true;
-        renderStat('stars', repo.stargazers_count, true);
-      }
-    }).catch(function () { /* 保持 stats.json / 兜底数字 */ });
-
-    (function loadReleases(page, acc) {
-      ghJson(GH_API + '/releases?per_page=100&page=' + page, 8000).then(function (list) {
-        if (!Array.isArray(list)) throw new Error('bad response');
-        acc = acc.concat(list);
-        if (list.length === 100 && page < 5) return loadReleases(page + 1, acc);
-        if (!acc.length) return;
-        var total = 0;
-        acc.forEach(function (rel) {
-          (rel.assets || []).forEach(function (a) { total += (a.download_count || 0); });
-        });
-        statFromData.downloads = true;
-        renderStat('downloads', total, true);
-        if (acc[0] && acc[0].tag_name) {
-          statFromData.version = true;
-          renderStat('version', acc[0].tag_name, true);
-        }
-      }).catch(function () { /* 同上 */ });
-    })(1, []);
-  }
-
-  refreshLiveStats();
-
-  // 切回标签页时再刷一次（1 分钟内不重复请求：来回切页面不该反复打 API）
-  document.addEventListener('visibilitychange', function () {
-    if (document.visibilityState === 'visible' && Date.now() - liveLastFetch > 60000) {
-      refreshLiveStats();
     }
-  });
+    gh(API + '/releases?per_page=100', 6000).then(function (list) {
+      if (!list || !list.length) return;
+      var downloads = 0;
+      list.forEach(function (rel) {
+        (rel.assets || []).forEach(function (a) { downloads += a.download_count || 0; });
+      });
+      renderStat('downloads', downloads);
+      var latest = (list.filter(function (r) { return !r.draft && !r.prerelease; })[0] || list[0]);
+      if (latest && latest.tag_name) renderStat('version', latest.tag_name);
+    }).catch(function () { /* 静默 */ });
+    gh(API, 6000).then(function (repo) {
+      if (repo && repo.stargazers_count !== undefined) renderStat('stars', repo.stargazers_count);
+    }).catch(function () { /* 静默 */ });
+  }
 
-  paintIcons();
-  onScroll();
+  /* ── 文档页：进度条 / 目录高亮 / 代码复制 ──────────────────────────────── */
+  function initDocs() {
+    var bar = document.getElementById('docProgress');
+    var toc = document.getElementById('docToc');
+    var links = toc ? [].slice.call(toc.querySelectorAll('a')) : [];
+    var heads = links.map(function (a) {
+      var href = a.getAttribute('href') || '';
+      return document.getElementById(href.slice(1));
+    });
+
+    function spy() {
+      if (!links.length) return;
+      var idx = 0;
+      for (var i = 0; i < heads.length; i++) {
+        if (heads[i] && heads[i].getBoundingClientRect().top <= 130) idx = i;
+      }
+      links.forEach(function (a, i) { a.classList.toggle('active', i === idx); });
+    }
+
+    function onScroll() {
+      if (bar) {
+        var h = document.documentElement.scrollHeight - window.innerHeight;
+        bar.style.width = (h > 0 ? Math.min(100, (window.scrollY / h) * 100) : 0) + '%';
+      }
+      spy();
+    }
+    if (bar || links.length) {
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    }
+
+    // 代码块复制（.code / .code-copy 由 md2html.py 生成）
+    [].slice.call(document.querySelectorAll('.code')).forEach(function (box) {
+      var btn = box.querySelector('.code-copy');
+      var pre = box.querySelector('pre');
+      if (!btn || !pre) return;
+      var reset = null;
+      btn.addEventListener('click', function () {
+        var text = pre.innerText;
+        function done() {
+          btn.textContent = '已复制';
+          clearTimeout(reset);
+          reset = setTimeout(function () { btn.textContent = '复制'; }, 1400);
+        }
+        function fallback() {
+          var ta = document.createElement('textarea');
+          ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+          document.body.appendChild(ta); ta.select();
+          try { document.execCommand('copy'); done(); } catch (e) { /* ignore */ }
+          document.body.removeChild(ta);
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(done, fallback);
+        } else { fallback(); }
+      });
+    });
+  }
+
+  /* ── 启动 ──────────────────────────────────────────────────────────────── */
+  paintIcons(document);
+  initLang();
+  initChrome();
+  initReveal();
+  initStats();
+  initDocs();
 })();

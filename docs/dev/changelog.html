@@ -5,44 +5,61 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>更新日志 — Shizako 开发文档</title>
 <meta name="description" content="各版本的对外更新内容（与 GitHub Releases 同步）">
-<meta name="theme-color" content="#0b0d12">
-<link rel="icon" href="../assets/logo.svg">
-<link rel="stylesheet" href="../assets/site.css?v=3">
+<meta name="theme-color" content="#07080d">
+<link rel="icon" type="image/png" sizes="64x64" href="../assets/icon-64.png">
+<link rel="apple-touch-icon" href="../assets/icon.png">
+<link rel="stylesheet" href="../assets/site.css?v=14">
 </head>
 <body>
 
-<div class="doc-progress"><span id="docProgress"></span></div>
+<div class="doc-progress" aria-hidden="true"><span id="docProgress"></span></div>
 
-<header class="nav" id="nav">
-  <a class="brand" href="../index.html">
-    <img src="../assets/logo.svg" alt="Shizako" width="32" height="32">
-    <span>Shizako</span>
-  </a>
-  <nav class="nav-links">
-    <a href="../index.html">首页</a>
-    <a href="../index.html#features">功能</a>
-    <a href="../index.html#activate">激活</a>
-    <a href="index.html" class="active">开发文档</a>
-    <a href="https://github.com/cr1437/Shizako">GitHub</a>
-  </nav>
-  <div class="nav-right">
-    <a class="btn primary small" href="https://github.com/cr1437/Shizako/releases/latest">下载</a>
+<header class="topbar" id="topbar">
+  <div class="wrap">
+    <a class="brand" href="../index.html">
+      <img src="../assets/icon.png" alt="" width="30" height="30">
+      <span>Shizako</span>
+    </a>
+    <nav class="nav-links" aria-label="主导航">
+      <a href="../index.html#features" data-i18n="nav.features">功能</a>
+      <a href="../index.html#activate" data-i18n="nav.activate">激活</a>
+      <a href="../index.html#shots" data-i18n="nav.shots">截图</a>
+      <a href="../index.html#compat" data-i18n="nav.compat">兼容</a>
+      <a href="../index.html#faq" data-i18n="nav.faq">FAQ</a>
+      <a href="index.html" class="active" data-i18n="nav.docs">开发文档</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="icon-link" href="https://github.com/cr1437/Shizako" data-i18n="nav.github">GitHub ↗</a>
+      <a class="btn primary sm" href="https://github.com/cr1437/Shizako/releases/latest" data-i18n="nav.download">下载</a>
+      <button class="menu-btn" id="menuBtn" type="button" aria-label="菜单" aria-expanded="false">
+        <span class="icon" data-icon="menu"></span>
+      </button>
+    </div>
   </div>
 </header>
+
+<nav class="drawer" id="drawer" aria-label="站点导航">
+  <a href="../index.html#features" data-i18n="nav.features">功能</a>
+  <a href="../index.html#activate" data-i18n="nav.activate">激活</a>
+  <a href="../index.html#compat" data-i18n="nav.compat">兼容</a>
+  <a href="../act/index.html" data-i18n="nav.guide">激活教程</a>
+  <a href="index.html" data-i18n="nav.docs">开发文档</a>
+  <a href="https://github.com/cr1437/Shizako" data-i18n="nav.repo">GitHub 仓库</a>
+</nav>
 
 <div class="doc-shell">
 
   <aside class="doc-nav">
     <p class="doc-nav-title">开发文档</p>
     <nav>
-<a href="api.html">API 使用指南</a>
+      <a href="api.html">API 使用指南</a>
       <a href="build.html">编译与参与开发</a>
       <a href="changes.html">对 Shizuku-API 的本地修改</a>
       <a href="upstream-api.html">Shizuku-API 上游文档</a>
       <a href="rish.html">rish 命令行</a>
       <a href="changelog.html" class="active">更新日志</a>
     </nav>
-    <a class="doc-nav-back" href="index.html">全部文档 →</a>
+    <a class="doc-nav-back" href="index.html">← 全部文档</a>
   </aside>
 
   <main class="doc-main">
@@ -231,59 +248,42 @@
 
 </div>
 
-<script>
-(function () {
-  // 顶栏 + 阅读进度
-  var nav = document.getElementById('nav');
-  var bar = document.getElementById('docProgress');
-  function onScroll() {
-    if (nav) nav.classList.toggle('scrolled', window.scrollY > 8);
-    if (bar) {
-      var h = document.documentElement.scrollHeight - window.innerHeight;
-      bar.style.width = (h > 0 ? Math.min(100, (window.scrollY / h) * 100) : 0) + '%';
-    }
-    spy();
-  }
-  window.addEventListener('scroll', onScroll, { passive: true });
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-cols">
+      <div>
+        <a class="brand" href="../index.html" style="margin-bottom:12px">
+          <img src="../assets/icon.png" alt="" width="30" height="30">
+          <span>Shizako</span>
+        </a>
+        <p data-i18n="footer.desc">猫耳看板娘的系统特权助手。开源、免费、无广告。</p>
+      </div>
+      <div>
+        <h4 data-i18n="footer.links">链接</h4>
+        <ul>
+          <li><a href="../index.html">官网首页</a></li>
+          <li><a href="https://github.com/cr1437/Shizako" data-i18n="footer.repo">GitHub 仓库</a></li>
+          <li><a href="https://github.com/cr1437/Shizako/releases" data-i18n="footer.releases">版本发布</a></li>
+          <li><a href="https://github.com/cr1437/Shizako/issues" data-i18n="footer.issues">问题反馈</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-i18n="footer.community">交流</h4>
+        <ul>
+          <li><a href="https://qm.qq.com/cgi-bin/qm/qr?k=891276089">QQ 891276089</a></li>
+          <li><a href="https://qm.qq.com/cgi-bin/qm/qr?k=1104445003">QQ 群 1104445003</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-i18n="footer.license">许可</h4>
+        <p data-i18n="footer.licenseText">Apache License 2.0。上游版权归 RikkaApps，修改部分版权归 初然。</p>
+      </div>
+    </div>
+    <p class="footer-bottom" data-i18n="footer.bottom">为爱发电 · 用爱发电的她不会咬人 (ˊᗜˋ*)</p>
+  </div>
+</footer>
 
-  // 本页目录高亮：取当前视口内最后一个已滚过的标题
-  var links = [].slice.call(document.querySelectorAll('#docToc a'));
-  var heads = links.map(function (a) {
-    var id = decodeURIComponent(a.getAttribute('href').slice(1));
-    return document.getElementById(id) || document.getElementById(a.getAttribute('href').slice(1));
-  });
-  function spy() {
-    if (!links.length) return;
-    var idx = 0;
-    for (var i = 0; i < heads.length; i++) {
-      if (heads[i] && heads[i].getBoundingClientRect().top <= 120) idx = i;
-    }
-    links.forEach(function (a, i) { a.classList.toggle('active', i === idx); });
-  }
-
-  // 代码块：加「复制」按钮（语言标签由生成器写在 HTML 里）
-  [].slice.call(document.querySelectorAll('.code')).forEach(function (box) {
-    var btn = box.querySelector('.code-copy');
-    var pre = box.querySelector('pre');
-    if (!btn || !pre) return;
-    btn.addEventListener('click', function () {
-      var text = pre.innerText;
-      function done() { btn.textContent = '已复制'; setTimeout(function () { btn.textContent = '复制'; }, 1400); }
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(done, function () { fallback(text, done); });
-      } else { fallback(text, done); }
-    });
-  });
-  function fallback(text, done) {
-    var ta = document.createElement('textarea');
-    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
-    document.body.appendChild(ta); ta.select();
-    try { document.execCommand('copy'); done(); } catch (e) {}
-    document.body.removeChild(ta);
-  }
-
-  onScroll();
-})();
-</script>
+<script src="../assets/icons.js?v=5"></script>
+<script src="../assets/site.js?v=14"></script>
 </body>
 </html>

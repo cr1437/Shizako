@@ -39,39 +39,56 @@ PAGE = """<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{title} — Shizako 开发文档</title>
 <meta name="description" content="{desc}">
-<meta name="theme-color" content="#0b0d12">
-<link rel="icon" href="{p}assets/logo.svg">
-<link rel="stylesheet" href="{p}assets/site.css?v=3">
+<meta name="theme-color" content="#07080d">
+<link rel="icon" type="image/png" sizes="64x64" href="{p}assets/icon-64.png">
+<link rel="apple-touch-icon" href="{p}assets/icon.png">
+<link rel="stylesheet" href="{p}assets/site.css?v=14">
 </head>
 <body>
 
-<div class="doc-progress"><span id="docProgress"></span></div>
+<div class="doc-progress" aria-hidden="true"><span id="docProgress"></span></div>
 
-<header class="nav" id="nav">
-  <a class="brand" href="{p}index.html">
-    <img src="{p}assets/logo.svg" alt="Shizako" width="32" height="32">
-    <span>Shizako</span>
-  </a>
-  <nav class="nav-links">
-    <a href="{p}index.html">首页</a>
-    <a href="{p}index.html#features">功能</a>
-    <a href="{p}index.html#activate">激活</a>
-    <a href="index.html" class="active">开发文档</a>
-    <a href="https://github.com/cr1437/Shizako">GitHub</a>
-  </nav>
-  <div class="nav-right">
-    <a class="btn primary small" href="https://github.com/cr1437/Shizako/releases/latest">下载</a>
+<header class="topbar" id="topbar">
+  <div class="wrap">
+    <a class="brand" href="{p}index.html">
+      <img src="{p}assets/icon.png" alt="" width="30" height="30">
+      <span>Shizako</span>
+    </a>
+    <nav class="nav-links" aria-label="主导航">
+      <a href="{p}index.html#features" data-i18n="nav.features">功能</a>
+      <a href="{p}index.html#activate" data-i18n="nav.activate">激活</a>
+      <a href="{p}index.html#shots" data-i18n="nav.shots">截图</a>
+      <a href="{p}index.html#compat" data-i18n="nav.compat">兼容</a>
+      <a href="{p}index.html#faq" data-i18n="nav.faq">FAQ</a>
+      <a href="index.html" class="active" data-i18n="nav.docs">开发文档</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="icon-link" href="https://github.com/cr1437/Shizako" data-i18n="nav.github">GitHub ↗</a>
+      <a class="btn primary sm" href="https://github.com/cr1437/Shizako/releases/latest" data-i18n="nav.download">下载</a>
+      <button class="menu-btn" id="menuBtn" type="button" aria-label="菜单" aria-expanded="false">
+        <span class="icon" data-icon="menu"></span>
+      </button>
+    </div>
   </div>
 </header>
+
+<nav class="drawer" id="drawer" aria-label="站点导航">
+  <a href="{p}index.html#features" data-i18n="nav.features">功能</a>
+  <a href="{p}index.html#activate" data-i18n="nav.activate">激活</a>
+  <a href="{p}index.html#compat" data-i18n="nav.compat">兼容</a>
+  <a href="{p}act/index.html" data-i18n="nav.guide">激活教程</a>
+  <a href="index.html" data-i18n="nav.docs">开发文档</a>
+  <a href="https://github.com/cr1437/Shizako" data-i18n="nav.repo">GitHub 仓库</a>
+</nav>
 
 <div class="doc-shell">
 
   <aside class="doc-nav">
     <p class="doc-nav-title">开发文档</p>
     <nav>
-{doclist}
+      {doclist}
     </nav>
-    <a class="doc-nav-back" href="index.html">全部文档 →</a>
+    <a class="doc-nav-back" href="index.html">← 全部文档</a>
   </aside>
 
   <main class="doc-main">
@@ -107,60 +124,43 @@ PAGE = """<!DOCTYPE html>
 
 </div>
 
-<script>
-(function () {{
-  // 顶栏 + 阅读进度
-  var nav = document.getElementById('nav');
-  var bar = document.getElementById('docProgress');
-  function onScroll() {{
-    if (nav) nav.classList.toggle('scrolled', window.scrollY > 8);
-    if (bar) {{
-      var h = document.documentElement.scrollHeight - window.innerHeight;
-      bar.style.width = (h > 0 ? Math.min(100, (window.scrollY / h) * 100) : 0) + '%';
-    }}
-    spy();
-  }}
-  window.addEventListener('scroll', onScroll, {{ passive: true }});
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-cols">
+      <div>
+        <a class="brand" href="{p}index.html" style="margin-bottom:12px">
+          <img src="{p}assets/icon.png" alt="" width="30" height="30">
+          <span>Shizako</span>
+        </a>
+        <p data-i18n="footer.desc">猫耳看板娘的系统特权助手。开源、免费、无广告。</p>
+      </div>
+      <div>
+        <h4 data-i18n="footer.links">链接</h4>
+        <ul>
+          <li><a href="{p}index.html">官网首页</a></li>
+          <li><a href="https://github.com/cr1437/Shizako" data-i18n="footer.repo">GitHub 仓库</a></li>
+          <li><a href="https://github.com/cr1437/Shizako/releases" data-i18n="footer.releases">版本发布</a></li>
+          <li><a href="https://github.com/cr1437/Shizako/issues" data-i18n="footer.issues">问题反馈</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-i18n="footer.community">交流</h4>
+        <ul>
+          <li><a href="https://qm.qq.com/cgi-bin/qm/qr?k=891276089">QQ 891276089</a></li>
+          <li><a href="https://qm.qq.com/cgi-bin/qm/qr?k=1104445003">QQ 群 1104445003</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-i18n="footer.license">许可</h4>
+        <p data-i18n="footer.licenseText">Apache License 2.0。上游版权归 RikkaApps，修改部分版权归 初然。</p>
+      </div>
+    </div>
+    <p class="footer-bottom" data-i18n="footer.bottom">为爱发电 · 用爱发电的她不会咬人 (ˊᗜˋ*)</p>
+  </div>
+</footer>
 
-  // 本页目录高亮：取当前视口内最后一个已滚过的标题
-  var links = [].slice.call(document.querySelectorAll('#docToc a'));
-  var heads = links.map(function (a) {{
-    var id = decodeURIComponent(a.getAttribute('href').slice(1));
-    return document.getElementById(id) || document.getElementById(a.getAttribute('href').slice(1));
-  }});
-  function spy() {{
-    if (!links.length) return;
-    var idx = 0;
-    for (var i = 0; i < heads.length; i++) {{
-      if (heads[i] && heads[i].getBoundingClientRect().top <= 120) idx = i;
-    }}
-    links.forEach(function (a, i) {{ a.classList.toggle('active', i === idx); }});
-  }}
-
-  // 代码块：加「复制」按钮（语言标签由生成器写在 HTML 里）
-  [].slice.call(document.querySelectorAll('.code')).forEach(function (box) {{
-    var btn = box.querySelector('.code-copy');
-    var pre = box.querySelector('pre');
-    if (!btn || !pre) return;
-    btn.addEventListener('click', function () {{
-      var text = pre.innerText;
-      function done() {{ btn.textContent = '已复制'; setTimeout(function () {{ btn.textContent = '复制'; }}, 1400); }}
-      if (navigator.clipboard && navigator.clipboard.writeText) {{
-        navigator.clipboard.writeText(text).then(done, function () {{ fallback(text, done); }});
-      }} else {{ fallback(text, done); }}
-    }});
-  }});
-  function fallback(text, done) {{
-    var ta = document.createElement('textarea');
-    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
-    document.body.appendChild(ta); ta.select();
-    try {{ document.execCommand('copy'); done(); }} catch (e) {{}}
-    document.body.removeChild(ta);
-  }}
-
-  onScroll();
-}})();
-</script>
+<script src="{p}assets/icons.js?v=5"></script>
+<script src="{p}assets/site.js?v=14"></script>
 </body>
 </html>
 """
@@ -226,13 +226,51 @@ def slug(text):
 
 
 def inline(text):
-    """行内 Markdown → HTML（先转义，再放行受支持的行内语法）。"""
+    """行内 Markdown → HTML（先转义，再放行受支持的行内语法）。
+
+    注意顺序：先把 `code` 抽成占位符，最后再放回。否则 `docs/*.md` 这类
+    代码片段里的星号会被下面的强调正则吃掉，生成跨 <code> 的错误 <em>。
+    """
     out = html.escape(text, quote=False)
-    out = re.sub(r"`([^`]+)`", r"<code>\1</code>", out)
+    codes = []
+
+    def stash(m):
+        codes.append(m.group(1))
+        return "\x00%d\x00" % (len(codes) - 1)
+
+    out = re.sub(r"`([^`]+)`", stash, out)
     out = re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", out)
     out = re.sub(r"(?<!\*)\*([^*\n]+)\*(?!\*)", r"<em>\1</em>", out)
     out = re.sub(r"\[([^\]]+)\]\(([^)\s]+)\)", r'<a href="\2">\1</a>', out)
+    out = re.sub(r"\x00(\d+)\x00", lambda m: "<code>%s</code>" % codes[int(m.group(1))], out)
     return out
+
+
+def resolve_links(body, src):
+    """把正文里的相对链接改写成「在 docs/dev/ 页面里也能点对」的地址。
+
+    源 Markdown 里的相对路径是按它自己的位置写的（例如 docs/API.md 里写
+    ../api/SHIZAKO-CHANGES.md），而生成的页面在 docs/dev/ 下，原样输出会 404。
+    规则：指向 docs/ 内的文件 → 相对路径；仓库里其它位置（api/ 等不在 Pages
+    发布范围内）→ GitHub blob 链接。
+    """
+    base = os.path.dirname(src)
+
+    def repl(m):
+        href = m.group(2)
+        if href.startswith(("http://", "https://", "#", "mailto:", "data:", "/")):
+            return m.group(0)
+        path, _, frag = href.partition("#")
+        target = os.path.normpath(os.path.join(base, path)).replace(os.sep, "/")
+        if target.startswith("docs/"):
+            new = "../" + target[len("docs/"):]
+        else:
+            new = "https://github.com/cr1437/Shizako/blob/main/" + target
+        if frag:
+            new += "#" + frag
+        return '%s href="%s"' % (m.group(1), new)
+
+    return re.sub(r'(<a) href="([^"]+)"', repl, body)
 
 
 def render(md):
@@ -389,6 +427,7 @@ def convert(src, out_name, title, desc, jobs=None):
     # 首行的一级标题已用作页面标题，正文里去掉，避免重复
     md = re.sub(r"^#\s+.*\n", "", md, count=1)
     body, toc = render(md)
+    body = resolve_links(body, src)
 
     # 源文件链接：docs/ 下的文件站点会直接提供（相对路径）；仓库其它位置的
     # （api/ 等不在 Pages 服务范围内）给 GitHub 链接，否则会指向错误的文件。
