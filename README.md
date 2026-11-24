@@ -2,7 +2,7 @@
 
 <img src="docs/banner.jpg" alt="Shizako 酱抱着终端的横幅插画" width="820" />
 
-# 🐱 Shizako
+# Shizako
 
 ## 让猫耳看板娘替你「借」系统权限 —— 不 Root、不刷机
 
@@ -23,9 +23,7 @@
 [![基于](docs/badge-based-on.svg)](https://github.com/RikkaApps/Shizuku)
 [![许可](docs/badge-license.svg)](LICENSE)
 
-[🌐 官网](https://cr1437.github.io/Shizako/) · [📦 下载最新版](https://github.com/cr1437/Shizako/releases) · [🐛 反馈问题](https://github.com/cr1437/Shizako/issues) · ⭐ Star 支持她
-
-**当前版本：`zako4`** —— 性能优化主线版；新增应用数据备份/恢复、特权存储代理、安装信任列表与批量队列、EXEC_SHELL 自动化。
+[<img src="docs/assets/icons/readme/book-open.svg" width="15" height="15" alt="" /> 官网](https://cr1437.github.io/Shizako/) · [<img src="docs/assets/icons/readme/download.svg" width="15" height="15" alt="" /> 下载最新版](https://github.com/cr1437/Shizako/releases) · [<img src="docs/assets/icons/readme/message-circle.svg" width="15" height="15" alt="" /> 反馈问题](https://github.com/cr1437/Shizako/issues) · <img src="docs/assets/icons/readme/star.svg" width="15" height="15" alt="" /> Star 支持她
 
 </div>
 
@@ -43,27 +41,7 @@
 
 ---
 
-## 🆕 zako4：把「顺手」放在第一位
-
-这一版的主线是**性能与耗电**，功能更新只是顺路带上车：
-
-| 优化 | 之前 | 现在 |
-| --- | --- | --- |
-| **Baseline Profile** | 构建脚本把 `CompileArtProfileTask` 全局禁用，421 KB 的 `baseline-prof.txt` 每次生成却**从未进 APK**，冷启动只能靠 JIT | 移除禁用，release 包内 `assets/dexopt/baseline.prof` 真正生效，Compose / Material3 / RecyclerView 的基线配置一起回到包内 |
-| **应用列表图标** | 每次新建列表项都在主线程同步 `loadIcon`（缓存建了但没命中） | 绑定先查 `AppIconCache`（uid + 目标尺寸），命中直接上屏，未命中才异步替换 |
-| **列表测量** | 内容变化时反复 `requestLayout` | `setHasFixedSize(true)` + 固定条目标高，过滤/刷新少一轮测量 |
-| **后台唤醒** | `AlarmManager.RTC_WAKEUP` 定时唤醒查更新；保活 45s 一轮 | 更新检查改 `JobScheduler`（6h、持久化、按网络触发）；保活 90s；无障碍心跳前台 60s / 息屏 5min / 省电 10min |
-| **首页状态** | 一次 binder 探活失败就把整页判成「服务未运行」 | 单点失败只记日志，`onResume` 再校准，减少无效重载与闪烁 |
-
-想自己核对「Baseline Profile 真的进包了」：
-
-```bash
-unzip -l shizako-zako4-release.apk | grep dexopt   # 应看到 assets/dexopt/baseline.prof
-```
-
----
-
-## 🐾 她能做到的事
+## <img src="docs/assets/icons/readme/zap.svg" width="20" height="20" alt="" /> 她能做到的事
 
 | 特性 | 说明 |
 |------|------|
@@ -73,11 +51,11 @@ unzip -l shizako-zako4-release.apk | grep dexopt   # 应看到 assets/dexopt/bas
 | Dhizuku 模式 | 一键把她扶上「设备所有者」，特权常驻、免 Root 免无线调试；不需要时应用内可「取消设备所有者」 |
 | 新手引导 | 首次启动逐步向导：语言 / 外观 / 启动方式，引导内**直接完成激活**；免责声明 10 秒强制阅读 |
 | 四种激活方式 | Root / 无线调试 / 电脑 ADB / Dhizuku，一页搞定；已配对可一键启动 |
-| **应用数据备份 / 恢复** | 外部数据（`/sdcard/Android/data`、`obb`）打包进你选的 SAF 目录，替换式恢复、批量队列、可选保存 OBB / APK |
-| **特权存储代理** | 服务进程以 shell/root 身份提供受限文件接口，四层访问降级 + 路径白名单 + 全量审计；第三方应用需单独授权 |
-| **安装信任列表 + 批量队列** | 受信应用免确认直装、外部请求弹确认框、XAPK / APKS / apk.1 全支持、单项失败不中断 |
-| **EXEC_SHELL 自动化** | 带令牌与签名校验的广播入口，Tasker / MacroDroid 可执行特权命令并按包名收回结果 |
-| **批量授权 / 权限模板** | 多选批量授予撤销、影响确认、内置模板 + 自定义模板、SAF 导出导入 |
+| 应用数据备份 / 恢复 | 外部数据（`/sdcard/Android/data`、`obb`）打包进你选的 SAF 目录，替换式恢复、批量队列、可选保存 OBB / APK |
+| 特权存储代理 | 服务进程以 shell/root 身份提供受限文件接口，四层访问降级 + 路径白名单 + 全量审计；第三方应用需单独授权 |
+| 安装信任列表 + 批量队列 | 受信应用免确认直装、外部请求弹确认框、XAPK / APKS / apk.1 全支持、单项失败不中断 |
+| EXEC_SHELL 自动化 | 带令牌与签名校验的广播入口，Tasker / MacroDroid 可执行特权命令并按包名收回结果 |
+| 批量授权 / 权限模板 | 多选批量授予撤销、影响确认、内置模板 + 自定义模板、SAF 导出导入 |
 | 一键注入 | 把权限分给常用工具（黑阈、小黑屋、冰箱、炼妖壶），没装的应用内直接下载 |
 | 兼容桥 | 内置 provider 中转，Shizuku-API 客户端零改动直连；只用自己的 authority，**不占用上游任何标识** |
 | Tasker 支持 | 广播一键启停服务、激活 Dhizuku、查状态、触发下载 |
@@ -87,7 +65,7 @@ unzip -l shizako-zako4-release.apk | grep dexopt   # 应看到 assets/dexopt/bas
 
 ---
 
-## 💾 应用数据备份与恢复（zako4 新增）
+## <img src="docs/assets/icons/readme/download.svg" width="20" height="20" alt="" /> 应用数据备份与恢复
 
 入口：**应用管理 → 右上角「应用数据备份与恢复」**。
 
@@ -102,7 +80,7 @@ unzip -l shizako-zako4-release.apk | grep dexopt   # 应看到 assets/dexopt/bas
 
 ---
 
-## 📦 安装器：信任列表 + 批量队列（zako4 新增）
+## <img src="docs/assets/icons/readme/package.svg" width="20" height="20" alt="" /> 安装器：信任列表 + 批量队列
 
 - **受信应用直装**：签名 + uid 双校验通过的应用，请求安装时不再弹确认框；判定顺序固定（先调用方、再策略、最后才动安装），
   信任列表可在「设置 → 安装」里维护。
@@ -113,7 +91,7 @@ unzip -l shizako-zako4-release.apk | grep dexopt   # 应看到 assets/dexopt/bas
 
 ---
 
-## 🤖 自动化：EXEC_SHELL（zako4 新增）
+## <img src="docs/assets/icons/readme/terminal.svg" width="20" height="20" alt="" /> 自动化：EXEC_SHELL
 
 - 广播 action：`com.churan.shizako.action.EXEC_SHELL`，需要显式组件 + 令牌 + 发送方签名校验；
 - 结果通过 `com.churan.shizako.action.EXEC_SHELL_RESULT` **按调用方包名**回传，令牌泄漏也不会把输出发给别人；
@@ -121,7 +99,7 @@ unzip -l shizako-zako4-release.apk | grep dexopt   # 应看到 assets/dexopt/bas
 
 ---
 
-## 🧩 批量授权与权限模板
+## <img src="docs/assets/icons/readme/menu.svg" width="20" height="20" alt="" /> 批量授权与权限模板
 
 - 应用管理页长按（或右上角菜单「选择」）进入多选，批量授予 / 撤销，带影响确认、进度与结果报告；
 - 3 个内置模板 + 自定义模板，支持 SAF 导出 / 导入（冲突可选重命名 / 跳过 / 覆盖）；
@@ -129,7 +107,7 @@ unzip -l shizako-zako4-release.apk | grep dexopt   # 应看到 assets/dexopt/bas
 
 ---
 
-## 🚀 把她带回家
+## <img src="docs/assets/icons/readme/smartphone.svg" width="20" height="20" alt="" /> 把她带回家
 
 ### 第一步：领养
 
@@ -144,7 +122,7 @@ unzip -l shizako-zako4-release.apk | grep dexopt   # 应看到 assets/dexopt/bas
 | Root | 已有 Root 环境直接唤醒 | 有 Root 的极致玩家 |
 | Dhizuku（设备所有者） | 电脑执行一次 `adb shell dpm set-device-owner com.churan.shizako/moe.shizuku.manager.dhizuku.DhizukuAdminReceiver`（设备上不能有账户），之后免 Root、免无线调试；不需要时在应用内「Dhizuku 应用」页点「取消设备所有者」即可退回 | 一劳永逸党 |
 
-激活流程与上游 Shizuku 一致，可参考[上游配置指南](https://shizuku.rikka.app/zh-hans/guide/setup/)，把 Shizuku 换成 Shizako 即可。
+图文并茂的完整教程在[官网激活指南](https://cr1437.github.io/Shizako/act/)；流程与上游 Shizuku 一致，也可参考[上游配置指南](https://shizuku.rikka.app/zh-hans/guide/setup/)，把 Shizuku 换成 Shizako 即可。
 
 ### 第三步：发通行证
 
@@ -152,7 +130,7 @@ unzip -l shizako-zako4-release.apk | grep dexopt   # 应看到 assets/dexopt/bas
 
 ---
 
-## 🔌 生态兼容
+## <img src="docs/assets/icons/readme/plug.svg" width="20" height="20" alt="" /> 生态兼容
 
 ### 底层就是 Shizuku 的 API
 
@@ -164,8 +142,8 @@ unzip -l shizako-zako4-release.apk | grep dexopt   # 应看到 assets/dexopt/bas
 
 | 什么应用 | 连官方 Shizuku | 连 Shizako |
 |----------|:---:|:---:|
-| 官方 `dev.rikka.shizuku:api` 写的 | ✅ | ✅ |
-| 用本仓库 `api/` 写的 | ✅ | ✅ |
+| 官方 `dev.rikka.shizuku:api` 写的 | <img src="docs/assets/icons/readme/shield-check.svg" width="16" height="16" alt="" /> | <img src="docs/assets/icons/readme/shield-check.svg" width="16" height="16" alt="" /> |
+| 用本仓库 `api/` 写的 | <img src="docs/assets/icons/readme/shield-check.svg" width="16" height="16" alt="" /> | <img src="docs/assets/icons/readme/shield-check.svg" width="16" height="16" alt="" /> |
 
 服务端只校验「是否请求了权限」，不校验「请求了哪个权限名」；首次连接照样弹授权框，你点头才算数。
 
@@ -176,7 +154,7 @@ unzip -l shizako-zako4-release.apk | grep dexopt   # 应看到 assets/dexopt/bas
 - 每个 Dhizuku-API 应用首次借用都会弹授权框，同意后记入本地白名单，可在「Dhizuku 授权的应用」页面收回
 - 兼容层为独立编写（wire 协议对齐 Dhizuku-API），不依赖 GPL 许可的 Dhizuku-API 库，Shizako 保持 Apache-2.0
 
-### 🔏 与官方 Shizuku 共存，以及「怎么确认你装的是官方构建」
+### <img src="docs/assets/icons/readme/shield-check.svg" width="19" height="19" alt="" /> 与官方 Shizuku 共存，以及「怎么确认你装的是官方构建」
 
 Shizako 用**自己的**包名（`com.churan.shizako`）和权限名，provider 只声明自己的 authority
 `com.churan.shizako.shizuku`，不使用上游的 `moe.shizuku.privileged.api` 包名、`Shizuku` 应用名、
@@ -205,7 +183,7 @@ F-Droid 版由 F-Droid 用自己的密钥重新签名，指纹与上表不同，
 
 ---
 
-## 🎨 看板娘一角
+## <img src="docs/assets/icons/readme/palette.svg" width="20" height="20" alt="" /> 看板娘一角
 
 <div align="center">
 <img src="manager/src/main/res/mipmap-xxxhdpi/ic_launcher.png" width="96" alt="Shizako logo" />
@@ -217,7 +195,7 @@ Shizako 酱：白发猫耳、月牙发饰，人设是「抱着终端机的猫娘
 
 ---
 
-## 🛠️ 给开发者
+## <img src="docs/assets/icons/readme/key-round.svg" width="20" height="20" alt="" /> 给开发者
 
 ### 方案一：直接连（推荐）
 
@@ -244,7 +222,7 @@ implementation project(':provider')
 
 ### 存储代理（给受信第三方）
 
-zako4 起服务端多了一个 `IStorageProxy`（列目录 / 开文件 / tar 打包 / 安全解压 / 复制 / 删除 / 建目录 / 存在性）。
+服务端提供 `IStorageProxy` 接口（列目录 / 开文件 / tar 打包 / 安全解压 / 复制 / 删除 / 建目录 / 存在性）。
 第三方应用要同时满足两个条件才能用：
 
 1. 已在 Shizako 里拿到普通 Shizuku 授权；
@@ -254,7 +232,7 @@ zako4 起服务端多了一个 `IStorageProxy`（列目录 / 开文件 / tar 打
 
 ---
 
-## 📦 自己动手编译
+## <img src="docs/assets/icons/readme/cpu.svg" width="20" height="20" alt="" /> 自己动手编译
 
 ```bash
 git clone https://github.com/cr1437/Shizako.git
@@ -289,16 +267,16 @@ cd Shizako
 
 ---
 
-## 🗂️ 源码结构
+## <img src="docs/assets/icons/readme/book-open.svg" width="20" height="20" alt="" /> 源码结构
 
 共 **10 个 Gradle 模块**（以 `settings.gradle` 为准）：
 
 ```
 Shizako/
 ├── manager/          Android 应用本体（Kotlin，约 5 万行，占全仓约 85%）
-│   └── storage/      应用数据备份/恢复（zako4 新增）
+│   └── storage/      应用数据备份/恢复
 ├── server/           特权服务进程（Java，跑在 shell / root 里）
-│   └── storage/      特权存储代理实现（zako4 新增）
+│   └── storage/      特权存储代理实现
 ├── starter/          服务启动器（启动 server 进程）
 ├── shell/            构建 rish_shizuku.dex（`ShizukuShellLoader`），供 manager 打包进 APK
 ├── common/           共享工具（BuildUtils / OsUtils）
@@ -318,56 +296,94 @@ Shizako/
 
 ---
 
-## ❓ FAQ
+## <img src="docs/assets/icons/readme/message-circle.svg" width="20" height="20" alt="" /> FAQ
 
-**Q：要 Root 吗？**
+<details>
+<summary><b>Q：要 Root 吗？</b></summary>
+
 A：不要。无线调试 / USB 就能激活；有 Root 也行，姿势更多，但绝非必需。
 
-**Q：这版为什么叫 zako4？**
-A：改动面比过往任何一次都大（性能主线 + 备份恢复 + 安装器 + 自动化），继续叫 3.20 容易让人低估；版本号同步从 320 跳到 400。
+</details>
 
-**Q：跟 Shizuku 什么关系？**
+<details>
+<summary><b>Q：跟 Shizuku 什么关系？</b></summary>
+
 A：它兼容 Shizuku-API 生态 —— 用官方 SDK 写的应用零改动直连。按上游许可要求，本项目使用自己的包名与权限名、不占用上游任何 authority，因此可以和官方 Shizuku 装在同一台机器上；在此之上还加了 Dhizuku 兼容、一键注入、数据备份等自家功能。
 
-**Q：备份会碰 `/data/data` 吗？**
+</details>
+
+<details>
+<summary><b>Q：备份会碰 `/data/data` 吗？</b></summary>
+
 A：不会。只处理外部数据（`/sdcard/Android/data`、`/sdcard/Android/obb`）；完整的 `/data/data` 备份不在这个功能范围内。
 
-**Q：第三方备份工具怎么用存储代理？**
+</details>
+
+<details>
+<summary><b>Q：第三方备份工具怎么用存储代理？</b></summary>
+
 A：先给它正常的 Shizuku 授权，再到「数据备份与恢复 → 第三方调用」里单独打开它的「存储代理」开关；只有 Shizuku 授权、没有这个开关时，接口会明确拒绝并记审计。
 
-**Q：性能优化到底改了啥？**
-A：主要是四处：Baseline Profile 真正进包（冷启动）、应用列表图标真正命中缓存、列表测量收敛、后台唤醒（更新检查改 JobScheduler / 心跳自适应 / 保活 90s）。核对方法见上面的 `unzip -l | grep dexopt`。
+</details>
 
-**Q：能不能和官方 Shizuku 一起装？**
+<details>
+<summary><b>Q：能不能和官方 Shizuku 一起装？</b></summary>
+
 A：可以。Shizako 的 provider 只声明自己的 authority，不会和官方 Shizuku 撞。两个都装、各自授权即可。
 
-**Q：授权给应用安全吗？**
+</details>
+
+<details>
+<summary><b>Q：授权给应用安全吗？</b></summary>
+
 A：每个应用都要你亲自点头才拿得到通行证，白名单本地记录、随时可收回；Dhizuku 特权转发也只在 Shizako 进程内完成；存储代理还要额外单独授权，且每次调用都写审计。
 
-**Q：支持哪些 Android 版本？**
+</details>
+
+<details>
+<summary><b>Q：支持哪些 Android 版本？</b></summary>
+
 A：Android 7.0+ 都能跑；无线调试激活需要 Android 11+。
 
-**Q：配对时一直停在「正在搜索配对服务」，端口填不了？**
+</details>
+
+<details>
+<summary><b>Q：配对时一直停在「正在搜索配对服务」，端口填不了？</b></summary>
+
 A：自动发现配对端口靠 mDNS 组播。GrapheneOS 开启 VPN 时组播不会送进应用，华为 / 鸿蒙部分机型同样会拦截 —— 这类设备上自动发现必然失败。配对对话框的端口框**始终可见可手输**：从设备「开发者选项 → 无线调试 → 使用配对码配对设备」页面上读出**配对端口**填进去，配对码一起输入即可。如果设备上 adbd 已经监听在固定端口（比如 5555），也可以直接用激活页的「手动连接端口」，跳过配对。
 
-**Q：安装/更新时 Play Protect 提示「应用可能有害」，是病毒吗？**
+</details>
+
+<details>
+<summary><b>Q：安装/更新时 Play Protect 提示「应用可能有害」，是病毒吗？</b></summary>
+
 A：不是。Shizako 是侧载应用，又具备「下载安装」「用 app_process 起特权进程」「设备所有者」这类能力，Play Protect 的启发式模型很容易把 Shizuku 生态工具判成风险项 —— 判定发生在 Google 侧，开发者无法在代码里关掉它。建议按顺序自查：① 只从 [Releases](https://github.com/cr1437/Shizako/releases) 下载，并用 `apksigner verify --print-certs <apk>` 核对证书 SHA-256 为 `515baf0c…9f9c8a`；② 如果你装的是 Actions 产物（debug 签名）或来源不明的包，请换正式签名包；③ 确认无误后，可在 Play Protect 提示里点「更多详情 → 仍然保留」，或在「设置 → Google → 安全 → Play Protect」关闭「扫描应用」（这会降低整机防护，不建议长期关闭）。判定权在 Google，可以按[官方指引](https://developers.google.com/android/play-protect/warning-dev-guidance)提交误报申诉，但申诉是单向流程、不承诺结果与时限。
 
-**Q：为什么装包里有那么多「危险权限」？**
+</details>
+
+<details>
+<summary><b>Q：为什么装包里有那么多「危险权限」？</b></summary>
+
 A：都是功能必需：`QUERY_ALL_PACKAGES` 用来显示已授权应用的名称与图标；`WRITE_SECURE_SETTINGS` 用来一键开无线调试、管理无障碍服务；DeviceAdmin 就是 Dhizuku 模式本身；`STORAGE_PROXY` 是存储代理的能力标记（真正的开关在应用内）。应用不会在后台偷偷使用它们，权限白名单本地记录、随时可收回。
 
-**Q：为什么这么可爱？**
+</details>
+
+<details>
+<summary><b>Q：为什么这么可爱？</b></summary>
+
 A：因为作者把她当女儿养（确信）。
+
+</details>
 
 ---
 
-## 💗 感谢
+## <img src="docs/assets/icons/readme/star.svg" width="20" height="20" alt="" /> 感谢
 
 - [RikkaApps/Shizuku](https://github.com/RikkaApps/Shizuku) 及其贡献者 —— Shizako 的核心能力来自这里
 - [RikkaApps/Shizuku-API](https://github.com/RikkaApps/Shizuku-API) —— 客户端通信库
 - 每一个给 Shizako 酱点 Star 的你
 
-## 📬 反馈
+## <img src="docs/assets/icons/readme/github.svg" width="20" height="20" alt="" /> 反馈
 
 | 方式 | 入口 |
 |------|------|
@@ -375,7 +391,7 @@ A：因为作者把她当女儿养（确信）。
 | QQ 反馈 | [891276089](https://qm.qq.com/cgi-bin/qm/qr?k=891276089) |
 | QQ 吹水群 | [1104445003](https://qm.qq.com/cgi-bin/qm/qr?k=1104445003) |
 
-## 📄 许可
+## <img src="docs/assets/icons/readme/shield-check.svg" width="20" height="20" alt="" /> 许可
 
 本项目继承上游 [Apache License 2.0](LICENSE)，另见 [NOTICE](NOTICE)。
 
@@ -400,7 +416,7 @@ A：因为作者把她当女儿养（确信）。
 
 <div align="center">
 
-> ⭐ **喜欢 Shizako 酱？点个 Star 再走吧** —— 每一颗星都是她的猫粮 `(ฅ'ω'ฅ)`
+> <img src="docs/assets/icons/readme/star.svg" width="18" height="18" alt="" /> **喜欢 Shizako 酱？点个 Star 再走吧** —— 每一颗星都是她的猫粮 `(ฅ'ω'ฅ)`
 >
 > [点这里投喂 Star →](https://github.com/cr1437/Shizako)
 
