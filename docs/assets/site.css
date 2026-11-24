@@ -426,41 +426,29 @@ table.compare th { font-size: 12px; font-weight: 500; letter-spacing: .08em; tex
 table.compare td { color: var(--fg-dim); }
 table.compare td b, table.compare td strong { color: #fff; font-weight: 500; }
 
-/* ── 社区收录卡片 ───────────────────────────────────────────────────────
-   和上面的数据卡同宽、同层级，但更"轻"：单色、无发光、只留一行引言。
-   三组数字不重复放（数据卡里已经有了），避免一整屏全是 143 / 6,634。 */
+/* ── 社区收录：数据卡下面的一枚金色小卡 ───────────────────────────────── */
+.award-row { margin-top: 14px; }
 .award {
-  display: flex; align-items: center; gap: 28px;
-  margin-top: 16px; padding: 26px 30px;
-  border-radius: var(--radius);
-  border: 1px solid var(--line);
-  background: linear-gradient(180deg, rgba(255, 255, 255, .045), rgba(255, 255, 255, .018));
-  transition: border-color .25s var(--ease), background-color .25s var(--ease);
+  display: inline-flex; align-items: center; gap: 12px;
+  padding: 10px 14px 10px 12px;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(255, 209, 102, .34);
+  background: linear-gradient(180deg, rgba(255, 209, 102, .10), rgba(255, 209, 102, .04));
+  box-shadow: 0 0 26px -14px rgba(255, 209, 102, .55);
+  color: var(--gold);
+  transition: border-color .22s var(--ease), box-shadow .22s var(--ease), background-color .22s var(--ease);
 }
-.award:hover { border-color: rgba(255, 255, 255, .2); }
-.award-main { min-width: 0; }
-.award-label { display: flex; align-items: center; gap: 10px; margin: 0 0 12px; }
+.award:hover { border-color: rgba(255, 209, 102, .6); box-shadow: 0 0 30px -10px rgba(255, 209, 102, .65); color: var(--gold); }
 .award-badge-img { display: block; height: 20px; width: auto; }
-.award-label span { font-size: 12px; letter-spacing: .04em; color: var(--fg-faint); }
-.award-quote {
-  margin: 0 0 10px; font-size: 17px; line-height: 1.65; color: #ececf1;
-  max-width: 62ch;
-}
-.award-meta { margin: 0; font-size: 12.5px; color: var(--fg-faint); }
-.award-link {
-  margin-left: auto; flex: none;
-  display: inline-flex; align-items: center; gap: 6px;
-  height: 38px; padding: 0 18px; border-radius: var(--radius-pill);
-  border: 1px solid var(--line-2); color: var(--fg);
-  font-size: 13.5px; white-space: nowrap;
-  transition: background-color .2s var(--ease), border-color .2s var(--ease);
-}
-.award-link:hover { background: rgba(255, 255, 255, .08); border-color: rgba(255, 255, 255, .3); color: #fff; }
+.award-text { font-size: 13px; color: #f3dca6; white-space: nowrap; }
+.award-link { display: inline-flex; align-items: center; gap: 2px; font-size: 13px; color: var(--gold); opacity: .9; }
+.award:hover .award-link { opacity: 1; }
+.award-link .icon { width: 13px; height: 13px; }
 
-@media (max-width: 760px) {
-  .award { flex-direction: column; align-items: flex-start; gap: 18px; padding: 22px 22px; }
-  .award-quote { font-size: 15.5px; }
-  .award-link { margin-left: 0; }
+@media (max-width: 640px) {
+  .award { width: 100%; border-radius: 14px; justify-content: flex-start; }
+  .award-text { white-space: normal; font-size: 12.5px; }
+  .award-link { margin-left: auto; }
 }
 
 /* ── §7 信任 / FAQ / CTA / 页脚 ─────────────────────────────────────────── */

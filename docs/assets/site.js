@@ -138,7 +138,6 @@
     's3.d': 'Each privilege belongs to one app you approved, the allowlist is stored locally and every privileged API call is written to the audit log.',
     's4.d': 'Build it yourself from source; upstream copyright belongs to RikkaApps and the modifications to Churan.',
     'rec.badge': 'Listed by the Shizuku community',
-    'rec.quote': 'A catgirl-mascot edition of Shizuku, a drop-in replacement manager that official Shizuku-API apps connect to without modification',
     'rec.link': 'View the list',
     'faq.eyebrow': 'FAQ',
     'faq.title': 'Common questions',
